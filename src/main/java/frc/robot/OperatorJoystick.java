@@ -1,10 +1,9 @@
 package frc.robot;
 
-import frc.robot.libraries.XboxController1038;
+import frc.robot.commands.MovePivotForwardsCommand;
+import frc.robot.commands.movePivotBackwardsCommand;
 import frc.robot.constants.IOConstants;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.libraries.XboxController1038;
 
 public class OperatorJoystick extends XboxController1038 {
     // Singleton Setup
@@ -20,5 +19,7 @@ public class OperatorJoystick extends XboxController1038 {
 
     private OperatorJoystick() {
         super(IOConstants.kOperatorControllerPort);
+        bButton.whileTrue(new MovePivotForwardsCommand());
+        xButton.whileTrue(new movePivotBackwardsCommand());
     }
 }
