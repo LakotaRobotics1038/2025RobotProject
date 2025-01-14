@@ -26,7 +26,7 @@ public class Base extends SubsystemBase {
     private Base() {
         SparkMaxConfig baseConfig = new SparkMaxConfig();
         baseConfig.idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeo550Current);
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
 
         basePivotMotor.configure(baseConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
