@@ -33,11 +33,11 @@ public class Base extends SubsystemBase {
     }
 
     public void movePivotForwards() {
-        basePivotMotor.set(.25);
+        basePivotMotor.set(BaseConstants.kClimbSpeed);
     }
 
     public void movePivotBackwards() {
-        basePivotMotor.set(-.25);
+        basePivotMotor.set(-BaseConstants.kClimbSpeed);
     }
 
     public void stopPivot() {
