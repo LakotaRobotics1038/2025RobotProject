@@ -32,8 +32,6 @@ public class Robot extends TimedRobot {
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Vision vision = Vision.getInstance();
 
-    private ShuffleboardTab tempTab = Shuffleboard.getTab("temp tab");
-
     @Override
     public void robotInit() {
         // Singleton instances that need to be created but not referenced
@@ -52,14 +50,10 @@ public class Robot extends TimedRobot {
                 est -> {
                     // Change our trust in the measurement based on the tags we can see
                     var estStdDevs = vision.getEstimationStdDevs();
-
+                    System.out.println(est.estimatedPose.toString());
                     driveTrain.addVisionMeasurement(
                             est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-                    tempTab.add("estimatedPose", est.estimatedPose.toPose2d())
-                            .withPosition(1, 1)
-                            .withSize(1, 1);
                 });
-
     }
 
     @Override

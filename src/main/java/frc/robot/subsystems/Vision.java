@@ -41,7 +41,8 @@ public class Vision extends SubsystemBase {
 
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
         Optional<EstimatedRobotPose> visionEst = Optional.empty();
-        for (var change : Stream.concat(frontCam.getAllUnreadResults().stream(), backCam.getAllUnreadResults().stream())
+        for (var change : Stream.concat(frontCam.getAllUnreadResults().stream(),
+                backCam.getAllUnreadResults().stream())
                 .toList()) {
             visionEst = photonEstimator.update(change);
             updateEstimationStdDevs(visionEst, change.getTargets());
