@@ -50,6 +50,9 @@ public class Dashboard extends SubsystemBase {
     private Dashboard() {
         super();
 
+        driversTab.add("Coords", driveTrain.getPose())
+                .withPosition(5, 6)
+                .withSize(1, 1);
         driversTab.add("Auton Choices", autoChooser)
                 .withPosition(0, 0)
                 .withSize(2, 1);
@@ -84,8 +87,8 @@ public class Dashboard extends SubsystemBase {
         });
 
         // driversTab.add("Camera Stream", camera)
-        //         .withPosition(6, 0)
-        //         .withSize(4, 4);
+        // .withPosition(6, 0)
+        // .withSize(4, 4);
 
         controlsTab.add(field)
                 .withPosition(2, 0)

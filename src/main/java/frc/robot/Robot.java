@@ -8,6 +8,8 @@ import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
@@ -15,6 +17,7 @@ import frc.robot.constants.SwerveModuleConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
+import frc.robot.subsystems.Vision;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -27,6 +30,9 @@ public class Robot extends TimedRobot {
 
     // Subsystems
     private DriveTrain driveTrain = DriveTrain.getInstance();
+    private Vision vision = Vision.getInstance();
+
+    private ShuffleboardTab tempTab = Shuffleboard.getTab("temp tab");
 
     @Override
     public void robotInit() {
@@ -41,6 +47,19 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        var visionEst = vision.getEstimatedGlobalPose();
+        visionEst.ifPresent(
+                est -> {
+                    // Change our trust in the measurement based on the tags we can see
+                    var estStdDevs = vision.getEstimationStdDevs();
+
+                    driveTrain.addVisionMeasurement(
+                            est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+                    tempTab.add("estimatedPose", est.estimatedPose.toPose2d())
+                            .withPosition(1, 1)
+                            .withSize(1, 1);
+                });
+
     }
 
     @Override
