@@ -271,4 +271,13 @@ public class DriveTrain extends SubsystemBase {
         odometry.addVisionMeasurement(visionMeasurement, timestampSeconds,
                 stdDevs);
     }
+
+    /**
+     * Reset the estimated pose of the swerve drive on the field.
+     *
+     * @param pose New robot pose.
+     */
+    public void resetPose(Pose2d pose) {
+        odometry.resetPosition(Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()), getModulePositions(), pose);
+    }
 }

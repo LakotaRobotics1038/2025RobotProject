@@ -10,10 +10,11 @@ import org.photonvision.EstimatedRobotPose;
 
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
@@ -49,15 +50,17 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        // Correct pose estimate with vision measurements
         Optional<EstimatedRobotPose> visionEst = vision.getEstimatedGlobalPose();
         visionEst.ifPresent(
                 est -> {
                     // Change our trust in the measurement based on the tags we can see
-                    var estStdDevs = vision.getEstimationStdDevs();
-                    System.out.println(est.estimatedPose.toString());
+                    Matrix<N3, N1> estStdDevs = vision.getEstimationStdDevs();
+
                     driveTrain.addVisionMeasurement(
                             est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
                 });
+
     }
 
     @Override
