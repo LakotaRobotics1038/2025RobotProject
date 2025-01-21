@@ -1,5 +1,7 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -43,4 +45,7 @@ public final class DriveConstants {
 
     public static final boolean kGyroReversed = false;
     public static final int kGyroCanId = 25;
+
+    // Camera's Transform 3D from Center
+    public static final Transform3d cameraToRobot = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
 }

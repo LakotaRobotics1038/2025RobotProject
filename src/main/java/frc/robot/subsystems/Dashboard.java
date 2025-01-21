@@ -84,8 +84,8 @@ public class Dashboard extends SubsystemBase {
         });
 
         // driversTab.add("Camera Stream", camera)
-        //         .withPosition(6, 0)
-        //         .withSize(4, 4);
+        // .withPosition(6, 0)
+        // .withSize(4, 4);
 
         controlsTab.add(field)
                 .withPosition(2, 0)
@@ -101,6 +101,7 @@ public class Dashboard extends SubsystemBase {
             resetGyro.setBoolean(false);
         }
         field.setRobotPose(driveTrain.getPose());
+
     }
 
     /**

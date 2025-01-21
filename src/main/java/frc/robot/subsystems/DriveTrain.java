@@ -4,11 +4,22 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -44,6 +55,10 @@ public class DriveTrain extends SubsystemBase {
     // The gyro sensor
     private final Pigeon2 gyro = new Pigeon2(DriveConstants.kGyroCanId);
 
+    private PhotonCamera camera = new PhotonCamera("cameraName");
+
+    private AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+
     // Odometry class for tracking robot pose
     private SwerveDriveOdometry odometry = new SwerveDriveOdometry(
             DriveConstants.kDriveKinematics,
@@ -54,6 +69,8 @@ public class DriveTrain extends SubsystemBase {
                     rearLeft.getPosition(),
                     rearRight.getPosition()
             });
+    // Vision Estimated Position
+    private Pose3d estimatedPose;
 
     // Singleton Setup
     private static DriveTrain instance;
@@ -81,6 +98,21 @@ public class DriveTrain extends SubsystemBase {
                         rearLeft.getPosition(),
                         rearRight.getPosition()
                 });
+
+        var results = camera.getAllUnreadResults();
+        PhotonTrackedTarget target = results.get(results.size() - 1).getBestTarget();
+
+        int targetId = target.getFiducialId();
+        Optional<Pose3d> poseAprilTagField = aprilTagFieldLayout.getTagPose(targetId);
+
+        if (poseAprilTagField.isPresent()) {
+            estimatedPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
+                    poseAprilTagField.get(), DriveConstants.cameraToRobot);
+        }
+    }
+
+    public Pose3d getEstimatedPose() {
+        return this.estimatedPose;
     }
 
     /**
