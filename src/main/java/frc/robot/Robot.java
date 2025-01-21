@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -45,7 +49,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        var visionEst = vision.getEstimatedGlobalPose();
+        Optional<EstimatedRobotPose> visionEst = vision.getEstimatedGlobalPose();
         visionEst.ifPresent(
                 est -> {
                     // Change our trust in the measurement based on the tags we can see

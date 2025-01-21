@@ -9,6 +9,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -46,13 +47,13 @@ public class DriveTrain extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
 
-    private final SwerveDrivePoseEstimator poseEstimator;
-
     // The gyro sensor
     private final Pigeon2 gyro = new Pigeon2(DriveConstants.kGyroCanId);
 
     // Odometry class for tracking robot pose
-    private SwerveDriveOdometry odometry = new SwerveDriveOdometry(
+    private Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+    private Vector<N3> visionStdDevs = VecBuilder.fill(1, 1, 1);
+    private SwerveDrivePoseEstimator odometry = new SwerveDrivePoseEstimator(
             DriveConstants.kDriveKinematics,
             Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
             new SwerveModulePosition[] {
@@ -60,7 +61,10 @@ public class DriveTrain extends SubsystemBase {
                     frontRight.getPosition(),
                     rearLeft.getPosition(),
                     rearRight.getPosition()
-            });
+            },
+            Pose2d.kZero,
+            stateStdDevs,
+            visionStdDevs);
 
     // Singleton Setup
     private static DriveTrain instance;
@@ -76,16 +80,6 @@ public class DriveTrain extends SubsystemBase {
     private DriveTrain() {
         super();
         gyro.reset();
-
-        var stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
-        var visionStdDevs = VecBuilder.fill(1, 1, 1);
-        poseEstimator = new SwerveDrivePoseEstimator(
-                DriveConstants.kDriveKinematics,
-                gyro.getRotation2d(),
-                getModulePositions(),
-                new Pose2d(),
-                stateStdDevs,
-                visionStdDevs);
     }
 
     @Override
@@ -106,7 +100,7 @@ public class DriveTrain extends SubsystemBase {
      * @return The pose.
      */
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return odometry.getEstimatedPosition();
     }
 
     /**
@@ -274,7 +268,7 @@ public class DriveTrain extends SubsystemBase {
      * See {@link SwerveDrivePoseEstimator#addVisionMeasurement(Pose2d, double)}.
      */
     public void addVisionMeasurement(Pose2d visionMeasurement, double timestampSeconds) {
-        poseEstimator.addVisionMeasurement(visionMeasurement, timestampSeconds);
+        odometry.addVisionMeasurement(visionMeasurement, timestampSeconds);
     }
 
     /**
@@ -283,7 +277,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void addVisionMeasurement(
             Pose2d visionMeasurement, double timestampSeconds, Matrix<N3, N1> stdDevs) {
-        poseEstimator.addVisionMeasurement(visionMeasurement, timestampSeconds,
+        odometry.addVisionMeasurement(visionMeasurement, timestampSeconds,
                 stdDevs);
     }
 }
