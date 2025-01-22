@@ -115,6 +115,10 @@ public class DriveTrain extends SubsystemBase {
         return this.estimatedPose;
     }
 
+    public String getEstimatedPoseValues() {
+        return this.estimatedPose.toString();
+    }
+
     /**
      * Returns the currently-estimated pose of the robot.
      *
