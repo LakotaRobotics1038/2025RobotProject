@@ -1,12 +1,14 @@
 package frc.robot.commands;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,6 +42,7 @@ public class PathOnTheFly extends Command {
     }
 
     public PathOnTheFly(EndPoints endpoint) {
+        super.addRequirements(Dashboard.getInstance());
         System.out.println("WOAHHHH");
         this.endpoint = endpoint;
     }
@@ -51,23 +54,29 @@ public class PathOnTheFly extends Command {
                 AutoConstants.kMaxAccelerationMetersPerSecondSquared,
                 AutoConstants.kMaxAngularSpeedRadiansPerSecond,
                 AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
-        idealStartingState = new IdealStartingState(null, Rotation2d.fromDegrees(driveTrain.getHeading()));
+        idealStartingState = new IdealStartingState(driveTrain.getChassisSpeeds().vxMetersPerSecond,
+                Rotation2d.fromDegrees(driveTrain.getHeading()));
         goalEndState = new GoalEndState(0.0, endpoint.getEndpoint().getRotation());
         path = new PathPlannerPath(waypoints, constraints, idealStartingState, goalEndState);
         path.preventFlipping = true;
-        path.generateTrajectory(driveTrain.getChassisSpeeds(),
-                Rotation2d.fromDegrees(driveTrain.getHeading()),
-                AutoConstants.kRobotConfig.get());
-        Dashboard.getInstance().addPath();
-        // Dashboard.getInstance()
-        // .setTrajectory(path.generateTrajectory(driveTrain.getChassisSpeeds(),
+        try {
+            new PathPlannerTrajectory(path, DriveTrain.getInstance().getChassisSpeeds(),
+                    Rotation2d.fromDegrees(DriveTrain.getInstance().getHeading()),
+                    AutoConstants.kRobotConfig.get());
+
+            Dashboard.getInstance().addPath();
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+
+        // path.generateTrajectory(driveTrain.getChassisSpeeds(),
         // Rotation2d.fromDegrees(driveTrain.getHeading()),
-        // AutoConstants.kRobotConfig.get()));
+        // AutoConstants.kRobotConfig.get());
     }
 
     @Override
     public void execute() {
-        System.out.println("AHHHHHHHHHH");
+        System.out.println();
     }
 
     @Override
