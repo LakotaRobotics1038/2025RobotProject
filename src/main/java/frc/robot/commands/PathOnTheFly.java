@@ -59,24 +59,16 @@ public class PathOnTheFly extends Command {
         goalEndState = new GoalEndState(0.0, endpoint.getEndpoint().getRotation());
         path = new PathPlannerPath(waypoints, constraints, idealStartingState, goalEndState);
         path.preventFlipping = true;
-        try {
-            new PathPlannerTrajectory(path, DriveTrain.getInstance().getChassisSpeeds(),
-                    Rotation2d.fromDegrees(DriveTrain.getInstance().getHeading()),
-                    AutoConstants.kRobotConfig.get());
-
-            Dashboard.getInstance().addPath();
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-        }
-
-        // path.generateTrajectory(driveTrain.getChassisSpeeds(),
-        // Rotation2d.fromDegrees(driveTrain.getHeading()),
+        // new PathPlannerTrajectory(path, DriveTrain.getInstance().getChassisSpeeds(),
+        // Rotation2d.fromDegrees(DriveTrain.getInstance().getHeading()),
         // AutoConstants.kRobotConfig.get());
+
+        Dashboard.getInstance().addPath(path);
     }
 
     @Override
     public void execute() {
-        System.out.println();
+        System.out.println("sam is lame");
     }
 
     @Override
