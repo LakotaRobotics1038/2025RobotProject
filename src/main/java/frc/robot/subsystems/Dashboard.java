@@ -1,9 +1,13 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -117,6 +121,18 @@ public class Dashboard extends SubsystemBase {
      */
     public void clearTrajectory() {
         this.field.getObject("traj").setPoses(new ArrayList<>());
+    }
+
+    public void addPath(PathPlannerPath path) {
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+            pose = path.getPathPoses().get(path.getPathPoses().size() - 1);
+            field.getObject("target pose").setPose(pose);
+        });
+
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+            poses = path.getPathPoses();
+            field.getObject("poses").setPoses(poses);
+        });
     }
 
     /**

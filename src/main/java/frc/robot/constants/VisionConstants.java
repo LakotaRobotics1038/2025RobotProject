@@ -36,6 +36,6 @@ public final class VisionConstants {
 
     public static final double camPitch = 0.0;
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-    public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5),
+    public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.1, 0.0, 0.1),
             new Rotation3d(0, -camPitch, 0));
 }
