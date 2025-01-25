@@ -1,14 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.OperatorJoystick;
 
 public class SwagLights implements Subsystem {
-    private OperatorJoystick operatorJoystick = OperatorJoystick.getInstance();
-
     // Enums
     public enum RobotStates {
         Enabled("A"),
