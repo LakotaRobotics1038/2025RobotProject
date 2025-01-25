@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.commands.PathOnTheFly;
-import frc.robot.commands.PathOnTheFly.EndPoints;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
@@ -84,7 +83,7 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         super.xButton.whileTrue(new RunCommand(driveTrain::setX, driveTrain));
 
-        super.aButton.whileTrue(new PathOnTheFly(EndPoints.TestWaypoint));
+        super.aButton.whileTrue(new PathOnTheFly());
     }
 
     /**

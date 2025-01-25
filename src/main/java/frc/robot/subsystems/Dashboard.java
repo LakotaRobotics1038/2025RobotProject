@@ -1,22 +1,44 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autons.AutonSelector.AutonChoices;
+import frc.robot.commands.PathOnTheFly;
+import frc.robot.commands.PathOnTheFly.EndPoints;
+import frc.robot.constants.AutoConstants;
+import frc.robot.constants.DriveConstants;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
@@ -79,22 +101,34 @@ public class Dashboard extends SubsystemBase {
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
-        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-            field.getObject("target pose").setPose(pose);
-        });
+        // PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+        //     field.getObject("target pose").setPose(pose);
+        // });
 
-        PathPlannerLogging.setLogActivePathCallback((poses) -> {
-            field.getObject("poses").setPoses(poses);
-        });
+        // PathPlannerLogging.setLogActivePathCallback((poses) -> {
+        //     field.getObject("poses").setPoses(poses);
+        // });
 
         // driversTab.add("Camera Stream", camera)
         // .withPosition(6, 0)
         // .withSize(4, 4);
 
         controlsTab.add(field)
-                .withPosition(2, 0)
-                .withSize(8, 5)
-                .withWidget(BuiltInWidgets.kField);
+        .withPosition(2, 0)
+        .withSize(8, 5)
+        .withWidget(BuiltInWidgets.kField);
+        // this.field.getObject("poses").setPoses(poses);
+        // this.field.getObject("target pose").setPose(poses.get(path.getPathPoses().size() - 1));
+
+
+        // Also an option:
+
+        // this.field.getObject("traj").setTrajectory(TrajectoryGenerator.generateTrajectory(
+
+        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+        //     new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))));
     }
 
     @Override
@@ -104,7 +138,6 @@ public class Dashboard extends SubsystemBase {
             driveTrain.zeroHeading();
             resetGyro.setBoolean(false);
         }
-        field.setRobotPose(driveTrain.getPose());
     }
 
     /**
@@ -124,15 +157,11 @@ public class Dashboard extends SubsystemBase {
     }
 
     public void addPath(PathPlannerPath path) {
-        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-            pose = path.getPathPoses().get(path.getPathPoses().size() - 1);
-            field.getObject("target pose").setPose(pose);
-        });
+        this.field.getObject("poses").setPoses(path.getPathPoses());
+    }
 
-        PathPlannerLogging.setLogActivePathCallback((poses) -> {
-            poses = path.getPathPoses();
-            field.getObject("poses").setPoses(poses);
-        });
+    public void setRobotPosition(Pose2d position) {
+        this.field.setRobotPose(position);
     }
 
     /**
