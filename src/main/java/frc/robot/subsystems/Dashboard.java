@@ -35,8 +35,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autons.AutonSelector.AutonChoices;
-import frc.robot.commands.PathOnTheFly;
-import frc.robot.commands.PathOnTheFly.EndPoints;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 
@@ -117,18 +115,6 @@ public class Dashboard extends SubsystemBase {
         .withPosition(2, 0)
         .withSize(8, 5)
         .withWidget(BuiltInWidgets.kField);
-        // this.field.getObject("poses").setPoses(poses);
-        // this.field.getObject("target pose").setPose(poses.get(path.getPathPoses().size() - 1));
-
-
-        // Also an option:
-
-        // this.field.getObject("traj").setTrajectory(TrajectoryGenerator.generateTrajectory(
-
-        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-        //     new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))));
     }
 
     @Override

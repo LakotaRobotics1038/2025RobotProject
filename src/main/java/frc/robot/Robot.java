@@ -8,6 +8,9 @@ import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.pathplanner.lib.pathfinding.LocalADStar;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.Matrix;
@@ -48,6 +51,7 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
+        Pathfinding.setPathfinder(new LocalADStar());
     }
 
     @Override
@@ -75,7 +79,7 @@ public class Robot extends TimedRobot {
         } else {
             swagLights.setDisabled(true);
         }
-        // new PathOnTheFly().ignoringDisable(true).schedule();
+        new PathOnTheFly().ignoringDisable(true).schedule();
     }
 
     @Override
