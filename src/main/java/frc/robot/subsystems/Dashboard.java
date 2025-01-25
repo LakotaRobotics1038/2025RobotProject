@@ -70,6 +70,10 @@ public class Dashboard extends SubsystemBase {
         controlsTab.addNumber("Roll", driveTrain::getRoll)
                 .withPosition(1, 0);
 
+        controlsTab.addString("Pose: ", driveTrain::getEstimatedPoseValues)
+                .withPosition(1, 1)
+                .withSize(2, 1);
+
         driversTab.add(field)
                 .withPosition(2, 1)
                 .withSize(4, 3)
@@ -84,13 +88,14 @@ public class Dashboard extends SubsystemBase {
         });
 
         // driversTab.add("Camera Stream", camera)
-        //         .withPosition(6, 0)
-        //         .withSize(4, 4);
+        // .withPosition(6, 0)
+        // .withSize(4, 4);
 
         controlsTab.add(field)
                 .withPosition(2, 0)
                 .withSize(8, 5)
                 .withWidget(BuiltInWidgets.kField);
+
     }
 
     @Override
@@ -101,6 +106,7 @@ public class Dashboard extends SubsystemBase {
             resetGyro.setBoolean(false);
         }
         field.setRobotPose(driveTrain.getPose());
+
     }
 
     /**
