@@ -73,13 +73,13 @@ public class PathOnTheFly extends Command {
     @Override
     public void initialize() {
         this.localADStar = new LocalADStar();
-        this.localADStar.setStartPosition(new Translation2d(0, 0));
-        Pathfinding.setPathfinder(this.localADStar);
         PathfindingCommand.warmupCommand().schedule();
+        Pathfinding.setPathfinder(this.localADStar);
+        Pathfinding.setStartPosition(new Translation2d(2, 2));
+        Pathfinding.setGoalPosition(new Translation2d(5, 5));
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             // log("Odometry/Trajectory", activePath.toArray(new
             // Pose2d[activePath.size()]));
-            System.out.println("oiudb");
             dashboard.addPath(activePath);
         });
         PathPlannerLogging.setLogTargetPoseCallback((targetPose) -> {
