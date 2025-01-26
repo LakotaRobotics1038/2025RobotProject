@@ -82,53 +82,37 @@ public class PathOnTheFly extends Command {
                 AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
         this.idealStartingState = new IdealStartingState(driveTrain.getChassisSpeeds().vxMetersPerSecond,
                 Rotation2d.fromDegrees(driveTrain.getHeading()));
-        this.goalEndState = new GoalEndState(0, new Rotation2d());
+        this.goalEndState = new GoalEndState(0, new Rotation2d(180));
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             // log("Odometry/Trajectory", activePath.toArray(new
             // Pose2d[activePath.size()]));
-            dashboard.addPath(new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
-                    idealStartingState, goalEndState));
+            if (activePath.size() >= 2) {
+                this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
+                        idealStartingState, goalEndState);
+                // dashboard.addPath(path);
+            }
         });
         PathPlannerLogging.setLogTargetPoseCallback((targetPose) -> {
             // log("Odometry/TrajectorySetpoint", targetPose);
         });
-        // this.localADStar = new LocalADStar();
-        // Pathfinding.setPathfinder(this.localADStar);
-        // PathfindingCommand.warmupCommand().schedule();
-        // Pathfinding.setStartPosition(new Translation2d(5, 5));
-        // this.path = Pathfinding.getCurrentPath(constraints, goalEndState);
-        // this.dashboard.addPath(path);
-        // this.poses = Arrays.asList(EndPoints.TestWaypoint.getEndpoint(),
-        // EndPoints.TestWaypoint2.getEndpoint());
-        // this.waypoints = PathPlannerPath.waypointsFromPoses(poses);
-        // this.path = new PathPlannerPath(waypoints, constraints, idealStartingState,
-        // goalEndState);
-        // Optional<PathPlannerTrajectory> idealTrajectory =
-        // this.path.getIdealTrajectory(AutoConstants.kRobotConfig.get());
-        // idealTrajectory.ifPresent(traj -> this.trajectory = traj);
-        // timer.reset();
-        // timer.start();
-        // PathPlannerTrajectory pathPlannerTrajectory = new PathPlannerTrajectory(path,
-        // DriveTrain.getInstance().getChassisSpeeds(),
-        // Rotation2d.fromDegrees(DriveTrain.getInstance().getHeading()),
-        // AutoConstants.kRobotConfig.get());
-        // // driveTrain.resetOdometry(pathPlannerTrajectory.getInitialPose());
-        // Command command =
-        // AutoBuilder.pathfindToPose(EndPoints.TestWaypoint.getEndpoint(),
-        // constraints);
-        // command.schedule();
-
+        timer.reset();
+        timer.start();
     }
 
     @Override
     public void execute() {
-        // double currentTime = timer.get();
-        // PathPlannerTrajectoryState targetState = this.trajectory.sample(currentTime);
-        // this.dashboard.addPose(targetState.pose);
-        // if (timer.get() > 5) {
-        // timer.reset();
-        // timer.start();
-        // }
+        double currentTime = timer.get();
+        if (this.path != null) {
+            PathPlannerTrajectoryState targetState = this.path
+                    .generateTrajectory(driveTrain.getChassisSpeeds(), Rotation2d.fromDegrees(
+                            driveTrain.getHeading()), AutoConstants.kRobotConfig.get())
+                    .sample(currentTime);
+            this.dashboard.addPose(targetState.pose);
+        }
+        if (timer.get() > 5) {
+            timer.reset();
+            timer.start();
+        }
     }
 
     @Override
