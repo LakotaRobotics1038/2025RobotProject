@@ -100,11 +100,11 @@ public class Dashboard extends SubsystemBase {
                 .withWidget(BuiltInWidgets.kField);
 
         // PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-        //     field.getObject("target pose").setPose(pose);
+        // field.getObject("target pose").setPose(pose);
         // });
 
         // PathPlannerLogging.setLogActivePathCallback((poses) -> {
-        //     field.getObject("poses").setPoses(poses);
+        // field.getObject("poses").setPoses(poses);
         // });
 
         // driversTab.add("Camera Stream", camera)
@@ -112,9 +112,9 @@ public class Dashboard extends SubsystemBase {
         // .withSize(4, 4);
 
         controlsTab.add(field)
-        .withPosition(2, 0)
-        .withSize(8, 5)
-        .withWidget(BuiltInWidgets.kField);
+                .withPosition(2, 0)
+                .withSize(8, 5)
+                .withWidget(BuiltInWidgets.kField);
     }
 
     @Override
@@ -144,6 +144,14 @@ public class Dashboard extends SubsystemBase {
 
     public void addPath(PathPlannerPath path) {
         this.field.getObject("poses").setPoses(path.getPathPoses());
+    }
+
+    public void addPath(List<Pose2d> poses) {
+        this.field.getObject("poses").setPoses(poses);
+    }
+
+    public void addPose(Pose2d pose) {
+        this.field.getObject("k").setPose(pose);
     }
 
     public void setRobotPosition(Pose2d position) {
