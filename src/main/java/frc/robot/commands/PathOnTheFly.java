@@ -72,15 +72,22 @@ public class PathOnTheFly extends Command {
 
     @Override
     public void initialize() {
-        this.localADStar = new LocalADStar();
         PathfindingCommand.warmupCommand().schedule();
-        Pathfinding.setPathfinder(this.localADStar);
+        Pathfinding.setPathfinder(new LocalADStar());
         Pathfinding.setStartPosition(new Translation2d(2, 2));
         Pathfinding.setGoalPosition(new Translation2d(5, 5));
+        this.constraints = new PathConstraints(DriveConstants.kMaxSpeedMetersPerSecond,
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
+        this.idealStartingState = new IdealStartingState(driveTrain.getChassisSpeeds().vxMetersPerSecond,
+                Rotation2d.fromDegrees(driveTrain.getHeading()));
+        this.goalEndState = new GoalEndState(0, new Rotation2d());
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             // log("Odometry/Trajectory", activePath.toArray(new
             // Pose2d[activePath.size()]));
-            dashboard.addPath(activePath);
+            dashboard.addPath(new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
+                    idealStartingState, goalEndState));
         });
         PathPlannerLogging.setLogTargetPoseCallback((targetPose) -> {
             // log("Odometry/TrajectorySetpoint", targetPose);
@@ -89,20 +96,11 @@ public class PathOnTheFly extends Command {
         // Pathfinding.setPathfinder(this.localADStar);
         // PathfindingCommand.warmupCommand().schedule();
         // Pathfinding.setStartPosition(new Translation2d(5, 5));
-        // this.constraints = new
-        // PathConstraints(DriveConstants.kMaxSpeedMetersPerSecond,
-        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
-        // this.goalEndState = new GoalEndState(0, new Rotation2d());
         // this.path = Pathfinding.getCurrentPath(constraints, goalEndState);
         // this.dashboard.addPath(path);
         // this.poses = Arrays.asList(EndPoints.TestWaypoint.getEndpoint(),
         // EndPoints.TestWaypoint2.getEndpoint());
         // this.waypoints = PathPlannerPath.waypointsFromPoses(poses);
-        // this.idealStartingState = new
-        // IdealStartingState(driveTrain.getChassisSpeeds().vxMetersPerSecond,
-        // Rotation2d.fromDegrees(driveTrain.getHeading()));
         // this.path = new PathPlannerPath(waypoints, constraints, idealStartingState,
         // goalEndState);
         // Optional<PathPlannerTrajectory> idealTrajectory =
