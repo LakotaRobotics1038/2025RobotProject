@@ -47,7 +47,7 @@ public class PathOnTheFly extends Command {
     private PathPlannerTrajectory trajectory;
     private Dashboard dashboard;
     private DriveTrain driveTrain;
-    private LocalADStar localADStar;
+    private Pose2d currentPose;
 
     public enum EndPoints {
         TestWaypoint(new Pose2d(5, 2, Rotation2d.fromDegrees(0))),
@@ -107,7 +107,8 @@ public class PathOnTheFly extends Command {
                     .generateTrajectory(driveTrain.getChassisSpeeds(), Rotation2d.fromDegrees(
                             driveTrain.getHeading()), AutoConstants.kRobotConfig.get())
                     .sample(currentTime);
-            this.dashboard.addPose(targetState.pose);
+            this.currentPose = targetState.pose;
+            this.dashboard.addPose(this.currentPose);
         }
         if (timer.get() > 5) {
             timer.reset();
