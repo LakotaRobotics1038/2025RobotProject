@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
         } else {
             swagLights.setDisabled(true);
         }
-        new PathOnTheFly().ignoringDisable(true).schedule();
+        // new PathOnTheFly().ignoringDisable(true).schedule();
     }
 
     @Override
