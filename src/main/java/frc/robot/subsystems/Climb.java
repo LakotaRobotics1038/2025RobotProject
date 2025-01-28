@@ -3,11 +3,17 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ClimbConstants;
+import frc.robot.constants.NeoMotorConstants;
 
-public class Climb {
+public class Climb extends SubsystemBase {
 
     private SparkMax climbMotor = new SparkMax(ClimbConstants.climbMotorPort, MotorType.kBrushless);
     private RelativeEncoder climbEncoder = climbMotor.getEncoder();
@@ -27,41 +33,47 @@ public class Climb {
         return instance;
     }
 
-    /**
-     * Empty javadoc
-     */
     private Climb() {
+        SparkMaxConfig climbConfig = new SparkMaxConfig();
 
+        climbConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
+                .inverted(false);
+
+        climbMotor.configure(climbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        climbEncoder.setPosition(0);
     }
 
     /**
-     * Mostly empty javadoc
+     * Gets the position of the climbLimitSwitch
      *
-     * @return Not implemented yet
+     * @return A boolean representing whether the climbLimitSwitch is pressed or not
      */
     public boolean getSwitch() {
-        return false;
+        return climbLimitSwitch.isPressed();
     }
 
     /**
-     * Empty javadoc
+     * Runs the climbMotor at a constant speed up
      */
     public void runClimbUp() {
-
+        climbMotor.set(ClimbConstants.climbUpSpeed);
     }
 
     /**
-     * Empty javadoc
+     * Runs the climbMotor at a constant speed down
      */
     public void runClimbDown() {
-
+        climbMotor.set(ClimbConstants.climbDownSpeed);
     }
 
     /**
-     * Empty javadoc
+     * Stops the climb motor
      */
     public void stopClimb() {
-
+        climbMotor.stopMotor();
     }
 
 }
