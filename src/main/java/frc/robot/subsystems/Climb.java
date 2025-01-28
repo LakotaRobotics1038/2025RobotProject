@@ -27,6 +27,9 @@ public class Climb {
         return instance;
     }
 
+    /**
+     * Empty javadoc
+     */
     private Climb() {
 
     }
