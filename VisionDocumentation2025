@@ -2,12 +2,23 @@
 
 ## How To Get PhotonVision
 --------------------------
+1) Go to https://github.com/PhotonVision/photonvision 
+2) Scroll down until you see the releases section and click on the text that says "+ (whatever amount) releases"
+3) See if there's any recent developer versions of the PhotonVision code (marked with pre-release) and if there isn't download the latest stable version of the PhotonVision code (marked with latest)
+4) Make sure the download is in a spot you will remember for later
 
 
-
-## How To Etch PhotonVision For Your CoProcessor
+## How To Etch PhotonVision For Your CoProcessor (Get PhotonVision from your computer to the sd card needed for the CoProccesor)
 ------------------------------------------------
-
+1) Check a Driver Station Laptop and make sure it has balena Etcher / Etcher
+2) Open balena Etcher / Etcher
+3) Make sure you have a micro-sd card and an sd card adapter 
+4) insert the micro-sd card into the sd card adapter & then plug the sd card adapter into the Driver Station Laptop
+5) Click "Select Image" in balena Etcher / Etcher
+5) Find your copy of the latest version of PhotonVision that you got from the "How To Get PhotonVision" Steps and select the folder **DO NOT UNZIP IT**
+6) Then go on to select drive & select the Drive of the sd card
+7) And then finally hit flash & wait for the sd card to finish being flashed and once it is finished unplug the sd card & the sd card adapter
+8) insert the sd card into our Orange Pi 5 Pro
 
 
 ## How To Calibrate Camera
@@ -15,7 +26,7 @@
 
 
 
-## How TO Configure Settings For The Robot (Team)
+## How To Configure Settings For The Robot (Team)
 -------------------------------------------------
 
 
