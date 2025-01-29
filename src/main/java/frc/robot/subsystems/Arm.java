@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import au.grapplerobotics.ConfigurationFailedException;
 import au.grapplerobotics.LaserCan;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -70,6 +69,10 @@ public class Arm extends SubsystemBase {
         armMotor.set(power);
     }
 
+    /**
+     * Returns current distance recieved by the Arm laser as a double in mm
+     *
+     */
     public double getPosition() {
         LaserCan.Measurement measurement = laser.getMeasurement();
         if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
@@ -78,14 +81,27 @@ public class Arm extends SubsystemBase {
         return 0.0;
     }
 
+    /**
+     * Returns whether or not the PID controller is on target as a boolean
+     *
+     */
     public boolean onTarget() {
         return armController.atSetpoint();
     }
 
+    /**
+     * Returns whether or not the limit switch is pressed as a boolean
+     *
+     */
     public boolean isPressed() {
         return lowerLimitSwitch.isPressed();
     }
 
+    /**
+     * Sets the setpoint for the subsystem.
+     *
+     * @param setpoint the setpoint for the subsystem
+     */
     public void setSetpoint(ArmSetpoint setpoint) {
         double value = setpoint.position;
         value = MathUtil.clamp(value, 0, ArmConstants.kMaxArmPower);
@@ -97,19 +113,33 @@ public class Arm extends SubsystemBase {
      *
      * @param setpoint the setpoint for the subsystem
      */
-
     private final void setSetpoint(double setpoint) {
         armController.setSetpoint(setpoint);
     }
 
+    /**
+     * Sets the P for the PID controller.
+     *
+     * @param P the P to set to the PID controller
+     */
     public void setP(double P) {
         armController.setP(P);
     }
 
+    /**
+     * Sets the I for the PID controller.
+     *
+     * @param I the I to set to the PID controller
+     */
     public void setI(double I) {
         armController.setP(I);
     }
 
+    /**
+     * Sets the D for the PID controller.
+     *
+     * @param D the D to set to the PID controller
+     */
     public void setD(double D) {
         armController.setP(D);
     }
