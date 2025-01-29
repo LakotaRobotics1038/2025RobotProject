@@ -54,28 +54,32 @@ public class FollowPath extends Auton {
             new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
             new Pose2d(3.0, 1.0, Rotation2d.fromDegrees(0)),
             new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)));
-    private PathPlannerPath path = new PathPlannerPath(waypoints, constraints, idealStartingState, goalEndState);
+    private PathPlannerPath path;
 
     public FollowPath(Optional<Alliance> alliance) {
         super(alliance);
         this.alliance = alliance.get();
+
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
                 this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
                         idealStartingState, goalEndState);
-                this.followPathCommand(path).schedule();
+                this.dashboard.addPath(path);
             }
         });
+
         super.addCommands(
                 Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose), this.driveTrain),
-                new PathfindingCommand(
-                        this.endingPose,
-                        this.constraints,
-                        this.driveTrain::getPose,
-                        this.driveTrain::getChassisSpeeds,
-                        (speeds, feedForwards) -> this.driveTrain.applyChassisSpeeds(speeds),
-                        this.driveController,
-                        AutoConstants.kRobotConfig.get(),
-                        this.driveTrain));
+                AutoBuilder.pathfindToPose(endingPose, constraints)
+        // new PathfindingCommand(
+        // this.endingPose,
+        // this.constraints,
+        // this.driveTrain::getPose,
+        // this.driveTrain::getChassisSpeeds,
+        // (speeds, feedForwards) -> this.driveTrain.applyChassisSpeeds(speeds),
+        // this.driveController,
+        // AutoConstants.kRobotConfig.get(),
+        // this.driveTrain)
+        );
     }
 }
