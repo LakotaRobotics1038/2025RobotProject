@@ -2,17 +2,23 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 
 
 public class Shoulder extends PIDSubsystem {
     private SparkMax shoulderLeft = new SparkMax(ShoulderConstants.kLeftMotorPort, kBrushless);
-    private SparkMax shoulderRight = new SparkMax(ShoulderConstants.kRightMotorPort, kBrushless); //? brushless?
+    private SparkMax shoulderRight = new SparkMax(ShoulderConstants.kRightMotorPort, kBrushless);
     private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI, ShoulderConstants.kD);
     private Shoulder instance;
@@ -41,7 +47,23 @@ public class Shoulder extends PIDSubsystem {
     }
 
     private Shoulder() {
+        SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
+        leftShoulderConfig.idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
 
+        SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
+        rightShoulderConfig.idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
+
+        rightShoulderConfig.follow(leftShoulderMotor, true);
+
+        leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+        rightShoulderMotor.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+
+        shoulderController.setTolerance(ShoulderConstants.kTolerance);
+        shoulderController.enableContinuousInput(0, ShoulderConstants.kEncoderConversion);
     }
 
     public static Shoulder getInstance() {
@@ -62,7 +84,7 @@ public class Shoulder extends PIDSubsystem {
     }
 
     public boolean onTarget() {
-        return getController().atSetpoint();
+        return shoulderController.atSetpoint();
     }
 
     private void setSetpoint(double setpoint) {
@@ -70,18 +92,18 @@ public class Shoulder extends PIDSubsystem {
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        setSetpoint(setpoint.getSetpoint()); // ?
+        shoulderController.setSetpoint(setpoint);
     }
 
     public void setP(double p) {
-        getController().setP(p);
+        shoulderController.setP(p);
     }
 
     public void setI(double i) {
-        getController().setI(i);
+        shoulderController.setI(i);
     }
 
     public void setD(double d) {
-        getController().setD(d);
+        shoulderController.setD(d);
     }
 }
