@@ -43,4 +43,7 @@ public final class DriveConstants {
 
     public static final boolean kGyroReversed = false;
     public static final int kGyroCanId = 25;
+
+    // SPARK FLEX CAN IDs
+    public static final int kWristCanId = 0;
 }
