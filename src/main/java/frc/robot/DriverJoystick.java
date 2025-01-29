@@ -83,7 +83,7 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         super.xButton.whileTrue(new RunCommand(driveTrain::setX, driveTrain));
 
-        super.aButton.onTrue(new PathOnTheFly());
+        // super.aButton.onTrue(new PathOnTheFly());
     }
 
     /**

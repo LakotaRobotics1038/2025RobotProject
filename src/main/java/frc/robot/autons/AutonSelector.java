@@ -11,6 +11,7 @@ import frc.robot.subsystems.Dashboard;
 public class AutonSelector {
     public enum AutonChoices {
         NoAuto,
+        FollowPath,
     }
 
     // Choosers
@@ -32,7 +33,9 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        // this.autoChooser.addOption("Score 2 In Amp Position 1", AutonChoices.AmpAuto);
+        this.autoChooser.setDefaultOption("Follow Path", AutonChoices.FollowPath);
+        // this.autoChooser.addOption("Score 2 In Amp Position 1",
+        // AutonChoices.AmpAuto);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
@@ -56,8 +59,8 @@ public class AutonSelector {
     public Auton chooseAuton() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         switch (this.autoChooser.getSelected()) {
-            // case AmpAuto:
-            //     return new ScoreInAmp(alliance);
+            case FollowPath:
+                return new FollowPath(alliance);
             default:
                 return null;
         }

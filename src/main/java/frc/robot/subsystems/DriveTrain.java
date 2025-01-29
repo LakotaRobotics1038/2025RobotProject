@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import java.lang.StackWalker.Option;
 import java.util.Optional;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.controllers.PathFollowingController;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -88,6 +91,24 @@ public class DriveTrain extends SubsystemBase {
     private DriveTrain() {
         super();
         gyro.reset();
+        PPHolonomicDriveController driveController = new PPHolonomicDriveController(
+                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, 0.0),
+                new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0));
+        AutoBuilder.configure(
+                this::getPose,
+                this::resetPose,
+                this::getChassisSpeeds,
+                this::applyChassisSpeeds,
+                driveController,
+                AutoConstants.kRobotConfig.get(),
+                () -> {
+                    Optional<Alliance> alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this);
     }
 
     @Override

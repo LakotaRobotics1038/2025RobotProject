@@ -8,6 +8,10 @@ import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.pathfinding.LocalADStar;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
@@ -15,6 +19,7 @@ import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -24,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
 import frc.robot.commands.PathOnTheFly;
+import frc.robot.constants.AutoConstants;
+import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveModuleConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
@@ -51,6 +58,7 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
+        PathfindingCommand.warmupCommand().schedule();
     }
 
     @Override
@@ -78,7 +86,6 @@ public class Robot extends TimedRobot {
         } else {
             swagLights.setDisabled(true);
         }
-        // new PathOnTheFly().ignoringDisable(true).schedule();
     }
 
     @Override
