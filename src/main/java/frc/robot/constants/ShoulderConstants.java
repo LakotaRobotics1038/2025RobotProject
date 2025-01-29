@@ -1,4 +1,4 @@
-package frc.robot.constants
+package frc.robot.constants;
 
 public class ShoulderConstants {
     public static final int kLeftMotorPort = 0;

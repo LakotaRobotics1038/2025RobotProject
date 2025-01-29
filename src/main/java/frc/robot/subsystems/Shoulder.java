@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.AbsoluteEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
@@ -15,21 +16,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 
-
 public class Shoulder extends PIDSubsystem {
-    private SparkMax shoulderLeft = new SparkMax(ShoulderConstants.kLeftMotorPort, kBrushless);
-    private SparkMax shoulderRight = new SparkMax(ShoulderConstants.kRightMotorPort, kBrushless);
-    private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
-    private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI, ShoulderConstants.kD);
-    private Shoulder instance;
+    public enum ShoulderSetpoints()
 
-    public enum ShoulderSetpoints() {
-        L1Coral (0.0),
-        L2Coral (0.0),
-        L3Coral (0.0),
-        L4Coral (0.0),
-        L23Algae (0.0),
-        L34Algae (0.0),
+    {
+        L1Coral(0.0),
+        L2Coral(0.0),
+        L3Coral(0.0),
+        L4Coral(0.0),
+        L23Algae(0.0),
+        L34Algae(0.0),
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
@@ -46,7 +42,17 @@ public class Shoulder extends PIDSubsystem {
         }
     }
 
+    private SparkMax shoulderLeft = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
+    private SparkMax shoulderRight = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
+    private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
+    private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
+            ShoulderConstants.kD);
+    private static Shoulder instance;
+
     private Shoulder() {
+        super(new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
+                ShoulderConstants.kD));
+
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
@@ -55,11 +61,11 @@ public class Shoulder extends PIDSubsystem {
         rightShoulderConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
 
-        rightShoulderConfig.follow(leftShoulderMotor, true);
+        rightShoulderConfig.follow(shoulderLeft, true);
 
-        leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
+        shoulderLeft.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
-        rightShoulderMotor.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
+        shoulderRight.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
         shoulderController.setTolerance(ShoulderConstants.kTolerance);
@@ -67,20 +73,24 @@ public class Shoulder extends PIDSubsystem {
     }
 
     public static Shoulder getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new Shoulder();
         }
 
         return instance;
     }
 
-    private void useOutput (double output, double setpoint) {
-        double power = MathUtil.clamp(output, -ShoulderConstants.maxPower, ShoulderConstants.kMaxPower)
-        super.setSetpoint(power);
+    protected void useOutput(double output, double setpoint) {
+        double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
+        setSetpoint(power);
     }
 
     public double getPosition() {
         return shoulderEncoder.getPosition();
+    }
+
+    protected double getMeasurement() {
+        return getPosition();
     }
 
     public boolean onTarget() {
@@ -88,11 +98,11 @@ public class Shoulder extends PIDSubsystem {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance)
+        setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        shoulderController.setSetpoint(setpoint);
+        shoulderController.setSetpoint(setpoint.getSetpoint());
     }
 
     public void setP(double p) {
@@ -106,4 +116,5 @@ public class Shoulder extends PIDSubsystem {
     public void setD(double d) {
         shoulderController.setD(d);
     }
+
 }
