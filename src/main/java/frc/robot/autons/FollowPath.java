@@ -1,6 +1,7 @@
 package frc.robot.autons;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -19,6 +20,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -48,12 +50,15 @@ public class FollowPath extends Auton {
             driveTrain.getChassisSpeeds().vxMetersPerSecond,
             Rotation2d.fromDegrees(driveTrain.getHeading()));
     private GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
-    private PathPlannerPath path;
+    private List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+            new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
+            new Pose2d(3.0, 1.0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)));
+    private PathPlannerPath path = new PathPlannerPath(waypoints, constraints, idealStartingState, goalEndState);
 
     public FollowPath(Optional<Alliance> alliance) {
         super(alliance);
         this.alliance = alliance.get();
-
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
                 this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
@@ -63,6 +68,7 @@ public class FollowPath extends Auton {
         });
         super.addCommands(
                 Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose), this.driveTrain),
-                AutoBuilder.pathfindToPose(endingPose, constraints));
+                // AutoBuilder.pathfindToPose(endingPose, constraints),
+                this.followPathCommand(path));
     }
 }
