@@ -63,12 +63,19 @@ public class FollowPath extends Auton {
             if (activePath.size() >= 2) {
                 this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
                         idealStartingState, goalEndState);
-                dashboard.addPath(path);
+                this.followPathCommand(path).schedule();
             }
         });
         super.addCommands(
                 Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose), this.driveTrain),
-                // AutoBuilder.pathfindToPose(endingPose, constraints),
-                this.followPathCommand(path));
+                new PathfindingCommand(
+                        this.endingPose,
+                        this.constraints,
+                        this.driveTrain::getPose,
+                        this.driveTrain::getChassisSpeeds,
+                        (speeds, feedForwards) -> this.driveTrain.applyChassisSpeeds(speeds),
+                        this.driveController,
+                        AutoConstants.kRobotConfig.get(),
+                        this.driveTrain));
     }
 }
