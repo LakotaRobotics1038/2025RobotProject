@@ -15,7 +15,7 @@ import frc.robot.constants.NeoMotorConstants;
 
 public class Climb extends SubsystemBase {
 
-    private SparkMax climbMotor = new SparkMax(ClimbConstants.climbMotorPort, MotorType.kBrushless);
+    private SparkMax climbMotor = new SparkMax(ClimbConstants.kClimbMotorPort, MotorType.kBrushless);
     private RelativeEncoder climbEncoder = climbMotor.getEncoder();
     private SparkLimitSwitch climbLimitSwitch = climbMotor.getForwardLimitSwitch();
 
@@ -59,14 +59,14 @@ public class Climb extends SubsystemBase {
      * Runs the climbMotor at a constant speed up
      */
     public void runClimbUp() {
-        climbMotor.set(ClimbConstants.climbUpSpeed);
+        climbMotor.set(ClimbConstants.kClimbUpSpeed);
     }
 
     /**
      * Runs the climbMotor at a constant speed down
      */
     public void runClimbDown() {
-        climbMotor.set(ClimbConstants.climbDownSpeed);
+        climbMotor.set(ClimbConstants.kClimbDownSpeed);
     }
 
     /**
