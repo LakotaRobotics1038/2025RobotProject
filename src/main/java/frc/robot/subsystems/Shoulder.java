@@ -16,10 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 
-public class Shoulder extends PIDSubsystem {
-    public enum ShoulderSetpoints()
-
-    {
+public class Shoulder extends SubsystemBase {
+    public enum ShoulderSetpoints {
         L1Coral(0.0),
         L2Coral(0.0),
         L3Coral(0.0),
@@ -33,7 +31,7 @@ public class Shoulder extends PIDSubsystem {
 
         public final double setpoint;
 
-        private ArmSystemSetpoints(double setpoint) {
+        private ShoulderSetpoints(double setpoint) {
             this.setpoint = setpoint;
         }
 
@@ -50,8 +48,6 @@ public class Shoulder extends PIDSubsystem {
     private static Shoulder instance;
 
     private Shoulder() {
-        super(new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
-                ShoulderConstants.kD));
 
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
@@ -80,7 +76,7 @@ public class Shoulder extends PIDSubsystem {
         return instance;
     }
 
-    protected void useOutput(double output, double setpoint) {
+    public void useOutput(double output, double setpoint) {
         double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
         setSetpoint(power);
     }
@@ -89,7 +85,7 @@ public class Shoulder extends PIDSubsystem {
         return shoulderEncoder.getPosition();
     }
 
-    protected double getMeasurement() {
+    public double getMeasurement() {
         return getPosition();
     }
 
