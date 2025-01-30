@@ -14,14 +14,18 @@ import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Acquisition extends SubsystemBase {
-    private static DigitalInput topLaser = new DigitalInput(AcquisitionConstants.TOP_LASER_CHANNEL);
-    private static DigitalInput bottomLaser = new DigitalInput(AcquisitionConstants.BOTTOM_LASER_CHANNEL);
-    private static SparkFlex acquisitionMotor = new SparkFlex(AcquisitionConstants.MOTOR_DEVICE_ID,
-            MotorType.kBrushless);
-    private static SparkLimitSwitch algaeSwitch = acquisitionMotor.getReverseLimitSwitch();
+    private static DigitalInput topLaser;
+    private static DigitalInput bottomLaser;
+    private static SparkFlex acquisitionMotor;
+    private static SparkLimitSwitch algaeSwitch;
     public static Acquisition instance;
 
     private Acquisition() {
+        topLaser = new DigitalInput(AcquisitionConstants.TOP_LASER_CHANNEL);
+        bottomLaser = new DigitalInput(AcquisitionConstants.BOTTOM_LASER_CHANNEL);
+        acquisitionMotor = new SparkFlex(AcquisitionConstants.MOTOR_DEVICE_ID, MotorType.kBrushless);
+        algaeSwitch = acquisitionMotor.getReverseLimitSwitch();
+
         SparkFlexConfig acquisitionConfig = new SparkFlexConfig();
         acquisitionConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
         acquisitionMotor.configure(acquisitionConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
