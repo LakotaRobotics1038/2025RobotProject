@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import au.grapplerobotics.LaserCan;
@@ -53,9 +54,9 @@ public class Arm extends SubsystemBase {
     }
 
     private Arm() {
-        SparkMaxConfig armConfig = new SparkMaxConfig();
+        SparkFlexConfig armConfig = new SparkFlexConfig();
         armConfig.idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
+                .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent);
 
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
