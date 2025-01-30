@@ -14,17 +14,17 @@ import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Acquisition extends SubsystemBase {
-    private static DigitalInput topLaser;
-    private static DigitalInput bottomLaser;
-    private static SparkFlex acquisitionMotor;
-    private static SparkLimitSwitch algaeSwitch;
+    private DigitalInput topLaser;
+    private DigitalInput bottomLaser;
+    private SparkFlex acquisitionMotor;
+    private SparkLimitSwitch algaeSwitch;
     public static Acquisition instance;
 
     private Acquisition() {
         topLaser = new DigitalInput(AcquisitionConstants.kTopLaserChannel);
         bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserChannel);
         acquisitionMotor = new SparkFlex(AcquisitionConstants.kMotorDeviceID, MotorType.kBrushless);
-        algaeSwitch = acquisitionMotor.getReverseLimitSwitch();
+        algaeSwitch = acquisitionMotor.getForwardLimitSwitch();
 
         SparkFlexConfig acquisitionConfig = new SparkFlexConfig();
         acquisitionConfig
