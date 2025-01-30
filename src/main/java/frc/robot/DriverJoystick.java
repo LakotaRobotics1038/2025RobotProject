@@ -38,7 +38,7 @@ public class DriverJoystick extends XboxController1038 {
         SlewRateLimiter sidewaysFilter = new SlewRateLimiter(1.0);
         SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
 
-        driveTrain.setDefaultCommand(new RunCommand(() -> {
+        driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
             double x = super.getLeftX();
             double y = super.getLeftY();
             double z = super.getRightX();
@@ -72,8 +72,8 @@ public class DriverJoystick extends XboxController1038 {
                     break;
             }
 
-            driveTrain.drive(forward, -sideways, -rotate);
-        }, driveTrain));
+            return driveTrain.drive(forward, -sideways, -rotate);
+        }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);
 
@@ -81,7 +81,7 @@ public class DriverJoystick extends XboxController1038 {
         super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         // Lock the wheels into an X formation
-        super.xButton.whileTrue(new RunCommand(driveTrain::setX, driveTrain));
+        super.xButton.whileTrue(this.driveTrain.setX());
     }
 
     /**

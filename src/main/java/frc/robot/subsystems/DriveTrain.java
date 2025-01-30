@@ -161,21 +161,20 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * @param ySpeed Speed of the robot in the y direction (sideways).
      * @param rot    Angular rate of the robot.
      */
-    public void drive(double xSpeed, double ySpeed, double rot) {
-        this.applyRequest(() -> driveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed) // Drive forward with
-                                                                                             // negative Y
-                // (forward)
-                .withVelocityY(ySpeed * DriveConstants.MaxSpeed) // Drive left with negative X (left)
-                .withRotationalRate(rot * DriveConstants.MaxAngularRate) // Drive counterclockwise with negative X
-                                                                         // (left)
-        );
+    public SwerveRequest drive(double xSpeed, double ySpeed, double rot) {
+        // Drive forward with negative Y (forward)
+        return driveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed)
+                // Drive left with negative X (left)
+                .withVelocityY(ySpeed * DriveConstants.MaxSpeed)
+                // Drive counterclockwise with negative X (left)
+                .withRotationalRate(rot * DriveConstants.MaxAngularRate);
     }
 
     /**
      * Sets the wheels into an X formation to prevent movement.
      */
-    public void setX() {
-        this.applyRequest(() -> brakeRequest);
+    public Command setX() {
+        return this.applyRequest(() -> brakeRequest);
     }
 
     /**
