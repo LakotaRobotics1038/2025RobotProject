@@ -46,6 +46,11 @@ public class Arm extends SubsystemBase {
     private LaserCan laser = new LaserCan(ArmConstants.kArmLaserMotorPort);
     private static Arm instance;
 
+    /**
+     * Creates an instance of the Arm subsystem if it does not exist.
+     *
+     * @return An instance of the arm subsystem
+     */
     public static Arm getInstance() {
         if (instance == null) {
             instance = new Arm();
@@ -71,8 +76,9 @@ public class Arm extends SubsystemBase {
     }
 
     /**
-     * Returns current distance recieved by the Arm laser as a double in mm
+     * Returns current distance recieved by the Arm laser as a double in milimetres
      *
+     * @return laser distance is milimetres
      */
     public double getPosition() {
         LaserCan.Measurement measurement = laser.getMeasurement();
@@ -85,6 +91,7 @@ public class Arm extends SubsystemBase {
     /**
      * Returns whether or not the PID controller is on target as a boolean
      *
+     * @return boolean whether or not the PID controller is at setpoint
      */
     public boolean onTarget() {
         return armController.atSetpoint();
@@ -93,6 +100,7 @@ public class Arm extends SubsystemBase {
     /**
      * Returns whether or not the limit switch is pressed as a boolean
      *
+     * @return boolean whether or not the limit switch is pressed
      */
     public boolean isPressed() {
         return lowerLimitSwitch.isPressed();
