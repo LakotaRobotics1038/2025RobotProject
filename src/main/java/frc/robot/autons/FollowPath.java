@@ -70,16 +70,6 @@ public class FollowPath extends Auton {
 
         super.addCommands(
                 Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose), this.driveTrain),
-                AutoBuilder.pathfindToPose(endingPose, constraints)
-        // new PathfindingCommand(
-        // this.endingPose,
-        // this.constraints,
-        // this.driveTrain::getPose,
-        // this.driveTrain::getChassisSpeeds,
-        // (speeds, feedForwards) -> this.driveTrain.applyChassisSpeeds(speeds),
-        // this.driveController,
-        // AutoConstants.kRobotConfig.get(),
-        // this.driveTrain)
-        );
+                AutoBuilder.pathfindToPose(endingPose, constraints));
     }
 }
