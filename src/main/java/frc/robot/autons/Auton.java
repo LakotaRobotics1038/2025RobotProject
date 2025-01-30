@@ -2,6 +2,7 @@ package frc.robot.autons;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -68,28 +69,21 @@ public abstract class Auton extends SequentialCommandGroup {
             return new FollowPathCommand(
                     path,
                     // Robot pose supplier
-                    this.driveTrain::getPose,
+                    () -> this.driveTrain.getState().Pose,
                     // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                    this.driveTrain::getChassisSpeeds,
+                    () -> this.driveTrain.getState().Speeds,
                     // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                    (speeds, feedforwards) -> this.driveTrain.applyChassisSpeeds(speeds),
+                    (speeds, feedforwards) -> this.driveTrain.setControl(
+                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                    .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                                    .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
                     new PPHolonomicDriveController(
                             // Translation PIDconstants
                             new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, 0.0),
                             // Rotation PID constants
                             new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0)),
                     AutoConstants.kRobotConfig.get(),
-                    () -> {
-                        // Boolean supplier that controls when the path will be mirrored for the red
-                        // alliance
-                        // This will flip the path being followed to the red side of the field.
-                        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-                        if (this.alliance != null) {
-                            return this.alliance == DriverStation.Alliance.Red;
-                        }
-                        return false;
-                    },
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
                     this.driveTrain // Reference to this subsystem to set requirements
             );
         } catch (Exception e) {
