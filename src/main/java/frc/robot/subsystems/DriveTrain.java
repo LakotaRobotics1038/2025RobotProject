@@ -1,59 +1,43 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
+import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.swerve.SwerveDrivetrain;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.DriveConstants;
-import frc.robot.libraries.MAXSwerveModule;
+import frc.robot.constants.SwerveConstants;
 
-public class DriveTrain extends SubsystemBase {
-    // Create MAXSwerveModules
-    private final MAXSwerveModule frontLeft = new MAXSwerveModule(
-            DriveConstants.kFrontLeftDrivingCanId,
-            DriveConstants.kFrontLeftTurningCanId,
-            DriveConstants.kFrontLeftChassisAngularOffset);
-
-    private final MAXSwerveModule frontRight = new MAXSwerveModule(
-            DriveConstants.kFrontRightDrivingCanId,
-            DriveConstants.kFrontRightTurningCanId,
-            DriveConstants.kFrontRightChassisAngularOffset);
-
-    private final MAXSwerveModule rearLeft = new MAXSwerveModule(
-            DriveConstants.kRearLeftDrivingCanId,
-            DriveConstants.kRearLeftTurningCanId,
-            DriveConstants.kBackLeftChassisAngularOffset);
-
-    private final MAXSwerveModule rearRight = new MAXSwerveModule(
-            DriveConstants.kRearRightDrivingCanId,
-            DriveConstants.kRearRightTurningCanId,
-            DriveConstants.kBackRightChassisAngularOffset);
-
-    // The gyro sensor
-    private final Pigeon2 gyro = new Pigeon2(DriveConstants.kGyroCanId);
-
-    // Odometry class for tracking robot pose
-    private SwerveDriveOdometry odometry = new SwerveDriveOdometry(
-            DriveConstants.kDriveKinematics,
-            Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
-            new SwerveModulePosition[] {
-                    frontLeft.getPosition(),
-                    frontRight.getPosition(),
-                    rearLeft.getPosition(),
-                    rearRight.getPosition()
-            });
+/**
+ * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
+ * Subsystem so it can easily be used in command-based projects.
+ */
+public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
+    // Simulation Setup
+    private static final double kSimLoopPeriod = 0.005; // 5 ms
+    private Notifier simNotifier = null;
+    private double lastSimTime;
 
     // Singleton Setup
     private static DriveTrain instance;
@@ -66,176 +50,250 @@ public class DriveTrain extends SubsystemBase {
         return instance;
     }
 
+    /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
+    private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
+    /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
+    private static final Rotation2d kRedAlliancePerspectiveRotation = Rotation2d.k180deg;
+    /* Keep track if we've ever applied the operator perspective before or not */
+    private boolean hasAppliedOperatorPerspective = false;
+
+    private final SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
+            .withDeadband(DriveConstants.MaxSpeed * 0.1).withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1) // Add
+                                                                                                                     // a
+                                                                                                                     // 10%
+                                                                                                                     // deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+    private final SwerveRequest.SwerveDriveBrake brakeRequest = new SwerveRequest.SwerveDriveBrake();
+
+    /* Swerve requests to apply during SysId characterization */
+    private final SwerveRequest.SysIdSwerveTranslation translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
+    private final SwerveRequest.SysIdSwerveSteerGains steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
+    private final SwerveRequest.SysIdSwerveRotation rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
+
+    /*
+     * SysId routine for characterizing translation. This is used to find PID gains
+     * for the drive motors.
+     */
+    private final SysIdRoutine sysIdRoutineTranslation = new SysIdRoutine(
+            new SysIdRoutine.Config(
+                    null, // Use default ramp rate (1 V/s)
+                    Volts.of(4), // Reduce dynamic step voltage to 4 V to prevent brownout
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdTranslation_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    output -> setControl(translationCharacterization.withVolts(output)),
+                    null,
+                    this));
+
+    /*
+     * SysId routine for characterizing steer. This is used to find PID gains for
+     * the steer motors.
+     */
+    private final SysIdRoutine sysIdRoutineSteer = new SysIdRoutine(
+            new SysIdRoutine.Config(
+                    null, // Use default ramp rate (1 V/s)
+                    Volts.of(7), // Use dynamic voltage of 7 V
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdSteer_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    volts -> setControl(steerCharacterization.withVolts(volts)),
+                    null,
+                    this));
+
+    /*
+     * SysId routine for characterizing rotation.
+     * This is used to find PID gains for the FieldCentricFacingAngle
+     * HeadingController.
+     * See the documentation of SwerveRequest.SysIdSwerveRotation for info on
+     * importing the log to SysId.
+     */
+    private final SysIdRoutine sysIdRoutineRotation = new SysIdRoutine(
+            new SysIdRoutine.Config(
+                    /* This is in radians per second², but SysId only supports "volts per second" */
+                    Volts.of(Math.PI / 6).per(Second),
+                    /* This is in radians per second, but SysId only supports "volts" */
+                    Volts.of(Math.PI),
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdRotation_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    output -> {
+                        /* output is actually radians per second, but SysId only supports "volts" */
+                        setControl(rotationCharacterization.withRotationalRate(output.in(Volts)));
+                        /* also log the requested output for SysId */
+                        SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
+                    },
+                    null,
+                    this));
+
+    /* The SysId routine to test */
+    private SysIdRoutine sysIdRoutineToApply = sysIdRoutineTranslation;
+
     private DriveTrain() {
-        super();
-        gyro.reset();
-    }
-
-    @Override
-    public void periodic() {
-        odometry.update(
-                Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
-                new SwerveModulePosition[] {
-                        frontLeft.getPosition(),
-                        frontRight.getPosition(),
-                        rearLeft.getPosition(),
-                        rearRight.getPosition()
-                });
-    }
-
-    /**
-     * Returns the currently-estimated pose of the robot.
-     *
-     * @return The pose.
-     */
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        super(
+                TalonFX::new,
+                TalonFX::new,
+                CANcoder::new,
+                SwerveConstants.DrivetrainConstants,
+                0.0,
+                DriveConstants.kOdometryStdDev,
+                DriveConstants.kVisionStdDevs,
+                SwerveConstants.FrontLeft,
+                SwerveConstants.FrontRight,
+                SwerveConstants.BackLeft,
+                SwerveConstants.FrontRight);
+        if (Utils.isSimulation()) {
+            startSimThread();
+        }
     }
 
     /**
-     * Resets the odometry to the specified pose.
-     *
-     * @param pose The pose to which to set the odometry.
+     * Reset the gyro to zero
      */
-    public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(
-                Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
-                new SwerveModulePosition[] {
-                        frontLeft.getPosition(),
-                        frontRight.getPosition(),
-                        rearLeft.getPosition(),
-                        rearRight.getPosition()
-                },
-                pose);
+    public void zeroHeading() {
+        this.getPigeon2().reset();
     }
 
     /**
      * Method to drive the robot using joystick info.
      *
-     * @param xSpeed        Speed of the robot in the x direction (forward).
-     * @param ySpeed        Speed of the robot in the y direction (sideways).
-     * @param rot           Angular rate of the robot.
-     * @param fieldRelative Whether the provided x and y speeds are relative to the
-     *                      field.
+     * @param xSpeed Speed of the robot in the x direction (forward).
+     * @param ySpeed Speed of the robot in the y direction (sideways).
+     * @param rot    Angular rate of the robot.
      */
-    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-        // Adjust input based on max speed
-        xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
-        ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
-        rot *= DriveConstants.kMaxAngularSpeed;
-
-        this.applyChassisSpeeds(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()))
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
-    }
-
-    public void applyChassisSpeeds(ChassisSpeeds speeds) {
-        SwerveModuleState[] swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(speeds);
-        this.setModuleStates(swerveModuleStates);
-    }
-
-    /**
-     * Gets the actual chassis speeds
-     *
-     * @return actual chassis speeds
-     */
-    public ChassisSpeeds getChassisSpeeds() {
-        return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+    public void drive(double xSpeed, double ySpeed, double rot) {
+        this.applyRequest(() -> driveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed) // Drive forward with
+                                                                                             // negative Y
+                // (forward)
+                .withVelocityY(ySpeed * DriveConstants.MaxSpeed) // Drive left with negative X (left)
+                .withRotationalRate(rot * DriveConstants.MaxAngularRate) // Drive counterclockwise with negative X
+                                                                         // (left)
+        );
     }
 
     /**
      * Sets the wheels into an X formation to prevent movement.
      */
     public void setX() {
-        frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-        frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-        rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-        rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+        this.applyRequest(() -> brakeRequest);
     }
 
     /**
-     * Sets the swerve ModuleStates.
+     * Returns a command that applies the specified control request to this swerve
+     * drivetrain.
      *
-     * @param desiredStates The desired SwerveModule states.
+     * @param request Function returning the request to apply
+     * @return Command to run
      */
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        rearLeft.setDesiredState(desiredStates[2]);
-        rearRight.setDesiredState(desiredStates[3]);
+    public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
+        return run(() -> this.setControl(requestSupplier.get()));
     }
 
     /**
-     * Gets the swerve ModuleStates.
+     * Runs the SysId Quasistatic test in the given direction for the routine
+     * specified by {@link #sysIdRoutineToApply}.
      *
-     * @return The current SwerveModule states.
+     * @param direction Direction of the SysId Quasistatic test
+     * @return Command to run
      */
-    public SwerveModuleState[] getModuleStates() {
-        return new SwerveModuleState[] {
-                frontLeft.getState(),
-                frontRight.getState(),
-                rearLeft.getState(),
-                rearRight.getState(),
-        };
-    }
-
-    public void setDrivingIdleMode(IdleMode mode) {
-        frontLeft.setDrivingIdleMode(mode);
-        rearLeft.setDrivingIdleMode(mode);
-        frontRight.setDrivingIdleMode(mode);
-        rearRight.setDrivingIdleMode(mode);
-    }
-
-    /** Resets the drive encoders to currently read a position of 0. */
-    public void resetEncoders() {
-        frontLeft.resetEncoders();
-        rearLeft.resetEncoders();
-        frontRight.resetEncoders();
-        rearRight.resetEncoders();
-    }
-
-    /** Zeroes the heading of the robot. */
-    public void zeroHeading() {
-        gyro.reset();
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return sysIdRoutineToApply.quasistatic(direction);
     }
 
     /**
-     * Returns the heading of the robot.
+     * Runs the SysId Dynamic test in the given direction for the routine
+     * specified by {@link #sysIdRoutineToApply}.
      *
-     * @return the robot's heading in degrees, from -180 to 180
+     * @param direction Direction of the SysId Dynamic test
+     * @return Command to run
      */
-    public double getHeading() {
-        return Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()).getDegrees();
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return sysIdRoutineToApply.dynamic(direction);
+    }
+
+    @Override
+    public void periodic() {
+        /*
+         * Periodically try to apply the operator perspective.
+         * If we haven't applied the operator perspective before, then we should apply
+         * it regardless of DS state.
+         * This allows us to correct the perspective in case the robot code restarts
+         * mid-match.
+         * Otherwise, only check and apply the operator perspective if the DS is
+         * disabled.
+         * This ensures driving behavior doesn't change until an explicit disable event
+         * occurs during testing.
+         */
+        if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+            DriverStation.getAlliance().ifPresent(allianceColor -> {
+                setOperatorPerspectiveForward(
+                        allianceColor == Alliance.Red
+                                ? kRedAlliancePerspectiveRotation
+                                : kBlueAlliancePerspectiveRotation);
+                hasAppliedOperatorPerspective = true;
+            });
+        }
     }
 
     /**
-     * Returns the turn rate of the robot.
-     *
-     * @return The turn rate of the robot, in degrees per second
+     * Starts a thread to track drive train in the robot simulator
      */
-    public double getTurnRate() {
-        return gyro.getAngularVelocityZWorld().getValueAsDouble() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    private void startSimThread() {
+        lastSimTime = Utils.getCurrentTimeSeconds();
+
+        /* Run simulation at a faster rate so PID gains behave more reasonably */
+        simNotifier = new Notifier(() -> {
+            final double currentTime = Utils.getCurrentTimeSeconds();
+            double deltaTime = currentTime - lastSimTime;
+            lastSimTime = currentTime;
+
+            /* use the measured time delta, get battery voltage from WPILib */
+            updateSimState(deltaTime, RobotController.getBatteryVoltage());
+        });
+        simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
     /**
-     * Returns the roll value of the robot.
+     * Adds a vision measurement to the Kalman Filter. This will correct the
+     * odometry pose estimate
+     * while still accounting for measurement noise.
      *
-     * @return the robot's roll in degrees, from 0 to 360
+     * @param visionRobotPoseMeters The pose of the robot as measured by the vision
+     *                              camera.
+     * @param timestampSeconds      The timestamp of the vision measurement in
+     *                              seconds.
      */
-    public double getRoll() {
-        return -gyro.getRoll().getValueAsDouble();
+    @Override
+    public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
+        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
     /**
-     * Returns the pitch value of the robot.
+     * Adds a vision measurement to the Kalman Filter. This will correct the
+     * odometry pose estimate
+     * while still accounting for measurement noise.
+     * <p>
+     * Note that the vision measurement standard deviations passed into this method
+     * will continue to apply to future measurements until a subsequent call to
+     * {@link #setVisionMeasurementStdDevs(Matrix)} or this method.
      *
-     * @return the robot's pitch in degrees, from ? to ?
+     * @param visionRobotPoseMeters    The pose of the robot as measured by the
+     *                                 vision camera.
+     * @param timestampSeconds         The timestamp of the vision measurement in
+     *                                 seconds.
+     * @param visionMeasurementStdDevs Standard deviations of the vision pose
+     *                                 measurement
+     *                                 in the form [x, y, theta]ᵀ, with units in
+     *                                 meters and radians.
      */
-    public double getPitch() {
-        return gyro.getPitch().getValueAsDouble();
+    @Override
+    public void addVisionMeasurement(
+            Pose2d visionRobotPoseMeters,
+            double timestampSeconds,
+            Matrix<N3, N1> visionMeasurementStdDevs) {
+        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds),
+                visionMeasurementStdDevs);
     }
 }
