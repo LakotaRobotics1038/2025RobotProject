@@ -27,7 +27,10 @@ public class Acquisition extends SubsystemBase {
         algaeSwitch = acquisitionMotor.getReverseLimitSwitch();
 
         SparkFlexConfig acquisitionConfig = new SparkFlexConfig();
-        acquisitionConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
+        acquisitionConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
+                .inverted(false);
         acquisitionMotor.configure(acquisitionConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
