@@ -45,7 +45,6 @@ public class Shoulder extends SubsystemBase {
     private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
-    private static Shoulder instance;
 
     private Shoulder() {
 
@@ -68,6 +67,8 @@ public class Shoulder extends SubsystemBase {
         shoulderController.enableContinuousInput(0, ShoulderConstants.kEncoderConversion);
     }
 
+    private static Shoulder instance;
+
     public static Shoulder getInstance() {
         if (instance == null) {
             instance = new Shoulder();
@@ -76,9 +77,9 @@ public class Shoulder extends SubsystemBase {
         return instance;
     }
 
-    public void useOutput(double output, double setpoint) {
+    private void useOutput(double output, double setpoint) {
         double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
-        setSetpoint(power);
+        this.setSetpoint(power);
     }
 
     public double getPosition() {
