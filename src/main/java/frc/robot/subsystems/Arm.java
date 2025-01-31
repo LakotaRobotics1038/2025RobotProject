@@ -5,45 +5,23 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 import au.grapplerobotics.LaserCan;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ArmConstants;
+import frc.robot.constants.ArmConstants.ArmSetpoint;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Arm extends SubsystemBase {
-    public enum ArmSetpoint {
-        L1Coral(0.0),
-        L2Coral(0.0),
-        L3Coral(0.0),
-        L4Coral(0.0),
-        L23Algae(0.0),
-        L34Algae(0.0),
-        Processor(0.0),
-        GroundAlgae(0.0),
-        Storage(0.0),
-        FeederStation(0.0);
-
-        public final double position;
-
-        ArmSetpoint(double position) {
-            this.position = position;
-        }
-
-        public double getPosition() {
-            return position;
-        }
-    }
-
     private SparkFlex armMotor = new SparkFlex(ArmConstants.kArmMotorPort, MotorType.kBrushless);
     private PIDController armController = new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD);
-    private SparkLimitSwitch lowerLimitSwitch = armMotor.getForwardLimitSwitch();
-    private LaserCan laser = new LaserCan(ArmConstants.kArmLaserMotorPort);
+    private SparkLimitSwitch limitSwitch = armMotor.getReverseLimitSwitch();
+    private LaserCan laser = new LaserCan(ArmConstants.kArmLaserPort);
     private static Arm instance;
 
     /**
@@ -66,8 +44,12 @@ public class Arm extends SubsystemBase {
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
+        armConfig.limitSwitch
+                .reverseLimitSwitchType(Type.kNormallyOpen)
+                .reverseLimitSwitchEnabled(true);
+
         armController.setTolerance(ArmConstants.kTolerance);
-        armController.enableContinuousInput(0, ArmConstants.kEncoderConversion);
+        armController.disableContinuousInput();
     }
 
     protected void useOutput(double output, double setpoint) {
@@ -103,7 +85,7 @@ public class Arm extends SubsystemBase {
      * @return boolean whether or not the limit switch is pressed
      */
     public boolean isPressed() {
-        return lowerLimitSwitch.isPressed();
+        return limitSwitch.isPressed();
     }
 
     /**
@@ -112,9 +94,7 @@ public class Arm extends SubsystemBase {
      * @param setpoint the setpoint for the subsystem
      */
     public void setSetpoint(ArmSetpoint setpoint) {
-        double value = setpoint.position;
-        value = MathUtil.clamp(value, 0, ArmConstants.kMaxArmPower);
-        setSetpoint(value);
+        setSetpoint(setpoint.position);
     }
 
     /**
