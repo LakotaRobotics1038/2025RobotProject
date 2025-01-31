@@ -103,6 +103,7 @@ public class Arm extends SubsystemBase {
      * @param setpoint the setpoint for the subsystem
      */
     private final void setSetpoint(double setpoint) {
+        setpoint = MathUtil.clamp(setpoint, 0, ArmConstants.kArmMaxExtension);
         armController.setSetpoint(setpoint);
     }
 
