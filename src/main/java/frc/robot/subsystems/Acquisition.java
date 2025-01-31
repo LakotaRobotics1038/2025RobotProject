@@ -14,10 +14,10 @@ import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Acquisition extends SubsystemBase {
-    private DigitalInput topLaser;
-    private DigitalInput bottomLaser;
-    private SparkFlex acquisitionMotor;
-    private SparkLimitSwitch algaeSwitch;
+    private final DigitalInput topLaser;
+    private final DigitalInput bottomLaser;
+    private final SparkFlex acquisitionMotor;
+    private final SparkLimitSwitch algaeSwitch;
     public static Acquisition instance;
 
     private Acquisition() {
