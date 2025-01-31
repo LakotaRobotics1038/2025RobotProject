@@ -8,30 +8,28 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Acquisition extends SubsystemBase {
-    private final DigitalInput topLaser;
-    private final DigitalInput bottomLaser;
-    private final SparkFlex acquisitionMotor;
-    private final SparkLimitSwitch algaeSwitch;
+    private final DigitalInput topLaser = new DigitalInput(AcquisitionConstants.kTopLaserPort);
+    private final DigitalInput bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserPort);
+    private final SparkFlex acquisitionMotor = new SparkFlex(AcquisitionConstants.kAcquisitionMotorPort,
+            MotorType.kBrushless);
+    private final SparkLimitSwitch algaeSwitch = acquisitionMotor.getForwardLimitSwitch();
     public static Acquisition instance;
 
     private Acquisition() {
-        topLaser = new DigitalInput(AcquisitionConstants.kTopLaserPort);
-        bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserPort);
-        acquisitionMotor = new SparkFlex(AcquisitionConstants.kAcquisitionMotorPort, MotorType.kBrushless);
-        algaeSwitch = acquisitionMotor.getForwardLimitSwitch();
-
         SparkFlexConfig acquisitionConfig = new SparkFlexConfig();
         acquisitionConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
                 .inverted(false);
-        acquisitionMotor.configure(acquisitionConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        this.acquisitionMotor.configure(acquisitionConfig, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
     }
 
     public static Acquisition getInstance() {
@@ -42,26 +40,26 @@ public class Acquisition extends SubsystemBase {
     }
 
     public void acquire() {
-        acquisitionMotor.set(AcquisitionConstants.kAcquireSpeed);
+        this.acquisitionMotor.set(AcquisitionConstants.kAcquireSpeed);
     }
 
     public void dispose() {
-        acquisitionMotor.set(AcquisitionConstants.kDisposeSpeed);
+        this.acquisitionMotor.set(AcquisitionConstants.kDisposeSpeed);
     }
 
     public void stopAcquisition() {
-        acquisitionMotor.stopMotor();
+        this.acquisitionMotor.stopMotor();
     }
 
     public boolean getTopLaser() {
-        return topLaser.get();
+        return this.topLaser.get();
     }
 
     public boolean getBottomLaser() {
-        return bottomLaser.get();
+        return this.bottomLaser.get();
     }
 
     public boolean getAlgaeSwitch() {
-        return algaeSwitch.isPressed();
+        return this.algaeSwitch.isPressed();
     }
 }
