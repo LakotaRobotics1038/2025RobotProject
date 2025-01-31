@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,7 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
-import frc.robot.constants.SwerveModuleConstants;
+import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
@@ -74,9 +76,9 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             Pose2d initialPose = autonomousCommand.getInitialPose();
             if (initialPose != null) {
-                driveTrain.resetOdometry(initialPose);
+                driveTrain.resetPose(initialPose);
             }
-            driveTrain.setDrivingIdleMode(SwerveModuleConstants.kAutoDrivingMotorIdleMode);
+            driveTrain.configNeutralMode(SwerveConstants.kAutonDrivingMotorNeutralMode);
             autonomousCommand.schedule();
         }
     }
@@ -95,7 +97,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Dashboard.getInstance().clearTrajectory();
-        driveTrain.setDrivingIdleMode(SwerveModuleConstants.kTeleopDrivingMotorIdleMode);
+        driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
     }
 
     @Override
