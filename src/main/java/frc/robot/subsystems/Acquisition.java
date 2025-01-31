@@ -21,9 +21,9 @@ public class Acquisition extends SubsystemBase {
     public static Acquisition instance;
 
     private Acquisition() {
-        topLaser = new DigitalInput(AcquisitionConstants.kTopLaserChannel);
-        bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserChannel);
-        acquisitionMotor = new SparkFlex(AcquisitionConstants.kMotorDeviceID, MotorType.kBrushless);
+        topLaser = new DigitalInput(AcquisitionConstants.kTopLaserPort);
+        bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserPort);
+        acquisitionMotor = new SparkFlex(AcquisitionConstants.kAcquisitionMotorPort, MotorType.kBrushless);
         algaeSwitch = acquisitionMotor.getForwardLimitSwitch();
 
         SparkFlexConfig acquisitionConfig = new SparkFlexConfig();
