@@ -12,7 +12,7 @@ public class ClimbUpCommand extends Command {
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         climb.runClimbUp();
     }
 
