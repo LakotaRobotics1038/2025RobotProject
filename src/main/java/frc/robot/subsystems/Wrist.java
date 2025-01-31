@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
@@ -15,20 +16,21 @@ import frc.robot.constants.WristConstants;
 
 public class Wrist extends SubsystemBase {
 
-    private static SparkFlex wristMotor;
-    private static AbsoluteEncoder wristEncoder;
-    private static PIDController wristController;
+    private SparkFlex wristMotor = new SparkFlex(WristConstants.kWristCanId, MotorType.kBrushless);
+    private AbsoluteEncoder wristEncoder = wristMotor.getAbsoluteEncoder();
+    private PIDController wristController = new PIDController(
+            WristConstants.kWristControllerP,
+            WristConstants.kWristControllerI,
+            WristConstants.kWristControllerD);
     private static Wrist instance;
 
     private Wrist() {
-        wristMotor = new SparkFlex(WristConstants.kWristCanId, MotorType.kBrushless);
         SparkFlexConfig wristConfig = new SparkFlexConfig();
         wristConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
                 .inverted(false);
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        wristEncoder = wristMotor.getAbsoluteEncoder();
     }
 
     public static Wrist getInstance() {
@@ -38,8 +40,20 @@ public class Wrist extends SubsystemBase {
         return instance;
     }
 
-    public void useOutput(double output, double setpoint) {
-
+    public void useOutput(double output) {
+        double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
+        this.wristMotor.set(power);
     }
 
+    public void setP(double p) {
+        this.wristController.setP(p);
+    }
+
+    public void setI(double i) {
+        this.wristController.setI(i);
+    }
+
+    public void setD(double d) {
+        this.wristController.setD(d);
+    }
 }
