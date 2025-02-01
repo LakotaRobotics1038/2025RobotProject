@@ -50,10 +50,6 @@ public class FollowPath extends Auton {
             driveTrain.getChassisSpeeds().vxMetersPerSecond,
             Rotation2d.fromDegrees(driveTrain.getHeading()));
     private GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
-    private List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-            new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
-            new Pose2d(3.0, 1.0, Rotation2d.fromDegrees(0)),
-            new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)));
     private PathPlannerPath path;
 
     public FollowPath(Optional<Alliance> alliance) {
