@@ -55,7 +55,7 @@ public class Wrist extends SubsystemBase {
     }
 
     public double getPosition() {
-        return this.wristEncoder.getPosition() % 360;
+        return this.wristEncoder.getPosition();
     }
 
     public boolean onTarget() {
