@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Acquisition;
 
 public class DisposeCommand extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
@@ -16,7 +17,7 @@ public class DisposeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return acquisition.getTopLaser() && acquisition.getBottomLaser();
+        return !(acquisition.getTopLaser() && acquisition.getBottomLaser());
     }
 
     @Override
