@@ -23,6 +23,7 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerP,
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
+    private boolean enabled;
     private static Wrist instance;
 
     private Wrist() {
@@ -41,7 +42,14 @@ public class Wrist extends SubsystemBase {
         return instance;
     }
 
-    public void useOutput(double output) {
+    @Override
+    public void periodic() {
+        if (enabled) {
+            this.useOutput(this.wristController.calculate(this.getPosition()));
+        }
+    }
+
+    protected void useOutput(double output) {
         double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
         this.wristMotor.set(power);
     }
@@ -74,4 +82,19 @@ public class Wrist extends SubsystemBase {
     public void setD(double d) {
         this.wristController.setD(d);
     }
+
+    public void enable() {
+        this.enabled = true;
+        this.wristController.reset();
+    }
+
+    public void disable() {
+        this.enabled = false;
+        this.useOutput(0);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
 }
