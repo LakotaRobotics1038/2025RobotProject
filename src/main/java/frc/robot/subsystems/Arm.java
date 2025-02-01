@@ -56,11 +56,11 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         if (enabled) {
-            useOutput(armController.calculate(getPosition()), getSetpoint());
+            useOutput(armController.calculate(getPosition(), getSetpoint()));
         }
     }
 
-    protected void useOutput(double output, double setpoint) {
+    protected void useOutput(double output) {
         double power = MathUtil.clamp(output, -ArmConstants.kMaxArmPower, ArmConstants.kMaxArmPower);
         armMotor.set(power);
     }
@@ -160,6 +160,6 @@ public class Arm extends SubsystemBase {
     /** Disables the PID control. Sets output to zero. */
     public void disable() {
         enabled = false;
-        useOutput(0, 0);
+        useOutput(0);
     }
 }
