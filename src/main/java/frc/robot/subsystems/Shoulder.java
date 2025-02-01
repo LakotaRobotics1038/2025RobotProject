@@ -14,32 +14,15 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
+import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 
 public class Shoulder extends SubsystemBase {
-    public enum ShoulderSetpoints {
-        L1Coral(0.0),
-        L2Coral(0.0),
-        L3Coral(0.0),
-        L4Coral(0.0),
-        L23Algae(0.0),
-        L34Algae(0.0),
-        Processor(0.0),
-        GroundAlgae(0.0),
-        Storage(0.0),
-        FeederStation(0.0);
-
-        public final double setpoint;
-
-        private ShoulderSetpoints(double setpoint) {
-            this.setpoint = setpoint;
-        }
-    }
-
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
     private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
-    private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
+    private AbsoluteEncoder shoulderEncoder = leftShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
+    private boolean enable = false;
 
     private Shoulder() {
 
@@ -53,15 +36,12 @@ public class Shoulder extends SubsystemBase {
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
-        rightShoulderConfig.limitSwitch
-                .reverseLimitSwitchEnabled(true)
-                .reverseLimitSwitchType(Type.kNormallyOpen);
 
-        rightShoulderConfig.follow(shoulderLeft, true);
+        rightShoulderConfig.follow(leftShoulderMotor, true);
 
-        shoulderLeft.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
+        leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
-        shoulderRight.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
+        rightShoulderMotor.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
         shoulderController.setTolerance(ShoulderConstants.kTolerance);
@@ -78,9 +58,16 @@ public class Shoulder extends SubsystemBase {
         return instance;
     }
 
-    private void useOutput(double output, double setpoint) {
+    @Override
+    public void periodic() {
+        if (this.enable) {
+            this.useOutput(this.shoulderController.calculate(this.getPosition()));
+        }
+    }
+
+    private void useOutput(double output) {
         double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
-        shoulderLeft.set(power);
+        leftShoulderMotor.set(power);
     }
 
     public double getPosition() {
@@ -111,4 +98,11 @@ public class Shoulder extends SubsystemBase {
         shoulderController.setD(d);
     }
 
+    public void enable() {
+        this.enable = true;
+    }
+
+    public void disable() {
+        this.enable = false;
+    }
 }
