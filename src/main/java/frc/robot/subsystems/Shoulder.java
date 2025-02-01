@@ -22,7 +22,7 @@ public class Shoulder extends SubsystemBase {
     private AbsoluteEncoder shoulderEncoder = leftShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
-    private boolean enable = false;
+    private boolean enabled = false;
 
     private Shoulder() {
 
