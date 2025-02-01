@@ -2,9 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
-import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Wrist;
 
 public class AcquireCommand extends Command {
 
@@ -21,9 +18,7 @@ public class AcquireCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (acquisition.getAlgaeSwitch()) {
-            return true;
-        } else if (acquisition.getTopLaser && acquisition.getBottomLaser) {
+        if (acquisition.getAlgaeSwitch() || acquisition.getBottomLaser()) {
             return true;
         } else {
             return false;
@@ -31,7 +26,7 @@ public class AcquireCommand extends Command {
     }
 
     @Override
-    public void end() {
+    public void end(boolean interrupted) {
         acquisition.stopAcquisition();
     }
 
