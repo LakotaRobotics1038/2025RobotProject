@@ -100,9 +100,11 @@ public class Shoulder extends SubsystemBase {
 
     public void enable() {
         this.enable = true;
+        this.shoulderController.reset();
     }
 
     public void disable() {
         this.enable = false;
+        this.useOutput(0);
     }
 }
