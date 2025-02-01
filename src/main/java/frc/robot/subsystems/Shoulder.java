@@ -36,7 +36,7 @@ public class Shoulder extends SubsystemBase {
         }
     }
 
-    private SparkMax shoulderLeft = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
+    private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
     private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
     private AbsoluteEncoder shoulderEncoder = shoulderLeft.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
