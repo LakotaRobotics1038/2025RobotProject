@@ -23,6 +23,7 @@ public class Arm extends SubsystemBase {
     private SparkLimitSwitch limitSwitch = armMotor.getReverseLimitSwitch();
     private LaserCan laser = new LaserCan(ArmConstants.kArmLaserPort);
     private static Arm instance;
+    private boolean enabled;
 
     /**
      * Creates an instance of the Arm subsystem if it does not exist.
@@ -52,6 +53,13 @@ public class Arm extends SubsystemBase {
         armController.disableContinuousInput();
     }
 
+    @Override
+    public void periodic() {
+        if (enabled) {
+            useOutput(armController.calculate(getPosition()), getSetpoint());
+        }
+    }
+
     protected void useOutput(double output, double setpoint) {
         double power = MathUtil.clamp(output, -ArmConstants.kMaxArmPower, ArmConstants.kMaxArmPower);
         armMotor.set(power);
@@ -68,6 +76,15 @@ public class Arm extends SubsystemBase {
             return laser.getMeasurement().distance_mm;
         }
         return 0.0;
+    }
+
+    /**
+     * Returns the current setpoint of the subsystem.
+     *
+     * @return The current setpoint
+     */
+    public double getSetpoint() {
+        return armController.getSetpoint();
     }
 
     /**
@@ -132,5 +149,17 @@ public class Arm extends SubsystemBase {
      */
     public void setD(double D) {
         armController.setP(D);
+    }
+
+    /** Enables the PID control. Resets the controller. */
+    public void enable() {
+        enabled = true;
+        armController.reset();
+    }
+
+    /** Disables the PID control. Sets output to zero. */
+    public void disable() {
+        enabled = false;
+        useOutput(0, 0);
     }
 }
