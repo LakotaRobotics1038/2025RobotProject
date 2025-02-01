@@ -1,27 +1,16 @@
 package frc.robot.autons;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.PathfindThenFollowPath;
-import com.pathplanner.lib.commands.PathfindingCommand;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.Waypoint;
-import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.constants.AutoConstants;
@@ -33,7 +22,6 @@ public class FollowPath extends Auton {
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Dashboard dashboard = Dashboard.getInstance();
 
-    private Alliance alliance;
     // startingPose probably going to be replaced with this.driveTrain::getPose soon
     // but this is just for testing
     private Pose2d startingPose = new Pose2d(2, 2, Rotation2d.kZero);
@@ -43,9 +31,6 @@ public class FollowPath extends Auton {
             AutoConstants.kMaxAccelerationMetersPerSecondSquared,
             AutoConstants.kMaxAngularSpeedRadiansPerSecond,
             AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
-    private PPHolonomicDriveController driveController = new PPHolonomicDriveController(
-            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, 0.0),
-            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0));
     private IdealStartingState idealStartingState = new IdealStartingState(
             driveTrain.getChassisSpeeds().vxMetersPerSecond,
             Rotation2d.fromDegrees(driveTrain.getHeading()));
@@ -54,7 +39,6 @@ public class FollowPath extends Auton {
 
     public FollowPath(Optional<Alliance> alliance) {
         super(alliance);
-        this.alliance = alliance.get();
 
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
