@@ -49,7 +49,8 @@ public class FollowPath extends Auton {
         });
 
         super.addCommands(
-                Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose), this.driveTrain),
+                // Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose),
+                // this.driveTrain),
                 AutoBuilder.pathfindToPose(endingPose, constraints));
     }
 }
