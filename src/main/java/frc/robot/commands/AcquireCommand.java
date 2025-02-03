@@ -18,10 +18,7 @@ public class AcquireCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (acquisition.getAlgaeSwitch() || acquisition.getBottomLaser()) {
-            return true;
-        }
-        return false;
+        return acquisition.getAlgaeSwitch() || acquisition.getBottomLaser();
     }
 
     @Override
