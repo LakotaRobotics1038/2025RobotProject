@@ -60,7 +60,7 @@ public class Shoulder extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (this.enable) {
+        if (this.enabled) {
             this.useOutput(this.shoulderController.calculate(this.getPosition()));
         }
     }
@@ -99,12 +99,12 @@ public class Shoulder extends SubsystemBase {
     }
 
     public void enable() {
-        this.enable = true;
+        this.enabled = true;
         this.shoulderController.reset();
     }
 
     public void disable() {
-        this.enable = false;
+        this.enabled = false;
         this.useOutput(0);
     }
 }
