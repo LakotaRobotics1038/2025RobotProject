@@ -38,9 +38,6 @@ public class Dashboard extends SubsystemBase {
             .withWidget(BuiltInWidgets.kToggleButton)
             .getEntry();
 
-    private GenericEntry followPath = controlsTab.add("Follow Path", false).withSize(1, 1).withPosition(1, 1)
-            .withWidget(BuiltInWidgets.kToggleButton).getEntry();
-
     // Singleton Setup
     private static Dashboard instance;
 
@@ -106,10 +103,7 @@ public class Dashboard extends SubsystemBase {
             resetGyro.setBoolean(false);
         }
 
-        if (followPath.getBoolean(false)) {
-
-            followPath.setBoolean(false);
-        }
+        field.setRobotPose(driveTrain.getPose());
     }
 
     /**
