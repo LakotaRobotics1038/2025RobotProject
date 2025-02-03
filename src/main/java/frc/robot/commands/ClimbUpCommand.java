@@ -18,7 +18,7 @@ public class ClimbUpCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return climb.getSwitch();
+        return false;
     }
 
     @Override
