@@ -17,7 +17,7 @@ public class DisposeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return !(acquisition.getTopLaser() && acquisition.getBottomLaser());
+        return !acquisition.getTopLaser() && !acquisition.getBottomLaser();
     }
 
     @Override
