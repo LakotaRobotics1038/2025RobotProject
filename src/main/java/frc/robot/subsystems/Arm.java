@@ -56,7 +56,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         if (enabled) {
-            useOutput(armController.calculate(getPosition(), getSetpoint()));
+            useOutput(armController.calculate(getPosition()));
         }
     }
 
