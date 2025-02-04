@@ -24,6 +24,15 @@
 
 package frc.robot.subsystems;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.numbers.N1;
@@ -31,17 +40,11 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.VisionConstants;
 
-import java.util.List;
-import java.util.Optional;
-import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
 public class Vision extends SubsystemBase {
-    private final PhotonCamera camera;
-    private final PhotonPoseEstimator photonEstimator;
+    private final PhotonCamera frontCam;
+    private final PhotonCamera backCam;
+    private final PhotonPoseEstimator photonEstimatorFront;
+    private final PhotonPoseEstimator photonEstimatorBack;
     private Matrix<N3, N1> curStdDevs;
 
     private static Vision instance;
@@ -54,11 +57,17 @@ public class Vision extends SubsystemBase {
     }
 
     private Vision() {
-        camera = new PhotonCamera("frontCam");
+        frontCam = new PhotonCamera("frontCam");
+        backCam = new PhotonCamera("backCam");
 
-        photonEstimator = new PhotonPoseEstimator(VisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                VisionConstants.kRobotToCam);
-        photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        photonEstimatorFront = new PhotonPoseEstimator(VisionConstants.kTagLayout,
+                PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                VisionConstants.kRobotToCamFront);
+        photonEstimatorFront.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        photonEstimatorBack = new PhotonPoseEstimator(VisionConstants.kTagLayout,
+                PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                VisionConstants.kRobotToCamFront);
+        photonEstimatorFront.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
     }
 
     /**
@@ -77,8 +86,12 @@ public class Vision extends SubsystemBase {
      */
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
         Optional<EstimatedRobotPose> visionEst = Optional.empty();
-        for (var change : camera.getAllUnreadResults()) {
-            visionEst = photonEstimator.update(change);
+        for (var change : frontCam.getAllUnreadResults()) {
+            visionEst = photonEstimatorFront.update(change);
+            updateEstimationStdDevs(visionEst, change.getTargets());
+        }
+        for (var change : backCam.getAllUnreadResults()) {
+            visionEst = photonEstimatorBack.update(change);
             updateEstimationStdDevs(visionEst, change.getTargets());
         }
         return visionEst;

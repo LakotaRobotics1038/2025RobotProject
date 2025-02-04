@@ -21,7 +21,7 @@ public class FollowPath extends Auton {
     private Dashboard dashboard = Dashboard.getInstance();
 
     public enum Position {
-        TEST(5.359, 5.488, new Rotation2d(190));
+        TEST(2.793, 3.779, new Rotation2d(0));
 
         private double x;
         private double y;
