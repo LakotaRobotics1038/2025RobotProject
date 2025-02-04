@@ -29,7 +29,7 @@ public class SetAcquisitionPositionCommand extends Command {
         return false;
     }
 
-    public void end() {
+    public void end(boolean isInterrupted) {
 
     }
 
