@@ -1,9 +1,14 @@
 package frc.robot;
 
+import frc.robot.autons.FollowPath;
+import frc.robot.autons.FollowPath.Position;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+
+import java.util.Optional;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -78,7 +83,7 @@ public class DriverJoystick extends XboxController1038 {
 
         // Re-orient robot to the field
         super.startButton.whileTrue(new InstantCommand(driveTrain::zeroHeading, driveTrain));
-
+        super.aButton.whileTrue(new FollowPath(Position.TEST));
         // Lock the wheels into an X formation
         super.xButton.whileTrue(new RunCommand(driveTrain::setX, driveTrain));
 

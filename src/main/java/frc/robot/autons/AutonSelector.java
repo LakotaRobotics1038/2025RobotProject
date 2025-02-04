@@ -33,7 +33,6 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        this.autoChooser.setDefaultOption("Follow Path", AutonChoices.FollowPath);
         // this.autoChooser.addOption("Score 2 In Amp Position 1",
         // AutonChoices.AmpAuto);
 
@@ -59,8 +58,6 @@ public class AutonSelector {
     public Auton chooseAuton() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         switch (this.autoChooser.getSelected()) {
-            case FollowPath:
-                return new FollowPath(alliance);
             default:
                 return null;
         }

@@ -35,6 +35,6 @@ public final class VisionConstants {
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-    public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.1, 0.0, 0.1),
+    public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.323849, 0.323849, 0.17779),
             new Rotation3d(0, 0, 0));
 }

@@ -11,8 +11,6 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
@@ -22,10 +20,25 @@ public class FollowPath extends Auton {
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Dashboard dashboard = Dashboard.getInstance();
 
-    // startingPose probably going to be replaced with this.driveTrain::getPose soon
-    // but this is just for testing
-    private Pose2d startingPose = new Pose2d(2, 2, Rotation2d.kZero);
-    private Pose2d endingPose = new Pose2d(6, 6, Rotation2d.k180deg);
+    public enum Position {
+        TEST(5.359, 5.488, new Rotation2d(190));
+
+        private double x;
+        private double y;
+        private Rotation2d rotation;
+
+        private Position(double x, double y, Rotation2d rotation) {
+            this.x = x;
+            this.y = y;
+            this.rotation = rotation;
+        }
+
+        public Pose2d getPose() {
+            return new Pose2d(x, y, rotation);
+        }
+    }
+
+    private Pose2d endingPose;
     private PathConstraints constraints = new PathConstraints(
             DriveConstants.kMaxSpeedMetersPerSecond,
             AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -37,8 +50,10 @@ public class FollowPath extends Auton {
     private GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
     private PathPlannerPath path;
 
-    public FollowPath(Optional<Alliance> alliance) {
-        super(alliance);
+    public FollowPath(Position position) {
+        super(Optional.empty());
+
+        endingPose = position.getPose();
 
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
