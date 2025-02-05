@@ -57,6 +57,7 @@ public class SetAcquisitionPositionCommand extends Command {
         this.shoulder = Shoulder.getInstance();
         this.wrist = Wrist.getInstance();
         this.arm = Arm.getInstance();
+        addRequirements(shoulder, wrist, arm);
         this.setAcquisitionPositionSetpoint = setAcquisitionPositionSetpoint;
     }
 
