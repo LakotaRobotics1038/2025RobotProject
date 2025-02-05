@@ -34,6 +34,6 @@ public class PrepClimbCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-
+        climb.stopClimb();
     }
 }
