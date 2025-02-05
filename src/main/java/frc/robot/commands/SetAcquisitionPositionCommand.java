@@ -12,9 +12,9 @@ import frc.robot.subsystems.Wrist;
 
 public class SetAcquisitionPositionCommand extends Command {
 
-    private Shoulder shoulder;
-    private Wrist wrist;
-    private Arm arm;
+    private Shoulder shoulder = Shoulder.getInstance();
+    private Wrist wrist = Wrist.getInstance();
+    private Arm arm = Arm.getInstance();
     private SetAcquisitionPositionSetpoint setAcquisitionPositionSetpoint;
 
     public enum SetAcquisitionPositionSetpoint {
@@ -54,9 +54,6 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public SetAcquisitionPositionCommand(SetAcquisitionPositionSetpoint setAcquisitionPositionSetpoint) {
-        this.shoulder = Shoulder.getInstance();
-        this.wrist = Wrist.getInstance();
-        this.arm = Arm.getInstance();
         addRequirements(shoulder, wrist, arm);
         this.setAcquisitionPositionSetpoint = setAcquisitionPositionSetpoint;
     }
