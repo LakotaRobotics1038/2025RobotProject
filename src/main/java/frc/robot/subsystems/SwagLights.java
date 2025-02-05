@@ -72,7 +72,6 @@ public class SwagLights implements Subsystem {
      * @param values
      */
     private void setLedStates(String... values) {
-        System.out.println(String.join("", values));
         serialPort.writeString(String.join("", values));
     }
 

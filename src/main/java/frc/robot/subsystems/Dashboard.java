@@ -19,6 +19,7 @@ import frc.robot.autons.AutonSelector.AutonChoices;
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
+    private Vision vision = Vision.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -93,6 +94,10 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(2, 0)
                 .withSize(8, 5)
                 .withWidget(BuiltInWidgets.kField);
+
+        // controlsTab.addNumber("best ID", vision::getBestTarget)
+        // .withPosition(0, 1)
+        // .withSize(1, 1);
     }
 
     @Override
