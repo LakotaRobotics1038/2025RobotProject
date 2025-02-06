@@ -21,9 +21,9 @@ public class PrepClimbCommand extends Command {
 
     @Override
     public void initialize() {
-        arm.disable();
-        shoulder.disable();
-        wrist.disable();
+        arm.enable();
+        shoulder.enable();
+        wrist.enable();
     }
 
     @Override
