@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.ArmConstants.ArmSetpoint;
+import frc.robot.constants.ArmConstants.ArmSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetPoints;
 import frc.robot.subsystems.Arm;
@@ -28,8 +28,8 @@ public class PrepClimbCommand extends Command {
 
     @Override
     public void execute() {
-        arm.setSetpoint(ArmSetpoint.Storage);
-        wrist.setSetpoint(WristSetPoints.STORAGE);
+        arm.setSetpoint(ArmSetpoints.Storage);
+        wrist.setSetpoint(WristSetPoints.Storage);
         shoulder.setSetpoint(ShoulderSetpoints.Storage);
         climb.runClimbDown();
     }
