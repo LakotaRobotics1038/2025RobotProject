@@ -20,6 +20,13 @@ public class PrepClimbCommand extends Command {
     }
 
     @Override
+    public void initialize() {
+        arm.disable();
+        shoulder.disable();
+        wrist.disable();
+    }
+
+    @Override
     public void execute() {
         arm.setSetpoint(ArmSetpoint.Storage);
         wrist.setSetpoint(WristSetPoints.STORAGE);
@@ -34,6 +41,9 @@ public class PrepClimbCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        arm.disable();
+        shoulder.disable();
+        wrist.disable();
         climb.stopClimb();
     }
 }
