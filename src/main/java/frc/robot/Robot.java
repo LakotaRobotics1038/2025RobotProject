@@ -31,6 +31,7 @@ import frc.robot.autons.AutonSelector;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveModuleConstants;
+import frc.robot.libraries.LocalADStar1038;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
@@ -57,6 +58,7 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
+        Pathfinding.setPathfinder(new LocalADStar1038());
         PathfindingCommand.warmupCommand().schedule();
     }
 
