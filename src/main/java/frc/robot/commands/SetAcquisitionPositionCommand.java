@@ -29,27 +29,27 @@ public class SetAcquisitionPositionCommand extends Command {
         FeederStation(ShoulderSetpoints.FeederStation, WristSetPoints.FeederStation, ArmSetpoint.FeederStation),
         Storage(ShoulderSetpoints.Storage, WristSetPoints.Storage, ArmSetpoint.Storage);
 
-        private ShoulderSetpoints shoulderSetpoints;
-        private WristSetPoints wristSetPoints;
-        private ArmSetpoint armSetpoints;
+        private ShoulderSetpoints shoulderSetpoint;
+        private WristSetPoints wristSetPoint;
+        private ArmSetpoint armSetpoint;
 
-        private SetAcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoints, WristSetPoints wristSetPoints,
-                ArmSetpoint armSetpoints) {
-            this.shoulderSetpoints = shoulderSetpoints;
-            this.wristSetPoints = wristSetPoints;
-            this.armSetpoints = armSetpoints;
+        private SetAcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetPoints wristSetPoint,
+                ArmSetpoint armSetpoint) {
+            this.shoulderSetpoint = shoulderSetpoint;
+            this.wristSetPoint = wristSetPoint;
+            this.armSetpoint = armSetpoint;
         }
 
-        public ShoulderSetpoints getShoulderSetpoints() {
-            return this.shoulderSetpoints;
+        public ShoulderSetpoints getShoulderSetpoint() {
+            return this.shoulderSetpoint;
         }
 
-        public WristSetPoints getWristSetPoints() {
-            return this.wristSetPoints;
+        public WristSetPoints getWristSetpoint() {
+            return this.wristSetPoint;
         }
 
         public ArmSetpoint getArmSetpoint() {
-            return this.armSetpoints;
+            return this.armSetpoint;
         }
     }
 
@@ -62,8 +62,8 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         arm.enable();
-        shoulder.setSetpoint(this.setAcquisitionPositionSetpoint.getShoulderSetpoints());
-        wrist.setSetpoint(this.setAcquisitionPositionSetpoint.getWristSetPoints());
+        shoulder.setSetpoint(this.setAcquisitionPositionSetpoint.getShoulderSetpoint());
+        wrist.setSetpoint(this.setAcquisitionPositionSetpoint.getWristSetpoint());
         arm.setSetpoint(this.setAcquisitionPositionSetpoint.getArmSetpoint());
     }
 
@@ -75,7 +75,7 @@ public class SetAcquisitionPositionCommand extends Command {
         return (wrist.onTarget() && shoulder.onTarget() && arm.onTarget()) || arm.isPressed();
     }
 
-    public void end(boolean isInterrupted) {
+    public void end(boolean interrupted) {
         wrist.disable();
         shoulder.disable();
         arm.disable();
