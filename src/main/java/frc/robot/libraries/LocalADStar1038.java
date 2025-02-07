@@ -81,40 +81,14 @@ public class LocalADStar1038 implements Pathfinder {
 
         staticObstacles.clear();
         dynamicObstacles.clear();
-        File navGridFile = new File(Filesystem.getDeployDirectory(), "pathplanner/navgrid1038.json");
-
-        if (navGridFile.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(navGridFile))) {
-                StringBuilder fileContentBuilder = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    fileContentBuilder.append(line);
+        nodeSize = Grid.nodeSizeMeters;
+        fieldLength = Grid.fieldSizeX;
+        fieldWidth = Grid.fieldSizeY;
+        for (int columns = 0; columns < Grid.grid.length; columns++) {
+            for (int rows = 0; rows < Grid.grid[columns].length; rows++) {
+                if (Grid.grid[columns][rows]) {
+                    staticObstacles.add(new GridPosition(rows, columns));
                 }
-
-                String fileContent = fileContentBuilder.toString();
-                JSONObject json = (JSONObject) new JSONParser().parse(fileContent);
-
-                nodeSize = ((Number) json.get("nodeSizeMeters")).doubleValue();
-                JSONArray grid = (JSONArray) json.get("grid");
-                nodesY = grid.size();
-                for (int row = 0; row < grid.size(); row++) {
-                    JSONArray rowArray = (JSONArray) grid.get(row);
-                    if (row == 0) {
-                        nodesX = rowArray.size();
-                    }
-                    for (int col = 0; col < rowArray.size(); col++) {
-                        boolean isObstacle = ((int) rowArray.get(col)) == 1;
-                        if (isObstacle) {
-                            staticObstacles.add(new GridPosition(col, row));
-                        }
-                    }
-                }
-
-                JSONObject fieldSize = (JSONObject) json.get("field_size");
-                fieldLength = ((Number) fieldSize.get("x")).doubleValue();
-                fieldWidth = ((Number) fieldSize.get("y")).doubleValue();
-            } catch (Exception e) {
-                // Do nothing, use defaults
             }
         }
 

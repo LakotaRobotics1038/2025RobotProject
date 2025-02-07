@@ -66,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
     private Vector<N3> visionStdDevs = VecBuilder.fill(1, 1, 1);
     private SwerveDrivePoseEstimator odometry = new SwerveDrivePoseEstimator(
             DriveConstants.kDriveKinematics,
-            Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
+            Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble()),
             new SwerveModulePosition[] {
                     frontLeft.getPosition(),
                     frontRight.getPosition(),
@@ -91,24 +91,26 @@ public class DriveTrain extends SubsystemBase {
     private DriveTrain() {
         super();
         gyro.reset();
-        PPHolonomicDriveController driveController = new PPHolonomicDriveController(
-                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, 0.0),
-                new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0));
-        AutoBuilder.configure(
-                this::getPose,
-                this::resetPose,
-                this::getChassisSpeeds,
-                this::applyChassisSpeeds,
-                driveController,
-                AutoConstants.kRobotConfig.get(),
-                () -> {
-                    Optional<Alliance> alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this);
+        // PPHolonomicDriveController driveController = new PPHolonomicDriveController(
+        // new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+        // 0.0),
+        // new PIDConstants(AutoConstants.kPThetaController,
+        // AutoConstants.kIThetaController, 0.0));
+        // AutoBuilder.configure(
+        // this::getPose,
+        // this::resetPose,
+        // this::getChassisSpeeds,
+        // this::applyChassisSpeeds,
+        // driveController,
+        // AutoConstants.kRobotConfig.get(),
+        // () -> {
+        // Optional<Alliance> alliance = DriverStation.getAlliance();
+        // if (alliance.isPresent()) {
+        // return alliance.get() == DriverStation.Alliance.Red;
+        // }
+        // return false;
+        // },
+        // this);
     }
 
     @Override
@@ -132,7 +134,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void resetOdometry(Pose2d pose) {
         odometry.resetPosition(
-                Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()),
+                Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble()),
                 new SwerveModulePosition[] {
                         frontLeft.getPosition(),
                         frontRight.getPosition(),
@@ -160,7 +162,7 @@ public class DriveTrain extends SubsystemBase {
         this.applyChassisSpeeds(
                 fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()))
+                                Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble()))
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
     }
 
@@ -256,7 +258,7 @@ public class DriveTrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()).getDegrees();
+        return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble()).getDegrees();
     }
 
     /**
@@ -309,6 +311,6 @@ public class DriveTrain extends SubsystemBase {
      * @param pose New robot pose.
      */
     public void resetPose(Pose2d pose) {
-        odometry.resetPosition(Rotation2d.fromDegrees(-gyro.getYaw().getValueAsDouble()), getModulePositions(), pose);
+        odometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble()), getModulePositions(), pose);
     }
 }

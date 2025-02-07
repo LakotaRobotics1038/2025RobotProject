@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
-        Pathfinding.setPathfinder(new LocalADStar1038());
+        // Pathfinding.setPathfinder(new LocalADStar1038());
         PathfindingCommand.warmupCommand().schedule();
     }
 
