@@ -4,6 +4,7 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -16,6 +17,8 @@ public class DriverJoystick extends XboxController1038 {
     private double prevX = 0;
     private double prevY = 0;
     private double prevZ = 0;
+
+    private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -35,7 +38,7 @@ public class DriverJoystick extends XboxController1038 {
         SlewRateLimiter sidewaysFilter = new SlewRateLimiter(1.0);
         SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
 
-        driveTrain.setDefaultCommand(new RunCommand(() -> {
+        driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
             double x = super.getLeftX();
             double y = super.getLeftY();
             double z = super.getRightX();
@@ -69,18 +72,16 @@ public class DriverJoystick extends XboxController1038 {
                     break;
             }
 
-            // if (this.getRightBumper()) {
-            // driveTrain.drive(y, -x, -z, true);
-            // } else {
-            driveTrain.drive(forward, -sideways, -rotate, true);
-            // }
-        }, driveTrain));
+            return driveTrain.drive(forward, -sideways, -rotate);
+        }));
+
+        this.driveTrain.registerTelemetry(logger::telemeterize);
 
         // Re-orient robot to the field
-        super.startButton.whileTrue(new InstantCommand(driveTrain::zeroHeading, driveTrain));
+        super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         // Lock the wheels into an X formation
-        super.xButton.whileTrue(new RunCommand(driveTrain::setX, driveTrain));
+        super.xButton.whileTrue(this.driveTrain.setX());
     }
 
     /**

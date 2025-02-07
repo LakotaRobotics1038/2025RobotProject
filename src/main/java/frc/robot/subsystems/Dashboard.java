@@ -59,16 +59,13 @@ public class Dashboard extends SubsystemBase {
                 .withSize(2, 1);
 
         driversTab.addNumber("Gyro", () -> {
-            double angle = driveTrain.getHeading();
+            double angle = driveTrain.getState().RawHeading.getDegrees();
             angle %= 360;
             return angle < 0 ? angle + 360 : angle;
         })
                 .withPosition(2, 0)
                 .withSize(2, 1);
         // .withWidget(BuiltInWidgets.kGyro);
-
-        controlsTab.addNumber("Roll", driveTrain::getRoll)
-                .withPosition(1, 0);
 
         driversTab.add(field)
                 .withPosition(2, 1)
@@ -84,8 +81,8 @@ public class Dashboard extends SubsystemBase {
         });
 
         // driversTab.add("Camera Stream", camera)
-        //         .withPosition(6, 0)
-        //         .withSize(4, 4);
+        // .withPosition(6, 0)
+        // .withSize(4, 4);
 
         controlsTab.add(field)
                 .withPosition(2, 0)
@@ -100,7 +97,7 @@ public class Dashboard extends SubsystemBase {
             driveTrain.zeroHeading();
             resetGyro.setBoolean(false);
         }
-        field.setRobotPose(driveTrain.getPose());
+        field.setRobotPose(driveTrain.getState().Pose);
     }
 
     /**
