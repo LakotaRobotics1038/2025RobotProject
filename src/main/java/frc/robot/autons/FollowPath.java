@@ -3,10 +3,12 @@ package frc.robot.autons;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -67,6 +69,11 @@ public class FollowPath extends Auton {
             }
         });
 
-        super.addCommands(AutoBuilder.pathfindThenFollowPath(path, constraints));
+        super.addCommands(AutoBuilder.pathfindToPose(this.endingPose, this.constraints),
+                this.followPathCommand(
+                        new PathPlannerPath(
+                                PathPlannerPath.waypointsFromPoses(driveTrain.getPose(),
+                                        new Pose2d(3.165, 3.947, Rotation2d.kZero)),
+                                this.constraints, this.idealStartingState, this.goalEndState)));
     }
 }
