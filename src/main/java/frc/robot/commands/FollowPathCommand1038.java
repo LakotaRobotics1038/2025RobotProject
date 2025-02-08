@@ -128,7 +128,7 @@ public class FollowPathCommand1038 extends Command {
                 this.idealStartingState,
                 this.goalEndState);
 
-        if (shouldFlipPath.getAsBoolean() && !originalPath.preventFlipping) {
+        if (shouldFlipPath.getAsBoolean() && !path.preventFlipping) {
             path = path.flipPath();
         }
         ChassisSpeeds currentSpeeds = speedsSupplier.get();
@@ -159,7 +159,7 @@ public class FollowPathCommand1038 extends Command {
         }
 
         PathPlannerAuto.setCurrentTrajectory(trajectory);
-        PathPlannerAuto.currentPathName = originalPath.name;
+        PathPlannerAuto.currentPathName = path.name;
 
         PathPlannerLogging.logActivePath(path);
         PPLibTelemetry.setCurrentPath(path);
