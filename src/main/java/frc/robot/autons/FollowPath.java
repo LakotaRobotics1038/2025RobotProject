@@ -3,7 +3,6 @@ package frc.robot.autons;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.controllers.PathFollowingController;
@@ -11,11 +10,11 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.PathfindingCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
@@ -44,6 +43,7 @@ public class FollowPath extends Auton {
         }
     }
 
+    private Pose2d startingPose;
     private Pose2d endingPose;
     private PathConstraints constraints = new PathConstraints(
             DriveConstants.kMaxSpeedMetersPerSecond,
@@ -78,14 +78,25 @@ public class FollowPath extends Auton {
             }
         });
 
-        super.addCommands(new PathfindingCommand1038(
-                this.endingPose,
-                this.constraints,
-                driveTrain::getPose,
-                driveTrain::getChassisSpeeds,
-                (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds),
-                driveController,
-                AutoConstants.kRobotConfig.get(),
-                driveTrain));
+        super.addCommands(
+                AutoBuilder.pathfindToPose(endingPose, constraints),
+                Commands.runOnce(new Runnable() {
+                    @Override
+                    public void run() {
+                        startingPose = driveTrain.getPose();
+                    }
+                }, driveTrain),
+                this.followPathCommand(
+                        new PathPlannerPath(PathPlannerPath.waypointsFromPoses(this.startingPose, this.endingPose),
+                                this.constraints, this.idealStartingState, this.goalEndState)));
+        // new PathfindingCommand1038(
+        // this.endingPose,
+        // this.constraints,
+        // driveTrain::getPose,
+        // driveTrain::getChassisSpeeds,
+        // (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds),
+        // driveController,
+        // AutoConstants.kRobotConfig.get(),
+        // driveTrain)
     }
 }
