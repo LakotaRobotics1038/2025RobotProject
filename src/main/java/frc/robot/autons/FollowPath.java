@@ -80,12 +80,6 @@ public class FollowPath extends Auton {
 
         super.addCommands(
                 AutoBuilder.pathfindToPose(endingPose, constraints),
-                Commands.runOnce(new Runnable() {
-                    @Override
-                    public void run() {
-                        startingPose = driveTrain.getPose();
-                    }
-                }, driveTrain),
                 this.followPathCommand(
                         new PathPlannerPath(PathPlannerPath.waypointsFromPoses(this.startingPose, this.endingPose),
                                 this.constraints, this.idealStartingState, this.goalEndState)));
