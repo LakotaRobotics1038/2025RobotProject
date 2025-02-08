@@ -122,6 +122,7 @@ public class FollowPathCommand1038 extends Command {
     @Override
     public void initialize() {
         Pose2d currentPose = poseSupplier.get();
+        poses = new ArrayList<>(poses);
         poses.add(0, currentPose);
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
