@@ -114,8 +114,9 @@ public class FollowPathCommand1038 extends Command {
 
         // this.path = this.originalPath;
         // Ensure the ideal trajectory is generated
-        Optional<PathPlannerTrajectory> idealTrajectory = this.path.getIdealTrajectory(this.robotConfig);
-        idealTrajectory.ifPresent(traj -> this.trajectory = traj);
+        // Optional<PathPlannerTrajectory> idealTrajectory =
+        // this.path.getIdealTrajectory(this.robotConfig);
+        // idealTrajectory.ifPresent(traj -> this.trajectory = traj);
     }
 
     @Override
