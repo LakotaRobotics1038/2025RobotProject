@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PathFollowingController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -13,6 +16,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.commands.PathfindingCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
@@ -51,6 +55,11 @@ public class FollowPath extends Auton {
             Rotation2d.fromDegrees(driveTrain.getHeading()));
     private GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
     private PathPlannerPath path;
+    private PathFollowingController driveController = new PPHolonomicDriveController(
+            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                    0.0),
+            new PIDConstants(AutoConstants.kPThetaController,
+                    AutoConstants.kIThetaController, 0.0));
 
     public FollowPath(Position position) {
         super(Optional.empty());
@@ -69,11 +78,14 @@ public class FollowPath extends Auton {
             }
         });
 
-        super.addCommands(AutoBuilder.pathfindToPose(this.endingPose, this.constraints),
-                this.followPathCommand(
-                        new PathPlannerPath(
-                                PathPlannerPath.waypointsFromPoses(driveTrain.getPose(),
-                                        new Pose2d(3.165, 3.947, Rotation2d.kZero)),
-                                this.constraints, this.idealStartingState, this.goalEndState)));
+        super.addCommands(new PathfindingCommand1038(
+                this.endingPose,
+                this.constraints,
+                driveTrain::getPose,
+                driveTrain::getChassisSpeeds,
+                (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds),
+                driveController,
+                AutoConstants.kRobotConfig.get(),
+                driveTrain));
     }
 }
