@@ -7,8 +7,6 @@ import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
 
-import java.util.Optional;
-
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;

@@ -3,9 +3,6 @@ package frc.robot.autons;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.controllers.PathFollowingController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -14,9 +11,6 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.commands.PathfindingCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
@@ -45,11 +39,6 @@ public class FollowPath extends Auton {
     }
 
     private Pose2d endingPose;
-    private PathFollowingController driveController = new PPHolonomicDriveController(
-            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                    0.0),
-            new PIDConstants(AutoConstants.kPThetaController,
-                    AutoConstants.kIThetaController, 0.0));
     private PathConstraints constraints = new PathConstraints(
             DriveConstants.kMaxSpeedMetersPerSecond,
             AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -64,28 +53,20 @@ public class FollowPath extends Auton {
     public FollowPath(Position position) {
         super(Optional.empty());
 
-        endingPose = position.getPose();
+        this.endingPose = position.getPose();
+        this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(this.endingPose, this.endingPose),
+                this.constraints,
+                this.idealStartingState, this.goalEndState);
 
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
-                this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath), constraints,
+                PathPlannerPath dashboardPath = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(activePath),
+                        constraints,
                         idealStartingState, goalEndState);
-                this.dashboard.addPath(path);
+                this.dashboard.addPath(dashboardPath);
             }
         });
 
-        super.addCommands(
-                // Commands.runOnce(() -> this.driveTrain.resetOdometry(this.startingPose),
-                // this.driveTrain),
-                // AutoBuilder.pathfindToPose(endingPose, constraints)
-                new PathfindingCommand1038(
-                        this.endingPose,
-                        this.constraints,
-                        driveTrain::getPose,
-                        driveTrain::getChassisSpeeds,
-                        (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds),
-                        driveController,
-                        AutoConstants.kRobotConfig.get(),
-                        driveTrain));
+        super.addCommands(AutoBuilder.pathfindThenFollowPath(path, constraints));
     }
 }

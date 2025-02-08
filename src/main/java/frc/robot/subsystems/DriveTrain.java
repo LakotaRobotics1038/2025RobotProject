@@ -4,21 +4,17 @@
 
 package frc.robot.subsystems;
 
-import java.lang.StackWalker.Option;
 import java.util.Optional;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.controllers.PPLTVController;
-import com.pathplanner.lib.controllers.PathFollowingController;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
-import edu.wpi.first.math.controller.LTVUnicycleController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,7 +25,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.AutoConstants;
@@ -91,26 +86,26 @@ public class DriveTrain extends SubsystemBase {
     private DriveTrain() {
         super();
         gyro.reset();
-        // PPHolonomicDriveController driveController = new PPHolonomicDriveController(
-        // new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-        // 0.0),
-        // new PIDConstants(AutoConstants.kPThetaController,
-        // AutoConstants.kIThetaController, 0.0));
-        // AutoBuilder.configure(
-        // this::getPose,
-        // this::resetPose,
-        // this::getChassisSpeeds,
-        // this::applyChassisSpeeds,
-        // driveController,
-        // AutoConstants.kRobotConfig.get(),
-        // () -> {
-        // Optional<Alliance> alliance = DriverStation.getAlliance();
-        // if (alliance.isPresent()) {
-        // return alliance.get() == DriverStation.Alliance.Red;
-        // }
-        // return false;
-        // },
-        // this);
+        PPHolonomicDriveController driveController = new PPHolonomicDriveController(
+                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                        0.0),
+                new PIDConstants(AutoConstants.kPThetaController,
+                        AutoConstants.kIThetaController, 0.0));
+        AutoBuilder.configure(
+                this::getPose,
+                this::resetPose,
+                this::getChassisSpeeds,
+                this::applyChassisSpeeds,
+                driveController,
+                AutoConstants.kRobotConfig.get(),
+                () -> {
+                    Optional<Alliance> alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this);
     }
 
     @Override
