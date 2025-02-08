@@ -129,9 +129,7 @@ public class FollowPathCommand1038 extends Command {
                 this.goalEndState);
 
         if (shouldFlipPath.getAsBoolean() && !originalPath.preventFlipping) {
-            path = originalPath.flipPath();
-        } else {
-            path = originalPath;
+            path = path.flipPath();
         }
         ChassisSpeeds currentSpeeds = speedsSupplier.get();
 
