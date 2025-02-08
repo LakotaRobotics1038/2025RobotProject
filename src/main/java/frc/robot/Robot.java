@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Singleton instances that need to be created but not referenced
         DriverJoystick.getInstance();
-        OperatorJoystick.getInstance();
+        OperatorPanel.getInstance();
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
