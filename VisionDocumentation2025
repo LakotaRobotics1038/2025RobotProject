@@ -23,7 +23,22 @@
 
 ## How To Calibrate Camera
 --------------------------
-
+1) Open PhotonVision UI
+2) Navigate to PhotonVision's Calibration Section in the UI under the Camera tab.
+3) Select a calibration resolution and populate the pattern spacing, marker size, and board size.
+- If you're using the provided charuco board set the pattern spacing to the size of the black, marker size to the size of the aruco marker and board size to the size of the cheruco board.
+4) Make sure the voard overlay matches the board in the image to ensure a stronger calibration. Capture enough images to cover the Camera's FOV (minimum 12). Once you've got your images click "Finish calibration" then wait.
+- Make sure that the FInal Calibration has an FOV of the calibration is within 10 degreess of the camera's specified FOV, the mean error should be less than 1 pixel.
+### Tips
+1) Ensure your targets are in different positions and angles, with as big of a difference as possible.
+2) Ensure your calibration target is as big as possible.
+3) Ensure your target has enough white border around it.
+4) Ensure your camera stays in one position during calibration.
+5) All images should be from varying distances and angles.
+6) Take at least one image that covers the entire image area.
+7) Have good lighting.
+8) Ensure that the target doesn't bend of fold in any way.
+9) Avoid having targets that are parallel to the lens of the camera.
 
 
 ## How To Configure Settings For The Robot (Team)
