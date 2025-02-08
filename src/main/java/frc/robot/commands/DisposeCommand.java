@@ -6,16 +6,16 @@ import frc.robot.subsystems.Acquisition;
 
 public class DisposeCommand extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
-    private double secondsToDispose = 0.0;
+    private double secondsToDispose;
     private Timer timer = new Timer();
 
     public DisposeCommand() {
-        super.addRequirements(acquisition);
+        this(0.0);
     }
 
     public DisposeCommand(double secondsToDispose) {
         this.secondsToDispose = secondsToDispose;
-
+        super.addRequirements(acquisition);
     }
 
     @Override
@@ -26,15 +26,13 @@ public class DisposeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
+        if (!(acquisition.getTopLaser() && acquisition.getBottomLaser())) {
             if (!(acquisition.getAlgaeSwitch())) {
                 return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     @Override
