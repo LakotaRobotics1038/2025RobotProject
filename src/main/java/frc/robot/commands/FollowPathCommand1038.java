@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 /** Base command for following a path */
 public class FollowPathCommand1038 extends Command {
     private final Timer timer = new Timer();
-    private final PathPlannerPath originalPath;
+    private PathPlannerPath originalPath;
     private final Supplier<Pose2d> poseSupplier;
     private final Supplier<ChassisSpeeds> speedsSupplier;
     private final BiConsumer<ChassisSpeeds, DriveFeedforwards> output;
@@ -84,8 +84,9 @@ public class FollowPathCommand1038 extends Command {
             RobotConfig robotConfig,
             BooleanSupplier shouldFlipPath,
             Subsystem... requirements) {
-        this.originalPath = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), constraints,
-                idealStartingState, goalEndState);
+        // this.originalPath = new
+        // PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), constraints,
+        // idealStartingState, goalEndState);
         this.poses = poses;
         this.constraints = constraints;
         this.idealStartingState = idealStartingState;
