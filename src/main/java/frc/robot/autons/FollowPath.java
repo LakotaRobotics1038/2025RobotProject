@@ -1,5 +1,6 @@
 package frc.robot.autons;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -14,7 +15,9 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.FollowPathCommand1038;
 import frc.robot.commands.PathfindingCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
@@ -80,9 +83,18 @@ public class FollowPath extends Auton {
 
         super.addCommands(
                 AutoBuilder.pathfindToPose(endingPose, constraints),
-                this.followPathCommand(
-                        new PathPlannerPath(PathPlannerPath.waypointsFromPoses(this.startingPose, this.endingPose),
-                                this.constraints, this.idealStartingState, this.goalEndState)));
+                new FollowPathCommand1038(List.of(endingPose), constraints, idealStartingState, goalEndState,
+                        driveTrain::getPose,
+                        driveTrain::getChassisSpeeds,
+                        (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds), driveController,
+                        AutoConstants.kRobotConfig.get(),
+                        () -> {
+                            if (DriverStation.getAlliance().get() != null) {
+                                return this.alliance == DriverStation.Alliance.Red;
+                            }
+                            return false;
+                        },
+                        driveTrain));
         // new PathfindingCommand1038(
         // this.endingPose,
         // this.constraints,
