@@ -15,9 +15,9 @@ public class SetAcquisitionPositionCommand extends Command {
     private Shoulder shoulder = Shoulder.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Arm arm = Arm.getInstance();
-    private SetAcquisitionPositionSetpoint setAcquisitionPositionSetpoint;
+    private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
 
-    public enum SetAcquisitionPositionSetpoint {
+    public enum AcquisitionPositionSetpoint {
 
         L1Coral(ShoulderSetpoints.L1Coral, WristSetPoints.L1Coral, ArmSetpoint.L1Coral),
         L2Coral(ShoulderSetpoints.L2Coral, WristSetPoints.L2Coral, ArmSetpoint.L2Coral),
@@ -33,7 +33,7 @@ public class SetAcquisitionPositionCommand extends Command {
         private WristSetPoints wristSetPoint;
         private ArmSetpoint armSetpoint;
 
-        private SetAcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetPoints wristSetPoint,
+        private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetPoints wristSetPoint,
                 ArmSetpoint armSetpoint) {
             this.shoulderSetpoint = shoulderSetpoint;
             this.wristSetPoint = wristSetPoint;
@@ -53,18 +53,18 @@ public class SetAcquisitionPositionCommand extends Command {
         }
     }
 
-    public SetAcquisitionPositionCommand(SetAcquisitionPositionSetpoint setAcquisitionPositionSetpoint) {
+    public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
         addRequirements(shoulder, wrist, arm);
-        this.setAcquisitionPositionSetpoint = setAcquisitionPositionSetpoint;
+        this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
     }
 
     public void initialize() {
         wrist.enable();
         shoulder.enable();
         arm.enable();
-        shoulder.setSetpoint(this.setAcquisitionPositionSetpoint.getShoulderSetpoint());
-        wrist.setSetpoint(this.setAcquisitionPositionSetpoint.getWristSetpoint());
-        arm.setSetpoint(this.setAcquisitionPositionSetpoint.getArmSetpoint());
+        shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+        wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+        arm.setSetpoint(this.acquisitionPositionSetpoint.getArmSetpoint());
     }
 
     public void execute() {
@@ -72,7 +72,7 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
-        return (wrist.onTarget() && shoulder.onTarget() && arm.onTarget()) || arm.isPressed();
+        return wrist.onTarget() && shoulder.onTarget() && arm.onTarget();
     }
 
     public void end(boolean interrupted) {
