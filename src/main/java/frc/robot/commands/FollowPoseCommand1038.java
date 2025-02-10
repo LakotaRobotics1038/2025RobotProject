@@ -27,7 +27,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /** Base command for following a path */
-public class FollowPathCommand1038 extends Command {
+public class FollowPoseCommand1038 extends Command {
     private final Timer timer = new Timer();
     private final Supplier<Pose2d> poseSupplier;
     private final Supplier<ChassisSpeeds> speedsSupplier;
@@ -39,6 +39,7 @@ public class FollowPathCommand1038 extends Command {
 
     private PathPlannerPath path;
     private List<Pose2d> poses;
+    private final Pose2d endingPose;
     private final PathConstraints constraints;
     private final IdealStartingState idealStartingState;
     private final GoalEndState goalEndState;
@@ -47,7 +48,7 @@ public class FollowPathCommand1038 extends Command {
     /**
      * Construct a base path following command
      *
-     * @param path           The path to follow
+     * @param endingPose     The pose to go to
      * @param poseSupplier   Function that supplies the current field-relative pose
      *                       of the robot
      * @param speedsSupplier Function that supplies the current robot-relative
@@ -71,8 +72,8 @@ public class FollowPathCommand1038 extends Command {
      * @param requirements   Subsystems required by this command, usually just the
      *                       drive subsystem
      */
-    public FollowPathCommand1038(
-            List<Pose2d> poses,
+    public FollowPoseCommand1038(
+            Pose2d endingPose,
             PathConstraints constraints,
             IdealStartingState idealStartingState,
             GoalEndState goalEndState,
@@ -86,7 +87,7 @@ public class FollowPathCommand1038 extends Command {
         // this.originalPath = new
         // PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), constraints,
         // idealStartingState, goalEndState);
-        this.poses = poses;
+        this.endingPose = endingPose;
         this.constraints = constraints;
         this.idealStartingState = idealStartingState;
         this.goalEndState = goalEndState;
@@ -116,8 +117,7 @@ public class FollowPathCommand1038 extends Command {
     @Override
     public void initialize() {
         Pose2d currentPose = poseSupplier.get();
-        poses = new ArrayList<>(poses);
-        poses.add(0, currentPose);
+        this.poses = Arrays.asList(currentPose, this.endingPose);
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
                 this.goalEndState);
@@ -229,9 +229,8 @@ public class FollowPathCommand1038 extends Command {
      * @return Path following warmup command
      */
     public static Command warmupCommand() {
-        return new FollowPathCommand1038(
-                List.of(new Pose2d(0.0, 0.0, Rotation2d.kZero), new Pose2d(6.0, 6.0,
-                        Rotation2d.kZero)),
+        return new FollowPoseCommand1038(
+                new Pose2d(0.0, 0.0, Rotation2d.kZero),
                 new PathConstraints(4.0, 4.0, 4.0, 4.0),
                 new IdealStartingState(0.0, Rotation2d.kZero),
                 new GoalEndState(0.0, Rotation2d.kCW_90deg),
@@ -248,7 +247,7 @@ public class FollowPathCommand1038 extends Command {
                                 0.048, 5.0, 1.2, DCMotor.getKrakenX60(1).withReduction(6.14), 60.0, 1),
                         0.55),
                 () -> true)
-                .andThen(Commands.print("[PathPlanner] FollowPathCommand finished warmup"))
+                .andThen(Commands.print("[PathPlanner] FollowPoseCommand finished warmup"))
                 .ignoringDisable(true);
     }
 }

@@ -16,9 +16,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.FollowPathCommand1038;
-import frc.robot.commands.PathfindingCommand1038;
+import frc.robot.commands.FollowPoseCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
@@ -82,27 +80,22 @@ public class FollowPath extends Auton {
         });
 
         super.addCommands(
-                AutoBuilder.pathfindToPose(endingPose, constraints),
-                new FollowPathCommand1038(List.of(endingPose), constraints, idealStartingState, goalEndState,
-                        driveTrain::getPose,
-                        driveTrain::getChassisSpeeds,
+                AutoBuilder.pathfindToPose(this.endingPose, this.constraints),
+                new FollowPoseCommand1038(
+                        this.endingPose,
+                        this.constraints,
+                        this.idealStartingState,
+                        this.goalEndState,
+                        this.driveTrain::getPose,
+                        this.driveTrain::getChassisSpeeds,
                         (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds), driveController,
                         AutoConstants.kRobotConfig.get(),
                         () -> {
-                            if (DriverStation.getAlliance().get() != null) {
+                            if (DriverStation.getAlliance().isPresent()) {
                                 return this.alliance == DriverStation.Alliance.Red;
                             }
                             return false;
                         },
-                        driveTrain));
-        // new PathfindingCommand1038(
-        // this.endingPose,
-        // this.constraints,
-        // driveTrain::getPose,
-        // driveTrain::getChassisSpeeds,
-        // (speeds, driveForwards) -> driveTrain.applyChassisSpeeds(speeds),
-        // driveController,
-        // AutoConstants.kRobotConfig.get(),
-        // driveTrain)
+                        this.driveTrain));
     }
 }
