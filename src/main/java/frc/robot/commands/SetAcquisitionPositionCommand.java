@@ -67,10 +67,6 @@ public class SetAcquisitionPositionCommand extends Command {
         arm.setSetpoint(this.acquisitionPositionSetpoint.getArmSetpoint());
     }
 
-    public void execute() {
-
-    }
-
     public boolean isFinished() {
         return wrist.onTarget() && shoulder.onTarget() && arm.onTarget();
     }
