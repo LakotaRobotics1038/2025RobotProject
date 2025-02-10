@@ -29,7 +29,6 @@ import java.util.function.Supplier;
 /** Base command for following a path */
 public class FollowPathCommand1038 extends Command {
     private final Timer timer = new Timer();
-    private PathPlannerPath originalPath;
     private final Supplier<Pose2d> poseSupplier;
     private final Supplier<ChassisSpeeds> speedsSupplier;
     private final BiConsumer<ChassisSpeeds, DriveFeedforwards> output;
@@ -40,9 +39,9 @@ public class FollowPathCommand1038 extends Command {
 
     private PathPlannerPath path;
     private List<Pose2d> poses;
-    private PathConstraints constraints;
-    private IdealStartingState idealStartingState;
-    private GoalEndState goalEndState;
+    private final PathConstraints constraints;
+    private final IdealStartingState idealStartingState;
+    private final GoalEndState goalEndState;
     private PathPlannerTrajectory trajectory;
 
     /**
@@ -99,7 +98,7 @@ public class FollowPathCommand1038 extends Command {
         this.shouldFlipPath = shouldFlipPath;
         this.eventScheduler = new EventScheduler();
 
-        Set<Subsystem> driveRequirements = Set.of(requirements);
+        // Set<Subsystem> driveRequirements = Set.of(requirements);
         addRequirements(requirements);
 
         // Add all event scheduler requirements to this command's requirements
@@ -112,11 +111,6 @@ public class FollowPathCommand1038 extends Command {
         // }
         // addRequirements(eventReqs);
 
-        // this.path = this.originalPath;
-        // Ensure the ideal trajectory is generated
-        // Optional<PathPlannerTrajectory> idealTrajectory =
-        // this.path.getIdealTrajectory(this.robotConfig);
-        // idealTrajectory.ifPresent(traj -> this.trajectory = traj);
     }
 
     @Override
@@ -127,6 +121,9 @@ public class FollowPathCommand1038 extends Command {
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
                 this.goalEndState);
+
+        Optional<PathPlannerTrajectory> idealTrajectory = this.path.getIdealTrajectory(this.robotConfig);
+        idealTrajectory.ifPresent(traj -> this.trajectory = traj);
 
         if (shouldFlipPath.getAsBoolean() && !path.preventFlipping) {
             path = path.flipPath();
