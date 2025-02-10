@@ -6,7 +6,11 @@ public class ControlPanelSetpoint {
 
     private AcquisitionPositionSetpoint lastInput;
 
+    private boolean isLeft;
+
     private ControlPanelSetpoint() {
+        this.lastInput = AcquisitionPositionSetpoint.Storage;
+        OperatorPanel.getInstance().updateIsLeft();
 
     }
 
@@ -20,11 +24,19 @@ public class ControlPanelSetpoint {
     }
 
     public AcquisitionPositionSetpoint getLastInput() {
-        return lastInput;
+        return this.lastInput;
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
         this.lastInput = lastInput;
+    }
+
+    public void setIsLeft(boolean isLeft) {
+        this.isLeft = isLeft;
+    }
+
+    public boolean getIsLeft() {
+        return this.isLeft;
     }
 
 }
