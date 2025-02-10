@@ -26,7 +26,10 @@ public class DisposeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (!(acquisition.getTopLaser() && acquisition.getBottomLaser())) {
+        // if neither acquisition laser returns true, move on to checking the algae
+        // switch. command is finished if all three sensors return false.
+
+        if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
             if (!(acquisition.getAlgaeSwitch())) {
                 return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
             }
