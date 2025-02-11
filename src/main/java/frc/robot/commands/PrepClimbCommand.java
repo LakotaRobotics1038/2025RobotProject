@@ -28,9 +28,9 @@ public class PrepClimbCommand extends Command {
 
     @Override
     public void execute() {
-        arm.setSetpoint(ArmSetpoint.Storage);
-        wrist.setSetpoint(WristSetPoints.STORAGE);
-        shoulder.setSetpoint(ShoulderSetpoints.Storage);
+        arm.setSetpoint(ArmSetpoint.Climb);
+        wrist.setSetpoint(WristSetPoints.Climb);
+        shoulder.setSetpoint(ShoulderSetpoints.Climb);
         climb.runClimbDown();
     }
 
