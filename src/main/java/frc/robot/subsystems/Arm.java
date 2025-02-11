@@ -14,8 +14,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ArmConstants;
-import frc.robot.constants.ArmConstants.ArmSetpoint;
 import frc.robot.constants.NeoMotorConstants;
+import frc.robot.constants.ArmConstants.ArmSetpoints;
 
 public class Arm extends SubsystemBase {
     private SparkFlex armMotor = new SparkFlex(ArmConstants.kArmMotorPort, MotorType.kBrushless);
@@ -110,7 +110,7 @@ public class Arm extends SubsystemBase {
      *
      * @param setpoint the setpoint for the subsystem
      */
-    public void setSetpoint(ArmSetpoint setpoint) {
+    public void setSetpoint(ArmSetpoints setpoint) {
         setSetpoint(setpoint.position);
     }
 
