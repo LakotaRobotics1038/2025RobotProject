@@ -30,7 +30,7 @@ public class DisposeCommand extends Command {
         // switch. command is finished if all three sensors return false.
 
         if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
-            if (!(acquisition.getAlgaeSwitch())) {
+            if (!acquisition.getAlgaeSwitch()) {
                 return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
             }
         }
