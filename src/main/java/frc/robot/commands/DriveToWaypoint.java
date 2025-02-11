@@ -27,7 +27,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /** Base command for following a path */
-public class FollowPoseCommand1038 extends Command {
+public class DriveToWaypoint extends Command {
     private final Timer timer = new Timer();
     private final Supplier<Pose2d> poseSupplier;
     private final Supplier<ChassisSpeeds> speedsSupplier;
@@ -38,7 +38,6 @@ public class FollowPoseCommand1038 extends Command {
     private final EventScheduler eventScheduler;
 
     private PathPlannerPath path;
-    private List<Pose2d> poses;
     private final Pose2d endingPose;
     private final PathConstraints constraints;
     private final IdealStartingState idealStartingState;
@@ -72,7 +71,7 @@ public class FollowPoseCommand1038 extends Command {
      * @param requirements   Subsystems required by this command, usually just the
      *                       drive subsystem
      */
-    public FollowPoseCommand1038(
+    public DriveToWaypoint(
             Pose2d endingPose,
             PathConstraints constraints,
             IdealStartingState idealStartingState,
@@ -84,9 +83,6 @@ public class FollowPoseCommand1038 extends Command {
             RobotConfig robotConfig,
             BooleanSupplier shouldFlipPath,
             Subsystem... requirements) {
-        // this.originalPath = new
-        // PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), constraints,
-        // idealStartingState, goalEndState);
         this.endingPose = endingPose;
         this.constraints = constraints;
         this.idealStartingState = idealStartingState;
@@ -99,25 +95,14 @@ public class FollowPoseCommand1038 extends Command {
         this.shouldFlipPath = shouldFlipPath;
         this.eventScheduler = new EventScheduler();
 
-        // Set<Subsystem> driveRequirements = Set.of(requirements);
         addRequirements(requirements);
-
-        // Add all event scheduler requirements to this command's requirements
-        // Set<Subsystem> eventReqs =
-        // EventScheduler.getSchedulerRequirements(this.originalPath);
-        // if (!Collections.disjoint(driveRequirements, eventReqs)) {
-        // throw new IllegalArgumentException(
-        // "Events that are triggered during path following cannot require the drive
-        // subsystem");
-        // }
-        // addRequirements(eventReqs);
 
     }
 
     @Override
     public void initialize() {
         Pose2d currentPose = poseSupplier.get();
-        this.poses = Arrays.asList(currentPose, this.endingPose);
+        List<Pose2d> poses = Arrays.asList(currentPose, this.endingPose);
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
                 this.goalEndState);
@@ -223,13 +208,13 @@ public class FollowPoseCommand1038 extends Command {
     }
 
     /**
-     * Create a command to warmup on-the-fly generation, replanning, and the path
+     * Create a command to warmup on-the-fly generation, re-planning, and the path
      * following command
      *
      * @return Path following warmup command
      */
     public static Command warmupCommand() {
-        return new FollowPoseCommand1038(
+        return new DriveToWaypoint(
                 new Pose2d(0.0, 0.0, Rotation2d.kZero),
                 new PathConstraints(4.0, 4.0, 4.0, 4.0),
                 new IdealStartingState(0.0, Rotation2d.kZero),

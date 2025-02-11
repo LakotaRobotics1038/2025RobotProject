@@ -1,6 +1,5 @@
 package frc.robot.autons;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -16,22 +15,22 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.commands.FollowPoseCommand1038;
+import frc.robot.commands.DriveToWaypoint;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 
 public class FollowPath extends Auton {
-    private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Dashboard dashboard = Dashboard.getInstance();
+    private final DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Dashboard dashboard = Dashboard.getInstance();
 
     public enum Position {
         TEST(3.165, 3.947, new Rotation2d(0));
 
-        private double x;
-        private double y;
-        private Rotation2d rotation;
+        private final double x;
+        private final double y;
+        private final Rotation2d rotation;
 
         private Position(double x, double y, Rotation2d rotation) {
             this.x = x;
@@ -45,28 +44,21 @@ public class FollowPath extends Auton {
     }
 
     private Pose2d startingPose;
-    private Pose2d endingPose;
-    private PathConstraints constraints = new PathConstraints(
+    private final PathConstraints constraints = new PathConstraints(
             DriveConstants.kMaxSpeedMetersPerSecond,
             AutoConstants.kMaxAccelerationMetersPerSecondSquared,
             AutoConstants.kMaxAngularSpeedRadiansPerSecond,
             AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared);
-    private IdealStartingState idealStartingState = new IdealStartingState(
+    private final IdealStartingState idealStartingState = new IdealStartingState(
             driveTrain.getChassisSpeeds().vxMetersPerSecond,
             Rotation2d.fromDegrees(driveTrain.getHeading()));
-    private GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
-    private PathPlannerPath path;
-    private PathFollowingController driveController = new PPHolonomicDriveController(
-            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                    0.0),
-            new PIDConstants(AutoConstants.kPThetaController,
-                    AutoConstants.kIThetaController, 0.0));
+    private final GoalEndState goalEndState = new GoalEndState(0, Rotation2d.kZero);
 
     public FollowPath(Position position) {
         super(Optional.empty());
 
-        this.endingPose = position.getPose();
-        this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(this.endingPose, this.endingPose),
+        Pose2d endingPose = position.getPose();
+        PathPlannerPath path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(endingPose, endingPose),
                 this.constraints,
                 this.idealStartingState, this.goalEndState);
 
@@ -79,10 +71,15 @@ public class FollowPath extends Auton {
             }
         });
 
+        PathFollowingController driveController = new PPHolonomicDriveController(
+                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                        0.0),
+                new PIDConstants(AutoConstants.kPThetaController,
+                        AutoConstants.kIThetaController, 0.0));
         super.addCommands(
-                AutoBuilder.pathfindToPose(this.endingPose, this.constraints),
-                new FollowPoseCommand1038(
-                        this.endingPose,
+                AutoBuilder.pathfindToPose(endingPose, this.constraints),
+                new DriveToWaypoint(
+                        endingPose,
                         this.constraints,
                         this.idealStartingState,
                         this.goalEndState,

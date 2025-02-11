@@ -100,10 +100,7 @@ public class DriveTrain extends SubsystemBase {
                 AutoConstants.kRobotConfig.get(),
                 () -> {
                     Optional<Alliance> alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
+                    return alliance.filter(value -> value == Alliance.Red).isPresent();
                 },
                 this);
     }
