@@ -26,7 +26,6 @@ public class ArmConstants {
         Storage(0.0),
         FeederStation(0.0),
         Climb(0.0);
-        ;
 
         public final double position;
 
