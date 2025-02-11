@@ -27,7 +27,8 @@ public class SetAcquisitionPositionCommand extends Command {
         L34Algae(ShoulderSetpoints.L34Algae, WristSetPoints.L34Algae, ArmSetpoint.L34Algae),
         Processor(ShoulderSetpoints.Processor, WristSetPoints.Processor, ArmSetpoint.Processor),
         FeederStation(ShoulderSetpoints.FeederStation, WristSetPoints.FeederStation, ArmSetpoint.FeederStation),
-        Storage(ShoulderSetpoints.Storage, WristSetPoints.Storage, ArmSetpoint.Storage);
+        Storage(ShoulderSetpoints.Storage, WristSetPoints.Storage, ArmSetpoint.Storage),
+        Barge(ShoulderSetpoints.Barge, WristSetPoints.Barge, ArmSetpoint.Barge);
 
         private ShoulderSetpoints shoulderSetpoint;
         private WristSetPoints wristSetPoint;

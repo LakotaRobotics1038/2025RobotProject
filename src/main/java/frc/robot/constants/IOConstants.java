@@ -16,4 +16,5 @@ public final class IOConstants {
     public static final int kProcesssorButtonNumber = 0;
     public static final int kFeederButtonNumber = 0;
     public static final int kDisposeButtonNumber = 0;
+    public static final int kBargeButtonNumber = 0;
 }
