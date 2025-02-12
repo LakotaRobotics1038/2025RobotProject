@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commands.DriveToWaypoint;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveConstants;
@@ -151,6 +152,23 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         AutoBuilder.configure(
                 () -> this.getState().Pose,
                 this::resetPose,
+                () -> this.getState().Speeds,
+                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+                    this.setControl(
+                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons())
+                    );
+                },
+                new PPHolonomicDriveController(
+                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, AutoConstants.kDController),
+                        new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, AutoConstants.kDThetaController)),
+                AutoConstants.kRobotConfig.get(),
+                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                this
+        );
+        DriveToWaypoint.configure(
+                () -> this.getState().Pose,
                 () -> this.getState().Speeds,
                 (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
                     this.setControl(

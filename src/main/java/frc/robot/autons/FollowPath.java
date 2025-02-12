@@ -64,9 +64,6 @@ public class FollowPath extends Auton {
         super(Optional.empty());
 
         Pose2d endingPose = position.getPose();
-        PathPlannerPath path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(endingPose, endingPose),
-                this.constraints,
-                this.idealStartingState, this.goalEndState);
 
         PathPlannerLogging.setLogActivePathCallback((activePath) -> {
             if (activePath.size() >= 2) {
@@ -77,32 +74,12 @@ public class FollowPath extends Auton {
             }
         });
 
-        PathFollowingController driveController = new PPHolonomicDriveController(
-                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                        0.0),
-                new PIDConstants(AutoConstants.kPThetaController,
-                        AutoConstants.kIThetaController, 0.0));
         super.addCommands(
                 AutoBuilder.pathfindToPose(endingPose, this.constraints),
                 new DriveToWaypoint(
                         endingPose,
                         this.constraints,
                         this.idealStartingState,
-                        this.goalEndState,
-                        () -> this.driveTrain.getState().Pose,
-                        () -> this.driveTrain.getState().Speeds,
-                        (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                            this.driveTrain.setControl(
-                                    new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                            .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                            .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons())
-                            );
-                        },
-                        new PPHolonomicDriveController(
-                                new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, AutoConstants.kDController),
-                                new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, AutoConstants.kDThetaController)),
-                        AutoConstants.kRobotConfig.get(),
-                        () -> DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Red,
-                        this.driveTrain));
+                        this.goalEndState));
     }
 }
