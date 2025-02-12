@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
-
 public class OperatorState {
     private AcquisitionPositionSetpoint lastInput;
     private ScoringSide scoringSide;

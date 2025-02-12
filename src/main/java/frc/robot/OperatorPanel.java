@@ -9,7 +9,6 @@ import frc.robot.OperatorState.ScoringSide;
 import frc.robot.commands.AcquireCommand;
 import frc.robot.commands.DisposeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
 import frc.robot.constants.IOConstants;
 
 public class OperatorPanel extends GenericHID {
