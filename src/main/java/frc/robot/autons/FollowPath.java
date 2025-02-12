@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.commands.DriveToWaypoint;
+import frc.robot.commands.DriveToWaypoint.DriveWaypoints;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Dashboard;
@@ -77,7 +78,7 @@ public class FollowPath extends Auton {
         super.addCommands(
                 AutoBuilder.pathfindToPose(endingPose, this.constraints),
                 new DriveToWaypoint(
-                        endingPose,
+                        DriveWaypoints.Algae23,
                         this.constraints,
                         this.idealStartingState,
                         this.goalEndState));

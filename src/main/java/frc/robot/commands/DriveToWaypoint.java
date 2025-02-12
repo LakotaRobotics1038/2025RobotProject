@@ -11,6 +11,8 @@ import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.PPLibTelemetry;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,26 +38,69 @@ public class DriveToWaypoint extends Command {
     private final EventScheduler eventScheduler;
 
     private PathPlannerPath path;
-    private final Pose2d endingPose;
+    private final DriveWaypoints driveWaypoint;
     private final PathConstraints constraints;
     private final IdealStartingState idealStartingState;
     private final GoalEndState goalEndState;
     private PathPlannerTrajectory trajectory;
 
+    public enum DriveWaypoints {
+        LeftCoral1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftCoral2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftoCoral3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftCoral4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightCoral1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightCoral2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightCoral3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightCoral4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        Algae23(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        Algae34(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        Processor(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation5(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation6(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation7(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation8(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftFeederStation9(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation5(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation6(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation7(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation8(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        RightFeederStation9(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
+
+        private Pose2d pose;
+
+        private DriveWaypoints(Pose2d pose) {
+            this.pose = pose;
+        }
+
+        public Pose2d getPose() {
+            return pose;
+        }
+
+    }
+
     /**
      * Construct a base path following command
      *
-     * @param endingPose         The pose to go to
+     * @param driveWaypoint      The waypoint to reach
      * @param constraints        The constraints of the path
      * @param idealStartingState The ideal starting state of the path
      * @param goalEndState       The ending state of the path
      */
     public DriveToWaypoint(
-            Pose2d endingPose,
+            DriveWaypoints driveWaypoint,
             PathConstraints constraints,
             IdealStartingState idealStartingState,
             GoalEndState goalEndState) {
-        this.endingPose = endingPose;
+        this.driveWaypoint = driveWaypoint;
         this.constraints = constraints;
         this.idealStartingState = idealStartingState;
         this.goalEndState = goalEndState;
@@ -68,7 +113,7 @@ public class DriveToWaypoint extends Command {
     @Override
     public void initialize() {
         Pose2d currentPose = poseSupplier.get();
-        List<Pose2d> poses = Arrays.asList(currentPose, this.endingPose);
+        List<Pose2d> poses = Arrays.asList(currentPose, this.driveWaypoint.getPose());
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
                 this.goalEndState);
@@ -90,10 +135,10 @@ public class DriveToWaypoint extends Command {
             boolean idealVelocity = Math.abs(linearVel - path.getIdealStartingState().velocityMPS()) <= 0.25;
             boolean idealRotation = !robotConfig.isHolonomic
                     || Math.abs(
-                    currentPose
-                            .getRotation()
-                            .minus(path.getIdealStartingState().rotation())
-                            .getDegrees()) <= 30.0;
+                            currentPose
+                                    .getRotation()
+                                    .minus(path.getIdealStartingState().rotation())
+                                    .getDegrees()) <= 30.0;
             if (idealVelocity && idealRotation) {
                 // We can use the ideal trajectory
                 trajectory = path.getIdealTrajectory(robotConfig).orElseThrow();
@@ -174,12 +219,12 @@ public class DriveToWaypoint extends Command {
     }
 
     public static void configure(Supplier<Pose2d> poseSupplier,
-                          Supplier<ChassisSpeeds> speedsSupplier,
-                          BiConsumer<ChassisSpeeds, DriveFeedforwards> output,
-                          PathFollowingController controller,
-                          RobotConfig robotConfig,
-                          BooleanSupplier shouldFlipPath,
-                          Subsystem... requirements) {
+            Supplier<ChassisSpeeds> speedsSupplier,
+            BiConsumer<ChassisSpeeds, DriveFeedforwards> output,
+            PathFollowingController controller,
+            RobotConfig robotConfig,
+            BooleanSupplier shouldFlipPath,
+            Subsystem... requirements) {
         DriveToWaypoint.poseSupplier = poseSupplier;
         DriveToWaypoint.speedsSupplier = speedsSupplier;
         DriveToWaypoint.output = output;
