@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.autons.FollowPath;
-import frc.robot.commands.DriveToWaypoint;
+import frc.robot.commands.DriveToWaypointCommand;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;

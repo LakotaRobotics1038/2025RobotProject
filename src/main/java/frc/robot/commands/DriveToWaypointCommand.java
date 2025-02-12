@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 /**
  * Base command for following a path
  */
-public class DriveToWaypoint extends Command {
+public class DriveToWaypointCommand extends Command {
     private final Timer timer = new Timer();
     private static Supplier<Pose2d> poseSupplier;
     private static Supplier<ChassisSpeeds> speedsSupplier;
@@ -95,7 +95,7 @@ public class DriveToWaypoint extends Command {
      * @param idealStartingState The ideal starting state of the path
      * @param goalEndState       The ending state of the path
      */
-    public DriveToWaypoint(
+    public DriveToWaypointCommand(
             DriveWaypoints driveWaypoint,
             PathConstraints constraints,
             IdealStartingState idealStartingState,
@@ -118,7 +118,8 @@ public class DriveToWaypoint extends Command {
                 this.idealStartingState,
                 this.goalEndState);
 
-        Optional<PathPlannerTrajectory> idealTrajectory = this.path.getIdealTrajectory(DriveToWaypoint.robotConfig);
+        Optional<PathPlannerTrajectory> idealTrajectory = this.path
+                .getIdealTrajectory(DriveToWaypointCommand.robotConfig);
         idealTrajectory.ifPresent(traj -> this.trajectory = traj);
 
         if (shouldFlipPath.getAsBoolean() && !path.preventFlipping) {
@@ -225,12 +226,12 @@ public class DriveToWaypoint extends Command {
             RobotConfig robotConfig,
             BooleanSupplier shouldFlipPath,
             Subsystem... requirements) {
-        DriveToWaypoint.poseSupplier = poseSupplier;
-        DriveToWaypoint.speedsSupplier = speedsSupplier;
-        DriveToWaypoint.output = output;
-        DriveToWaypoint.controller = controller;
-        DriveToWaypoint.robotConfig = robotConfig;
-        DriveToWaypoint.shouldFlipPath = shouldFlipPath;
-        DriveToWaypoint.requirements = requirements;
+        DriveToWaypointCommand.poseSupplier = poseSupplier;
+        DriveToWaypointCommand.speedsSupplier = speedsSupplier;
+        DriveToWaypointCommand.output = output;
+        DriveToWaypointCommand.controller = controller;
+        DriveToWaypointCommand.robotConfig = robotConfig;
+        DriveToWaypointCommand.shouldFlipPath = shouldFlipPath;
+        DriveToWaypointCommand.requirements = requirements;
     }
 }
