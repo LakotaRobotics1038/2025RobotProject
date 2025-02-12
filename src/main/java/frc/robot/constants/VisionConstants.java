@@ -18,8 +18,8 @@ public final class VisionConstants {
     public static final String kEnabled0Topic = "enable0";
     public static final String kEnabled1Topic = "enable1";
 
-    public static final double width = 1280;
-    public static final double height = 720;
+    public static final double width = 800;
+    public static final double height = 600;
     public static final double fov = 100;
 
     public static final double driveP = 0.005;
