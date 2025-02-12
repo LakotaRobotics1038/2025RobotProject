@@ -32,7 +32,8 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        // this.autoChooser.addOption("Score 2 In Amp Position 1", AutonChoices.AmpAuto);
+        // this.autoChooser.addOption("Score 2 In Amp Position 1",
+        // AutonChoices.AmpAuto);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
@@ -57,7 +58,7 @@ public class AutonSelector {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         switch (this.autoChooser.getSelected()) {
             // case AmpAuto:
-            //     return new ScoreInAmp(alliance);
+            // return new ScoreInAmp(alliance);
             default:
                 return null;
         }
