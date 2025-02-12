@@ -27,7 +27,7 @@ public class Acquisition extends SubsystemBase {
         acquisitionConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
-                .inverted(false);
+                .inverted(true);
         this.acquisitionMotor.configure(acquisitionConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
     }

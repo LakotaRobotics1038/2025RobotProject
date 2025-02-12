@@ -101,7 +101,7 @@ public class Arm extends SubsystemBase {
      *
      * @return boolean whether or not the limit switch is pressed
      */
-    public boolean isPressed() {
+    public boolean isLimitSwitchPressed() {
         return limitSwitch.isPressed();
     }
 
