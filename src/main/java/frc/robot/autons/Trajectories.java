@@ -13,13 +13,17 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.constants.AutoConstants;
 
 public class Trajectories {
-    public static PathPlannerTrajectory getFromAmpToNote1Trajectory()
+    private static PathPlannerTrajectory getTrajectory(String pathName)
             throws IOException, ParseException, FileVersionException {
-        PathPlannerPath path = PathPlannerPath.fromPathFile("From position 1 to amp");
+        PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
         SwerveDriveState driveState = DriveTrain.getInstance().getState();
         return new PathPlannerTrajectory(path, driveState.Speeds,
                 driveState.RawHeading,
                 AutoConstants.kRobotConfig.get());
 
+    }
+
+    public static PathPlannerTrajectory getSomeTrajectory() throws IOException, ParseException, FileVersionException {
+        return Trajectories.getTrajectory("StartMiddlePos to RightReefTag21");
     }
 }
