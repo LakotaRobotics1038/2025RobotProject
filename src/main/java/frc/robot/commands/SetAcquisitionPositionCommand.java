@@ -3,13 +3,10 @@ package frc.robot.commands;
 import com.revrobotics.spark.SparkClosedLoopController.ArbFFUnits;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.AcquisitionPositionSetpoint;
-import frc.robot.constants.ArmConstants.ArmSetpoint;
-import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetPoints;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class SetAcquisitionPositionCommand extends Command {
 

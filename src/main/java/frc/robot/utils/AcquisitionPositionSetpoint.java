@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.utils;
 
 import frc.robot.constants.ArmConstants.ArmSetpoint;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
