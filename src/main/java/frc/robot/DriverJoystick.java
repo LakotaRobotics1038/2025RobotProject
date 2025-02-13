@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.autons.FollowPath;
-import frc.robot.commands.DriveToWaypointCommand;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
@@ -84,7 +82,6 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.aButton.whileTrue(new FollowPath(FollowPath.Position.TEST));
     }
 
     /**
