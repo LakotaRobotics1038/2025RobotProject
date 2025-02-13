@@ -3,7 +3,6 @@ package frc.robot.autons;
 import java.util.Optional;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -60,5 +59,36 @@ public abstract class Auton extends SequentialCommandGroup {
 
     public Pose2d getInitialPose() {
         return initialPose;
+    }
+
+    public Command followPathCommand(PathPlannerPath path) {
+        try {
+            if (!AutoConstants.kRobotConfig.isPresent()) {
+                throw new Error("PP Robot Config is Missing");
+            }
+            return new FollowPathCommand(
+                    path,
+                    // Robot pose supplier
+                    () -> this.driveTrain.getState().Pose,
+                    // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                    () -> this.driveTrain.getState().Speeds,
+                    // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                    (speeds, feedforwards) -> this.driveTrain.setControl(
+                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                    .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                                    .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
+                    new PPHolonomicDriveController(
+                            // Translation PIDconstants
+                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, 0.0),
+                            // Rotation PID constants
+                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0)),
+                    AutoConstants.kRobotConfig.get(),
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                    this.driveTrain // Reference to this subsystem to set requirements
+            );
+        } catch (Exception e) {
+            DriverStation.reportError("Failed to create auton: " + e.getMessage(), e.getStackTrace());
+            return Commands.none();
+        }
     }
 }
