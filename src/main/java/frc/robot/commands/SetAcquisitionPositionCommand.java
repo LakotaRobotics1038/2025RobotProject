@@ -9,7 +9,6 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class SetAcquisitionPositionCommand extends Command {
-
     private Shoulder shoulder = Shoulder.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Arm arm = Arm.getInstance();
