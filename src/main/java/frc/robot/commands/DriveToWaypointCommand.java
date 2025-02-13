@@ -75,14 +75,14 @@ public class DriveToWaypointCommand extends Command {
         RightFeederStation8(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         RightFeederStation9(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
 
-        private Pose2d pose;
+        private Pose2d endpoint;
 
-        private DriveWaypoints(Pose2d pose) {
-            this.pose = pose;
+        private DriveWaypoints(Pose2d endpoint) {
+            this.endpoint = endpoint;
         }
 
-        public Pose2d getPose() {
-            return pose;
+        public Pose2d getEndpoint() {
+            return endpoint;
         }
 
     }
@@ -113,7 +113,7 @@ public class DriveToWaypointCommand extends Command {
     @Override
     public void initialize() {
         Pose2d currentPose = poseSupplier.get();
-        List<Pose2d> poses = Arrays.asList(currentPose, this.driveWaypoint.getPose());
+        List<Pose2d> poses = Arrays.asList(currentPose, this.driveWaypoint.getEndpoint());
         this.path = new PathPlannerPath(PathPlannerPath.waypointsFromPoses(poses), this.constraints,
                 this.idealStartingState,
                 this.goalEndState);
