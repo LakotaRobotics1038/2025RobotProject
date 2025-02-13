@@ -10,10 +10,20 @@ import frc.robot.commands.AcquireCommand;
 import frc.robot.commands.DisposeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.IOConstants;
+import frc.robot.constants.ArmConstants.ArmSetpoint;
+import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
+import frc.robot.constants.WristConstants.WristSetPoints;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
     private OperatorState operatorState;
+
+    private Arm arm;
+    private Wrist wrist;
+    private Shoulder shoulder;
 
     public final JoystickButton acquireButton = new JoystickButton(this, IOConstants.kAcquireButtonNumber);
     public final JoystickButton disposeButton = new JoystickButton(this, IOConstants.kDisposeButtonNumber);
@@ -27,7 +37,8 @@ public class OperatorPanel extends GenericHID {
     public final JoystickButton algaeL34Button = new JoystickButton(this, IOConstants.kAlgaeL34ButtonNumber);
     public final JoystickButton feederButton = new JoystickButton(this, IOConstants.kFeederButtonNumber);
     public final JoystickButton processorButton = new JoystickButton(this, IOConstants.kProcesssorButtonNumber);
-    public final JoystickButton coralPosScoringSwitch = new JoystickButton(this, IOConstants.kCoralPosScoringSwitch);
+    public final JoystickButton coralPosScoringSwitch = new JoystickButton(this,
+            IOConstants.kCoralPosScoringSwitchNumber);
 
     private OperatorPanel() {
         super(IOConstants.kOperatorPanelPort);
@@ -69,5 +80,17 @@ public class OperatorPanel extends GenericHID {
             instance = new OperatorPanel();
         }
         return instance;
+    }
+
+    public void enableDefaults() {
+        arm.setDefaultCommand(new InstantCommand(() -> arm.setSetpoint(ArmSetpoint.Storage), arm));
+        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(WristSetPoints.Storage), wrist));
+        shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(ShoulderSetpoints.Storage), shoulder));
+    }
+
+    public void clearDefaults() {
+        arm.removeDefaultCommand();
+        wrist.removeDefaultCommand();
+        shoulder.removeDefaultCommand();
     }
 }
