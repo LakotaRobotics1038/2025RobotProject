@@ -59,7 +59,7 @@ public class Vision extends SubsystemBase {
         backCam = new PhotonCamera("backCam");
 
         photonEstimator = new PhotonPoseEstimator(VisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                VisionConstants.kRobotToCam);
+                VisionConstants.kRobotToFrontCam);
         photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.AVERAGE_BEST_TARGETS);
     }
 
@@ -146,8 +146,4 @@ public class Vision extends SubsystemBase {
     public Matrix<N3, N1> getEstimationStdDevs() {
         return curStdDevs;
     }
-
-    // public int getBestTarget() {
-    // return frontCam.getAllUnreadResults().get(1).getBestTarget().getFiducialId();
-    // }
 }

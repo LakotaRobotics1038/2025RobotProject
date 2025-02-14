@@ -3,7 +3,7 @@ package frc.robot;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.constants.AutoConstants;
-import frc.robot.constants.AutoConstants.DriveWaypoints;
+import frc.robot.constants.DriveWaypoints;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
 
