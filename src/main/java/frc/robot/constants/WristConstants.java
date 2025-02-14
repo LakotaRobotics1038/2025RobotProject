@@ -2,7 +2,6 @@ package frc.robot.constants;
 
 public class WristConstants {
     public enum WristSetPoints {
-
         L1Coral(0),
         L2Coral(0),
         L3Coral(0),
@@ -13,6 +12,7 @@ public class WristConstants {
         GroundAlgae(0),
         Storage(0),
         FeederStation(0),
+        Climb(0.0),
         Barge(0.0);
 
         private double setpoint;

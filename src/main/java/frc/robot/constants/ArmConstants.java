@@ -14,7 +14,7 @@ public class ArmConstants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
 
-    public enum ArmSetpoint {
+    public enum ArmSetpoints {
         L1Coral(0.0),
         L2Coral(0.0),
         L3Coral(0.0),
@@ -25,11 +25,12 @@ public class ArmConstants {
         GroundAlgae(0.0),
         Storage(0.0),
         FeederStation(0.0),
-        Barge(0.0);
+        Barge(0.0),
+        Climb(0.0);
 
         public final double position;
 
-        ArmSetpoint(double position) {
+        ArmSetpoints(double position) {
             this.position = position;
         }
     }

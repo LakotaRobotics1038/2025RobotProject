@@ -10,7 +10,7 @@ import frc.robot.commands.AcquireCommand;
 import frc.robot.commands.DisposeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.IOConstants;
-import frc.robot.constants.ArmConstants.ArmSetpoint;
+import frc.robot.constants.ArmConstants.ArmSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetPoints;
 import frc.robot.subsystems.Arm;
@@ -83,7 +83,7 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        arm.setDefaultCommand(new InstantCommand(() -> arm.setSetpoint(ArmSetpoint.Storage), arm));
+        arm.setDefaultCommand(new InstantCommand(() -> arm.setSetpoint(ArmSetpoints.Storage), arm));
         wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(WristSetPoints.Storage), wrist));
         shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(ShoulderSetpoints.Storage), shoulder));
     }
