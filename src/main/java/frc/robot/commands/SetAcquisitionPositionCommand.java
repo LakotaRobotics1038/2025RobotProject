@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
-import com.revrobotics.spark.SparkClosedLoopController.ArbFFUnits;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
@@ -11,30 +9,30 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 public class SetAcquisitionPositionCommand extends Command {
     private Shoulder shoulder = Shoulder.getInstance();
     private Wrist wrist = Wrist.getInstance();
-    private Arm arm = Arm.getInstance();
+    private Extension extension = Extension.getInstance();
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
-        addRequirements(shoulder, wrist, arm);
+        addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
     }
 
     public void initialize() {
         wrist.enable();
         shoulder.enable();
-        arm.enable();
+        extension.enable();
         shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
         wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-        arm.setSetpoint(this.acquisitionPositionSetpoint.getArmSetpoint());
+        extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
     }
 
     public boolean isFinished() {
-        return wrist.onTarget() && shoulder.onTarget() && arm.onTarget();
+        return wrist.onTarget() && shoulder.onTarget() && extension.onTarget();
     }
 
     public void end(boolean interrupted) {
         wrist.disable();
         shoulder.disable();
-        arm.disable();
+        extension.disable();
     }
 }

@@ -1,12 +1,12 @@
 package frc.robot.constants;
 
-public class ArmConstants {
-    public static final int kArmMotorPort = 0;
-    public static final int kArmLaserPort = 0;
+public class ExtensionConstants {
+    public static final int kExtensionMotorPort = 0;
+    public static final int kExtensionLaserPort = 0;
 
-    public static final double kMinArmPower = 0.0;
-    public static final double kMaxArmPower = 0.0;
-    public static final double kArmMaxExtension = 0.0;
+    public static final double kMinExtensionPower = 0.0;
+    public static final double kMaxExtensionPower = 0.0;
+    public static final double kExtensionMaximum = 0.0;
 
     public static final double kTolerance = 0.0;
     public static final double kEncoderConversion = 0.0;
@@ -14,7 +14,7 @@ public class ArmConstants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
 
-    public enum ArmSetpoints {
+    public enum ExtensionSetpoints {
         L1Coral(0.0),
         L2Coral(0.0),
         L3Coral(0.0),
@@ -30,7 +30,7 @@ public class ArmConstants {
 
         public final double position;
 
-        ArmSetpoints(double position) {
+        ExtensionSetpoints(double position) {
             this.position = position;
         }
     }

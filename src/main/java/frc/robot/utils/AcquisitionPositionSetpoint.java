@@ -1,43 +1,43 @@
 package frc.robot.utils;
 
-import frc.robot.constants.ArmConstants.ArmSetpoints;
+import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetPoints;
+import frc.robot.constants.WristConstants.WristSetpoints;
 
 //Wait for SetAcquisitionPositionCommand to be merged
 public enum AcquisitionPositionSetpoint {
 
-    L1Coral(ShoulderSetpoints.L1Coral, WristSetPoints.L1Coral, ArmSetpoints.L1Coral),
-    L2Coral(ShoulderSetpoints.L2Coral, WristSetPoints.L2Coral, ArmSetpoints.L2Coral),
-    L3Coral(ShoulderSetpoints.L3Coral, WristSetPoints.L3Coral, ArmSetpoints.L3Coral),
-    L4Coral(ShoulderSetpoints.L4Coral, WristSetPoints.L4Coral, ArmSetpoints.L4Coral),
-    L23Algae(ShoulderSetpoints.L23Algae, WristSetPoints.L23Algae, ArmSetpoints.L23Algae),
-    L34Algae(ShoulderSetpoints.L34Algae, WristSetPoints.L34Algae, ArmSetpoints.L34Algae),
-    Processor(ShoulderSetpoints.Processor, WristSetPoints.Processor, ArmSetpoints.Processor),
-    FeederStation(ShoulderSetpoints.FeederStation, WristSetPoints.FeederStation, ArmSetpoints.FeederStation),
-    Storage(ShoulderSetpoints.Storage, WristSetPoints.Storage, ArmSetpoints.Storage),
-    Barge(ShoulderSetpoints.Barge, WristSetPoints.Barge, ArmSetpoints.Barge);
+    L1Coral(ShoulderSetpoints.L1Coral, WristSetpoints.L1Coral, ExtensionSetpoints.L1Coral),
+    L2Coral(ShoulderSetpoints.L2Coral, WristSetpoints.L2Coral, ExtensionSetpoints.L2Coral),
+    L3Coral(ShoulderSetpoints.L3Coral, WristSetpoints.L3Coral, ExtensionSetpoints.L3Coral),
+    L4Coral(ShoulderSetpoints.L4Coral, WristSetpoints.L4Coral, ExtensionSetpoints.L4Coral),
+    L23Algae(ShoulderSetpoints.L23Algae, WristSetpoints.L23Algae, ExtensionSetpoints.L23Algae),
+    L34Algae(ShoulderSetpoints.L34Algae, WristSetpoints.L34Algae, ExtensionSetpoints.L34Algae),
+    Processor(ShoulderSetpoints.Processor, WristSetpoints.Processor, ExtensionSetpoints.Processor),
+    FeederStation(ShoulderSetpoints.FeederStation, WristSetpoints.FeederStation, ExtensionSetpoints.FeederStation),
+    Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Storage),
+    Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge);
 
     private ShoulderSetpoints shoulderSetpoint;
-    private WristSetPoints wristSetPoint;
-    private ArmSetpoints armSetpoint;
+    private WristSetpoints wristSetPoint;
+    private ExtensionSetpoints extensionSetpoint;
 
-    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetPoints wristSetPoint,
-            ArmSetpoints armSetpoint) {
+    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+            ExtensionSetpoints extensionSetpoint) {
         this.shoulderSetpoint = shoulderSetpoint;
         this.wristSetPoint = wristSetPoint;
-        this.armSetpoint = armSetpoint;
+        this.extensionSetpoint = extensionSetpoint;
     }
 
     public ShoulderSetpoints getShoulderSetpoint() {
         return this.shoulderSetpoint;
     }
 
-    public WristSetPoints getWristSetpoint() {
+    public WristSetpoints getWristSetpoint() {
         return this.wristSetPoint;
     }
 
-    public ArmSetpoints getArmSetpoint() {
-        return this.armSetpoint;
+    public ExtensionSetpoints getExtensionSetpoint() {
+        return this.extensionSetpoint;
     }
 }

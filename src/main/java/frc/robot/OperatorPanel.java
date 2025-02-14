@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.OperatorState.ScoringSide;
@@ -10,10 +8,10 @@ import frc.robot.commands.AcquireCommand;
 import frc.robot.commands.DisposeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.IOConstants;
-import frc.robot.constants.ArmConstants.ArmSetpoints;
+import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetPoints;
-import frc.robot.subsystems.Arm;
+import frc.robot.constants.WristConstants.WristSetpoints;
+import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
@@ -21,7 +19,7 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 public class OperatorPanel extends GenericHID {
     private OperatorState operatorState;
 
-    private Arm arm;
+    private Extension extension;
     private Wrist wrist;
     private Shoulder shoulder;
 
@@ -83,13 +81,14 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        arm.setDefaultCommand(new InstantCommand(() -> arm.setSetpoint(ArmSetpoints.Storage), arm));
-        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(WristSetPoints.Storage), wrist));
+        extension.setDefaultCommand(
+                new InstantCommand(() -> extension.setSetpoint(ExtensionSetpoints.Storage), extension));
+        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(WristSetpoints.Storage), wrist));
         shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(ShoulderSetpoints.Storage), shoulder));
     }
 
     public void clearDefaults() {
-        arm.removeDefaultCommand();
+        extension.removeDefaultCommand();
         wrist.removeDefaultCommand();
         shoulder.removeDefaultCommand();
     }
