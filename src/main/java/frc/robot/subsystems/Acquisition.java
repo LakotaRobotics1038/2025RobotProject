@@ -62,4 +62,8 @@ public class Acquisition extends SubsystemBase {
     public boolean getAlgaeSwitch() {
         return this.algaeSwitch.isPressed();
     }
+
+    public double getAcquisitionSpeed() {
+        return acquisitionMotor.get();
+    }
 }

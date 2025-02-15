@@ -17,6 +17,7 @@ import frc.robot.autons.AutonSelector.AutonChoices;
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
+    private Acquisition acquisition = Acquisition.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -66,6 +67,10 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(2, 0)
                 .withSize(2, 1);
         // .withWidget(BuiltInWidgets.kGyro);
+
+        driversTab.addNumber("AcquisitionSpeed", acquisition::getAcquisitionSpeed)
+                .withPosition(4, 0)
+                .withSize(2, 1);
 
         driversTab.add(field)
                 .withPosition(2, 1)
