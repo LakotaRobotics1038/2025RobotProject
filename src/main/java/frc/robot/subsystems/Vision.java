@@ -26,6 +26,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,12 +38,18 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class Vision extends SubsystemBase {
-    private final PhotonCamera frontCam;
-    private final PhotonCamera backCam;
-    private final PhotonPoseEstimator photonEstimator;
+    private final PhotonCamera frontCam = new PhotonCamera(VisionConstants.kRobotToFrontCamName);
+    private final PhotonCamera backCam = new PhotonCamera(VisionConstants.kRobotToBackCamName);
+    private final PhotonPoseEstimator frontCamPhotonEstimator = new PhotonPoseEstimator(VisionConstants.kTagLayout,
+            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+            VisionConstants.kRobotToFrontCam);
+    private final PhotonPoseEstimator backCamPhotonEstimator = new PhotonPoseEstimator(VisionConstants.kTagLayout,
+            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+            VisionConstants.kRobotToBackCam);
     private Matrix<N3, N1> curStdDevs;
 
     private static Vision instance;
@@ -55,12 +62,8 @@ public class Vision extends SubsystemBase {
     }
 
     private Vision() {
-        frontCam = new PhotonCamera("frontCam");
-        backCam = new PhotonCamera("backCam");
-
-        photonEstimator = new PhotonPoseEstimator(VisionConstants.kTagLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                VisionConstants.kRobotToFrontCam);
-        photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.AVERAGE_BEST_TARGETS);
+        frontCamPhotonEstimator.setMultiTagFallbackStrategy(PoseStrategy.AVERAGE_BEST_TARGETS);
+        backCamPhotonEstimator.setMultiTagFallbackStrategy(PoseStrategy.AVERAGE_BEST_TARGETS);
     }
 
     /**
@@ -72,11 +75,21 @@ public class Vision extends SubsystemBase {
      *         timestamp, and targets
      *         used for estimation.
      */
-    public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
+    public Optional<EstimatedRobotPose> frontCamGetEstimatedGlobalPose() {
         Optional<EstimatedRobotPose> visionEst = Optional.empty();
 
-        for (var change : frontCam.getAllUnreadResults()) {
-            visionEst = photonEstimator.update(change);
+        for (PhotonPipelineResult change : frontCam.getAllUnreadResults()) {
+            visionEst = frontCamPhotonEstimator.update(change);
+            updateEstimationStdDevs(visionEst, change.getTargets());
+        }
+        return visionEst;
+    }
+
+    public Optional<EstimatedRobotPose> backCamGetEstimatedGlobalPose() {
+        Optional<EstimatedRobotPose> visionEst = Optional.empty();
+
+        for (PhotonPipelineResult change : backCam.getAllUnreadResults()) {
+            visionEst = backCamPhotonEstimator.update(change);
             updateEstimationStdDevs(visionEst, change.getTargets());
         }
         return visionEst;
@@ -99,14 +112,14 @@ public class Vision extends SubsystemBase {
 
         } else {
             // Pose present. Start running Heuristic
-            var estStdDevs = VisionConstants.kSingleTagStdDevs;
+            Matrix<N3, N1> estStdDevs = VisionConstants.kSingleTagStdDevs;
             int numTags = 0;
             double avgDist = 0;
 
             // Precalculation - see how many tags we found, and calculate an
             // average-distance metric
-            for (var tgt : targets) {
-                var tagPose = photonEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
+            for (PhotonTrackedTarget tgt : targets) {
+                Optional<Pose3d> tagPose = frontCamPhotonEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
                 if (tagPose.isEmpty())
                     continue;
                 numTags++;

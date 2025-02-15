@@ -44,5 +44,4 @@ public enum DriveWaypoints {
     public Pose2d getEndpoint() {
         return endpoint;
     }
-
 }

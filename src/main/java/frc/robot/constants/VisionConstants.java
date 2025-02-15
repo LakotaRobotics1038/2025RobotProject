@@ -39,12 +39,14 @@ public final class VisionConstants {
     public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(kFrontCameraXOffset, kFrontCameraYOffset, kFrontCameraZOffset),
             new Rotation3d(0, 0, 0));
+    public static final String kRobotToFrontCamName = "frontCam";
     private static final double kBackCameraXOffset = 0.1;
     private static final double kBackCameraYOffset = 0.0;
     private static final double kBackCameraZOffset = 0.1;
     public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(kBackCameraXOffset, kBackCameraYOffset, kBackCameraZOffset),
             new Rotation3d(0, 0, 0));
+    public static final String kRobotToBackCamName = "backCam";
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 }
