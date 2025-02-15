@@ -33,7 +33,7 @@ public class MakeDetermineWaypointCommand extends Command {
         for (PhotonPipelineResult result : visionResults) {
             if (result.hasTargets() && result.getBestTarget().getArea() > area) {
                 area = result.getBestTarget().getArea();
-                this.this.bestId = result.getBestTarget().getFiducialId();
+                this.bestId = result.getBestTarget().getFiducialId();
             }
         }
 
