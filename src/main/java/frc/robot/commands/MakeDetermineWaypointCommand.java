@@ -4,9 +4,16 @@ import java.util.List;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
+import com.pathplanner.lib.util.FlippingUtil;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
+import frc.robot.constants.FieldConstants;
 import frc.robot.subsystems.Vision;
 
 public class MakeDetermineWaypointCommand extends Command {
@@ -501,5 +508,18 @@ public class MakeDetermineWaypointCommand extends Command {
 
     public DriveWaypoints getWaypoint() {
         return this.waypoint;
+    }
+
+    public Pose2d getPose2d() {
+        Pose2d endpoint = waypoint.getEndpoint();
+        if (this.isMirrored) {
+            Translation2d transformedTranslation = new Translation2d(
+                    FieldConstants.kFieldLength - endpoint.getX(),
+                    endpoint.getY());
+            Rotation2d transformedHeading = endpoint.getRotation().plus(new Rotation2d(Math.PI));
+
+            endpoint = new Pose2d(transformedTranslation, transformedHeading);
+        }
+        return endpoint;
     }
 }
