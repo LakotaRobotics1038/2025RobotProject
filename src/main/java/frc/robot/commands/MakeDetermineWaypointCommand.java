@@ -25,6 +25,7 @@ public class MakeDetermineWaypointCommand extends Command {
                 this.bestId = result.getBestTarget().getFiducialId();
             }
         }
+
     }
 
     @Override
