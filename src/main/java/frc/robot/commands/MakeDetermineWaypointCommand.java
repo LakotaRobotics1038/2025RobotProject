@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
+import com.pathplanner.lib.util.FlippingUtil;
+import com.pathplanner.lib.util.PathPlannerLogging;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -81,16 +84,7 @@ public class MakeDetermineWaypointCommand extends Command {
     }
 
     public Pose2d getPose2d() {
-        Pose2d endpoint = waypoint.getEndpoint();
-        if (this.isMirrored) {
-            Translation2d transformedTranslation = new Translation2d(
-                    FieldConstants.kFieldLength - endpoint.getX(),
-                    endpoint.getY());
-            Rotation2d transformedHeading = endpoint.getRotation().plus(new Rotation2d(Math.PI));
-
-            endpoint = new Pose2d(transformedTranslation, transformedHeading);
-        }
-        return endpoint;
+        return FlippingUtil.flipFieldPose(this.waypoint.getEndpoint());
     }
 
     private void get134CoralWaypoint(ScoringSide scoringSide) {
