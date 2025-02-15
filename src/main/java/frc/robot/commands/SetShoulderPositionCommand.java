@@ -5,16 +5,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.subsystems.Shoulder;
 
-public class SetDefaultShoulderCommand extends Command {
+public class SetShoulderPositionCommand extends Command {
     private Shoulder shoulder = Shoulder.getInstance();
+    private ShoulderSetpoints setpoint;
 
-    public SetDefaultShoulderCommand() {
+    public SetShoulderPositionCommand(ShoulderSetpoints setpoint) {
         super.addRequirements(shoulder);
+        this.setpoint = setpoint;
     }
 
     @Override
     public void initialize() {
-        shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(ShoulderSetpoints.Storage), shoulder));
+        shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(setpoint), shoulder));
     }
 
     @Override

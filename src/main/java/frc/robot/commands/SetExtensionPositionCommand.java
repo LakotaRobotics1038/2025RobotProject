@@ -5,17 +5,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.subsystems.Extension;
 
-public class SetDefaultExtensionCommand extends Command {
+public class SetExtensionPositionCommand extends Command {
     private Extension extension = Extension.getInstance();
+    private ExtensionSetpoints setpoint;
 
-    public SetDefaultExtensionCommand() {
+    public SetExtensionPositionCommand(ExtensionSetpoints setpoint) {
         super.addRequirements(extension);
+        this.setpoint = setpoint;
     }
 
     @Override
     public void initialize() {
         extension.setDefaultCommand(
-                new InstantCommand(() -> extension.setSetpoint(ExtensionSetpoints.Storage), extension));
+                new InstantCommand(() -> extension.setSetpoint(setpoint), extension));
     }
 
     @Override

@@ -5,16 +5,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.WristConstants.WristSetpoints;
 import frc.robot.subsystems.Wrist;
 
-public class SetDefaultWristCommand extends Command {
+public class SetWristPositionCommand extends Command {
     private Wrist wrist = Wrist.getInstance();
+    private WristSetpoints setpoint;
 
-    public SetDefaultWristCommand() {
+    public SetWristPositionCommand(WristSetpoints setpoint) {
         super.addRequirements(wrist);
+        this.setpoint = setpoint;
     }
 
     @Override
     public void initialize() {
-        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(WristSetpoints.Storage), wrist));
+        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(setpoint), wrist));
     }
 
     @Override
