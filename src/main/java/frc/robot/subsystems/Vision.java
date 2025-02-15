@@ -33,10 +33,13 @@ import frc.robot.constants.VisionConstants;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class Vision extends SubsystemBase {
@@ -134,6 +137,10 @@ public class Vision extends SubsystemBase {
                 curStdDevs = estStdDevs;
             }
         }
+    }
+
+    public List<PhotonPipelineResult> getResults() {
+        return Stream.concat(frontCam.getAllUnreadResults().stream(), backCam.getAllUnreadResults().stream()).toList();
     }
 
     /**
