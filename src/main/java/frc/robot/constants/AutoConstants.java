@@ -11,12 +11,12 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public final class AutoConstants {
     public enum DriveWaypoints {
-        LeftCoral17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Level2LeftCoral17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        RightCoral17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Level2RightCoral17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        LeftCoral18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Level2LeftCoral18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        LeftCoral17(new Pose2d(new Translation2d(3.656, 3.00), new Rotation2d(60.00))),
+        Level2LeftCoral17(new Pose2d(new Translation2d(3.656, 3.00), new Rotation2d(-120.00))),
+        RightCoral17(new Pose2d(new Translation2d(3.968, 2.808), new Rotation2d(60.00))),
+        Level2RightCoral17(new Pose2d(new Translation2d(3.968, 2.808), new Rotation2d(-120.00))),
+        LeftCoral18(new Pose2d(new Translation2d(3.165, 4.187), new Rotation2d(0.0))),
+        Level2LeftCoral18(new Pose2d(new Translation2d(3.165, 4.187), new Rotation2d(180.0))),
         RightCoral18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         Level2RightCoral18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         LeftCoral19(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
@@ -35,18 +35,12 @@ public final class AutoConstants {
         Level2LeftCoral22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         RightCoral22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         Level2RightCoral22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level19(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level19(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level20(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level20(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level21(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level21(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae23Level22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-        Algae34Level22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel17(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel18(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel19(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel20(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel21(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+        AlgaeLevel22(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         Processor16(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         FeederStation12Point1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
         FeederStation12Point2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
@@ -75,6 +69,10 @@ public final class AutoConstants {
 
         public Pose2d getEndpoint() {
             return endpoint;
+        }
+
+        public Rotation2d getRotation2d() {
+            return endpoint.getRotation();
         }
 
     }

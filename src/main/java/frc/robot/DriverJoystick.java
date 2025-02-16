@@ -112,7 +112,7 @@ public class DriverJoystick extends XboxController1038 {
                                 new IdealStartingState(
                                         driveTrain.getState().Speeds.vxMetersPerSecond,
                                         driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, Rotation2d.kZero))))));
+                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d()))))));
     }
 
     /**
