@@ -33,4 +33,29 @@ public class Paths {
             throws IOException, ParseException, FileVersionException {
         return PathPlannerPath.fromPathFile("LeftReefTag20 to TopFeederStation");
     }
+
+    public static PathPlannerPath getMiddlePosToLeftTag21Path()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("StartMiddlePos To LeftReefTag21");
+    }
+
+    public static PathPlannerPath getLeftTag21ToBottomFeederStationPath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("LeftReefTag21 To BottomFeederStation");
+    }
+
+    public static PathPlannerPath getBottomFeederStationToRightTag22Path()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("BottomFeederStation To RightReefTag22");
+    }
+
+    public static PathPlannerPath getRightTag22ToBottomFeederStationPath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("RightReefTag22 To BottomFeederStation");
+    }
+
+    public static PathPlannerPath getBottomFeederStationToLeftTag22Path()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("BottomFeederStation To LeftReefTag22");
+    }
 }

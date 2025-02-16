@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2467213114754097,
-        "y": 7.003944672131147
+        "x": 1.2227459016393443,
+        "y": 7.06388319672131
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6019713114754097,
-        "y": 6.828444672131147
+        "x": 2.5779959016393446,
+        "y": 6.8883831967213105
       },
       "isLocked": false,
       "linkedName": "TopFeederStation"
@@ -48,7 +48,7 @@
   "folder": "3 Piece Top Auto Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.88213724620415
+    "rotation": 127.27817419986901
   },
   "useDefaultConstraints": true
 }

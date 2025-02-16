@@ -8,48 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.706852459016393,
-        "y": 5.86367418032787
+        "x": 5.058811475409836,
+        "y": 6.020952868852459
       },
       "isLocked": false,
       "linkedName": "LeftReefTag20"
     },
     {
       "anchor": {
-        "x": 3.8220000000000005,
-        "y": 6.60875
+        "x": 1.2227459016393443,
+        "y": 7.06388319672131
       },
       "prevControl": {
-        "x": 4.476934561515932,
-        "y": 6.303866669639136
-      },
-      "nextControl": {
-        "x": 3.2565,
-        "y": 6.871999999999999
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.2467213114754097,
-        "y": 7.003944672131147
-      },
-      "prevControl": {
-        "x": 2.21197131147541,
-        "y": 6.9061946721311465
+        "x": 2.1879959016393444,
+        "y": 6.96613319672131
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "TopFeederStation"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -177.45519562018694
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -63,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.88213724620415
+    "rotation": 127.27817419986901
   },
   "reversed": false,
   "folder": "3 Piece Top Auto Paths",
