@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9799180327868857,
-        "y": 2.7842725409836064
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 3.6322745901639335,
-        "y": 2.5445184426229503
-      },
-      "isLocked": false,
-      "linkedName": "RightReefTag22"
-    },
-    {
-      "anchor": {
         "x": 1.2107581967213117,
         "y": 0.9741290983606552
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.121823770491803,
+        "y": 1.4176741803278685
+      },
+      "isLocked": false,
+      "linkedName": "BottomFeederStation"
+    },
+    {
+      "anchor": {
+        "x": 3.9799180327868857,
+        "y": 2.7842725409836064
+      },
       "prevControl": {
-        "x": 1.9180327868852458,
-        "y": 1.3817110655737712
+        "x": 3.596311475409836,
+        "y": 2.017059426229508
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BottomFeederStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "3 Piece Bottom Auto Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

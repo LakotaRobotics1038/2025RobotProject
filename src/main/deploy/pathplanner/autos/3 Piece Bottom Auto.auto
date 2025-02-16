@@ -19,19 +19,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BottomFeederStation To RightReefTag22"
+            "pathName": "BottomFeederStation To RightReefTag17"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RightReefTag22 To BottomFeederStation"
+            "pathName": "RightReefTag17 To BottomFeederStation"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomFeederStation To LeftReefTag22"
+            "pathName": "BottomFeederStation To LeftReefTag17"
           }
         }
       ]

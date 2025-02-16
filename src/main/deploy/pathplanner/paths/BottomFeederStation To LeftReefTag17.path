@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.121823770491803,
-        "y": 1.4176741803278685
+        "x": 1.5823770491803275,
+        "y": 1.3097848360655735
       },
       "isLocked": false,
       "linkedName": "BottomFeederStation"
     },
     {
       "anchor": {
-        "x": 3.9799180327868857,
-        "y": 2.7842725409836064
+        "x": 3.692213114754098,
+        "y": 3.000051229508196
       },
       "prevControl": {
-        "x": 3.596311475409836,
-        "y": 2.017059426229508
+        "x": 3.1407786885245907,
+        "y": 2.49656762295082
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightReefTag22"
+      "linkedName": "LeftReefTag17"
     }
   ],
   "rotationTargets": [],

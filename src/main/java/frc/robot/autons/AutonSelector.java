@@ -61,15 +61,20 @@ public class AutonSelector {
         this.delayChooser.addOption("14 Seconds", 14.0);
     }
 
-    public Auton chooseAuton() throws FileVersionException, IOException, ParseException {
+    public Auton chooseAuton() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
-        switch (this.autoChooser.getSelected()) {
-            case ThreePieceTopAuto:
-                return new ThreePieceTopAuto(alliance);
-            case ThreePieceBottomAuto:
-                return new ThreePieceBottomAuto(alliance);
-            default:
-                return null;
+        try {
+            switch (this.autoChooser.getSelected()) {
+                case ThreePieceTopAuto:
+                    return new ThreePieceTopAuto(alliance);
+                case ThreePieceBottomAuto:
+                    return new ThreePieceBottomAuto(alliance);
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Choose Auton Failed " + e);
+            return null;
         }
     }
 
