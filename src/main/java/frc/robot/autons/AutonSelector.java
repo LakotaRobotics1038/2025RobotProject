@@ -1,11 +1,6 @@
 package frc.robot.autons;
 
-import java.io.IOException;
 import java.util.Optional;
-
-import org.json.simple.parser.ParseException;
-
-import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -16,8 +11,15 @@ import frc.robot.subsystems.Dashboard;
 public class AutonSelector {
     public enum AutonChoices {
         NoAuto,
-        ThreePieceTopAuto,
-        ThreePieceBottomAuto;
+        MiddleThreePieceTopAuto,
+        MiddleThreePieceBottomAuto,
+        TopThreePieceAuto,
+        BottomThreePieceAuto,
+        GetOutOfTheWayTopAuto,
+        GetOutOfTheWayMiddleAuto,
+        GetOutOfTheWayBottomAuto,
+        TopTaxi,
+        BottomTaxi;
     }
 
     // Choosers
@@ -39,8 +41,15 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        this.autoChooser.addOption("Three Piece Top Auto", AutonChoices.ThreePieceTopAuto);
-        this.autoChooser.addOption("Three Piece Bottom Auto", AutonChoices.ThreePieceBottomAuto);
+        this.autoChooser.addOption("Three Piece Top Auto", AutonChoices.MiddleThreePieceTopAuto);
+        this.autoChooser.addOption("Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
+        this.autoChooser.addOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
+        this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
+        this.autoChooser.addOption("Get Out of Way Top Auto", AutonChoices.GetOutOfTheWayTopAuto);
+        this.autoChooser.addOption("Get Out of Way Middle Auto", AutonChoices.GetOutOfTheWayMiddleAuto);
+        this.autoChooser.addOption("Get Out of Way Bottom Auto", AutonChoices.GetOutOfTheWayBottomAuto);
+        this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
+        this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
@@ -65,10 +74,24 @@ public class AutonSelector {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         try {
             switch (this.autoChooser.getSelected()) {
-                case ThreePieceTopAuto:
-                    return new ThreePieceTopAuto(alliance);
-                case ThreePieceBottomAuto:
-                    return new ThreePieceBottomAuto(alliance);
+                case MiddleThreePieceTopAuto:
+                    return new MiddleThreePieceTopAuto(alliance);
+                case MiddleThreePieceBottomAuto:
+                    return new MiddleThreePieceBottomAuto(alliance);
+                case TopThreePieceAuto:
+                    return new TopThreePieceAuto(alliance);
+                case BottomThreePieceAuto:
+                    return new BottomThreePieceAuto(alliance);
+                case GetOutOfTheWayTopAuto:
+                    return new GetOutOfTheWayTopAuto(alliance);
+                case GetOutOfTheWayMiddleAuto:
+                    return new GetOutOfTheWayMiddleAuto(alliance);
+                case GetOutOfTheWayBottomAuto:
+                    return new GetOutOfTheWayBottomAuto(alliance);
+                case TopTaxi:
+                    return new TopTaxi(alliance);
+                case BottomTaxi:
+                    return new BottomTaxi(alliance);
                 default:
                     return null;
             }

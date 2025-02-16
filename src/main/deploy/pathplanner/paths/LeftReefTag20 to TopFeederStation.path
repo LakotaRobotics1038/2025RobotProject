@@ -12,7 +12,7 @@
         "y": 5.961014344262295
       },
       "isLocked": false,
-      "linkedName": "LeftReefTag20"
+      "linkedName": "LeftReefTag19"
     },
     {
       "anchor": {
@@ -45,7 +45,7 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "3 Piece Top Auto Paths",
+  "folder": "Middle 3 Piece Top Auto Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -59.99999999999999

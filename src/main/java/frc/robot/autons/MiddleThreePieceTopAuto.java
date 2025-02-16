@@ -15,8 +15,8 @@ import frc.robot.commands.DisposeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
 
-public class ThreePieceTopAuto extends Auton {
-    ThreePieceTopAuto(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
+public class MiddleThreePieceTopAuto extends Auton {
+    MiddleThreePieceTopAuto(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
         super(alliance);
 
         super.addCommands(

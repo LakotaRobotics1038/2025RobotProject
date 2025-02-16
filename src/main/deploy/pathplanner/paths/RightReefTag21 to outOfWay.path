@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.15,
+        "x": 5.8305,
         "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.7257287129677525,
+        "x": 6.0805,
         "y": 4.2
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RightReefTag21"
     },
     {
       "anchor": {
-        "x": 5.8305,
+        "x": 6.298500000000001,
         "y": 4.2
       },
       "prevControl": {
-        "x": 6.2731376198426885,
-        "y": 4.2
+        "x": 5.957249999999999,
+        "y": 4.2005
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightReefTag21"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Middle 3 Piece Top Auto Paths",
+  "folder": "Get Out of the way middle auto",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

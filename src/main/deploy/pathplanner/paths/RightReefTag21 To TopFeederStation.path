@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.8,
+        "x": 5.8305,
         "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8,
+        "x": 5.8305,
         "y": 4.477158007449339
       },
       "isLocked": false,
@@ -66,7 +66,7 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "3 Piece Top Auto Paths",
+  "folder": "Middle 3 Piece Top Auto Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
