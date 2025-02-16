@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
-public class DisposeCommand extends Command {
+public class DisposeAlgaeCommand extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
     private double secondsToDispose;
     private Timer timer = new Timer();
 
-    public DisposeCommand() {
+    public DisposeAlgaeCommand() {
         this(0.0);
     }
 
-    public DisposeCommand(double secondsToDispose) {
+    public DisposeAlgaeCommand(double secondsToDispose) {
         this.secondsToDispose = secondsToDispose;
         super.addRequirements(acquisition);
     }
@@ -21,18 +21,15 @@ public class DisposeCommand extends Command {
     @Override
     public void execute() {
         timer.restart();
-        acquisition.dispose();
+        acquisition.disposeAlgae();
     }
 
     @Override
     public boolean isFinished() {
-        // if neither acquisition laser returns true, move on to checking the algae
-        // switch. command is finished if all three sensors return false.
+        // if algae limit switch is not pressed and set time has passed stop the command
 
-        if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
-            if (!acquisition.getAlgaeSwitch()) {
-                return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
-            }
+        if (!acquisition.getAlgaeSwitch()) {
+            return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
         }
 
         return false;
