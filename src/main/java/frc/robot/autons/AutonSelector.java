@@ -1,6 +1,11 @@
 package frc.robot.autons;
 
+import java.io.IOException;
 import java.util.Optional;
+
+import org.json.simple.parser.ParseException;
+
+import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -11,6 +16,8 @@ import frc.robot.subsystems.Dashboard;
 public class AutonSelector {
     public enum AutonChoices {
         NoAuto,
+        ThreePieceTopAuto,
+        ThreePieceBottomAuto;
     }
 
     // Choosers
@@ -32,7 +39,8 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        // this.autoChooser.addOption("Score 2 In Amp Position 1", AutonChoices.AmpAuto);
+        this.autoChooser.addOption("Three Piece Top Auto", AutonChoices.ThreePieceTopAuto);
+        this.autoChooser.addOption("Three Piece Bottom Auto", AutonChoices.ThreePieceBottomAuto);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
@@ -53,11 +61,13 @@ public class AutonSelector {
         this.delayChooser.addOption("14 Seconds", 14.0);
     }
 
-    public Auton chooseAuton() {
+    public Auton chooseAuton() throws FileVersionException, IOException, ParseException {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         switch (this.autoChooser.getSelected()) {
-            // case AmpAuto:
-            //     return new ScoreInAmp(alliance);
+            case ThreePieceTopAuto:
+                return new ThreePieceTopAuto(alliance);
+            case ThreePieceBottomAuto:
+                return new ThreePieceBottomAuto(alliance);
             default:
                 return null;
         }
