@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.286577868852459,
-        "y": 2.9880635245901637
+        "x": 3.9799180327868857,
+        "y": 2.7842725409836064
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.2075209273482495,
-        "y": 2.7508927000775354
+        "x": 3.6322745901639335,
+        "y": 2.5445184426229503
       },
       "isLocked": false,
       "linkedName": "RightReefTag22"
-    },
-    {
-      "anchor": {
-        "x": 4.962909836065574,
-        "y": 2.2328381147540983
-      },
-      "prevControl": {
-        "x": 5.08133962435424,
-        "y": 2.469697691331428
-      },
-      "nextControl": {
-        "x": 4.851106437190584,
-        "y": 2.0092313170041196
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 0.9741290983606552
       },
       "prevControl": {
-        "x": 2.1697745901639345,
-        "y": 1.1899077868852452
+        "x": 1.9180327868852458,
+        "y": 1.3817110655737712
       },
       "nextControl": null,
       "isLocked": false,
@@ -64,7 +48,7 @@
   "folder": "3 Piece Bottom Auto Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

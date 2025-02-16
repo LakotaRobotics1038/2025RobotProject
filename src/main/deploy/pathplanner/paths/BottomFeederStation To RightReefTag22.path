@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.286577868852459,
-        "y": 2.9880635245901637
+        "x": 3.9799180327868857,
+        "y": 2.7842725409836064
       },
       "prevControl": {
-        "x": 4.902971311475409,
-        "y": 2.220850409836065
+        "x": 3.596311475409836,
+        "y": 2.017059426229508
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "3 Piece Bottom Auto Paths",

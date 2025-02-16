@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5779959016393446,
-        "y": 6.8883831967213105
+        "x": 1.5823770491803275,
+        "y": 6.80015368852459
       },
       "isLocked": false,
       "linkedName": "TopFeederStation"
     },
     {
       "anchor": {
-        "x": 4.998872950819672,
-        "y": 5.265727459016393
+        "x": 3.692213114754098,
+        "y": 5.097899590163934
       },
       "prevControl": {
-        "x": 4.101872950819671,
-        "y": 6.045727459016393
+        "x": 3.308606557377049,
+        "y": 5.505481557377049
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -118.61045966596521
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "3 Piece Top Auto Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 127.27817419986901
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": true
 }

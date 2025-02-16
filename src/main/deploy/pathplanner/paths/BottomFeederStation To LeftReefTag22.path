@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.906045081967213,
-        "y": 1.273821721311475
+        "x": 1.5823770491803275,
+        "y": 1.3097848360655735
       },
       "isLocked": false,
       "linkedName": "BottomFeederStation"
     },
     {
       "anchor": {
-        "x": 4.9868852459016395,
-        "y": 2.84421106557377
+        "x": 3.692213114754098,
+        "y": 3.000051229508196
       },
       "prevControl": {
-        "x": 4.9269467213114755,
-        "y": 2.304764344262295
+        "x": 3.1407786885245907,
+        "y": 2.49656762295082
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "3 Piece Bottom Auto Paths",
