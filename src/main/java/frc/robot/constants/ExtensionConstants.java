@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public class ExtensionConstants {
-    public static final int kExtensionMotorPort = 0;
+    public static final int kExtensionMotorPort = 2;
     public static final int kExtensionLaserPort = 36;
 
     public static final double kMinExtensionPower = 0.0;
