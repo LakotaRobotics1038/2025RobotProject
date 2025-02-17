@@ -41,8 +41,8 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        this.autoChooser.addOption("Three Piece Top Auto", AutonChoices.MiddleThreePieceTopAuto);
-        this.autoChooser.addOption("Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
+        this.autoChooser.addOption("Middle Three Piece Top Auto", AutonChoices.MiddleThreePieceTopAuto);
+        this.autoChooser.addOption("Middle Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
         this.autoChooser.addOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
         this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
         this.autoChooser.addOption("Get Out of Way Top Auto", AutonChoices.GetOutOfTheWayTopAuto);
