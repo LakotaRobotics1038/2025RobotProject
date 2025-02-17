@@ -13,13 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.autons.AutonSelector.AutonChoices;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
-    private DriveTrain driveTrain = DriveTrain.getInstance();
+    private final DriveTrain driveTrain = DriveTrain.getInstance();
 
     // Choosers
-    private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
+    private final SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
     private SendableChooser<Double> delayChooser = new SendableChooser<>();
 
     // Tabs
@@ -98,6 +99,10 @@ public class Dashboard extends SubsystemBase {
             resetGyro.setBoolean(false);
         }
         field.setRobotPose(driveTrain.getState().Pose);
+    }
+
+    public void addPath(PathPlannerPath path) {
+        this.field.getObject("poses").setPoses(path.getPathPoses());
     }
 
     /**
