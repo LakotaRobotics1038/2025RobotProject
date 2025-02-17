@@ -26,7 +26,7 @@ public class WristConstants {
         }
     }
 
-    public static final int kWristCanId = 0;
+    public static final int kWristCanId = 3;
     public static final double kMaxPower = 0;
     public static final double kMinPower = 0;
     public static final double kMaxDistance = 0;

@@ -21,8 +21,8 @@ public class ShoulderConstants {
         }
     }
 
-    public static final int kLeftMotorPort = 0;
-    public static final int kRightMotorPort = 0;
+    public static final int kLeftMotorPort = 6;
+    public static final int kRightMotorPort = 5;
 
     public static final double kP = 0.0;
     public static final double kI = 0.0;
