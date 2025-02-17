@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2227459016393443,
+        "y": 7.06388319672131
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.207495901639345,
+        "y": 6.98563319672131
+      },
+      "isLocked": false,
+      "linkedName": "TopFeederStation"
+    },
+    {
+      "anchor": {
+        "x": 3.9799180327868857,
+        "y": 5.241752049180327
+      },
+      "prevControl": {
+        "x": 4.003893442622951,
+        "y": 5.589395491803279
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftReefTag19"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "reversed": false,
+  "folder": "Middle 3 Piece Top Auto Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": true
+}

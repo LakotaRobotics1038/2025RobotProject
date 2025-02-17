@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomStartingPos to LeftReefTag22"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftReefTag22 To OutOfWay"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
