@@ -21,11 +21,6 @@ public class SetExtensionPositionCommand extends Command {
     }
 
     @Override
-    public void execute() {
-
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
