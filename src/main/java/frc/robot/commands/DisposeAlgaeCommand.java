@@ -27,9 +27,8 @@ public class DisposeAlgaeCommand extends Command {
     @Override
     public boolean isFinished() {
         // if algae limit switch is not pressed and set time has passed stop the command
-
         if (!acquisition.getAlgaeSwitch()) {
-            return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
+            return secondsToDispose != 0 && timer.get() >= secondsToDispose;
         }
 
         return false;

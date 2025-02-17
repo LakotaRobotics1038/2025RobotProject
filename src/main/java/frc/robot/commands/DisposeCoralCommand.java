@@ -29,7 +29,7 @@ public class DisposeCoralCommand extends Command {
         // if neither acquisition laser returns true command is finished
 
         if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
-            return secondsToDispose == 0.0 ? false : timer.get() >= secondsToDispose;
+            return secondsToDispose != 0.0 && timer.get() >= secondsToDispose;
         }
 
         return false;
