@@ -77,95 +77,105 @@ public final class AutoConstants {
             return endpoint.getRotation();
         }
 
-        public static HashMap<Integer, DriveWaypoints> getIdsAnd134CoralDriveWaypointHashmap() {
-            HashMap<Integer, DriveWaypoints> idAndDriveWaypoint = new HashMap<Integer, DriveWaypoints>();
-            idAndDriveWaypoint.put(6, DriveWaypoints.LeftCoral22);
-            idAndDriveWaypoint.put(7, DriveWaypoints.LeftCoral21);
-            idAndDriveWaypoint.put(8, DriveWaypoints.LeftCoral20);
-            idAndDriveWaypoint.put(9, DriveWaypoints.LeftCoral19);
-            idAndDriveWaypoint.put(10, DriveWaypoints.LeftCoral18);
-            idAndDriveWaypoint.put(11, DriveWaypoints.LeftCoral17);
-            idAndDriveWaypoint.put(17, DriveWaypoints.LeftCoral17);
-            idAndDriveWaypoint.put(18, DriveWaypoints.LeftCoral18);
-            idAndDriveWaypoint.put(19, DriveWaypoints.LeftCoral19);
-            idAndDriveWaypoint.put(20, DriveWaypoints.LeftCoral20);
-            idAndDriveWaypoint.put(21, DriveWaypoints.LeftCoral21);
-            idAndDriveWaypoint.put(22, DriveWaypoints.LeftCoral22);
-            idAndDriveWaypoint.put(-6, DriveWaypoints.RightCoral22);
-            idAndDriveWaypoint.put(-7, DriveWaypoints.RightCoral21);
-            idAndDriveWaypoint.put(-8, DriveWaypoints.RightCoral20);
-            idAndDriveWaypoint.put(-9, DriveWaypoints.RightCoral19);
-            idAndDriveWaypoint.put(-10, DriveWaypoints.RightCoral18);
-            idAndDriveWaypoint.put(-11, DriveWaypoints.RightCoral17);
-            idAndDriveWaypoint.put(-17, DriveWaypoints.RightCoral17);
-            idAndDriveWaypoint.put(-18, DriveWaypoints.RightCoral18);
-            idAndDriveWaypoint.put(-19, DriveWaypoints.RightCoral19);
-            idAndDriveWaypoint.put(-20, DriveWaypoints.RightCoral20);
-            idAndDriveWaypoint.put(-21, DriveWaypoints.RightCoral21);
-            idAndDriveWaypoint.put(-22, DriveWaypoints.RightCoral22);
-            return idAndDriveWaypoint;
+        public static HashMap<Integer, DriveWaypoints> getIdsAnd134CoralWaypointsLeftHashmap() {
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(6, DriveWaypoints.LeftCoral22);
+            idAndDriveWaypoints.put(7, DriveWaypoints.LeftCoral21);
+            idAndDriveWaypoints.put(8, DriveWaypoints.LeftCoral20);
+            idAndDriveWaypoints.put(9, DriveWaypoints.LeftCoral19);
+            idAndDriveWaypoints.put(10, DriveWaypoints.LeftCoral18);
+            idAndDriveWaypoints.put(11, DriveWaypoints.LeftCoral17);
+            idAndDriveWaypoints.put(17, DriveWaypoints.LeftCoral17);
+            idAndDriveWaypoints.put(18, DriveWaypoints.LeftCoral18);
+            idAndDriveWaypoints.put(19, DriveWaypoints.LeftCoral19);
+            idAndDriveWaypoints.put(20, DriveWaypoints.LeftCoral20);
+            idAndDriveWaypoints.put(21, DriveWaypoints.LeftCoral21);
+            return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, DriveWaypoints> getIdsAndLevel2DriveWaypointHashmap() {
-            HashMap<Integer, DriveWaypoints> idAndDriveWaypoint = new HashMap<Integer, DriveWaypoints>();
-            idAndDriveWaypoint.put(6, DriveWaypoints.Level2LeftCoral22);
-            idAndDriveWaypoint.put(7, DriveWaypoints.Level2LeftCoral21);
-            idAndDriveWaypoint.put(8, DriveWaypoints.Level2LeftCoral20);
-            idAndDriveWaypoint.put(9, DriveWaypoints.Level2LeftCoral19);
-            idAndDriveWaypoint.put(10, DriveWaypoints.Level2LeftCoral18);
-            idAndDriveWaypoint.put(11, DriveWaypoints.Level2LeftCoral17);
-            idAndDriveWaypoint.put(17, DriveWaypoints.Level2LeftCoral17);
-            idAndDriveWaypoint.put(18, DriveWaypoints.Level2LeftCoral18);
-            idAndDriveWaypoint.put(19, DriveWaypoints.Level2LeftCoral19);
-            idAndDriveWaypoint.put(20, DriveWaypoints.Level2LeftCoral20);
-            idAndDriveWaypoint.put(21, DriveWaypoints.Level2LeftCoral21);
-            idAndDriveWaypoint.put(22, DriveWaypoints.Level2LeftCoral22);
-            idAndDriveWaypoint.put(-6, DriveWaypoints.Level2RightCoral22);
-            idAndDriveWaypoint.put(-7, DriveWaypoints.Level2RightCoral21);
-            idAndDriveWaypoint.put(-8, DriveWaypoints.Level2RightCoral20);
-            idAndDriveWaypoint.put(-9, DriveWaypoints.Level2RightCoral19);
-            idAndDriveWaypoint.put(-10, DriveWaypoints.Level2RightCoral18);
-            idAndDriveWaypoint.put(-11, DriveWaypoints.Level2RightCoral17);
-            idAndDriveWaypoint.put(-17, DriveWaypoints.Level2RightCoral17);
-            idAndDriveWaypoint.put(-18, DriveWaypoints.Level2RightCoral18);
-            idAndDriveWaypoint.put(-19, DriveWaypoints.Level2RightCoral19);
-            idAndDriveWaypoint.put(-20, DriveWaypoints.Level2RightCoral20);
-            idAndDriveWaypoint.put(-21, DriveWaypoints.Level2RightCoral21);
-            idAndDriveWaypoint.put(-22, DriveWaypoints.Level2RightCoral22);
-            return idAndDriveWaypoint;
+        public static HashMap<Integer, DriveWaypoints> getIdsAnd134CoralWaypointsRightHashmap() {
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(6, DriveWaypoints.RightCoral22);
+            idAndDriveWaypoints.put(7, DriveWaypoints.RightCoral21);
+            idAndDriveWaypoints.put(8, DriveWaypoints.RightCoral20);
+            idAndDriveWaypoints.put(9, DriveWaypoints.RightCoral19);
+            idAndDriveWaypoints.put(10, DriveWaypoints.RightCoral18);
+            idAndDriveWaypoints.put(11, DriveWaypoints.RightCoral17);
+            idAndDriveWaypoints.put(17, DriveWaypoints.RightCoral17);
+            idAndDriveWaypoints.put(18, DriveWaypoints.RightCoral18);
+            idAndDriveWaypoints.put(19, DriveWaypoints.RightCoral19);
+            idAndDriveWaypoints.put(20, DriveWaypoints.RightCoral20);
+            idAndDriveWaypoints.put(21, DriveWaypoints.RightCoral21);
+            idAndDriveWaypoints.put(22, DriveWaypoints.RightCoral22);
+            return idAndDriveWaypoints;
+
+        }
+
+        public static HashMap<Integer, DriveWaypoints> getIdsAndLevel2WaypointLeftHashmap() {
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(6, DriveWaypoints.Level2LeftCoral22);
+            idAndDriveWaypoints.put(7, DriveWaypoints.Level2LeftCoral21);
+            idAndDriveWaypoints.put(8, DriveWaypoints.Level2LeftCoral20);
+            idAndDriveWaypoints.put(9, DriveWaypoints.Level2LeftCoral19);
+            idAndDriveWaypoints.put(10, DriveWaypoints.Level2LeftCoral18);
+            idAndDriveWaypoints.put(11, DriveWaypoints.Level2LeftCoral17);
+            idAndDriveWaypoints.put(17, DriveWaypoints.Level2LeftCoral17);
+            idAndDriveWaypoints.put(18, DriveWaypoints.Level2LeftCoral18);
+            idAndDriveWaypoints.put(19, DriveWaypoints.Level2LeftCoral19);
+            idAndDriveWaypoints.put(20, DriveWaypoints.Level2LeftCoral20);
+            idAndDriveWaypoints.put(21, DriveWaypoints.Level2LeftCoral21);
+            idAndDriveWaypoints.put(22, DriveWaypoints.Level2LeftCoral22);
+            return idAndDriveWaypoints;
+        }
+
+        public static HashMap<Integer, DriveWaypoints> getIdsAndLevel2WaypointsRightHashmap() {
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(6, DriveWaypoints.Level2RightCoral22);
+            idAndDriveWaypoints.put(7, DriveWaypoints.Level2RightCoral21);
+            idAndDriveWaypoints.put(8, DriveWaypoints.Level2RightCoral20);
+            idAndDriveWaypoints.put(9, DriveWaypoints.Level2RightCoral19);
+            idAndDriveWaypoints.put(10, DriveWaypoints.Level2RightCoral18);
+            idAndDriveWaypoints.put(11, DriveWaypoints.Level2RightCoral17);
+            idAndDriveWaypoints.put(17, DriveWaypoints.Level2RightCoral17);
+            idAndDriveWaypoints.put(18, DriveWaypoints.Level2RightCoral18);
+            idAndDriveWaypoints.put(19, DriveWaypoints.Level2RightCoral19);
+            idAndDriveWaypoints.put(20, DriveWaypoints.Level2RightCoral20);
+            idAndDriveWaypoints.put(21, DriveWaypoints.Level2RightCoral21);
+            idAndDriveWaypoints.put(22, DriveWaypoints.Level2RightCoral22);
+            return idAndDriveWaypoints;
         }
 
         public static HashMap<Integer, DriveWaypoints> getIdsAndAlgaeDriveWaypointHashmap() {
-            HashMap<Integer, DriveWaypoints> idAndDriveWaypoint = new HashMap<Integer, DriveWaypoints>();
-            idAndDriveWaypoint.put(6, DriveWaypoints.AlgaeLevel22);
-            idAndDriveWaypoint.put(7, DriveWaypoints.AlgaeLevel21);
-            idAndDriveWaypoint.put(8, DriveWaypoints.AlgaeLevel20);
-            idAndDriveWaypoint.put(9, DriveWaypoints.AlgaeLevel19);
-            idAndDriveWaypoint.put(10, DriveWaypoints.AlgaeLevel18);
-            idAndDriveWaypoint.put(11, DriveWaypoints.AlgaeLevel17);
-            idAndDriveWaypoint.put(17, DriveWaypoints.AlgaeLevel17);
-            idAndDriveWaypoint.put(18, DriveWaypoints.AlgaeLevel18);
-            idAndDriveWaypoint.put(19, DriveWaypoints.AlgaeLevel19);
-            idAndDriveWaypoint.put(20, DriveWaypoints.AlgaeLevel20);
-            idAndDriveWaypoint.put(21, DriveWaypoints.AlgaeLevel21);
-            idAndDriveWaypoint.put(22, DriveWaypoints.AlgaeLevel22);
-            return idAndDriveWaypoint;
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(6, DriveWaypoints.AlgaeLevel22);
+            idAndDriveWaypoints.put(7, DriveWaypoints.AlgaeLevel21);
+            idAndDriveWaypoints.put(8, DriveWaypoints.AlgaeLevel20);
+            idAndDriveWaypoints.put(9, DriveWaypoints.AlgaeLevel19);
+            idAndDriveWaypoints.put(10, DriveWaypoints.AlgaeLevel18);
+            idAndDriveWaypoints.put(11, DriveWaypoints.AlgaeLevel17);
+            idAndDriveWaypoints.put(17, DriveWaypoints.AlgaeLevel17);
+            idAndDriveWaypoints.put(18, DriveWaypoints.AlgaeLevel18);
+            idAndDriveWaypoints.put(19, DriveWaypoints.AlgaeLevel19);
+            idAndDriveWaypoints.put(20, DriveWaypoints.AlgaeLevel20);
+            idAndDriveWaypoints.put(21, DriveWaypoints.AlgaeLevel21);
+            idAndDriveWaypoints.put(22, DriveWaypoints.AlgaeLevel22);
+            return idAndDriveWaypoints;
         }
 
         public static HashMap<Integer, DriveWaypoints> getIdsAndProcessorDriveWaypointHashmap() {
-            HashMap<Integer, DriveWaypoints> idAndDriveWaypoint = new HashMap<Integer, DriveWaypoints>();
-            idAndDriveWaypoint.put(3, DriveWaypoints.Processor3);
-            idAndDriveWaypoint.put(16, DriveWaypoints.Processor16);
-            return idAndDriveWaypoint;
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(3, DriveWaypoints.Processor3);
+            idAndDriveWaypoints.put(16, DriveWaypoints.Processor16);
+            return idAndDriveWaypoints;
         }
 
         public static HashMap<Integer, DriveWaypoints> getIdsAndFeederStationDriveWaypointHashmap() {
-            HashMap<Integer, DriveWaypoints> idAndDriveWaypoint = new HashMap<Integer, DriveWaypoints>();
-            idAndDriveWaypoint.put(1, DriveWaypoints.FeederStation12Point5);
-            idAndDriveWaypoint.put(2, DriveWaypoints.FeederStation13Point5);
-            idAndDriveWaypoint.put(12, DriveWaypoints.FeederStation12Point5);
-            idAndDriveWaypoint.put(13, DriveWaypoints.FeederStation13Point5);
-            return idAndDriveWaypoint;
+            HashMap<Integer, DriveWaypoints> idAndDriveWaypoints = new HashMap<Integer, DriveWaypoints>();
+            idAndDriveWaypoints.put(1, DriveWaypoints.FeederStation12Point5);
+            idAndDriveWaypoints.put(2, DriveWaypoints.FeederStation13Point5);
+            idAndDriveWaypoints.put(12, DriveWaypoints.FeederStation12Point5);
+            idAndDriveWaypoints.put(13, DriveWaypoints.FeederStation13Point5);
+            return idAndDriveWaypoints;
         }
 
     }
