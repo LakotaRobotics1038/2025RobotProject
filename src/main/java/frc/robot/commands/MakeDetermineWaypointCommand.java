@@ -40,7 +40,7 @@ public class MakeDetermineWaypointCommand extends Command {
             case L1Coral:
             case L3Coral:
             case L4Coral:
-                getCoralWaypoint(scoringSide);
+                get123CoralWaypoint(scoringSide);
                 break;
             case L2Coral:
                 getLevel2CoralWaypoint(scoringSide);
