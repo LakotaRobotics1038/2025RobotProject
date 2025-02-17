@@ -30,11 +30,14 @@ public class Robot extends TimedRobot {
     // Subsystems
     private DriveTrain driveTrain = DriveTrain.getInstance();
 
+    // Human Interface Devices
+    private OperatorPanel operatorPanel = OperatorPanel.getInstance();
+
     @Override
     public void robotInit() {
         // Singleton instances that need to be created but not referenced
         DriverJoystick.getInstance();
-        OperatorJoystick.getInstance();
+        OperatorPanel.getInstance();
         Dashboard.getInstance();
 
         addPeriodic(swagLights::periodic, 0.25);
@@ -67,6 +70,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        operatorPanel.clearDefaults();
         driveTrain.zeroHeading();
         autonomousCommand = autonSelector.chooseAuton();
         // if (DriverStation.isFMSAttached()) {
@@ -96,6 +100,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        operatorPanel.enableDefaults();
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
     }
