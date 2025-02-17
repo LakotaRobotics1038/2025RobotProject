@@ -5,10 +5,9 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.AcquisitionConstants;
@@ -39,12 +38,20 @@ public class Acquisition extends SubsystemBase {
         return instance;
     }
 
-    public void acquire() {
-        this.acquisitionMotor.set(AcquisitionConstants.kAcquireSpeed);
+    public void acquireCoral() {
+        this.acquisitionMotor.set(AcquisitionConstants.kAcquireCoralSpeed);
     }
 
-    public void dispose() {
-        this.acquisitionMotor.set(AcquisitionConstants.kDisposeSpeed);
+    public void acquireAlgae() {
+        this.acquisitionMotor.set(AcquisitionConstants.kAcquireAlgaeSpeed);
+    }
+
+    public void disposeCoral() {
+        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed);
+    }
+
+    public void disposeAlgae() {
+        this.acquisitionMotor.set(AcquisitionConstants.kDisposeAlgaeSpeed);
     }
 
     public void stopAcquisition() {
