@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.subsystems.Extension;
 
@@ -16,8 +15,8 @@ public class SetExtensionPositionCommand extends Command {
 
     @Override
     public void initialize() {
-        extension.setDefaultCommand(
-                new InstantCommand(() -> extension.setSetpoint(setpoint), extension));
+        extension.setSetpoint(setpoint);
+        extension.enable();
     }
 
     @Override
