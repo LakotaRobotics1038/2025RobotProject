@@ -27,6 +27,31 @@ public class OperatorState {
         return this.lastInput;
     }
 
+    public boolean isCoral() {
+        switch (getLastInput()) {
+            case L1Coral:
+            case L2Coral:
+            case L3Coral:
+            case L4Coral:
+            case FeederStation:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public boolean isAlgae() {
+        switch (getLastInput()) {
+            case L23Algae:
+            case L34Algae:
+            case Processor:
+            case Barge:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
         this.lastInput = lastInput;
     }
