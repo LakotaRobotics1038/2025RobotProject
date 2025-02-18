@@ -16,17 +16,18 @@ public class SetShoulderPositionCommand extends Command {
 
     @Override
     public void initialize() {
-        shoulder.setDefaultCommand(new InstantCommand(() -> shoulder.setSetpoint(setpoint), shoulder));
+        this.shoulder.setSetpoint(setpoint);
+        this.shoulder.enable();
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
     public void end(boolean isInterrupted) {
-
+        this.shoulder.disable();
     }
 
 }

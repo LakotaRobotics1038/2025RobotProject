@@ -15,8 +15,8 @@ public class SetExtensionPositionCommand extends Command {
 
     @Override
     public void initialize() {
-        extension.setSetpoint(setpoint);
-        extension.enable();
+        this.extension.setSetpoint(setpoint);
+        this.extension.enable();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class SetExtensionPositionCommand extends Command {
 
     @Override
     public void end(boolean isInterrupted) {
-        extension.disable();
+        this.extension.disable();
     }
 
 }

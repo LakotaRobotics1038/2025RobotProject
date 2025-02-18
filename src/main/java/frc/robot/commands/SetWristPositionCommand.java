@@ -16,16 +16,17 @@ public class SetWristPositionCommand extends Command {
 
     @Override
     public void initialize() {
-        wrist.setDefaultCommand(new InstantCommand(() -> wrist.setSetpoint(setpoint), wrist));
+        this.wrist.setSetpoint(setpoint);
+        this.wrist.enable();
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
     public void end(boolean isInterrupted) {
-
+        this.wrist.disable();
     }
 }
