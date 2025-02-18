@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.constants.ClimbConstants;
 import frc.robot.subsystems.Climb;
 
 public class ClimbUpCommand extends Command {
@@ -18,7 +18,7 @@ public class ClimbUpCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return climb.getPosition() >= ClimbConstants.maxClimbDistance;
     }
 
     @Override
