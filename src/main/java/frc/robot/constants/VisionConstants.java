@@ -18,18 +18,18 @@ public final class VisionConstants {
     public static final String kEnabled0Topic = "enable0";
     public static final String kEnabled1Topic = "enable1";
 
-    public static final double width = 800;
-    public static final double height = 600;
-    public static final double fov = 100;
+    public static final double kWidth = 800;
+    public static final double kHeight = 600;
+    public static final double kFov = 100;
 
-    public static final double driveP = 0.005;
-    public static final double driveI = 0;
-    public static final double driveD = 0.0002;
-    public static final double spinP = 0.005;
-    public static final double spinI = 0;
-    public static final double spinD = 0.0002;
-    public static final double spinSetpoint = 0.0;
-    public static final double aprilTagArea = 28908;
+    public static final double kDriveP = 0.005;
+    public static final double kDriveI = 0;
+    public static final double kDriveD = 0.0002;
+    public static final double kSpinP = 0.005;
+    public static final double kSpinI = 0;
+    public static final double kSpinD = 0.0002;
+    public static final double kSpinSetpoint = 0.0;
+    public static final double kAprilTagArea = 28908;
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
     public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.1, 0.0, 0.1),
