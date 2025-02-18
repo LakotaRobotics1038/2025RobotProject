@@ -11,6 +11,7 @@ public class OperatorState {
     }
 
     private OperatorState() {
+        this.lastInput = AcquisitionPositionSetpoint.Storage;
     }
 
     private static OperatorState instance;
