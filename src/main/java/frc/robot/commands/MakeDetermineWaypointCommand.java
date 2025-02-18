@@ -87,148 +87,121 @@ public class MakeDetermineWaypointCommand extends Command {
                 : Optional.empty();
     }
 
-    private void get134CoralWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> get134CoralWaypoint(ScoringSide scoringSide) {
         switch (this.bestId) {
             case 6:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
-                        : DriveWaypoints.RightCoral22;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
+                        : DriveWaypoints.RightCoral22;
             case 7:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
-                        : DriveWaypoints.RightCoral21;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
+                        : DriveWaypoints.RightCoral21;
             case 8:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
-                        : DriveWaypoints.RightCoral20;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
+                        : DriveWaypoints.RightCoral20;
             case 9:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
-                        : DriveWaypoints.RightCoral19;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
+                        : DriveWaypoints.RightCoral19;
             case 10:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
-                        : DriveWaypoints.RightCoral18;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
+                        : DriveWaypoints.RightCoral18;
             case 11:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
-                        : DriveWaypoints.RightCoral17;
                 this.isMirrored = true;
-                break;
-            case 17:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
                         : DriveWaypoints.RightCoral17;
+            case 17:
                 this.isMirrored = false;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
+                        : DriveWaypoints.RightCoral17;
             case 18:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
                         : DriveWaypoints.RightCoral18;
-                this.isMirrored = false;
-                break;
             case 19:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
                         : DriveWaypoints.RightCoral19;
-                this.isMirrored = false;
-                break;
             case 20:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
                         : DriveWaypoints.RightCoral20;
-                this.isMirrored = false;
-                break;
             case 21:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
                         : DriveWaypoints.RightCoral21;
-                this.isMirrored = false;
-                break;
             case 22:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
-                        : DriveWaypoints.RightCoral22;
                 this.isMirrored = false;
-                break;
-
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
+                        : DriveWaypoints.RightCoral22;
             default:
-                break;
+                return Optional.empty();
         }
     }
 
-    private void getLevel2CoralWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getLevel2CoralWaypoint(ScoringSide scoringSide) {
         switch (this.bestId) {
             case 6:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
-                        : DriveWaypoints.Level2RightCoral22;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
+                        : DriveWaypoints.Level2RightCoral22;
             case 7:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
-                        : DriveWaypoints.Level2RightCoral21;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
+                        : DriveWaypoints.Level2RightCoral21;
             case 8:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
-                        : DriveWaypoints.Level2RightCoral20;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
+                        : DriveWaypoints.Level2RightCoral20;
             case 9:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
-                        : DriveWaypoints.Level2RightCoral19;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
+                        : DriveWaypoints.Level2RightCoral19;
             case 10:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
-                        : DriveWaypoints.Level2RightCoral18;
                 this.isMirrored = true;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
+                        : DriveWaypoints.Level2RightCoral18;
             case 11:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
-                        : DriveWaypoints.Level2RightCoral17;
                 this.isMirrored = true;
-                break;
-            case 17:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
                         : DriveWaypoints.Level2RightCoral17;
+            case 17:
                 this.isMirrored = false;
-                break;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
+                        : DriveWaypoints.Level2RightCoral17;
             case 18:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
                         : DriveWaypoints.Level2RightCoral18;
-                this.isMirrored = false;
-                break;
             case 19:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
                         : DriveWaypoints.Level2RightCoral19;
-                this.isMirrored = false;
-                break;
             case 20:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
                         : DriveWaypoints.Level2RightCoral20;
-                this.isMirrored = false;
-                break;
             case 21:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
+                this.isMirrored = false;
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
                         : DriveWaypoints.Level2RightCoral21;
-                this.isMirrored = false;
-                break;
             case 22:
-                this.waypoint = scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
-                        : DriveWaypoints.Level2RightCoral22;
                 this.isMirrored = false;
-                break;
-
+                return scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
+                        : DriveWaypoints.Level2RightCoral22;
             default:
-                break;
+                return Optional.empty();
         }
     }
 
-    private void getAlgaeWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getAlgaeWaypoint(ScoringSide scoringSide) {
         switch (this.bestId) {
             case 6:
-                this.waypoint = DriveWaypoints.AlgaeLevel22;
                 this.isMirrored = true;
-                break;
+                return DriveWaypoints.AlgaeLevel22;
             case 7:
                 this.waypoint = DriveWaypoints.AlgaeLevel21;
                 this.isMirrored = true;

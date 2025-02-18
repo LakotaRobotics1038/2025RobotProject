@@ -60,7 +60,8 @@ public final class AutoConstants {
         FeederStation13Point6(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0))),
         FeederStation13Point7(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0))),
         FeederStation13Point8(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0))),
-        FeederStation13Point9(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0)));
+        FeederStation13Point9(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0))),
+        Storage(new Pose2d(new Translation2d(0, 0), new Rotation2d(125.0)));
 
         private Pose2d endpoint;
 
