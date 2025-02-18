@@ -4,7 +4,6 @@ import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetpoints;
 
-//Wait for SetAcquisitionPositionCommand to be merged
 public enum AcquisitionPositionSetpoint {
 
     L1Coral(ShoulderSetpoints.L1Coral, WristSetpoints.L1Coral, ExtensionSetpoints.L1Coral),
