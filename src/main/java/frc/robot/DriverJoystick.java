@@ -97,13 +97,13 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.aButton.whileTrue(
+        super.aButton.and(() -> makeDetermineWaypointCommand.getPose2d().isPresent()).whileTrue(
                 makeDetermineWaypointCommand.andThen(
                         new InstantCommand(() -> {
                             this.currentPose = this.driveTrain.getState().Pose;
                         }).andThen(AutoBuilder.followPath(new PathPlannerPath(
                                 PathPlannerPath.waypointsFromPoses(this.currentPose,
-                                        makeDetermineWaypointCommand.getPose2d()),
+                                        makeDetermineWaypointCommand.getPose2d().get()),
                                 new PathConstraints(
                                         DriveConstants.MaxSpeed,
                                         AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -112,7 +112,7 @@ public class DriverJoystick extends XboxController1038 {
                                 new IdealStartingState(
                                         driveTrain.getState().Speeds.vxMetersPerSecond,
                                         driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d()))))));
+                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d().get()))))));
     }
 
     /**

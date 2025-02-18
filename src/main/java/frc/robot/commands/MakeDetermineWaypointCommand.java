@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
@@ -16,7 +17,7 @@ import frc.robot.subsystems.Vision;
 public class MakeDetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
     private int bestId = 0;
-    private DriveWaypoints waypoint;
+    private Optional<DriveWaypoints> waypoint;
     private boolean isMirrored;
 
     public MakeDetermineWaypointCommand() {
@@ -54,6 +55,8 @@ public class MakeDetermineWaypointCommand extends Command {
                 break;
             case FeederStation:
                 getFeederStationWaypoint(scoringSide);
+            case Storage:
+                waypoint = Optional.empty();
                 break;
             default:
                 break;
@@ -74,16 +77,14 @@ public class MakeDetermineWaypointCommand extends Command {
         return this.isMirrored;
     }
 
-    public DriveWaypoints getWaypoint() {
-        return this.waypoint;
+    public Optional<Pose2d> getPose2d() {
+        return waypoint.isPresent() ? Optional.of(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()))
+                : Optional.empty();
     }
 
-    public Pose2d getPose2d() {
-        return FlippingUtil.flipFieldPose(this.waypoint.getEndpoint());
-    }
-
-    public Rotation2d getRotation2d() {
-        return waypoint.getRotation2d();
+    public Optional<Rotation2d> getRotation2d() {
+        return waypoint.isPresent() ? Optional.of(waypoint.get().getRotation2d())
+                : Optional.empty();
     }
 
     private void get134CoralWaypoint(ScoringSide scoringSide) {
