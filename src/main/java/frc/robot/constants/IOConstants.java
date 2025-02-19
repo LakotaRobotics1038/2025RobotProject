@@ -4,7 +4,7 @@ public final class IOConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorPanelPort = 1;
 
-    public static final int kCoralPosScoringSwitchNumber = 0;
+    public static final int kCoralPosScoringSwitchNumber = 13;
     public static final int kCoralL4ButtonNumber = 1;
     public static final int kCoralL3ButtonNumber = 2;
     public static final int kCoralL2ButtonNumber = 3;
