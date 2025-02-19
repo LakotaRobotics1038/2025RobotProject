@@ -24,9 +24,9 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 public class OperatorPanel extends GenericHID {
     private OperatorState operatorState;
 
-    private Extension extension;
-    private Wrist wrist;
-    private Shoulder shoulder;
+    private final Extension extension = Extension.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
 
     public final JoystickButton acquireButton = new JoystickButton(this, IOConstants.kAcquireButtonNumber);
     public final JoystickButton disposeButton = new JoystickButton(this, IOConstants.kDisposeButtonNumber);
