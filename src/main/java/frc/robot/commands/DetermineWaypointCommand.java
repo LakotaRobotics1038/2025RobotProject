@@ -14,13 +14,13 @@ import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpo
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 
-public class MakeDetermineWaypointCommand extends Command {
+public class DetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
     private int bestId = 0;
     private Optional<DriveWaypoints> waypoint;
     private boolean isMirrored;
 
-    public MakeDetermineWaypointCommand() {
+    public DetermineWaypointCommand() {
         addRequirements(vision);
     }
 

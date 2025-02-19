@@ -2,7 +2,7 @@ package frc.robot;
 
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
-import frc.robot.commands.MakeDetermineWaypointCommand;
+import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
-    private MakeDetermineWaypointCommand makeDetermineWaypointCommand = new MakeDetermineWaypointCommand();
+    private DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
 
     private Pose2d currentPose;
 
@@ -93,13 +93,13 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.aButton.and(() -> makeDetermineWaypointCommand.getPose2d().isPresent()).whileTrue(
-                makeDetermineWaypointCommand.andThen(
+        super.aButton.and(() -> determineWaypointCommand.getPose2d().isPresent()).whileTrue(
+                determineWaypointCommand.andThen(
                         new InstantCommand(() -> {
                             this.currentPose = this.driveTrain.getState().Pose;
                         }).andThen(AutoBuilder.followPath(new PathPlannerPath(
                                 PathPlannerPath.waypointsFromPoses(this.currentPose,
-                                        makeDetermineWaypointCommand.getPose2d().get()),
+                                        determineWaypointCommand.getPose2d().get()),
                                 new PathConstraints(
                                         DriveConstants.MaxSpeed,
                                         AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -108,7 +108,7 @@ public class DriverJoystick extends XboxController1038 {
                                 new IdealStartingState(
                                         driveTrain.getState().Speeds.vxMetersPerSecond,
                                         driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d().get()))))));
+                                new GoalEndState(0, determineWaypointCommand.getRotation2d().get()))))));
     }
 
     /**
