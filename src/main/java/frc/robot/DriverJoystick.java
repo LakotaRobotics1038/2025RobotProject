@@ -4,7 +4,6 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.commands.MakeDetermineWaypointCommand;
 import frc.robot.constants.AutoConstants;
-import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
 
@@ -16,10 +15,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
