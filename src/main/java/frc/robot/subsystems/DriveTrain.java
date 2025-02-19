@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveConstants;
+import frc.robot.constants.VisionConstants;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -53,6 +54,8 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         }
         return instance;
     }
+
+    private static final Vision vision = Vision.getInstance();
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -256,6 +259,16 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 hasAppliedOperatorPerspective = true;
             });
         }
+
+        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
+
+        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
     }
 
     /**
