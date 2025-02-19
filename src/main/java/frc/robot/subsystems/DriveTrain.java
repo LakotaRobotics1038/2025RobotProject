@@ -32,7 +32,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveConstants;
-import frc.robot.constants.VisionConstants;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
