@@ -3,15 +3,15 @@ package frc.robot;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorState {
-    private AcquisitionPositionSetpoint lastInput;
-    private ScoringSide scoringSide;
+    private static AcquisitionPositionSetpoint lastInput;
+    private static ScoringSide scoringSide;
 
     public enum ScoringSide {
         LEFT, RIGHT;
     }
 
     private OperatorState() {
-        this.lastInput = AcquisitionPositionSetpoint.Storage;
+        lastInput = AcquisitionPositionSetpoint.Storage;
     }
 
     private static OperatorState instance;
@@ -24,8 +24,8 @@ public class OperatorState {
         return instance;
     }
 
-    public AcquisitionPositionSetpoint getLastInput() {
-        return this.lastInput;
+    public static AcquisitionPositionSetpoint getLastInput() {
+        return lastInput;
     }
 
     public boolean isCoral() {
@@ -58,10 +58,10 @@ public class OperatorState {
     }
 
     public void setScoringSide(ScoringSide scoringSide) {
-        this.scoringSide = scoringSide;
+        OperatorState.scoringSide = scoringSide;
     }
 
-    public ScoringSide getScoringSide() {
-        return this.scoringSide;
+    public static ScoringSide getScoringSide() {
+        return scoringSide;
     }
 }

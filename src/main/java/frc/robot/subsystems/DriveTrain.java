@@ -163,7 +163,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 },
                 new PPHolonomicDriveController(
                         new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDController),
+                                AutoConstants.kDXController),
                         new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
                                 AutoConstants.kDThetaController)),
                 AutoConstants.kRobotConfig.get(),
