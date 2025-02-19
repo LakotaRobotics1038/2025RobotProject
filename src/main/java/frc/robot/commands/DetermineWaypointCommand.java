@@ -10,9 +10,11 @@ import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
+import frc.robot.OperatorState;
+import frc.robot.OperatorState.ScoringSide;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
@@ -41,7 +43,7 @@ public class DetermineWaypointCommand extends Command {
             case L1Coral:
             case L3Coral:
             case L4Coral:
-                this.waypoint = get123CoralWaypoint(scoringSide);
+                this.waypoint = get134CoralWaypoint(scoringSide);
                 break;
             case L2Coral:
                 this.waypoint = getLevel2CoralWaypoint(scoringSide);
