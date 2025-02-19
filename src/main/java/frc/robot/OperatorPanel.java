@@ -12,6 +12,7 @@ import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetExtensionPositionCommand;
 import frc.robot.commands.SetShoulderPositionCommand;
 import frc.robot.commands.SetWristPositionCommand;
+import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.constants.IOConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
@@ -53,6 +54,7 @@ public class OperatorPanel extends GenericHID {
         this.acquireButton.and(operatorState::isAlgae).whileTrue(new AcquireAlgaeCommand());
         this.disposeButton.and(operatorState::isCoral).whileTrue(new DisposeCoralCommand());
         this.disposeButton.and(operatorState::isAlgae).whileTrue(new DisposeAlgaeCommand());
+        this.disposeButton.and(operatorState::isBarge).whileTrue(new ShootAlgaeCommand());
         this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));
         this.bargeButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge));
         this.coralL1Button.onTrue(
