@@ -54,6 +54,10 @@ public class Acquisition extends SubsystemBase {
         this.acquisitionMotor.set(AcquisitionConstants.kDisposeAlgaeSpeed);
     }
 
+    public void shootAlgae() {
+        this.acquisitionMotor.set(AcquisitionConstants.kShootAlgaeSpeed);
+    }
+
     public void stopAcquisition() {
         this.acquisitionMotor.stopMotor();
     }
