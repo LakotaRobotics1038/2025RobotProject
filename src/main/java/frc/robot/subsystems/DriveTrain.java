@@ -151,24 +151,26 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
                 SwerveConstants.FrontRight);
-        AutoBuilder.configure(
-                () -> this.getState().Pose,
-                this::resetPose,
-                () -> this.getState().Speeds,
-                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                    this.setControl(
-                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                },
-                new PPHolonomicDriveController(
-                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDController),
-                        new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
-                                AutoConstants.kDThetaController)),
-                AutoConstants.kRobotConfig.get(),
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                this);
+        if (AutoConstants.kRobotConfig.isPresent()) {
+            AutoBuilder.configure(
+                    () -> this.getState().Pose,
+                    this::resetPose,
+                    () -> this.getState().Speeds,
+                    (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+                        this.setControl(
+                                new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                        .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                        .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
+                    },
+                    new PPHolonomicDriveController(
+                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                                    AutoConstants.kDController),
+                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
+                                    AutoConstants.kDThetaController)),
+                    AutoConstants.kRobotConfig.get(),
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                    this);
+        }
         if (Utils.isSimulation()) {
             startSimThread();
         }

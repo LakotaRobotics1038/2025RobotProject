@@ -94,20 +94,21 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.aButton.whileTrue(
-                new InstantCommand(() -> {
-                    this.currentPose = this.driveTrain.getState().Pose;
-                }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-                        PathPlannerPath.waypointsFromPoses(this.currentPose, DriveWaypoints.Algae23.getEndpoint()),
-                        new PathConstraints(
-                                DriveConstants.MaxSpeed,
-                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                        new IdealStartingState(
-                                driveTrain.getState().Speeds.vxMetersPerSecond,
-                                driveTrain.getState().Pose.getRotation()),
-                        new GoalEndState(0, Rotation2d.kZero)))));
+        // super.aButton.whileTrue(
+        // new InstantCommand(() -> {
+        // this.currentPose = this.driveTrain.getState().Pose;
+        // }).andThen(AutoBuilder.followPath(new PathPlannerPath(
+        // PathPlannerPath.waypointsFromPoses(this.currentPose,
+        // DriveWaypoints.Algae23.getEndpoint()),
+        // new PathConstraints(
+        // DriveConstants.MaxSpeed,
+        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+        // new IdealStartingState(
+        // driveTrain.getState().Speeds.vxMetersPerSecond,
+        // driveTrain.getState().Pose.getRotation()),
+        // new GoalEndState(0, Rotation2d.kZero)))));
     }
 
     /**
