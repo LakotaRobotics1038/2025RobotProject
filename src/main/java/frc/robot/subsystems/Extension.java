@@ -68,14 +68,14 @@ public class Extension extends SubsystemBase {
     }
 
     /**
-     * Returns current distance recieved by the Arm laser as a double in milimetres
+     * Returns current distance received by the Arm laser as a double in millimeters
      *
-     * @return laser distance is milimetres
+     * @return laser distance is millimeters
      */
     public double getPosition() {
         LaserCan.Measurement measurement = laser.getMeasurement();
         if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
-            return laser.getMeasurement().distance_mm;
+            return measurement.distance_mm;
         }
         return 0.0;
     }

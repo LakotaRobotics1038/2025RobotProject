@@ -40,7 +40,7 @@ public class OperatorPanel extends GenericHID {
     public final JoystickButton algaeL23Button = new JoystickButton(this, IOConstants.kAlgaeL23ButtonNumber);
     public final JoystickButton algaeL34Button = new JoystickButton(this, IOConstants.kAlgaeL34ButtonNumber);
     public final JoystickButton feederButton = new JoystickButton(this, IOConstants.kFeederButtonNumber);
-    public final JoystickButton processorButton = new JoystickButton(this, IOConstants.kProcesssorButtonNumber);
+    public final JoystickButton processorButton = new JoystickButton(this, IOConstants.kProcessorButtonNumber);
     public final JoystickButton coralPosScoringSwitch = new JoystickButton(this,
             IOConstants.kCoralPosScoringSwitchNumber);
 

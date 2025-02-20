@@ -32,7 +32,12 @@ public class Wrist extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
                 .inverted(false);
+        wristConfig.absoluteEncoder
+                .positionConversionFactor(WristConstants.kEncoderConversion);
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        wristController.disableContinuousInput();
+        wristController.setTolerance(2);
     }
 
     public static Wrist getInstance() {
@@ -55,7 +60,8 @@ public class Wrist extends SubsystemBase {
     }
 
     public double getPosition() {
-        return this.wristEncoder.getPosition();
+        double position = this.wristEncoder.getPosition();
+        return position < 180 ? position : position - 360;
     }
 
     public boolean onTarget() {

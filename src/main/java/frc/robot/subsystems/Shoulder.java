@@ -19,7 +19,7 @@ import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 public class Shoulder extends SubsystemBase {
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
     private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
-    private AbsoluteEncoder shoulderEncoder = leftShoulderMotor.getAbsoluteEncoder();
+    private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
     private boolean enabled = false;
@@ -28,16 +28,18 @@ public class Shoulder extends SubsystemBase {
 
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
+                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
-        leftShoulderConfig.limitSwitch
-                .reverseLimitSwitchEnabled(true)
-                .reverseLimitSwitchType(Type.kNormallyOpen);
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
-
-        rightShoulderConfig.follow(leftShoulderMotor, true);
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
+                .follow(leftShoulderMotor, true);
+        rightShoulderConfig.absoluteEncoder
+                .positionConversionFactor(ShoulderConstants.kEncoderConversion);
+        rightShoulderConfig.limitSwitch
+                .reverseLimitSwitchEnabled(true)
+                .reverseLimitSwitchType(Type.kNormallyOpen);
 
         leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
