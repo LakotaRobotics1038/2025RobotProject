@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
@@ -9,20 +10,21 @@ import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
-import au.grapplerobotics.LaserCan;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ExtensionConstants;
-import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
+import frc.robot.constants.NeoMotorConstants;
 
 public class Extension extends SubsystemBase {
     private SparkFlex extensionMotor = new SparkFlex(ExtensionConstants.kExtensionMotorPort, MotorType.kBrushless);
     private PIDController extensionController = new PIDController(ExtensionConstants.kP, ExtensionConstants.kI,
             ExtensionConstants.kD);
     private SparkLimitSwitch limitSwitch = extensionMotor.getReverseLimitSwitch();
-    private LaserCan laser = new LaserCan(ExtensionConstants.kExtensionLaserPort);
+    private RelativeEncoder extensionEncoder = extensionMotor.getEncoder();
     private static Extension instance;
     private boolean enabled;
 
@@ -42,6 +44,8 @@ public class Extension extends SubsystemBase {
         SparkFlexConfig extensionConfig = new SparkFlexConfig();
         extensionConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent);
+        extensionConfig.encoder
+                .positionConversionFactor(ExtensionConstants.kEncoderConversion);
 
         extensionMotor.configure(extensionConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
@@ -52,12 +56,21 @@ public class Extension extends SubsystemBase {
 
         extensionController.setTolerance(ExtensionConstants.kTolerance);
         extensionController.disableContinuousInput();
+
+        Shuffleboard.getTab("Controls").add("ExtPID", extensionController)
+                .withWidget(BuiltInWidgets.kPIDController);
+        Shuffleboard.getTab("Controls")
+                .addNumber("ExtCurrent", this::getPosition)
+                .withWidget(BuiltInWidgets.kTextView);
     }
 
     @Override
     public void periodic() {
         if (enabled) {
             useOutput(extensionController.calculate(getPosition()));
+        }
+        if (limitSwitch.isPressed() && extensionEncoder.getPosition() != 0.0) {
+            extensionEncoder.setPosition(0.0);
         }
     }
 
@@ -73,11 +86,7 @@ public class Extension extends SubsystemBase {
      * @return laser distance is millimeters
      */
     public double getPosition() {
-        LaserCan.Measurement measurement = laser.getMeasurement();
-        if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
-            return measurement.distance_mm;
-        }
-        return 0.0;
+        return extensionEncoder.getPosition();
     }
 
     /**

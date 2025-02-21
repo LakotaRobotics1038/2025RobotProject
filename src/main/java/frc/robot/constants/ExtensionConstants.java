@@ -6,12 +6,12 @@ public class ExtensionConstants {
 
     public static final double kMinExtensionPower = -1.0;
     public static final double kMaxExtensionPower = 1.0;
-    public static final double kExtensionMaximum = 0.0;
+    public static final double kExtensionMaximum = 26.14;
 
-    public static final double kTolerance = 5;
-    public static final double kEncoderConversion = 0.0;
-    public static final double kP = 0.03;
-    public static final double kI = 0.0;
+    public static final double kTolerance = 0.25;
+    public static final double kEncoderConversion = 0.158;
+    public static final double kP = 1.1;
+    public static final double kI = 0.002;
     public static final double kD = 0.0;
 
     public enum ExtensionSetpoints {
