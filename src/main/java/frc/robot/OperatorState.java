@@ -4,11 +4,7 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorState {
     private static AcquisitionPositionSetpoint lastInput;
-    private static ScoringSide scoringSide;
-
-    public enum ScoringSide {
-        LEFT, RIGHT;
-    }
+    private static boolean scoringFlipped;
 
     private OperatorState() {
         lastInput = AcquisitionPositionSetpoint.Storage;
@@ -54,14 +50,14 @@ public class OperatorState {
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
-        this.lastInput = lastInput;
+        OperatorState.lastInput = lastInput;
     }
 
-    public void setScoringSide(ScoringSide scoringSide) {
-        OperatorState.scoringSide = scoringSide;
+    public void setScoringFlipped(boolean scoringFlipped) {
+        OperatorState.scoringFlipped = scoringFlipped;
     }
 
-    public static ScoringSide getScoringSide() {
-        return scoringSide;
+    public static boolean isScoringFlipped() {
+        return scoringFlipped;
     }
 }

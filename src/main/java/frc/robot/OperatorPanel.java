@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.OperatorState.ScoringSide;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
@@ -47,7 +46,7 @@ public class OperatorPanel extends GenericHID {
         super(IOConstants.kOperatorPanelPort);
         this.operatorState = OperatorState.getInstance();
         operatorState.setLastInput(AcquisitionPositionSetpoint.Storage);
-        operatorState.setScoringSide(coralPosScoringSwitch.getAsBoolean() ? ScoringSide.LEFT : ScoringSide.RIGHT);
+        operatorState.setScoringFlipped(coralPosScoringSwitch.getAsBoolean());
 
         this.acquireButton.and(operatorState::isCoral).whileTrue(new AcquireCoralCommand());
         this.acquireButton.and(operatorState::isAlgae).whileTrue(new AcquireAlgaeCommand());
@@ -72,8 +71,8 @@ public class OperatorPanel extends GenericHID {
         this.feederButton.onTrue(
                 new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation)));
         this.coralPosScoringSwitch
-                .onTrue(new InstantCommand(() -> operatorState.setScoringSide(ScoringSide.LEFT)))
-                .onFalse(new InstantCommand(() -> operatorState.setScoringSide(ScoringSide.RIGHT)));
+                .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(false)))
+                .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(true)));
     }
 
     // Singleton Setup

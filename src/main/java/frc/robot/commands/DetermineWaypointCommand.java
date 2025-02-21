@@ -11,7 +11,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.OperatorState;
-import frc.robot.OperatorState.ScoringSide;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 import frc.robot.utils.AcquisitionPositionSetpoint;
@@ -38,25 +37,25 @@ public class DetermineWaypointCommand extends Command {
         }
 
         AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        ScoringSide scoringSide = OperatorState.getScoringSide();
+        boolean scoringFlipped = OperatorState.isScoringFlipped();
         switch (setpointLevel) {
             case L1Coral:
             case L3Coral:
             case L4Coral:
-                this.waypoint = get134CoralWaypoint(scoringSide);
+                this.waypoint = get134CoralWaypoint(scoringFlipped);
                 break;
             case L2Coral:
-                this.waypoint = getLevel2CoralWaypoint(scoringSide);
+                this.waypoint = getLevel2CoralWaypoint(scoringFlipped);
                 break;
             case L23Algae:
             case L34Algae:
-                this.waypoint = getAlgaeWaypoint(scoringSide);
+                this.waypoint = getAlgaeWaypoint(scoringFlipped);
                 break;
             case Processor:
-                this.waypoint = getProcessorWaypoint(scoringSide);
+                this.waypoint = getProcessorWaypoint(scoringFlipped);
                 break;
             case FeederStation:
-                this.waypoint = getFeederStationWaypoint(scoringSide);
+                this.waypoint = getFeederStationWaypoint(scoringFlipped);
             case Storage:
                 this.waypoint = Optional.empty();
                 break;
@@ -79,126 +78,124 @@ public class DetermineWaypointCommand extends Command {
     }
 
     public Optional<Pose2d> getPose2d() {
-        return waypoint.isPresent() ? Optional.of(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()))
-                : Optional.empty();
+        return Optional.ofNullable(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()));
     }
 
     public Optional<Rotation2d> getRotation2d() {
-        return waypoint.isPresent() ? Optional.of(waypoint.get().getRotation2d())
-                : Optional.empty();
+        return Optional.ofNullable(waypoint.get().getRotation2d());
     }
 
-    private Optional<DriveWaypoints> get134CoralWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> get134CoralWaypoint(boolean scoringFlipped) {
         switch (this.bestId) {
             case 6:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
                         : DriveWaypoints.RightCoral22);
             case 7:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
                         : DriveWaypoints.RightCoral21);
             case 8:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
                         : DriveWaypoints.RightCoral20);
             case 9:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
                         : DriveWaypoints.RightCoral19);
             case 10:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
                         : DriveWaypoints.RightCoral18);
             case 11:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
                         : DriveWaypoints.RightCoral17);
             case 17:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral17
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
                         : DriveWaypoints.RightCoral17);
             case 18:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral18
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
                         : DriveWaypoints.RightCoral18);
             case 19:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral19
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
                         : DriveWaypoints.RightCoral19);
             case 20:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral20
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
                         : DriveWaypoints.RightCoral20);
             case 21:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral21
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
                         : DriveWaypoints.RightCoral21);
             case 22:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.LeftCoral22
+                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
                         : DriveWaypoints.RightCoral22);
             default:
                 return Optional.empty();
         }
     }
 
-    private Optional<DriveWaypoints> getLevel2CoralWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getLevel2CoralWaypoint(boolean scoringFlipped) {
         switch (this.bestId) {
             case 6:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
                         : DriveWaypoints.Level2RightCoral22);
             case 7:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
                         : DriveWaypoints.Level2RightCoral21);
             case 8:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
                         : DriveWaypoints.Level2RightCoral20);
             case 9:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
                         : DriveWaypoints.Level2RightCoral19);
             case 10:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
                         : DriveWaypoints.Level2RightCoral18);
             case 11:
                 this.isMirrored = true;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
                         : DriveWaypoints.Level2RightCoral17);
             case 17:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral17
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
                         : DriveWaypoints.Level2RightCoral17);
             case 18:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral18
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
                         : DriveWaypoints.Level2RightCoral18);
             case 19:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral19
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
                         : DriveWaypoints.Level2RightCoral19);
             case 20:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral20
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
                         : DriveWaypoints.Level2RightCoral20);
             case 21:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral21
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
                         : DriveWaypoints.Level2RightCoral21);
             case 22:
                 this.isMirrored = false;
-                return Optional.of(scoringSide == ScoringSide.LEFT ? DriveWaypoints.Level2LeftCoral22
+                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
                         : DriveWaypoints.Level2RightCoral22);
             default:
                 return Optional.empty();
         }
     }
 
-    private Optional<DriveWaypoints> getAlgaeWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getAlgaeWaypoint(boolean scoringFlipped) {
         switch (this.bestId) {
             case 6:
                 this.isMirrored = true;
@@ -241,7 +238,7 @@ public class DetermineWaypointCommand extends Command {
         }
     }
 
-    private Optional<DriveWaypoints> getProcessorWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getProcessorWaypoint(boolean scoringFlipped) {
         switch (this.bestId) {
             case 3:
                 this.isMirrored = false;
@@ -254,7 +251,7 @@ public class DetermineWaypointCommand extends Command {
         }
     }
 
-    private Optional<DriveWaypoints> getFeederStationWaypoint(ScoringSide scoringSide) {
+    private Optional<DriveWaypoints> getFeederStationWaypoint(boolean scoringFlipped) {
         switch (this.bestId) {
             case 1:
                 this.isMirrored = true;
