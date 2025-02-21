@@ -8,17 +8,20 @@
   1) Go to <https://github.com/PhotonVision/photonvision>
   2) Scroll down until you see the releases section and click on the text that says "+ (whatever amount) releases"
   3) See if there are any recent developer versions of the PhotonVision code (marked with pre-release) and if there aren't any then download the latest stable version of the PhotonVision code (marked with latest)
-  4) Make sure the download is in a spot you will remember for later
+  4) Click on the triangle next to "assets" and scroll down until you see a file that includes the following words: "-linuxarm64_orangepi5pro.img.xz"
+     - IMPORTANT NOTE: Make sure the file you download contains the words in quotations above as PhotonVision will NOT work otherwise
+  6) Make sure the download is in a spot you will remember for later
+  7) Follow the steps in How To Etch PhotonVision For Your CoProcessor next!
 
 ## How To Etch PhotonVision For Your CoProcessor (Get PhotonVision from your computer to the SD card needed for the CoProcessor)
 
   1) Check a Driver Station Laptop and make sure it has balena Etcher / Etcher
   2) Open balena Etcher / Etcher
-  3) Make sure you have a micro-sd card and an SD card adapter
-  4) insert the micro-sd card into the SD card adapter & then plug the SD card adapter into the Driver Station Laptop
-  5) Click "Select Image" in balena Etcher / Etcher
-  6) Find your copy of the latest version of PhotonVision that you got from the "How To Get PhotonVision" Steps and select the folder **DO NOT UNZIP IT**
-  7) Then go on to select Drive & select the Drive of the SD card
+  3) Make sure you have a micro-sd card, and if needed a micro-sd card adapter
+  4) insert the micro-sd card into the SD card reader on the computer or into the micro-sd card adapter if the laptop does not have an SD card reader
+  5) Click "Flash from file" in balena Etcher / Etcher
+  6) Find your copy of PhotonVision that you got from the "How To Get PhotonVision" Steps and select the folder **DO NOT UNZIP IT**
+  7) Then go on to select Target & select the Drive of the SD card
   8) finally hit flash & wait for the SD card to finish being flashed, once it is finished unplug the SD card & the SD card adapter
   9) insert the SD card into our Orange Pi 5 Pro
 
@@ -28,10 +31,11 @@
   2) Open PhotonVision UI
   3) Navigate to PhotonVision's Calibration Section in the UI under the Camera tab.
   4) Select a calibration resolution and populate the pattern spacing, marker size, and board size.
+  5) These settings should be the following: Decimation 1, Pattern Spacing 1 inch, Marker size 1 inch, Board width 8 inch, and Board height 8 inch. The tag family for this year is Dict_4X4_1000 but might change for future years. 
 
         - If you're using the provided charuco board, set the pattern spacing to the size of the black, the marker size to the size of the charuco marker, and the board size to the size of the charuco board.
 
-  5) Make sure the board overlay matches the board in the image to ensure a stronger calibration. Capture enough images to cover the Camera's FOV (minimum 12). Once you've got your images click "Finish calibration" then wait.
+  7) Make sure the board overlay matches the board in the image to ensure a stronger calibration. Capture enough images to cover the Camera's FOV (minimum 12). Once you've got your images click "Finish calibration" then wait.
 
         - Make sure that the final Calibration has an FOV of the calibration that is within 10 degrees of the camera's specified FOV, the mean error should be less than 1 pixel.
 
