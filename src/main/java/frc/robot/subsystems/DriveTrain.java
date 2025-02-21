@@ -149,7 +149,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.FrontLeft,
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
-                SwerveConstants.FrontRight);
+                SwerveConstants.BackRight);
         if (AutoConstants.kRobotConfig.isPresent()) {
             AutoBuilder.configure(
                     () -> this.getState().Pose,
