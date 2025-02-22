@@ -55,8 +55,6 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         return instance;
     }
 
-    private static final Vision vision = Vision.getInstance();
-
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
@@ -177,13 +175,6 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
     }
 
     /**
-     * Reset the gyro to zero
-     */
-    public void zeroHeading() {
-        this.getPigeon2().reset();
-    }
-
-    /**
      * Method to drive the robot using joystick info.
      *
      * @param xSpeed Speed of the robot in the x direction (forward).
@@ -210,7 +201,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * Returns a command that applies the specified control request to this swerve
      * drivetrain.
      *
-     * @param requestSupplier Function returning the request to apply
+     * @param request Function returning the request to apply
      * @return Command to run
      */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
@@ -261,16 +252,6 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 hasAppliedOperatorPerspective = true;
             });
         }
-
-        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
-
-        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
     }
 
     /**
