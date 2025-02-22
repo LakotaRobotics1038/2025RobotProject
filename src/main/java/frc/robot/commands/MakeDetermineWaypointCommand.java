@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
@@ -17,7 +18,7 @@ import frc.robot.subsystems.Vision;
 public class MakeDetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
     private int bestId = 0;
-    private DriveWaypoints waypoint;
+    private Optional<DriveWaypoints> waypoint;
     private boolean isMirrored;
 
     public MakeDetermineWaypointCommand() {
@@ -76,20 +77,20 @@ public class MakeDetermineWaypointCommand extends Command {
         return this.isMirrored;
     }
 
-    public DriveWaypoints getWaypoint() {
+    public Optional<DriveWaypoints> getWaypoint() {
         return this.waypoint;
     }
 
-    public Pose2d getPose2d() {
-        return FlippingUtil.flipFieldPose(this.waypoint.getEndpoint());
+    public Optional<Pose2d> getPose2d() {
+        return Optional.ofNullable(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()));
     }
 
-    public Rotation2d getRotation2d() {
-        return waypoint.getRotation2d();
+    public Optional<Rotation2d> getRotation2d() {
+        return Optional.ofNullable(waypoint.get().getRotation2d());
     }
 
     private void get134CoralWaypoint(boolean scoringSideLeft) {
-        HashMap<Integer, DriveWaypoints> idsAnd134CoralWaypoints = scoringSideLeft
+        HashMap<Integer, Optional<DriveWaypoints>> idsAnd134CoralWaypoints = scoringSideLeft
                 ? DriveWaypoints.getIdsAnd134CoralWaypointsLeftHashmap()
                 : DriveWaypoints.getIdsAnd134CoralWaypointsRightHashmap();
         this.waypoint = idsAnd134CoralWaypoints.get(this.bestId);
@@ -97,7 +98,7 @@ public class MakeDetermineWaypointCommand extends Command {
     }
 
     private void getLevel2CoralWaypoint(boolean scoringSideLeft) {
-        HashMap<Integer, DriveWaypoints> idsAndLevel2Waypoints = scoringSideLeft
+        HashMap<Integer, Optional<DriveWaypoints>> idsAndLevel2Waypoints = scoringSideLeft
                 ? DriveWaypoints.getIdsAndLevel2WaypointLeftHashmap()
                 : DriveWaypoints.getIdsAndLevel2WaypointsRightHashmap();
         this.waypoint = idsAndLevel2Waypoints.get(this.bestId);
@@ -105,20 +106,21 @@ public class MakeDetermineWaypointCommand extends Command {
     }
 
     private void getAlgaeWaypoint() {
-        HashMap<Integer, DriveWaypoints> idsAndAlgaeWaypoints = DriveWaypoints.getIdsAndAlgaeDriveWaypointHashmap();
+        HashMap<Integer, Optional<DriveWaypoints>> idsAndAlgaeWaypoints = DriveWaypoints
+                .getIdsAndAlgaeDriveWaypointHashmap();
         this.waypoint = idsAndAlgaeWaypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 10;
     }
 
     private void getProcessorWaypoint() {
-        HashMap<Integer, DriveWaypoints> idsAndProcessorWaypoints = DriveWaypoints
+        HashMap<Integer, Optional<DriveWaypoints>> idsAndProcessorWaypoints = DriveWaypoints
                 .getIdsAndProcessorDriveWaypointHashmap();
         this.waypoint = idsAndProcessorWaypoints.get(this.bestId);
         this.isMirrored = false;
     }
 
     private void getFeederStationWaypoint() {
-        HashMap<Integer, DriveWaypoints> idsAndFeederStationWaypoints = DriveWaypoints
+        HashMap<Integer, Optional<DriveWaypoints>> idsAndFeederStationWaypoints = DriveWaypoints
                 .getIdsAndFeederStationDriveWaypointHashmap();
         this.waypoint = idsAndFeederStationWaypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 2;
