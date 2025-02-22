@@ -88,6 +88,13 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(2, 0)
                 .withSize(8, 5)
                 .withWidget(BuiltInWidgets.kField);
+
+        controlsTab.addNumber("X", driveTrain::getX)
+                .withPosition(5, 5)
+                .withSize(1, 1);
+        controlsTab.addNumber("Y", driveTrain::getY)
+                .withPosition(6, 5)
+                .withSize(1, 1);
     }
 
     @Override
