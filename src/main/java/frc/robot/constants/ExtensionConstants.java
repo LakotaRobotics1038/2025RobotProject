@@ -18,7 +18,7 @@ public class ExtensionConstants {
         L1Coral(0.0),
         L2Coral(0.0),
         L3Coral(0.0),
-        L4Coral(0.0),
+        L4Coral(26.0),
         L23Algae(0.0),
         L34Algae(16.0),
         Processor(0.0),

@@ -116,6 +116,8 @@ public class DriverJoystick extends XboxController1038 {
         super.aButton.whileTrue(new AcquireAlgaeCommand());
         super.bButton.whileTrue(new DisposeAlgaeCommand());
         super.yButton.whileTrue(new DisposeCoral2Command());
+        super.leftBumper.whileTrue(new AcquireCoralCommand());
+        super.leftTrigger.whileTrue(new DisposeCoral134Command());
     }
 
     /**
