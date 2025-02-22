@@ -7,7 +7,8 @@ import frc.robot.OperatorState.ScoringSide;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
-import frc.robot.commands.DisposeCoralCommand;
+import frc.robot.commands.DisposeCoral134Command;
+import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetExtensionPositionCommand;
 import frc.robot.commands.SetShoulderPositionCommand;
@@ -50,9 +51,10 @@ public class OperatorPanel extends GenericHID {
         operatorState.setLastInput(AcquisitionPositionSetpoint.Storage);
         operatorState.setScoringSide(coralPosScoringSwitch.getAsBoolean() ? ScoringSide.LEFT : ScoringSide.RIGHT);
 
-        this.acquireButton.and(operatorState::isCoral).whileTrue(new AcquireCoralCommand());
+        this.acquireButton.and(operatorState::isCoral134).whileTrue(new AcquireCoralCommand());
         this.acquireButton.and(operatorState::isAlgae).whileTrue(new AcquireAlgaeCommand());
-        this.disposeButton.and(operatorState::isCoral).whileTrue(new DisposeCoralCommand());
+        this.disposeButton.and(operatorState::isCoral134).whileTrue(new DisposeCoral134Command());
+        this.disposeButton.and(operatorState::isCoral2).whileTrue(new DisposeCoral2Command());
         this.disposeButton.and(operatorState::isAlgae).whileTrue(new DisposeAlgaeCommand());
         this.disposeButton.and(operatorState::isBarge).whileTrue(new ShootAlgaeCommand());
         this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));
