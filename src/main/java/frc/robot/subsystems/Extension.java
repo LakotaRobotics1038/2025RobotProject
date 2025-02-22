@@ -13,16 +13,17 @@ import au.grapplerobotics.LaserCan;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.ArmConstants;
+import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.NeoMotorConstants;
-import frc.robot.constants.ArmConstants.ArmSetpoints;
+import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 
-public class Arm extends SubsystemBase {
-    private SparkFlex armMotor = new SparkFlex(ArmConstants.kArmMotorPort, MotorType.kBrushless);
-    private PIDController armController = new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD);
-    private SparkLimitSwitch limitSwitch = armMotor.getReverseLimitSwitch();
-    private LaserCan laser = new LaserCan(ArmConstants.kArmLaserPort);
-    private static Arm instance;
+public class Extension extends SubsystemBase {
+    private SparkFlex extensionMotor = new SparkFlex(ExtensionConstants.kExtensionMotorPort, MotorType.kBrushless);
+    private PIDController extensionController = new PIDController(ExtensionConstants.kP, ExtensionConstants.kI,
+            ExtensionConstants.kD);
+    private SparkLimitSwitch limitSwitch = extensionMotor.getReverseLimitSwitch();
+    private LaserCan laser = new LaserCan(ExtensionConstants.kExtensionLaserPort);
+    private static Extension instance;
     private boolean enabled;
 
     /**
@@ -30,39 +31,40 @@ public class Arm extends SubsystemBase {
      *
      * @return An instance of the arm subsystem
      */
-    public static Arm getInstance() {
+    public static Extension getInstance() {
         if (instance == null) {
-            instance = new Arm();
+            instance = new Extension();
         }
         return instance;
     }
 
-    private Arm() {
-        SparkFlexConfig armConfig = new SparkFlexConfig();
-        armConfig.idleMode(IdleMode.kBrake)
+    private Extension() {
+        SparkFlexConfig extensionConfig = new SparkFlexConfig();
+        extensionConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent);
 
-        armMotor.configure(armConfig, ResetMode.kResetSafeParameters,
+        extensionMotor.configure(extensionConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
-        armConfig.limitSwitch
+        extensionConfig.limitSwitch
                 .reverseLimitSwitchType(Type.kNormallyOpen)
                 .reverseLimitSwitchEnabled(true);
 
-        armController.setTolerance(ArmConstants.kTolerance);
-        armController.disableContinuousInput();
+        extensionController.setTolerance(ExtensionConstants.kTolerance);
+        extensionController.disableContinuousInput();
     }
 
     @Override
     public void periodic() {
         if (enabled) {
-            useOutput(armController.calculate(getPosition()));
+            useOutput(extensionController.calculate(getPosition()));
         }
     }
 
     protected void useOutput(double output) {
-        double power = MathUtil.clamp(output, -ArmConstants.kMaxArmPower, ArmConstants.kMaxArmPower);
-        armMotor.set(power);
+        double power = MathUtil.clamp(output, -ExtensionConstants.kMaxExtensionPower,
+                ExtensionConstants.kMaxExtensionPower);
+        extensionMotor.set(power);
     }
 
     /**
@@ -84,7 +86,7 @@ public class Arm extends SubsystemBase {
      * @return The current setpoint
      */
     public double getSetpoint() {
-        return armController.getSetpoint();
+        return extensionController.getSetpoint();
     }
 
     /**
@@ -93,7 +95,7 @@ public class Arm extends SubsystemBase {
      * @return boolean whether or not the PID controller is at setpoint
      */
     public boolean onTarget() {
-        return armController.atSetpoint();
+        return extensionController.atSetpoint();
     }
 
     /**
@@ -110,7 +112,7 @@ public class Arm extends SubsystemBase {
      *
      * @param setpoint the setpoint for the subsystem
      */
-    public void setSetpoint(ArmSetpoints setpoint) {
+    public void setSetpoint(ExtensionSetpoints setpoint) {
         setSetpoint(setpoint.position);
     }
 
@@ -120,8 +122,8 @@ public class Arm extends SubsystemBase {
      * @param setpoint the setpoint for the subsystem
      */
     private final void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint, 0, ArmConstants.kArmMaxExtension);
-        armController.setSetpoint(setpoint);
+        setpoint = MathUtil.clamp(setpoint, 0, ExtensionConstants.kExtensionMaximum);
+        extensionController.setSetpoint(setpoint);
     }
 
     /**
@@ -130,7 +132,7 @@ public class Arm extends SubsystemBase {
      * @param P the P to set to the PID controller
      */
     public void setP(double P) {
-        armController.setP(P);
+        extensionController.setP(P);
     }
 
     /**
@@ -139,7 +141,7 @@ public class Arm extends SubsystemBase {
      * @param I the I to set to the PID controller
      */
     public void setI(double I) {
-        armController.setP(I);
+        extensionController.setP(I);
     }
 
     /**
@@ -148,13 +150,13 @@ public class Arm extends SubsystemBase {
      * @param D the D to set to the PID controller
      */
     public void setD(double D) {
-        armController.setP(D);
+        extensionController.setP(D);
     }
 
     /** Enables the PID control. Resets the controller. */
     public void enable() {
         enabled = true;
-        armController.reset();
+        extensionController.reset();
     }
 
     /** Disables the PID control. Sets output to zero. */

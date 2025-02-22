@@ -6,6 +6,7 @@
         "wpilibsuite.vscode-wpilib",
         "eamodio.gitlens",
         "gruntfuggly.todo-tree",
-        "wayou.vscode-todo-highlight"
+        "wayou.vscode-todo-highlight",
+        "davidanson.vscode-markdownlint"
     ]
 }
