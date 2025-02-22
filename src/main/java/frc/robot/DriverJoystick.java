@@ -2,6 +2,11 @@ package frc.robot;
 
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
+import frc.robot.commands.AcquireAlgaeCommand;
+import frc.robot.commands.AcquireCoralCommand;
+import frc.robot.commands.DisposeAlgaeCommand;
+import frc.robot.commands.DisposeCoral134Command;
+import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveWaypoints;
 import frc.robot.libraries.XboxController1038;
@@ -108,6 +113,9 @@ public class DriverJoystick extends XboxController1038 {
         // driveTrain.getState().Speeds.vxMetersPerSecond,
         // driveTrain.getState().Pose.getRotation()),
         // new GoalEndState(0, Rotation2d.kZero)))));
+        super.aButton.whileTrue(new AcquireAlgaeCommand());
+        super.bButton.whileTrue(new DisposeAlgaeCommand());
+        super.yButton.whileTrue(new DisposeCoral2Command());
     }
 
     /**

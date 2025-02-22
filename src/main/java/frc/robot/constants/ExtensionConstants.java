@@ -20,11 +20,11 @@ public class ExtensionConstants {
         L3Coral(0.0),
         L4Coral(0.0),
         L23Algae(0.0),
-        L34Algae(0.0),
+        L34Algae(16.0),
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
-        FeederStation(0.0),
+        FeederStation(2.0),
         Barge(0.0),
         Climb(0.0);
 

@@ -3,15 +3,15 @@ package frc.robot.constants;
 public class ShoulderConstants {
     public enum ShoulderSetpoints {
         L1Coral(0.0),
-        L2Coral(0.0),
-        L3Coral(0.0),
+        L2Coral(-40.0),
+        L3Coral(90.0),
         L4Coral(0.0),
         L23Algae(0.0),
-        L34Algae(0.0),
+        L34Algae(50.0),
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
-        FeederStation(0.0),
+        FeederStation(-5.0),
         Barge(0.0),
         Climb(0.0);
 

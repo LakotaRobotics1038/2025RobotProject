@@ -10,6 +10,8 @@ import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.AbsoluteEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
@@ -48,6 +50,12 @@ public class Shoulder extends SubsystemBase {
 
         shoulderController.setTolerance(ShoulderConstants.kTolerance);
         shoulderController.enableContinuousInput(0, 360);
+
+        Shuffleboard.getTab("Controls").add("ShoulderPID", shoulderController)
+                .withWidget(BuiltInWidgets.kPIDController);
+        Shuffleboard.getTab("Controls")
+                .addNumber("ShoulderCurrent", this::getPosition)
+                .withWidget(BuiltInWidgets.kTextView);
     }
 
     private static Shoulder instance;
@@ -82,10 +90,11 @@ public class Shoulder extends SubsystemBase {
 
     private void setSetpoint(double setpoint) {
         setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance);
+        shoulderController.setSetpoint(setpoint);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        shoulderController.setSetpoint(setpoint.setpoint);
+        this.setSetpoint(setpoint.setpoint);
     }
 
     public void setP(double p) {
