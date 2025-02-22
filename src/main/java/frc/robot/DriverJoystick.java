@@ -88,7 +88,7 @@ public class DriverJoystick extends XboxController1038 {
                     break;
             }
 
-            return driveTrain.drive(forward, -sideways, -rotate);
+            return driveTrain.drive(-forward, sideways, rotate);
         }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);
