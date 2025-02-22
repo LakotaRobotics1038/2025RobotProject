@@ -11,7 +11,9 @@ import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
+import frc.robot.OperatorState.ScoringSide;
+import frc.robot.OperatorState;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 
@@ -20,6 +22,7 @@ public class MakeDetermineWaypointCommand extends Command {
     private int bestId = 0;
     private Optional<DriveWaypoints> waypoint;
     private boolean isMirrored;
+    private OperatorState operatorState = OperatorState.getInstance();
 
     public MakeDetermineWaypointCommand() {
         addRequirements(vision);
@@ -36,8 +39,8 @@ public class MakeDetermineWaypointCommand extends Command {
             }
         }
 
-        AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        ScoringSide scoringSide = OperatorState.getScoringSide();
+        AcquisitionPositionSetpoint setpointLevel = operatorState.getLastInput();
+        ScoringSide scoringSide = operatorState.getScoringSide();
         boolean scoringSideLeft = scoringSide == ScoringSide.LEFT;
         switch (setpointLevel) {
             case L1Coral:

@@ -51,6 +51,13 @@ public class Climb extends SubsystemBase {
         climbEncoder.setPosition(0);
     }
 
+    @Override
+    public void periodic() {
+        if (climbLimitSwitch.isPressed() && climbEncoder.getPosition() != 0) {
+            climbEncoder.setPosition(0.0);
+        }
+    }
+
     /**
      * Gets the position of the climbLimitSwitch
      *
@@ -81,4 +88,12 @@ public class Climb extends SubsystemBase {
         climbMotor.stopMotor();
     }
 
+    /**
+     * gets climb encoder position
+     *
+     * @return climb distance as double
+     */
+    public double getPosition() {
+        return climbEncoder.getPosition();
+    }
 }

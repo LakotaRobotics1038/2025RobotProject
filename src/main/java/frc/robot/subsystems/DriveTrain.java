@@ -54,6 +54,8 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         return instance;
     }
 
+    private static final Vision vision = Vision.getInstance();
+
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
@@ -148,24 +150,26 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
                 SwerveConstants.FrontRight);
-        AutoBuilder.configure(
-                () -> this.getState().Pose,
-                this::resetPose,
-                () -> this.getState().Speeds,
-                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                    this.setControl(
-                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                },
-                new PPHolonomicDriveController(
-                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDController),
-                        new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
-                                AutoConstants.kDThetaController)),
-                AutoConstants.kRobotConfig.get(),
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                this);
+        if (AutoConstants.kRobotConfig.isPresent()) {
+            AutoBuilder.configure(
+                    () -> this.getState().Pose,
+                    this::resetPose,
+                    () -> this.getState().Speeds,
+                    (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+                        this.setControl(
+                                new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                        .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                        .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
+                    },
+                    new PPHolonomicDriveController(
+                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                                    AutoConstants.kDController),
+                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
+                                    AutoConstants.kDThetaController)),
+                    AutoConstants.kRobotConfig.get(),
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                    this);
+        }
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -256,6 +260,16 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 hasAppliedOperatorPerspective = true;
             });
         }
+
+        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
+
+        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
     }
 
     /**

@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.WristConstants;
-import frc.robot.constants.WristConstants.WristSetPoints;
+import frc.robot.constants.WristConstants.WristSetpoints;
 
 public class Wrist extends SubsystemBase {
 
@@ -67,7 +67,7 @@ public class Wrist extends SubsystemBase {
         this.wristController.setSetpoint(clampedPoint);
     }
 
-    public void setSetpoint(WristSetPoints setPoints) {
+    public void setSetpoint(WristSetpoints setPoints) {
         this.setSetpoint(setPoints.getSetpoint());
     }
 
