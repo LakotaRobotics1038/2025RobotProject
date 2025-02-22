@@ -103,7 +103,7 @@ public class DriverJoystick extends XboxController1038 {
                             this.currentPose = this.driveTrain.getState().Pose;
                         }).andThen(AutoBuilder.followPath(new PathPlannerPath(
                                 PathPlannerPath.waypointsFromPoses(this.currentPose,
-                                        makeDetermineWaypointCommand.getPose2d()),
+                                        makeDetermineWaypointCommand.getPose2d().get()),
                                 new PathConstraints(
                                         DriveConstants.MaxSpeed,
                                         AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -112,7 +112,7 @@ public class DriverJoystick extends XboxController1038 {
                                 new IdealStartingState(
                                         driveTrain.getState().Speeds.vxMetersPerSecond,
                                         driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d()))))));
+                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d().get()))))));
     }
 
     /**
