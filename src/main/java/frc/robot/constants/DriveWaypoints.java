@@ -19,7 +19,7 @@ public enum DriveWaypoints {
     LeftFeederStation1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     LeftFeederStation2(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     LeftFeederStation3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-    LeftFeederStation4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
+    LeftFeederStation4(new Pose2d(new Translation2d(1.889044, 7.243662), new Rotation2d(Math.toRadians(-55.0)))),
     LeftFeederStation5(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     LeftFeederStation6(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     LeftFeederStation7(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),

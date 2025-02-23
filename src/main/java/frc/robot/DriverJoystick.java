@@ -28,7 +28,7 @@ public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
 
-    private Pose2d currentPose;
+    private Pose2d currentPose = new Pose2d(3, 1, new Rotation2d());
 
     // Previous Status
     private double prevX = 0;
@@ -89,7 +89,7 @@ public class DriverJoystick extends XboxController1038 {
                     break;
             }
 
-            return driveTrain.drive(-forward, sideways, rotate);
+            return driveTrain.drive(forward, -sideways, -rotate);
         }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);
@@ -99,22 +99,24 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        // super.aButton.whileTrue(
-        // new InstantCommand(() -> {
-        // this.currentPose = this.driveTrain.getState().Pose;
-        // }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-        // PathPlannerPath.waypointsFromPoses(this.currentPose,
-        // DriveWaypoints.Algae23.getEndpoint()),
-        // new PathConstraints(
-        // DriveConstants.MaxSpeed,
-        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-        // new IdealStartingState(
-        // driveTrain.getState().Speeds.vxMetersPerSecond,
-        // driveTrain.getState().Pose.getRotation()),
-        // new GoalEndState(0, Rotation2d.kZero)))));
-        super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
+
+        super.aButton.whileTrue(
+                new InstantCommand(() -> {
+                    this.currentPose = this.driveTrain.getState().Pose;
+                }).andThen(new InstantCommand(() -> AutoBuilder.followPath(new PathPlannerPath(
+                        PathPlannerPath.waypointsFromPoses(this.currentPose,
+                                DriveWaypoints.LeftFeederStation4.getEndpoint()),
+                        new PathConstraints(
+                                DriveConstants.MaxSpeed,
+                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                        new IdealStartingState(
+                                driveTrain.getState().Speeds.vxMetersPerSecond,
+                                driveTrain.getState().Pose.getRotation()),
+                        new GoalEndState(0, Rotation2d.kZero))).schedule())));
+
+        // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
         super.bButton.whileTrue(new DisposeAlgaeCommand());
         super.yButton.whileTrue(new DisposeCoral2Command());
         super.leftBumper.whileTrue(new AcquireCoralCommand());
