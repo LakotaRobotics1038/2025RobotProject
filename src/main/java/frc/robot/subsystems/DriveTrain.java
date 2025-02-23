@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -13,8 +14,10 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.DriveFeedforwards;
 
 import edu.wpi.first.math.Matrix;
@@ -28,6 +31,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.AutoConstants;
@@ -147,24 +151,51 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.BackLeft,
                 SwerveConstants.BackRight);
         if (AutoConstants.kRobotConfig.isPresent()) {
-            AutoBuilder.configure(
+            AutoBuilder.configureCustom(
+                    (path) -> new FollowPathCommand(
+                            new PathPlannerPath(
+                                    PathPlannerPath.waypointsFromPoses(
+                                            path.getPathPoses().set(0, this.getState().Pose)),
+                                    path.getGlobalConstraints(),
+                                    path.getIdealStartingState(), path.getGoalEndState()),
+                            () -> this.getState().Pose,
+                            () -> this.getState().Speeds,
+                            (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+                                this.setControl(
+                                        new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                                .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                                .withWheelForceFeedforwardsY(
+                                                        feedForwards.robotRelativeForcesYNewtons()));
+                            },
+                            new PPHolonomicDriveController(
+                                    new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                                            AutoConstants.kDController),
+                                    new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
+                                            AutoConstants.kDThetaController)),
+                            AutoConstants.kRobotConfig.get(),
+                            () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red, this),
                     () -> this.getState().Pose,
                     this::resetPose,
-                    () -> this.getState().Speeds,
-                    (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                        this.setControl(
-                                new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                        .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                        .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                    },
-                    new PPHolonomicDriveController(
-                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                    AutoConstants.kDController),
-                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
-                                    AutoConstants.kDThetaController)),
-                    AutoConstants.kRobotConfig.get(),
-                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                    this);
+                    true);
+            // AutoBuilder.configure(
+            // () -> this.getState().Pose,
+            // this::resetPose,
+            // () -> this.getState().Speeds,
+            // (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+            // this.setControl(
+            // new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+            // .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+            // .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
+            // },
+            // new PPHolonomicDriveController(
+            // new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+            // AutoConstants.kDController),
+            // new PIDConstants(AutoConstants.kPThetaController,
+            // AutoConstants.kIThetaController,
+            // AutoConstants.kDThetaController)),
+            // AutoConstants.kRobotConfig.get(),
+            // () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+            // this);
         }
         if (Utils.isSimulation()) {
             startSimThread();
