@@ -1,6 +1,7 @@
 package frc.robot.constants;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.pathplanner.lib.config.RobotConfig;
@@ -77,104 +78,112 @@ public final class AutoConstants {
             return endpoint.getRotation();
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAnd134CoralWaypointsLeftHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(6, Optional.of(DriveWaypoints.LeftCoral22));
-            idAndDriveWaypoints.put(7, Optional.of(DriveWaypoints.LeftCoral21));
-            idAndDriveWaypoints.put(8, Optional.of(DriveWaypoints.LeftCoral20));
-            idAndDriveWaypoints.put(9, Optional.of(DriveWaypoints.LeftCoral19));
-            idAndDriveWaypoints.put(10, Optional.of(DriveWaypoints.LeftCoral18));
-            idAndDriveWaypoints.put(11, Optional.of(DriveWaypoints.LeftCoral17));
-            idAndDriveWaypoints.put(17, Optional.of(DriveWaypoints.LeftCoral17));
-            idAndDriveWaypoints.put(18, Optional.of(DriveWaypoints.LeftCoral18));
-            idAndDriveWaypoints.put(19, Optional.of(DriveWaypoints.LeftCoral19));
-            idAndDriveWaypoints.put(20, Optional.of(DriveWaypoints.LeftCoral20));
-            idAndDriveWaypoints.put(21, Optional.of(DriveWaypoints.LeftCoral21));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAnd134CoralWaypointsLeftMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(6, Optional.of(DriveWaypoints.LeftCoral22)),
+                    Map.entry(7, Optional.of(DriveWaypoints.LeftCoral21)),
+                    Map.entry(8, Optional.of(DriveWaypoints.LeftCoral20)),
+                    Map.entry(9, Optional.of(DriveWaypoints.LeftCoral19)),
+                    Map.entry(10, Optional.of(DriveWaypoints.LeftCoral18)),
+                    Map.entry(11, Optional.of(DriveWaypoints.LeftCoral17)),
+                    Map.entry(17, Optional.of(DriveWaypoints.LeftCoral17)),
+                    Map.entry(18, Optional.of(DriveWaypoints.LeftCoral18)),
+                    Map.entry(19, Optional.of(DriveWaypoints.LeftCoral19)),
+                    Map.entry(20, Optional.of(DriveWaypoints.LeftCoral20)),
+                    Map.entry(21, Optional.of(DriveWaypoints.LeftCoral21)),
+                    Map.entry(22, Optional.of(DriveWaypoints.LeftCoral22)));
+
             return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAnd134CoralWaypointsRightHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(6, Optional.of(DriveWaypoints.RightCoral22));
-            idAndDriveWaypoints.put(7, Optional.of(DriveWaypoints.RightCoral21));
-            idAndDriveWaypoints.put(8, Optional.of(DriveWaypoints.RightCoral20));
-            idAndDriveWaypoints.put(9, Optional.of(DriveWaypoints.RightCoral19));
-            idAndDriveWaypoints.put(10, Optional.of(DriveWaypoints.RightCoral18));
-            idAndDriveWaypoints.put(11, Optional.of(DriveWaypoints.RightCoral17));
-            idAndDriveWaypoints.put(17, Optional.of(DriveWaypoints.RightCoral17));
-            idAndDriveWaypoints.put(18, Optional.of(DriveWaypoints.RightCoral18));
-            idAndDriveWaypoints.put(19, Optional.of(DriveWaypoints.RightCoral19));
-            idAndDriveWaypoints.put(20, Optional.of(DriveWaypoints.RightCoral20));
-            idAndDriveWaypoints.put(21, Optional.of(DriveWaypoints.RightCoral21));
-            idAndDriveWaypoints.put(22, Optional.of(DriveWaypoints.RightCoral22));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAnd134CoralWaypointsRightMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(6, Optional.of(DriveWaypoints.RightCoral22)),
+                    Map.entry(7, Optional.of(DriveWaypoints.RightCoral21)),
+                    Map.entry(8, Optional.of(DriveWaypoints.RightCoral20)),
+                    Map.entry(9, Optional.of(DriveWaypoints.RightCoral19)),
+                    Map.entry(10, Optional.of(DriveWaypoints.RightCoral18)),
+                    Map.entry(11, Optional.of(DriveWaypoints.RightCoral17)),
+                    Map.entry(17, Optional.of(DriveWaypoints.RightCoral17)),
+                    Map.entry(18, Optional.of(DriveWaypoints.RightCoral18)),
+                    Map.entry(19, Optional.of(DriveWaypoints.RightCoral19)),
+                    Map.entry(20, Optional.of(DriveWaypoints.RightCoral20)),
+                    Map.entry(21, Optional.of(DriveWaypoints.RightCoral21)),
+                    Map.entry(22, Optional.of(DriveWaypoints.RightCoral22)));
+
             return idAndDriveWaypoints;
 
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAndLevel2WaypointLeftHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(6, Optional.of(DriveWaypoints.Level2LeftCoral22));
-            idAndDriveWaypoints.put(7, Optional.of(DriveWaypoints.Level2LeftCoral21));
-            idAndDriveWaypoints.put(8, Optional.of(DriveWaypoints.Level2LeftCoral20));
-            idAndDriveWaypoints.put(9, Optional.of(DriveWaypoints.Level2LeftCoral19));
-            idAndDriveWaypoints.put(10, Optional.of(DriveWaypoints.Level2LeftCoral18));
-            idAndDriveWaypoints.put(11, Optional.of(DriveWaypoints.Level2LeftCoral17));
-            idAndDriveWaypoints.put(17, Optional.of(DriveWaypoints.Level2LeftCoral17));
-            idAndDriveWaypoints.put(18, Optional.of(DriveWaypoints.Level2LeftCoral18));
-            idAndDriveWaypoints.put(19, Optional.of(DriveWaypoints.Level2LeftCoral19));
-            idAndDriveWaypoints.put(20, Optional.of(DriveWaypoints.Level2LeftCoral20));
-            idAndDriveWaypoints.put(21, Optional.of(DriveWaypoints.Level2LeftCoral21));
-            idAndDriveWaypoints.put(22, Optional.of(DriveWaypoints.Level2LeftCoral22));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAndLevel2WaypointLeftMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(6, Optional.of(DriveWaypoints.Level2LeftCoral22)),
+                    Map.entry(7, Optional.of(DriveWaypoints.Level2LeftCoral21)),
+                    Map.entry(8, Optional.of(DriveWaypoints.Level2LeftCoral20)),
+                    Map.entry(9, Optional.of(DriveWaypoints.Level2LeftCoral19)),
+                    Map.entry(10, Optional.of(DriveWaypoints.Level2LeftCoral18)),
+                    Map.entry(11, Optional.of(DriveWaypoints.Level2LeftCoral17)),
+                    Map.entry(17, Optional.of(DriveWaypoints.Level2LeftCoral17)),
+                    Map.entry(18, Optional.of(DriveWaypoints.Level2LeftCoral18)),
+                    Map.entry(19, Optional.of(DriveWaypoints.Level2LeftCoral19)),
+                    Map.entry(20, Optional.of(DriveWaypoints.Level2LeftCoral20)),
+                    Map.entry(21, Optional.of(DriveWaypoints.Level2LeftCoral21)),
+                    Map.entry(22, Optional.of(DriveWaypoints.Level2LeftCoral22)));
+
             return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAndLevel2WaypointsRightHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(6, Optional.of(DriveWaypoints.Level2RightCoral22));
-            idAndDriveWaypoints.put(7, Optional.of(DriveWaypoints.Level2RightCoral21));
-            idAndDriveWaypoints.put(8, Optional.of(DriveWaypoints.Level2RightCoral20));
-            idAndDriveWaypoints.put(9, Optional.of(DriveWaypoints.Level2RightCoral19));
-            idAndDriveWaypoints.put(10, Optional.of(DriveWaypoints.Level2RightCoral18));
-            idAndDriveWaypoints.put(11, Optional.of(DriveWaypoints.Level2RightCoral17));
-            idAndDriveWaypoints.put(17, Optional.of(DriveWaypoints.Level2RightCoral17));
-            idAndDriveWaypoints.put(18, Optional.of(DriveWaypoints.Level2RightCoral18));
-            idAndDriveWaypoints.put(19, Optional.of(DriveWaypoints.Level2RightCoral19));
-            idAndDriveWaypoints.put(20, Optional.of(DriveWaypoints.Level2RightCoral20));
-            idAndDriveWaypoints.put(21, Optional.of(DriveWaypoints.Level2RightCoral21));
-            idAndDriveWaypoints.put(22, Optional.of(DriveWaypoints.Level2RightCoral22));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAndLevel2WaypointsRightMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(6, Optional.of(DriveWaypoints.Level2RightCoral22)),
+                    Map.entry(7, Optional.of(DriveWaypoints.Level2RightCoral21)),
+                    Map.entry(8, Optional.of(DriveWaypoints.Level2RightCoral20)),
+                    Map.entry(9, Optional.of(DriveWaypoints.Level2RightCoral19)),
+                    Map.entry(10, Optional.of(DriveWaypoints.Level2RightCoral18)),
+                    Map.entry(11, Optional.of(DriveWaypoints.Level2RightCoral17)),
+                    Map.entry(17, Optional.of(DriveWaypoints.Level2RightCoral17)),
+                    Map.entry(18, Optional.of(DriveWaypoints.Level2RightCoral18)),
+                    Map.entry(19, Optional.of(DriveWaypoints.Level2RightCoral19)),
+                    Map.entry(20, Optional.of(DriveWaypoints.Level2RightCoral20)),
+                    Map.entry(21, Optional.of(DriveWaypoints.Level2RightCoral21)),
+                    Map.entry(22, Optional.of(DriveWaypoints.Level2RightCoral22)));
+
             return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAndAlgaeDriveWaypointHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(6, Optional.of(DriveWaypoints.AlgaeLevel22));
-            idAndDriveWaypoints.put(7, Optional.of(DriveWaypoints.AlgaeLevel21));
-            idAndDriveWaypoints.put(8, Optional.of(DriveWaypoints.AlgaeLevel20));
-            idAndDriveWaypoints.put(9, Optional.of(DriveWaypoints.AlgaeLevel19));
-            idAndDriveWaypoints.put(10, Optional.of(DriveWaypoints.AlgaeLevel18));
-            idAndDriveWaypoints.put(11, Optional.of(DriveWaypoints.AlgaeLevel17));
-            idAndDriveWaypoints.put(17, Optional.of(DriveWaypoints.AlgaeLevel17));
-            idAndDriveWaypoints.put(18, Optional.of(DriveWaypoints.AlgaeLevel18));
-            idAndDriveWaypoints.put(19, Optional.of(DriveWaypoints.AlgaeLevel19));
-            idAndDriveWaypoints.put(20, Optional.of(DriveWaypoints.AlgaeLevel20));
-            idAndDriveWaypoints.put(21, Optional.of(DriveWaypoints.AlgaeLevel21));
-            idAndDriveWaypoints.put(22, Optional.of(DriveWaypoints.AlgaeLevel22));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAndAlgaeDriveWaypointMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(6, Optional.of(DriveWaypoints.AlgaeLevel22)),
+                    Map.entry(7, Optional.of(DriveWaypoints.AlgaeLevel21)),
+                    Map.entry(8, Optional.of(DriveWaypoints.AlgaeLevel20)),
+                    Map.entry(9, Optional.of(DriveWaypoints.AlgaeLevel19)),
+                    Map.entry(10, Optional.of(DriveWaypoints.AlgaeLevel18)),
+                    Map.entry(11, Optional.of(DriveWaypoints.AlgaeLevel17)),
+                    Map.entry(17, Optional.of(DriveWaypoints.AlgaeLevel17)),
+                    Map.entry(18, Optional.of(DriveWaypoints.AlgaeLevel18)),
+                    Map.entry(19, Optional.of(DriveWaypoints.AlgaeLevel19)),
+                    Map.entry(20, Optional.of(DriveWaypoints.AlgaeLevel20)),
+                    Map.entry(21, Optional.of(DriveWaypoints.AlgaeLevel21)),
+                    Map.entry(22, Optional.of(DriveWaypoints.AlgaeLevel22)));
+
             return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAndProcessorDriveWaypointHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(3, Optional.of(DriveWaypoints.Processor3));
-            idAndDriveWaypoints.put(16, Optional.of(DriveWaypoints.Processor16));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAndProcessorDriveWaypointMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(3, Optional.of(DriveWaypoints.Processor3)),
+                    Map.entry(16, Optional.of(DriveWaypoints.Processor16)));
+
             return idAndDriveWaypoints;
         }
 
-        public static HashMap<Integer, Optional<DriveWaypoints>> getIdsAndFeederStationDriveWaypointHashmap() {
-            HashMap<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = new HashMap<Integer, Optional<DriveWaypoints>>();
-            idAndDriveWaypoints.put(1, Optional.of(DriveWaypoints.FeederStation12Point5));
-            idAndDriveWaypoints.put(2, Optional.of(DriveWaypoints.FeederStation13Point5));
-            idAndDriveWaypoints.put(12, Optional.of(DriveWaypoints.FeederStation12Point5));
-            idAndDriveWaypoints.put(13, Optional.of(DriveWaypoints.FeederStation13Point5));
+        public static Map<Integer, Optional<DriveWaypoints>> getIdsAndFeederStationDriveWaypointMap() {
+            Map<Integer, Optional<DriveWaypoints>> idAndDriveWaypoints = Map.ofEntries(
+                    Map.entry(1, Optional.of(DriveWaypoints.FeederStation12Point5)),
+                    Map.entry(2, Optional.of(DriveWaypoints.FeederStation13Point5)),
+                    Map.entry(12, Optional.of(DriveWaypoints.FeederStation12Point5)),
+                    Map.entry(13, Optional.of(DriveWaypoints.FeederStation13Point5)));
+
             return idAndDriveWaypoints;
         }
 

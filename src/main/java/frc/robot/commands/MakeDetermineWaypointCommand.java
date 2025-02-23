@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -93,38 +94,38 @@ public class MakeDetermineWaypointCommand extends Command {
     }
 
     private void get134CoralWaypoint(boolean scoringSideLeft) {
-        HashMap<Integer, Optional<DriveWaypoints>> idsAnd134CoralWaypoints = scoringSideLeft
-                ? DriveWaypoints.getIdsAnd134CoralWaypointsLeftHashmap()
-                : DriveWaypoints.getIdsAnd134CoralWaypointsRightHashmap();
+        Map<Integer, Optional<DriveWaypoints>> idsAnd134CoralWaypoints = scoringSideLeft
+                ? DriveWaypoints.getIdsAnd134CoralWaypointsLeftMap()
+                : DriveWaypoints.getIdsAnd134CoralWaypointsRightMap();
         this.waypoint = idsAnd134CoralWaypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 17;
     }
 
     private void getLevel2CoralWaypoint(boolean scoringSideLeft) {
-        HashMap<Integer, Optional<DriveWaypoints>> idsAndLevel2Waypoints = scoringSideLeft
-                ? DriveWaypoints.getIdsAndLevel2WaypointLeftHashmap()
-                : DriveWaypoints.getIdsAndLevel2WaypointsRightHashmap();
+        Map<Integer, Optional<DriveWaypoints>> idsAndLevel2Waypoints = scoringSideLeft
+                ? DriveWaypoints.getIdsAndLevel2WaypointLeftMap()
+                : DriveWaypoints.getIdsAndLevel2WaypointsRightMap();
         this.waypoint = idsAndLevel2Waypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 17;
     }
 
     private void getAlgaeWaypoint() {
-        HashMap<Integer, Optional<DriveWaypoints>> idsAndAlgaeWaypoints = DriveWaypoints
-                .getIdsAndAlgaeDriveWaypointHashmap();
+        Map<Integer, Optional<DriveWaypoints>> idsAndAlgaeWaypoints = DriveWaypoints
+                .getIdsAndAlgaeDriveWaypointMap();
         this.waypoint = idsAndAlgaeWaypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 10;
     }
 
     private void getProcessorWaypoint() {
-        HashMap<Integer, Optional<DriveWaypoints>> idsAndProcessorWaypoints = DriveWaypoints
-                .getIdsAndProcessorDriveWaypointHashmap();
+        Map<Integer, Optional<DriveWaypoints>> idsAndProcessorWaypoints = DriveWaypoints
+                .getIdsAndProcessorDriveWaypointMap();
         this.waypoint = idsAndProcessorWaypoints.get(this.bestId);
         this.isMirrored = false;
     }
 
     private void getFeederStationWaypoint() {
-        HashMap<Integer, Optional<DriveWaypoints>> idsAndFeederStationWaypoints = DriveWaypoints
-                .getIdsAndFeederStationDriveWaypointHashmap();
+        Map<Integer, Optional<DriveWaypoints>> idsAndFeederStationWaypoints = DriveWaypoints
+                .getIdsAndFeederStationDriveWaypointMap();
         this.waypoint = idsAndFeederStationWaypoints.get(this.bestId);
         this.isMirrored = this.bestId <= 2;
     }
