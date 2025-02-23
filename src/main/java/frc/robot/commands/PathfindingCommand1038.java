@@ -321,7 +321,7 @@ public class PathfindingCommand1038 extends Command {
         boolean skipUpdates = currentTrajectory != null
                 && currentPose
                         .getTranslation()
-                        .getDistance(currentTrajectory.getEndState().pose.getTranslation()) < 2.0;
+                        .getDistance(currentTrajectory.getEndState().pose.getTranslation()) < 0;
 
         if (!skipUpdates && Pathfinding.isNewPathAvailable()) {
             currentPath = Pathfinding.getCurrentPath(constraints, goalEndState);

@@ -3,7 +3,7 @@ package frc.robot.constants;
 public class ShoulderConstants {
     public enum ShoulderSetpoints {
         L1Coral(0.0),
-        L2Coral(-40.0),
+        L2Coral(-30.0),
         L3Coral(100.0),
         L4Coral(90.0),
         L23Algae(100.0),
