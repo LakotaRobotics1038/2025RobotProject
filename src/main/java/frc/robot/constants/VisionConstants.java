@@ -38,7 +38,7 @@ public final class VisionConstants {
     private static final double kFrontCameraZOffset = 0.349494323;
     public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(kFrontCameraXOffset, kFrontCameraYOffset, kFrontCameraZOffset),
-            new Rotation3d(0, 0, 12.231));
+            new Rotation3d(0, 0, 0));
     public static final String kRobotToFrontCamName = "frontCamera";
     private static final double kBackCameraXOffset = 0.3368548;
     private static final double kBackCameraYOffset = -0.0719836;
