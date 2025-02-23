@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -154,8 +154,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
             AutoBuilder.configureCustom(
                     (path) -> new FollowPathCommand(
                             new PathPlannerPath(
-                                    PathPlannerPath.waypointsFromPoses(
-                                            path.getPathPoses().set(0, this.getState().Pose)),
+                                    PathPlannerPath.waypointsFromPoses(this.overridePose(path.getPathPoses())),
                                     path.getGlobalConstraints(),
                                     path.getIdealStartingState(), path.getGoalEndState()),
                             () -> this.getState().Pose,
@@ -200,6 +199,11 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         if (Utils.isSimulation()) {
             startSimThread();
         }
+    }
+
+    private List<Pose2d> overridePose(List<Pose2d> poses) {
+        poses.set(0, this.getState().Pose);
+        return poses;
     }
 
     /**

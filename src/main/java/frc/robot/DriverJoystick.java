@@ -100,7 +100,7 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
         super.aButton.whileTrue(AutoBuilder.followPath(new PathPlannerPath(
-                PathPlannerPath.waypointsFromPoses(this.currentPose,
+                PathPlannerPath.waypointsFromPoses(new Pose2d(),
                         DriveWaypoints.Algae23.getEndpoint()),
                 new PathConstraints(
                         DriveConstants.MaxSpeed,
