@@ -28,7 +28,7 @@ public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
 
-    private Pose2d currentPose;
+    private Pose2d currentPose = new Pose2d(3, 1, new Rotation2d());
 
     // Previous Status
     private double prevX = 0;
@@ -89,7 +89,7 @@ public class DriverJoystick extends XboxController1038 {
                     break;
             }
 
-            return driveTrain.drive(-forward, sideways, rotate);
+            return driveTrain.drive(forward, -sideways, -rotate);
         }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);

@@ -33,19 +33,19 @@ public final class VisionConstants {
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-    private static final double kFrontCameraXOffset = 0.3368548;
+    private static final double kFrontCameraXOffset = -0.3368548;
     private static final double kFrontCameraYOffset = 0.050419;
-    private static final double kFrontCameraZOffset = 0.1;
+    private static final double kFrontCameraZOffset = 0.349494323;
     public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(kFrontCameraXOffset, kFrontCameraYOffset, kFrontCameraZOffset),
-            new Rotation3d(0, 12.231, 0));
+            new Rotation3d(0, 0, 12.231));
     public static final String kRobotToFrontCamName = "frontCamera";
     private static final double kBackCameraXOffset = 0.3368548;
-    private static final double kBackCameraYOffset = 0.0719836;
-    private static final double kBackCameraZOffset = 0.1;
+    private static final double kBackCameraYOffset = -0.0719836;
+    private static final double kBackCameraZOffset = 0.349494323;
     public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(kBackCameraXOffset, kBackCameraYOffset, kBackCameraZOffset),
-            new Rotation3d(0, 12.231, 0));
+            new Rotation3d(0, 180, 0));
     public static final String kRobotToBackCamName = "backCamera";
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
