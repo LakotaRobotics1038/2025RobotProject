@@ -26,6 +26,7 @@ public class DriverJoystick extends XboxController1038 {
     private MakeDetermineWaypointCommand makeDetermineWaypointCommand = new MakeDetermineWaypointCommand();
 
     private Pose2d currentPose;
+    private PathPlannerPath path;
 
     // Previous Status
     private double prevX = 0;
@@ -100,18 +101,20 @@ public class DriverJoystick extends XboxController1038 {
                 makeDetermineWaypointCommand.andThen(
                         new InstantCommand(() -> {
                             this.currentPose = this.driveTrain.getState().Pose;
-                        }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-                                PathPlannerPath.waypointsFromPoses(this.currentPose,
-                                        makeDetermineWaypointCommand.getPose2d().get()),
-                                new PathConstraints(
-                                        DriveConstants.MaxSpeed,
-                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                                new IdealStartingState(
-                                        driveTrain.getState().Speeds.vxMetersPerSecond,
-                                        driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d().get()))))));
+                            this.path = new PathPlannerPath(
+                                    PathPlannerPath.waypointsFromPoses(this.currentPose,
+                                            makeDetermineWaypointCommand.getPose2d().get()),
+                                    new PathConstraints(
+                                            DriveConstants.MaxSpeed,
+                                            AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                            AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                            AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                                    new IdealStartingState(
+                                            driveTrain.getState().Speeds.vxMetersPerSecond,
+                                            driveTrain.getState().Pose.getRotation()),
+                                    new GoalEndState(0, makeDetermineWaypointCommand.getRotation2d().get()));
+                        }).andThen(AutoBuilder.followPath(this.path)))
+                        .onlyIf(() -> makeDetermineWaypointCommand.getPose2d().isPresent()));
     }
 
     /**
