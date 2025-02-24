@@ -1,12 +1,18 @@
 package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.DriveFeedforwards;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.AcquireCoralCommand;
@@ -14,7 +20,6 @@ import frc.robot.commands.AcquireForL4Command;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.DisposeCoral2Command;
-import frc.robot.commands.PathfindingCommand1038;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.DriveWaypoints;
@@ -25,6 +30,8 @@ import frc.robot.subsystems.DriveTrain;
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
+
+    private PathPlannerPath path;
 
     // Previous Status
     private double prevX = 0;
@@ -107,53 +114,24 @@ public class DriverJoystick extends XboxController1038 {
         // driveTrain.getState().Speeds.vxMetersPerSecond,
         // driveTrain.getState().Pose.getRotation()),
         // new GoalEndState(0, Rotation2d.kZero))));
-        super.aButton.whileTrue(new PathfindingCommand1038(
-                DriveWaypoints.LeftFeederStation4.getEndpoint(),
-                new PathConstraints(
-                        DriveConstants.MaxSpeed,
-                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                () -> this.driveTrain.getState().Pose,
-                () -> this.driveTrain.getState().Speeds,
-                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                    this.driveTrain.setControl(
-                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                },
-                new PPHolonomicDriveController(
-                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDController),
-                        new PIDConstants(AutoConstants.kPThetaController,
-                                AutoConstants.kIThetaController,
-                                AutoConstants.kDThetaController)),
-                AutoConstants.kRobotConfig.get(),
-                this.driveTrain));
+        super.aButton.whileTrue(
+                new InstantCommand(() -> {
+                    Pose2d currentPose = this.driveTrain.getState().Pose;
+                    this.path = new PathPlannerPath(
+                            PathPlannerPath.waypointsFromPoses(currentPose,
+                                    DriveWaypoints.Algae23.getEndpoint()),
+                            new PathConstraints(
+                                    DriveConstants.MaxSpeed,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                            new IdealStartingState(
+                                    driveTrain.getState().Speeds.vxMetersPerSecond,
+                                    driveTrain.getState().Pose.getRotation()),
+                            new GoalEndState(0, Rotation2d.kZero));
+                })
+                        .andThen(AutoBuilder.followPath(this.path)));
 
-        super.bButton.whileTrue(new PathfindingCommand1038(
-                DriveWaypoints.LeftCoral2.getEndpoint(),
-                new PathConstraints(
-                        DriveConstants.MaxSpeed,
-                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                () -> this.driveTrain.getState().Pose,
-                () -> this.driveTrain.getState().Speeds,
-                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                    this.driveTrain.setControl(
-                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                },
-                new PPHolonomicDriveController(
-                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDController),
-                        new PIDConstants(AutoConstants.kPThetaController,
-                                AutoConstants.kIThetaController,
-                                AutoConstants.kDThetaController)),
-                AutoConstants.kRobotConfig.get(),
-                this.driveTrain));
         // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
         // super.bButton.whileTrue(new DisposeAlgaeCommand());
         super.yButton.whileTrue(new DisposeCoral2Command());
