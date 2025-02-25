@@ -83,10 +83,13 @@ public class Dashboard extends SubsystemBase {
 
         controlsTab.addNumber("X", driveTrain::getX)
                 .withPosition(5, 5)
-                .withSize(1, 1);
+                .withSize(2, 1);
         controlsTab.addNumber("Y", driveTrain::getY)
-                .withPosition(6, 5)
-                .withSize(1, 1);
+                .withPosition(5, 4)
+                .withSize(2, 1);
+        controlsTab.addNumber("R", driveTrain::getRotation)
+                .withPosition(5, 4)
+                .withSize(2, 1);
     }
 
     @Override
