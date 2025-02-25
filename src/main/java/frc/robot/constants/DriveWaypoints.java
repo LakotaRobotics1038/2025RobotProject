@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 public enum DriveWaypoints {
     LeftCoral1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
-    LeftCoral2(new Pose2d(new Translation2d(3.45, 5.09), new Rotation2d(Math.toRadians(126.8)))),
+    LeftCoral2(new Pose2d(new Translation2d(3.53, 5.1), new Rotation2d(Math.toRadians(120.0)))),
     LeftCoral3(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     LeftCoral4(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),
     RightCoral1(new Pose2d(new Translation2d(0, 0), new Rotation2d(0))),

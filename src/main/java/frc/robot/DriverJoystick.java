@@ -1,29 +1,19 @@
 package frc.robot;
 
-import java.util.List;
 import java.util.Set;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.Waypoint;
-import com.pathplanner.lib.util.DriveFeedforwards;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.AcquireForL4Command;
-import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.constants.AutoConstants;
@@ -45,6 +35,8 @@ public class DriverJoystick extends XboxController1038 {
     private double prevZ = 0;
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
+
+    private Pose2d currentPose;
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -120,24 +112,37 @@ public class DriverJoystick extends XboxController1038 {
         // driveTrain.getState().Speeds.vxMetersPerSecond,
         // driveTrain.getState().Pose.getRotation()),
         // new GoalEndState(0, Rotation2d.kZero))));
+
+        // super.aButton.whileTrue(
+        // new InstantCommand(() -> {
+        // Pose2d currentPose = this.driveTrain.getState().Pose;
+        // this.path = new PathPlannerPath(
+        // PathPlannerPath.waypointsFromPoses(currentPose,
+        // DriveWaypoints.LeftCoral2.getEndpoint()),
+        // new PathConstraints(
+        // DriveConstants.MaxSpeed,
+        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+        // new IdealStartingState(
+        // driveTrain.getState().Speeds.vxMetersPerSecond,
+        // driveTrain.getState().Pose.getRotation()),
+        // new GoalEndState(0, DriveWaypoints.LeftCoral2.getEndpoint().getRotation()));
+        // })
+        // .andThen(
+        // new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+        // Set.of(this.driveTrain))));
+
         super.aButton.whileTrue(
-                new InstantCommand(() -> {
-                    Pose2d currentPose = this.driveTrain.getState().Pose;
-                    this.path = new PathPlannerPath(
-                            PathPlannerPath.waypointsFromPoses(currentPose,
-                                    DriveWaypoints.LeftCoral2.getEndpoint()),
-                            new PathConstraints(
-                                    DriveConstants.MaxSpeed,
-                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                    AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                    AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                            new IdealStartingState(
-                                    driveTrain.getState().Speeds.vxMetersPerSecond,
-                                    driveTrain.getState().Pose.getRotation()),
-                            new GoalEndState(0, DriveWaypoints.LeftCoral2.getEndpoint().getRotation()));
-                })
-                        .andThen(
-                                new DeferredCommand(() -> AutoBuilder.followPath(this.path), Set.of(this.driveTrain))));
+                new DeferredCommand(() -> AutoBuilder.pathfindToPose(
+                        DriveWaypoints.LeftCoral2.getEndpoint(),
+                        new PathConstraints(
+                                DriveConstants.MaxSpeed,
+                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                        0),
+                        Set.of(this.driveTrain)));
 
         // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
         // super.bButton.whileTrue(new DisposeAlgaeCommand());
