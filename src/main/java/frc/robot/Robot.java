@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
         Dashboard.getInstance();
+        PathfindingCommand.warmupCommand().schedule();
 
         addPeriodic(swagLights::periodic, 0.25);
     }
