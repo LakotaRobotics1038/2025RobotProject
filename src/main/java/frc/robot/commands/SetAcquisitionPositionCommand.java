@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
+import frc.robot.constants.ShoulderConstants;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
@@ -21,6 +23,10 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
+        if (!extension.isLimitSwitchPressed()
+                && this.shoulder.getPosition() > ShoulderConstants.kMaxExtendedShoulderAngle) {
+            extension.setSetpoint(ExtensionSetpoints.Zero);
+        }
         shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
         wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
         extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
