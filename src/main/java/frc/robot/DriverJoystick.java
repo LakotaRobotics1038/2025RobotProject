@@ -113,36 +113,36 @@ public class DriverJoystick extends XboxController1038 {
         // driveTrain.getState().Pose.getRotation()),
         // new GoalEndState(0, Rotation2d.kZero))));
 
+        super.aButton.whileTrue(
+                new InstantCommand(() -> {
+                    Pose2d currentPose = this.driveTrain.getState().Pose;
+                    this.path = new PathPlannerPath(
+                            PathPlannerPath.waypointsFromPoses(currentPose,
+                                    DriveWaypoints.Level2RightCoral19.getEndpoint()),
+                            new PathConstraints(
+                                    AutoConstants.maxSpeed,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                            new IdealStartingState(
+                                    driveTrain.getState().Speeds.vxMetersPerSecond,
+                                    driveTrain.getState().Pose.getRotation()),
+                            new GoalEndState(0, DriveWaypoints.Level2RightCoral19.getEndpoint().getRotation()));
+                })
+                        .andThen(
+                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+                                        Set.of(this.driveTrain))));
+
         // super.aButton.whileTrue(
-        // new InstantCommand(() -> {
-        // Pose2d currentPose = this.driveTrain.getState().Pose;
-        // this.path = new PathPlannerPath(
-        // PathPlannerPath.waypointsFromPoses(currentPose,
-        // DriveWaypoints.LeftCoral2.getEndpoint()),
+        // new DeferredCommand(() -> AutoBuilder.pathfindToPose(
+        // DriveWaypoints.LeftCoral2.getEndpoint(),
         // new PathConstraints(
         // DriveConstants.MaxSpeed,
         // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
         // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
         // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-        // new IdealStartingState(
-        // driveTrain.getState().Speeds.vxMetersPerSecond,
-        // driveTrain.getState().Pose.getRotation()),
-        // new GoalEndState(0, DriveWaypoints.LeftCoral2.getEndpoint().getRotation()));
-        // })
-        // .andThen(
-        // new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-        // Set.of(this.driveTrain))));
-
-        super.aButton.whileTrue(
-                new DeferredCommand(() -> AutoBuilder.pathfindToPose(
-                        DriveWaypoints.LeftCoral2.getEndpoint(),
-                        new PathConstraints(
-                                DriveConstants.MaxSpeed,
-                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                        0),
-                        Set.of(this.driveTrain)));
+        // 0),
+        // Set.of(this.driveTrain)));
 
         // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
         // super.bButton.whileTrue(new DisposeAlgaeCommand());
