@@ -13,6 +13,7 @@ public class SetAcquisitionPositionCommand extends Command {
     private Wrist wrist = Wrist.getInstance();
     private Extension extension = Extension.getInstance();
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
+    private boolean retractExtension;
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
         addRequirements(shoulder, wrist, extension);
@@ -27,9 +28,17 @@ public class SetAcquisitionPositionCommand extends Command {
                 && this.shoulder.getPosition() > ShoulderConstants.kMaxExtendedShoulderAngle) {
             extension.setSetpoint(ExtensionSetpoints.Zero);
         }
-        shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
-        wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-        extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+        this.retractExtension = true;
+    }
+
+    public void execute() {
+        if (this.retractExtension && (extension.isLimitSwitchPressed()
+                || this.shoulder.getPosition() > ShoulderConstants.kMaxExtendedShoulderAngle)) {
+            shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+            wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+            this.retractExtension = false;
+        }
     }
 
     public boolean isFinished() {
