@@ -10,8 +10,8 @@ public class ExtensionConstants {
 
     public static final double kTolerance = 0.25;
     public static final double kEncoderConversion = 0.158;
-    public static final double kP = 1.1;
-    public static final double kI = 0.002;
+    public static final double kP = 0.4;
+    public static final double kI = 0.001;
     public static final double kD = 0.0;
 
     public enum ExtensionSetpoints {
@@ -24,7 +24,7 @@ public class ExtensionConstants {
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
-        FeederStation(3.0),
+        FeederStation(4.0),
         Barge(26.0),
         Climb(0.0);
 
