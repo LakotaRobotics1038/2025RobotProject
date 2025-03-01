@@ -20,7 +20,6 @@ public class DisposeAlgaeCommand extends Command {
 
     @Override
     public void execute() {
-        timer.restart();
         acquisition.disposeAlgae();
     }
 
@@ -36,6 +35,7 @@ public class DisposeAlgaeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        timer.restart();
         acquisition.stopAcquisition();
     }
 }
