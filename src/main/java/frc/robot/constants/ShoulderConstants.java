@@ -11,7 +11,9 @@ public class ShoulderConstants {
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
-        FeederStation(0.0);
+        FeederStation(0.0),
+        Barge(0.0),
+        Climb(0.0);
 
         public final double setpoint;
 
@@ -20,8 +22,8 @@ public class ShoulderConstants {
         }
     }
 
-    public static final int kLeftMotorPort = 0;
-    public static final int kRightMotorPort = 0;
+    public static final int kLeftMotorPort = 6;
+    public static final int kRightMotorPort = 5;
 
     public static final double kP = 0.0;
     public static final double kI = 0.0;

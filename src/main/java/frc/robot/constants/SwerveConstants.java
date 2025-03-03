@@ -104,7 +104,7 @@ public class SwerveConstants {
     private static final boolean kInvertLeftSide = true;
     private static final boolean kInvertRightSide = false;
 
-    private static final int kPigeonId = 0;
+    private static final int kPigeonId = 22;
 
     // These are only used for simulation
     private static final MomentOfInertia kSteerInertia = KilogramSquareMeters.of(0.01);
@@ -142,9 +142,9 @@ public class SwerveConstants {
             .withDriveFrictionVoltage(kDriveFrictionVoltage);
 
     // Front Left
-    public static final int kFrontLeftDriveMotorId = 1;
-    public static final int kFrontLeftSteerMotorId = 2;
-    public static final int kFrontLeftEncoderId = 1;
+    public static final int kFrontLeftDriveMotorId = 14;
+    public static final int kFrontLeftSteerMotorId = 15;
+    public static final int kFrontLeftEncoderId = 33;
     public static final Angle kFrontLeftEncoderOffset = Rotations.of(-0.190673828125);
     public static final boolean kFrontLeftSteerMotorInverted = true;
     public static final boolean kFrontLeftEncoderInverted = false;
@@ -153,9 +153,9 @@ public class SwerveConstants {
     public static final Distance kFrontLeftYPos = Inches.of(DriveConstants.kTrackWidth / 2);
 
     // Front Right
-    public static final int kFrontRightDriveMotorId = 3;
-    public static final int kFrontRightSteerMotorId = 4;
-    public static final int kFrontRightEncoderId = 2;
+    public static final int kFrontRightDriveMotorId = 0;
+    public static final int kFrontRightSteerMotorId = 1;
+    public static final int kFrontRightEncoderId = 30;
     public static final Angle kFrontRightEncoderOffset = Rotations.of(0.451416015625);
     public static final boolean kFrontRightSteerMotorInverted = true;
     public static final boolean kFrontRightEncoderInverted = false;
@@ -164,9 +164,9 @@ public class SwerveConstants {
     public static final Distance kFrontRightYPos = Inches.of(-DriveConstants.kTrackWidth / 2);
 
     // Back Left
-    public static final int kBackLeftDriveMotorId = 7;
-    public static final int kBackLeftSteerMotorId = 8;
-    public static final int kBackLeftEncoderId = 4;
+    public static final int kBackLeftDriveMotorId = 16;
+    public static final int kBackLeftSteerMotorId = 17;
+    public static final int kBackLeftEncoderId = 32;
     public static final Angle kBackLeftEncoderOffset = Rotations.of(0.36279296875);
     public static final boolean kBackLeftSteerMotorInverted = true;
     public static final boolean kBackLeftEncoderInverted = false;
@@ -175,9 +175,9 @@ public class SwerveConstants {
     public static final Distance kBackLeftYPos = Inches.of(DriveConstants.kTrackWidth / 2);
 
     // Back Right
-    public static final int kBackRightDriveMotorId = 5;
-    public static final int kBackRightSteerMotorId = 6;
-    public static final int kBackRightEncoderId = 3;
+    public static final int kBackRightDriveMotorId = 18;
+    public static final int kBackRightSteerMotorId = 19;
+    public static final int kBackRightEncoderId = 31;
     public static final Angle kBackRightEncoderOffset = Rotations.of(0.29736328125);
     public static final boolean kBackRightSteerMotorInverted = true;
     public static final boolean kBackRightEncoderInverted = false;

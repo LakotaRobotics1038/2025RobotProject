@@ -3,27 +3,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
-public class AcquireCommand extends Command {
-
+public class ShootAlgaeCommand extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
 
-    public AcquireCommand() {
-        this.addRequirements(acquisition);
+    public ShootAlgaeCommand() {
+        super.addRequirements(acquisition);
     }
 
     @Override
     public void execute() {
-        acquisition.acquire();
+        acquisition.shootAlgae();
     }
 
     @Override
     public boolean isFinished() {
-        return acquisition.getAlgaeSwitch() || acquisition.getBottomLaser();
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         acquisition.stopAcquisition();
     }
-
 }

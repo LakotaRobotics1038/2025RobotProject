@@ -1,8 +1,7 @@
 package frc.robot.constants;
 
 public class WristConstants {
-    public enum WristSetPoints {
-
+    public enum WristSetpoints {
         L1Coral(0),
         L2Coral(0),
         L3Coral(0),
@@ -12,11 +11,13 @@ public class WristConstants {
         Processor(0),
         GroundAlgae(0),
         Storage(0),
-        FeederStation(0);
+        FeederStation(0),
+        Climb(0.0),
+        Barge(0.0);
 
         private double setpoint;
 
-        private WristSetPoints(double setpoint) {
+        private WristSetpoints(double setpoint) {
             this.setpoint = setpoint;
         }
 
@@ -25,7 +26,7 @@ public class WristConstants {
         }
     }
 
-    public static final int kWristCanId = 0;
+    public static final int kWristCanId = 3;
     public static final double kMaxPower = 0;
     public static final double kMinPower = 0;
     public static final double kMaxDistance = 0;
