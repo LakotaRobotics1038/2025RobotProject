@@ -2,9 +2,11 @@ package frc.robot.autons;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PathFollowingController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
@@ -68,9 +70,9 @@ public abstract class Auton extends SequentialCommandGroup {
             return new FollowPathCommand(
                     path,
                     // Robot pose supplier
-                    this.driveTrain::getPose,
+                    driveTrain::getPose,
                     // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                    this.driveTrain::getChassisSpeeds,
+                    driveTrain::getChassisSpeeds,
                     // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                     (speeds, feedforwards) -> this.driveTrain.applyChassisSpeeds(speeds),
                     new PPHolonomicDriveController(
@@ -79,17 +81,7 @@ public abstract class Auton extends SequentialCommandGroup {
                             // Rotation PID constants
                             new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController, 0.0)),
                     AutoConstants.kRobotConfig.get(),
-                    () -> {
-                        // Boolean supplier that controls when the path will be mirrored for the red
-                        // alliance
-                        // This will flip the path being followed to the red side of the field.
-                        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-                        if (this.alliance != null) {
-                            return this.alliance == DriverStation.Alliance.Red;
-                        }
-                        return false;
-                    },
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
                     this.driveTrain // Reference to this subsystem to set requirements
             );
         } catch (Exception e) {
