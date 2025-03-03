@@ -12,16 +12,21 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.AcquireForL4Command;
+import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.DisposeCoral2Command;
+import frc.robot.commands.PrepClimbCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.DriveWaypoints;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
@@ -146,10 +151,14 @@ public class DriverJoystick extends XboxController1038 {
 
         // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
         // super.bButton.whileTrue(new DisposeAlgaeCommand());
+
         super.yButton.whileTrue(new DisposeCoral2Command());
         super.leftBumper.whileTrue(new AcquireCoralCommand());
         super.leftTrigger.whileTrue(new DisposeCoral134Command());
-        super.rightBumper.whileTrue(new AcquireForL4Command());
+        // super.rightBumper.whileTrue(new AcquireForL4Command());
+        super.rightBumper.toggleOnTrue(new ParallelCommandGroup(new PrepClimbCommand(),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb)));
+        super.rightTrigger.whileTrue(new ClimbUpCommand());
     }
 
     /**

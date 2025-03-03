@@ -31,12 +31,12 @@ public class Shoulder extends SubsystemBase {
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
                 .inverted(true)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
+                .follow(rightShoulderMotor, true);
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
-                .follow(leftShoulderMotor, true);
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
         rightShoulderConfig.absoluteEncoder
                 .positionConversionFactor(ShoulderConstants.kEncoderConversion);
         rightShoulderConfig.limitSwitch
@@ -77,7 +77,7 @@ public class Shoulder extends SubsystemBase {
 
     private void useOutput(double output) {
         double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
-        leftShoulderMotor.set(power);
+        rightShoulderMotor.set(power);
     }
 
     public double getPosition() {

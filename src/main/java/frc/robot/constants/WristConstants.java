@@ -12,7 +12,7 @@ public class WristConstants {
         GroundAlgae(0),
         Storage(0),
         FeederStation(-24.0),
-        Climb(0.0),
+        Climb(20.0),
         Barge(-70.0);
 
         private double setpoint;
