@@ -10,9 +10,9 @@ import com.pathplanner.lib.util.FileVersionException;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DisposeCommand;
+import frc.robot.commands.DisposeCoralCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand.AcquisitionPositionSetpoint;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class GetOutOfTheWayBottomAuto extends Auton {
     GetOutOfTheWayBottomAuto(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
@@ -21,7 +21,7 @@ public class GetOutOfTheWayBottomAuto extends Auton {
         super.addCommands(
                 followPathCommand(Paths.getBottomStartingPosToLeftReefTag22Path())
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCommand(),
+                new DisposeCoralCommand(),
                 followPathCommand(Paths.getLeftReefTag22ToOutOfWayPath())
                         .alongWith(new SequentialCommandGroup(
                                 new WaitCommand(1),
