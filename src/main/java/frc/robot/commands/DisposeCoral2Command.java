@@ -20,8 +20,7 @@ public class DisposeCoral2Command extends Command {
 
     @Override
     public void execute() {
-        timer.restart();
-        acquisition.disposeCoral2();
+        acquisition.disposeCoral();
     }
 
     @Override
@@ -37,6 +36,7 @@ public class DisposeCoral2Command extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        timer.restart();
         acquisition.stopAcquisition();
     }
 }
