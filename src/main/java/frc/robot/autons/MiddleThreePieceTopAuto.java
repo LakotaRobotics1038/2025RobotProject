@@ -30,14 +30,14 @@ public class MiddleThreePieceTopAuto extends Auton {
                 new AcquireCoralCommand(),
                 followPathCommand(Paths.getTopFeederStationToLeftTag20Path())
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCommand(),
+                new DisposeCoralCommand(),
                 followPathCommand(Paths.getLeftTag20ToTopFeederStationPath())
                         .alongWith(new SequentialCommandGroup(
                                 new WaitCommand(1),
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
-                new AcquireCommand(),
+                new AcquireCoralCommand(),
                 followPathCommand(Paths.getTopFeederStationToRightTag20Path())
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCommand());
+                new DisposeCoralCommand());
     }
 }
