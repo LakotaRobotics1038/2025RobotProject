@@ -20,7 +20,7 @@ public class DisposeCoral2Command extends Command {
 
     @Override
     public void execute() {
-        acquisition.disposeCoral();
+        acquisition.disposeCoral2();
     }
 
     @Override

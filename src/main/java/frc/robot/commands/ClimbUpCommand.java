@@ -18,8 +18,7 @@ public class ClimbUpCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        // return climb.getPosition() >= ClimbConstants.maxClimbDistance;
-        return false;
+        return climb.getPosition() >= ClimbConstants.maxClimbDistance;
     }
 
     @Override
