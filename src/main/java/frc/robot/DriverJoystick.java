@@ -124,8 +124,7 @@ public class DriverJoystick extends XboxController1038 {
                         })
                                 .andThen(
                                         new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                                Set.of(this.driveTrain)))
-                                .onlyIf(() -> this.targetPose != null)));
+                                                Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
 
         super.yButton.whileTrue(new DisposeCoral2Command());
         super.leftBumper.whileTrue(new AcquireCoralCommand());

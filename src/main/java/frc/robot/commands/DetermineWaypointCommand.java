@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 import frc.robot.utils.AcquisitionPositionSetpoint;
+import frc.robot.OperatorState;
 
 public class DetermineWaypointCommand extends Command {
     private final Vision vision = Vision.getInstance();
+    private List<PhotonPipelineResult> visionResults;
     private int bestId = -1;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
@@ -36,14 +38,31 @@ public class DetermineWaypointCommand extends Command {
         // }
         // }
 
-        List<PhotonPipelineResult> visionResults = vision.getResults();
         Set<Integer> reefIDs = Set.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         Set<Integer> processorIDs = Set.of(3, 16);
         Set<Integer> feederStationIDs = Set.of(1, 2, 12, 13);
-        // AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        AcquisitionPositionSetpoint setpointLevel = AcquisitionPositionSetpoint.L2Coral;
-        // boolean scoringFlipped = OperatorState.isScoringFlipped();
-        boolean scoringFlipped = false;
+        AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
+        // AcquisitionPositionSetpoint setpointLevel =
+        // AcquisitionPositionSetpoint.L2Coral;
+        boolean scoringFlipped = OperatorState.isScoringFlipped();
+        // boolean scoringFlipped = false;
+
+        switch (setpointLevel) {
+            case L2Coral:
+            case FeederStation:
+            case L34Algae:
+            case L23Algae:
+                this.visionResults = vision.getResultsBackCam();
+                break;
+            case L3Coral:
+            case L4Coral:
+            case Processor:
+            case L1Coral:
+                this.visionResults = vision.getResultsFrontCam();
+                break;
+            default:
+                break;
+        }
 
         switch (setpointLevel) {
             case L1Coral:
@@ -52,12 +71,12 @@ public class DetermineWaypointCommand extends Command {
             case L4Coral:
             case L23Algae:
             case L34Algae:
-                getBestTarget(reefIDs, visionResults);
+                getBestTarget(reefIDs, this.visionResults);
                 break;
             case Processor:
-                getBestTarget(processorIDs, visionResults);
+                getBestTarget(processorIDs, this.visionResults);
             case FeederStation:
-                getBestTarget(feederStationIDs, visionResults);
+                getBestTarget(feederStationIDs, this.visionResults);
             default:
                 break;
         }
@@ -104,13 +123,16 @@ public class DetermineWaypointCommand extends Command {
 
         for (PhotonPipelineResult result : visionResults) {
             if (result.hasTargets()) {
-                PhotonTrackedTarget bestTarget = result.getBestTarget();
-                int targetId = bestTarget.getFiducialId();
-
-                if (set.contains(targetId) && bestTarget.getArea() > area) {
-                    area = bestTarget.getArea();
-                    this.bestId = targetId;
+                for (PhotonTrackedTarget photonTarget : result.getTargets()) {
+                    int targetId = photonTarget.getFiducialId();
+                    System.out.println(targetId);
+                    if (set.contains(targetId) && photonTarget.getArea() > area) {
+                        area = photonTarget.getArea();
+                        this.bestId = targetId;
+                        System.out.println(bestId);
+                    }
                 }
+
             }
         }
     }

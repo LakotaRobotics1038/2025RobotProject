@@ -75,8 +75,8 @@ public class OperatorPanel extends GenericHID {
         this.feederButton.onTrue(
                 new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation)));
         this.coralPosScoringSwitch
-                .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(false)))
-                .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(true)));
+                .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(true)))
+                .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
     }
 
     // Singleton Setup
