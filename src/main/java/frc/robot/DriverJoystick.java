@@ -2,10 +2,12 @@ package frc.robot;
 
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
+import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveWaypoints;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
@@ -93,6 +95,8 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
+        super.leftBumper.whileTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral));
+        super.leftTrigger.whileTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation));
         // super.aButton.whileTrue(
         // new InstantCommand(() -> {
         // this.currentPose = this.driveTrain.getState().Pose;
