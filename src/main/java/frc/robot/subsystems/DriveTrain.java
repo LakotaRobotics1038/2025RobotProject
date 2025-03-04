@@ -32,7 +32,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveConstants;
-import frc.robot.constants.VisionConstants;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -64,11 +63,13 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean hasAppliedOperatorPerspective = false;
 
-    private final SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
-            .withDeadband(DriveConstants.MaxSpeed * 0.1).withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1) // Add
-                                                                                                                     // a
-                                                                                                                     // 10%
-                                                                                                                     // deadband
+    private final SwerveRequest.FieldCentric fieldCentricDriveRequest = new SwerveRequest.FieldCentric()
+            .withDeadband(DriveConstants.MaxSpeed * 0.1) // Add a 10% deadband
+            .withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1)
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+    private final SwerveRequest.RobotCentric robotCentricDriveRequest = new SwerveRequest.RobotCentric()
+            .withDeadband(DriveConstants.MaxSpeed * 0.1) // Add a 10% deadband
+            .withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brakeRequest = new SwerveRequest.SwerveDriveBrake();
 
@@ -151,24 +152,26 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
                 SwerveConstants.FrontRight);
-        AutoBuilder.configure(
-                () -> this.getState().Pose,
-                this::resetPose,
-                () -> this.getState().Speeds,
-                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                    this.setControl(
-                            new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                    .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                    .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                },
-                new PPHolonomicDriveController(
-                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                AutoConstants.kDXController),
-                        new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
-                                AutoConstants.kDThetaController)),
-                AutoConstants.kRobotConfig.get(),
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                this);
+        if (AutoConstants.kRobotConfig.isPresent()) {
+            AutoBuilder.configure(
+                    () -> this.getState().Pose,
+                    this::resetPose,
+                    () -> this.getState().Speeds,
+                    (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+                        this.setControl(
+                                new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                        .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                        .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
+                    },
+                    new PPHolonomicDriveController(
+                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                                    AutoConstants.kDController),
+                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
+                                    AutoConstants.kDThetaController)),
+                    AutoConstants.kRobotConfig.get(),
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                    this);
+        }
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -188,9 +191,18 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * @param ySpeed Speed of the robot in the y direction (sideways).
      * @param rot    Angular rate of the robot.
      */
-    public SwerveRequest drive(double xSpeed, double ySpeed, double rot) {
+    public SwerveRequest drive(double xSpeed, double ySpeed, double rot, boolean fieldCentric) {
+        if (fieldCentric) {
+            // Drive forward with negative Y (forward)
+            return fieldCentricDriveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed)
+                    // Drive left with negative X (left)
+                    .withVelocityY(ySpeed * DriveConstants.MaxSpeed)
+                    // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(rot * DriveConstants.MaxAngularRate);
+        }
+
         // Drive forward with negative Y (forward)
-        return driveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed)
+        return robotCentricDriveRequest.withVelocityX(xSpeed * DriveConstants.MaxSpeed)
                 // Drive left with negative X (left)
                 .withVelocityY(ySpeed * DriveConstants.MaxSpeed)
                 // Drive counterclockwise with negative X (left)

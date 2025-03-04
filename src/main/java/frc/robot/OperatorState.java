@@ -42,11 +42,14 @@ public class OperatorState {
             case L23Algae:
             case L34Algae:
             case Processor:
-            case Barge:
                 return true;
             default:
                 return false;
         }
+    }
+
+    public boolean isBarge() {
+        return getLastInput().equals(AcquisitionPositionSetpoint.Barge);
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {

@@ -8,4 +8,5 @@ public class AcquisitionConstants {
     public static final double kAcquireAlgaeSpeed = 1.0;
     public static final double kDisposeCoralSpeed = -1.0;
     public static final double kDisposeAlgaeSpeed = -1.0;
+    public static final double kShootAlgaeSpeed = -1.0;
 }

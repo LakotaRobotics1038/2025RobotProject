@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
