@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -17,6 +16,7 @@ import frc.robot.autons.AutonSelector.AutonChoices;
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
+    private Climb climb = Climb.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -28,13 +28,6 @@ public class Dashboard extends SubsystemBase {
 
     // Variables
     private final Field2d field = new Field2d();
-
-    // Controls Tab Inputs
-    private GenericEntry resetGyro = controlsTab.add("Reset Gyro", false)
-            .withSize(1, 1)
-            .withPosition(0, 0)
-            .withWidget(BuiltInWidgets.kToggleButton)
-            .getEntry();
 
     // Singleton Setup
     private static Dashboard instance;
@@ -88,15 +81,24 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(2, 0)
                 .withSize(8, 5)
                 .withWidget(BuiltInWidgets.kField);
+
+        controlsTab.addNumber("X", driveTrain::getX)
+                .withPosition(5, 5)
+                .withSize(2, 1);
+        controlsTab.addNumber("Y", driveTrain::getY)
+                .withPosition(5, 4)
+                .withSize(2, 1);
+        controlsTab.addNumber("R", driveTrain::getRotation)
+                .withPosition(5, 4)
+                .withSize(2, 1);
+        controlsTab.addNumber("Climb", climb::getPosition)
+                .withPosition(3, 3)
+                .withSize(2, 1);
     }
 
     @Override
     public void periodic() {
         // Controls Tab
-        if (resetGyro.getBoolean(false)) {
-            driveTrain.zeroHeading();
-            resetGyro.setBoolean(false);
-        }
         field.setRobotPose(driveTrain.getState().Pose);
     }
 

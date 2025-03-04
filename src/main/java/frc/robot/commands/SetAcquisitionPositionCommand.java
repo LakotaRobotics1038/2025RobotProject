@@ -42,12 +42,10 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
-        return wrist.onTarget() && shoulder.onTarget() && extension.onTarget();
+        return false;
     }
 
     public void end(boolean interrupted) {
-        wrist.disable();
-        shoulder.disable();
-        extension.disable();
+
     }
 }

@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathfindingCommand;
+
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,10 +14,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
+import frc.robot.constants.DriveConstants;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
+import frc.robot.subsystems.Vision;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -27,6 +32,7 @@ public class Robot extends TimedRobot {
 
     // Subsystems
     private DriveTrain driveTrain = DriveTrain.getInstance();
+    private Vision vision = Vision.getInstance();
 
     // Human Interface Devices
     private OperatorPanel operatorPanel = OperatorPanel.getInstance();
@@ -37,6 +43,8 @@ public class Robot extends TimedRobot {
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
         Dashboard.getInstance();
+        // PathfindingCommand.warmupCommand().schedule();
+        FollowPathCommand.warmupCommand().schedule();
 
         addPeriodic(swagLights::periodic, 0.25);
     }
@@ -44,6 +52,18 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+
+        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+                    estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
+
+        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+                    estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
+        });
     }
 
     @Override
@@ -69,7 +89,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         operatorPanel.clearDefaults();
-        driveTrain.zeroHeading();
         autonomousCommand = autonSelector.chooseAuton();
         // if (DriverStation.isFMSAttached()) {
         // vision.startRecording();

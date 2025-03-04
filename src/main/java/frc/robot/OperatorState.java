@@ -28,13 +28,21 @@ public class OperatorState {
         return this.lastInput;
     }
 
-    public boolean isCoral() {
+    public boolean isCoral134() {
         switch (getLastInput()) {
             case L1Coral:
-            case L2Coral:
             case L3Coral:
             case L4Coral:
             case FeederStation:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public boolean isCoral2() {
+        switch (getLastInput()) {
+            case L2Coral:
                 return true;
             default:
                 return false;
