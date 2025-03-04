@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Volts;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -11,11 +13,13 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.DriveFeedforwards;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,6 +31,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.constants.AutoConstants;
@@ -53,8 +58,6 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         }
         return instance;
     }
-
-    private static final Vision vision = Vision.getInstance();
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -145,14 +148,38 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 TalonFX::new,
                 CANcoder::new,
                 SwerveConstants.DrivetrainConstants,
-                0.0,
-                DriveConstants.kOdometryStdDev,
-                DriveConstants.kVisionStdDevs,
                 SwerveConstants.FrontLeft,
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
-                SwerveConstants.FrontRight);
+                SwerveConstants.BackRight);
         if (AutoConstants.kRobotConfig.isPresent()) {
+            // AutoBuilder.configureCustom(
+            // (path) -> new FollowPathCommand(
+            // new PathPlannerPath(
+            // PathPlannerPath.waypointsFromPoses(this.overridePose(path.getAllPathPoints())),
+            // path.getGlobalConstraints(),
+            // path.getIdealStartingState(), path.getGoalEndState()),
+            // () -> this.getState().Pose,
+            // () -> this.getState().Speeds,
+            // (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
+            // this.setControl(
+            // new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+            // .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+            // .withWheelForceFeedforwardsY(
+            // feedForwards.robotRelativeForcesYNewtons()));
+            // },
+            // new PPHolonomicDriveController(
+            // new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+            // AutoConstants.kDController),
+            // new PIDConstants(AutoConstants.kPThetaController,
+            // AutoConstants.kIThetaController,
+            // AutoConstants.kDThetaController)),
+            // AutoConstants.kRobotConfig.get(),
+            // () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+            // this),
+            // () -> this.getState().Pose,
+            // this::resetPose,
+            // true);
             AutoBuilder.configure(
                     () -> this.getState().Pose,
                     this::resetPose,
@@ -166,22 +193,23 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                     new PPHolonomicDriveController(
                             new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
                                     AutoConstants.kDController),
-                            new PIDConstants(AutoConstants.kPThetaController, AutoConstants.kIThetaController,
+                            new PIDConstants(AutoConstants.kPThetaController,
+                                    AutoConstants.kIThetaController,
                                     AutoConstants.kDThetaController)),
                     AutoConstants.kRobotConfig.get(),
                     () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
                     this);
         }
-        if (Utils.isSimulation()) {
+        if (Utils.isSimulation())
+
+        {
             startSimThread();
         }
     }
 
-    /**
-     * Reset the gyro to zero
-     */
-    public void zeroHeading() {
-        this.getPigeon2().reset();
+    private List<Pose2d> overridePose(List<Pose2d> poses) {
+        poses.set(0, this.getState().Pose);
+        return poses;
     }
 
     /**
@@ -220,7 +248,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * Returns a command that applies the specified control request to this swerve
      * drivetrain.
      *
-     * @param requestSupplier Function returning the request to apply
+     * @param request Function returning the request to apply
      * @return Command to run
      */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
@@ -271,16 +299,6 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 hasAppliedOperatorPerspective = true;
             });
         }
-
-        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
-
-        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            this.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(), estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
     }
 
     /**
@@ -341,5 +359,17 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
             Matrix<N3, N1> visionMeasurementStdDevs) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds),
                 visionMeasurementStdDevs);
+    }
+
+    public double getX() {
+        return this.getState().Pose.getX();
+    }
+
+    public double getY() {
+        return this.getState().Pose.getY();
+    }
+
+    public double getRotation() {
+        return this.getState().Pose.getRotation().getDegrees();
     }
 }
