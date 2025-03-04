@@ -10,7 +10,6 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
@@ -95,7 +94,10 @@ public class DetermineWaypointCommand extends Command {
     }
 
     public Optional<Pose2d> getPose2d() {
-        return this.waypoint.map(driveWaypoints -> FlippingUtil.flipFieldPose(driveWaypoints.getEndpoint()));
+        return isMirrored
+                ? this.waypoint.map(driveWaypoints -> FlippingUtil.flipFieldPose(driveWaypoints.getEndpoint()))
+                : this.waypoint
+                        .map(driveWaypoints -> driveWaypoints.getEndpoint());
     }
 
     private void getBestTarget(Set<Integer> set, List<PhotonPipelineResult> visionResults) {
