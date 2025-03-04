@@ -17,7 +17,7 @@ import frc.robot.subsystems.Vision;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DetermineWaypointCommand extends Command {
-    private Vision vision = Vision.getInstance();
+    private final Vision vision = Vision.getInstance();
     private int bestId = -1;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
@@ -95,7 +95,7 @@ public class DetermineWaypointCommand extends Command {
     }
 
     public Optional<Pose2d> getPose2d() {
-        return Optional.ofNullable(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()));
+        return this.waypoint.map(driveWaypoints -> FlippingUtil.flipFieldPose(driveWaypoints.getEndpoint()));
     }
 
     private void getBestTarget(Set<Integer> set, List<PhotonPipelineResult> visionResults) {
@@ -115,187 +115,224 @@ public class DetermineWaypointCommand extends Command {
     }
 
     private Optional<DriveWaypoints> get134CoralWaypoint(boolean scoringFlipped) {
-        switch (this.bestId) {
-            case 6:
+        return switch (this.bestId) {
+            case 6 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
                         : DriveWaypoints.RightCoral22);
-            case 7:
+            }
+            case 7 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
                         : DriveWaypoints.RightCoral21);
-            case 8:
+            }
+            case 8 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
                         : DriveWaypoints.RightCoral20);
-            case 9:
+            }
+            case 9 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
                         : DriveWaypoints.RightCoral19);
-            case 10:
+            }
+            case 10 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
                         : DriveWaypoints.RightCoral18);
-            case 11:
+            }
+            case 11 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
                         : DriveWaypoints.RightCoral17);
-            case 17:
+            }
+            case 17 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral17
                         : DriveWaypoints.RightCoral17);
-            case 18:
+            }
+            case 18 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral18
                         : DriveWaypoints.RightCoral18);
-            case 19:
+            }
+            case 19 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral19
                         : DriveWaypoints.RightCoral19);
-            case 20:
+            }
+            case 20 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral20
                         : DriveWaypoints.RightCoral20);
-            case 21:
+            }
+            case 21 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral21
                         : DriveWaypoints.RightCoral21);
-            case 22:
+            }
+            case 22 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
+                yield Optional.of(scoringFlipped ? DriveWaypoints.LeftCoral22
                         : DriveWaypoints.RightCoral22);
-            default:
-                return Optional.empty();
-        }
+            }
+            default -> Optional.empty();
+        };
     }
 
     private Optional<DriveWaypoints> getLevel2CoralWaypoint(boolean scoringFlipped) {
-        switch (this.bestId) {
-            case 6:
+        return switch (this.bestId) {
+            case 6 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
                         : DriveWaypoints.Level2RightCoral22);
-            case 7:
+            }
+            case 7 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
                         : DriveWaypoints.Level2RightCoral21);
-            case 8:
+            }
+            case 8 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
                         : DriveWaypoints.Level2RightCoral20);
-            case 9:
+            }
+            case 9 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
                         : DriveWaypoints.Level2RightCoral19);
-            case 10:
+            }
+            case 10 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
                         : DriveWaypoints.Level2RightCoral18);
-            case 11:
+            }
+            case 11 -> {
                 this.isMirrored = true;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
                         : DriveWaypoints.Level2RightCoral17);
-            case 17:
+            }
+            case 17 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral17
                         : DriveWaypoints.Level2RightCoral17);
-            case 18:
+            }
+            case 18 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral18
                         : DriveWaypoints.Level2RightCoral18);
-            case 19:
+            }
+            case 19 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral19
                         : DriveWaypoints.Level2RightCoral19);
-            case 20:
+            }
+            case 20 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral20
                         : DriveWaypoints.Level2RightCoral20);
-            case 21:
+            }
+            case 21 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral21
                         : DriveWaypoints.Level2RightCoral21);
-            case 22:
+            }
+            case 22 -> {
                 this.isMirrored = false;
-                return Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
+                yield Optional.of(scoringFlipped ? DriveWaypoints.Level2LeftCoral22
                         : DriveWaypoints.Level2RightCoral22);
-            default:
-                return Optional.empty();
-        }
+            }
+            default -> Optional.empty();
+        };
     }
 
     private Optional<DriveWaypoints> getAlgaeWaypoint(boolean scoringFlipped) {
-        switch (this.bestId) {
-            case 6:
+        return switch (this.bestId) {
+            case 6 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel22);
-            case 7:
+                yield Optional.of(DriveWaypoints.AlgaeLevel22);
+            }
+            case 7 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel21);
-            case 8:
+                yield Optional.of(DriveWaypoints.AlgaeLevel21);
+            }
+            case 8 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel20);
-            case 9:
+                yield Optional.of(DriveWaypoints.AlgaeLevel20);
+            }
+            case 9 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel19);
-            case 10:
+                yield Optional.of(DriveWaypoints.AlgaeLevel19);
+            }
+            case 10 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel18);
-            case 11:
+                yield Optional.of(DriveWaypoints.AlgaeLevel18);
+            }
+            case 11 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.AlgaeLevel17);
-            case 17:
+                yield Optional.of(DriveWaypoints.AlgaeLevel17);
+            }
+            case 17 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel17);
-            case 18:
+                yield Optional.of(DriveWaypoints.AlgaeLevel17);
+            }
+            case 18 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel18);
-            case 19:
+                yield Optional.of(DriveWaypoints.AlgaeLevel18);
+            }
+            case 19 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel19);
-            case 20:
+                yield Optional.of(DriveWaypoints.AlgaeLevel19);
+            }
+            case 20 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel20);
-            case 21:
+                yield Optional.of(DriveWaypoints.AlgaeLevel20);
+            }
+            case 21 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel21);
-            case 22:
+                yield Optional.of(DriveWaypoints.AlgaeLevel21);
+            }
+            case 22 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.AlgaeLevel22);
-            default:
-                return Optional.empty();
-        }
+                yield Optional.of(DriveWaypoints.AlgaeLevel22);
+            }
+            default -> Optional.empty();
+        };
     }
 
     private Optional<DriveWaypoints> getProcessorWaypoint(boolean scoringFlipped) {
-        switch (this.bestId) {
-            case 3:
+        return switch (this.bestId) {
+            case 3 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.Processor3);
-            case 16:
+                yield Optional.of(DriveWaypoints.Processor3);
+            }
+            case 16 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.Processor16);
-            default:
-                return Optional.empty();
-        }
+                yield Optional.of(DriveWaypoints.Processor16);
+            }
+            default -> Optional.empty();
+        };
     }
 
     private Optional<DriveWaypoints> getFeederStationWaypoint(boolean scoringFlipped) {
-        switch (this.bestId) {
-            case 1:
+        return switch (this.bestId) {
+            case 1 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.FeederStation12Point5);
-            case 2:
+                yield Optional.of(DriveWaypoints.FeederStation12Point5);
+            }
+            case 2 -> {
                 this.isMirrored = true;
-                return Optional.of(DriveWaypoints.FeederStation13Point5);
-            case 12:
+                yield Optional.of(DriveWaypoints.FeederStation13Point5);
+            }
+            case 12 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.FeederStation12Point5);
-            case 13:
+                yield Optional.of(DriveWaypoints.FeederStation12Point5);
+            }
+            case 13 -> {
                 this.isMirrored = false;
-                return Optional.of(DriveWaypoints.FeederStation13Point5);
-            default:
-                return Optional.empty();
-        }
+                yield Optional.of(DriveWaypoints.FeederStation13Point5);
+            }
+            default -> Optional.empty();
+        };
     }
 }
