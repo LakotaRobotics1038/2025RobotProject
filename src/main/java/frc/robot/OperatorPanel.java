@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
-import frc.robot.commands.DisposeCoralCommand;
+import frc.robot.commands.DisposeCoral134Command;
+import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetExtensionPositionCommand;
 import frc.robot.commands.SetShoulderPositionCommand;
@@ -39,7 +40,7 @@ public class OperatorPanel extends GenericHID {
     public final JoystickButton algaeL23Button = new JoystickButton(this, IOConstants.kAlgaeL23ButtonNumber);
     public final JoystickButton algaeL34Button = new JoystickButton(this, IOConstants.kAlgaeL34ButtonNumber);
     public final JoystickButton feederButton = new JoystickButton(this, IOConstants.kFeederButtonNumber);
-    public final JoystickButton processorButton = new JoystickButton(this, IOConstants.kProcesssorButtonNumber);
+    public final JoystickButton processorButton = new JoystickButton(this, IOConstants.kProcessorButtonNumber);
     public final JoystickButton coralPosScoringSwitch = new JoystickButton(this,
             IOConstants.kCoralPosScoringSwitchNumber);
 
@@ -49,9 +50,10 @@ public class OperatorPanel extends GenericHID {
         operatorState.setLastInput(AcquisitionPositionSetpoint.Storage);
         operatorState.setScoringFlipped(coralPosScoringSwitch.getAsBoolean());
 
-        this.acquireButton.and(operatorState::isCoral).whileTrue(new AcquireCoralCommand());
+        this.acquireButton.and(operatorState::isCoral134).whileTrue(new AcquireCoralCommand());
         this.acquireButton.and(operatorState::isAlgae).whileTrue(new AcquireAlgaeCommand());
-        this.disposeButton.and(operatorState::isCoral).whileTrue(new DisposeCoralCommand());
+        this.disposeButton.and(operatorState::isCoral134).whileTrue(new DisposeCoral134Command());
+        this.disposeButton.and(operatorState::isCoral2).whileTrue(new DisposeCoral2Command());
         this.disposeButton.and(operatorState::isAlgae).whileTrue(new DisposeAlgaeCommand());
         this.disposeButton.and(operatorState::isBarge).whileTrue(new ShootAlgaeCommand());
         this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));

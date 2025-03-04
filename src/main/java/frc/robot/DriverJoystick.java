@@ -1,12 +1,6 @@
 package frc.robot;
 
-import frc.robot.constants.DriveConstants;
-import frc.robot.constants.IOConstants;
-import frc.robot.commands.DetermineWaypointCommand;
-import frc.robot.constants.AutoConstants;
-import frc.robot.constants.DriveWaypoints;
-import frc.robot.libraries.XboxController1038;
-import frc.robot.subsystems.DriveTrain;
+import java.util.Set;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
@@ -16,15 +10,31 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AcquireCoralCommand;
+import frc.robot.commands.AcquireForL4Command;
+import frc.robot.commands.ClimbUpCommand;
+import frc.robot.commands.DetermineWaypointCommand;
+import frc.robot.commands.DisposeCoral134Command;
+import frc.robot.commands.DisposeCoral2Command;
+import frc.robot.commands.PrepClimbCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.constants.AutoConstants;
+import frc.robot.constants.DriveConstants;
+import frc.robot.constants.DriveWaypoints;
+import frc.robot.constants.IOConstants;
+import frc.robot.libraries.XboxController1038;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
     private DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
 
-    private Pose2d currentPose;
     private PathPlannerPath path;
 
     // Previous Status
@@ -33,6 +43,8 @@ public class DriverJoystick extends XboxController1038 {
     private double prevZ = 0;
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
+
+    private Pose2d currentPose;
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -95,12 +107,9 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        // super.aButton.whileTrue(
-        // new InstantCommand(() -> {
-        // this.currentPose = this.driveTrain.getState().Pose;
-        // }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-        // PathPlannerPath.waypointsFromPoses(this.currentPose,
-        // DriveWaypoints.Algae23.getEndpoint()),
+        // super.aButton.whileTrue(AutoBuilder.followPath(new PathPlannerPath(
+        // PathPlannerPath.waypointsFromPoses(new Pose2d(),
+        // DriveWaypoints.LeftFeederStation4.getEndpoint()),
         // new PathConstraints(
         // DriveConstants.MaxSpeed,
         // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -109,7 +118,49 @@ public class DriverJoystick extends XboxController1038 {
         // new IdealStartingState(
         // driveTrain.getState().Speeds.vxMetersPerSecond,
         // driveTrain.getState().Pose.getRotation()),
-        // new GoalEndState(0, Rotation2d.kZero)))));
+        // new GoalEndState(0, Rotation2d.kZero))));
+
+        super.aButton.whileTrue(
+                new InstantCommand(() -> {
+                    Pose2d currentPose = this.driveTrain.getState().Pose;
+                    this.path = new PathPlannerPath(
+                            PathPlannerPath.waypointsFromPoses(currentPose,
+                                    DriveWaypoints.Level2RightCoral19.getEndpoint()),
+                            new PathConstraints(
+                                    AutoConstants.maxSpeed,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                    AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                            new IdealStartingState(
+                                    driveTrain.getState().Speeds.vxMetersPerSecond,
+                                    driveTrain.getState().Pose.getRotation()),
+                            new GoalEndState(0, DriveWaypoints.Level2RightCoral19.getEndpoint().getRotation()));
+                })
+                        .andThen(
+                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+                                        Set.of(this.driveTrain))));
+
+        // super.aButton.whileTrue(
+        // new DeferredCommand(() -> AutoBuilder.pathfindToPose(
+        // DriveWaypoints.LeftCoral2.getEndpoint(),
+        // new PathConstraints(
+        // DriveConstants.MaxSpeed,
+        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+        // 0),
+        // Set.of(this.driveTrain)));
+
+        // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
+        // super.bButton.whileTrue(new DisposeAlgaeCommand());
+
+        super.yButton.whileTrue(new DisposeCoral2Command());
+        super.leftBumper.whileTrue(new AcquireCoralCommand());
+        super.leftTrigger.whileTrue(new DisposeCoral134Command());
+        // super.rightBumper.whileTrue(new AcquireForL4Command());
+        super.rightBumper.toggleOnTrue(new ParallelCommandGroup(new PrepClimbCommand(),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb)));
+        super.rightTrigger.whileTrue(new ClimbUpCommand());
     }
 
     /**

@@ -11,7 +11,7 @@ public final class IOConstants {
     public static final int kCoralL1ButtonNumber = 4;
     public static final int kAlgaeL34ButtonNumber = 5;
     public static final int kAlgaeL23ButtonNumber = 6;
-    public static final int kProcesssorButtonNumber = 7;
+    public static final int kProcessorButtonNumber = 7;
     public static final int kStorageButtonNumber = 8;
     public static final int kBargeButtonNumber = 9;
     public static final int kFeederButtonNumber = 10;

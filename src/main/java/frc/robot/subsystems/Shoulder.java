@@ -10,6 +10,8 @@ import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.AbsoluteEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
@@ -19,7 +21,7 @@ import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 public class Shoulder extends SubsystemBase {
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
     private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
-    private AbsoluteEncoder shoulderEncoder = leftShoulderMotor.getAbsoluteEncoder();
+    private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
     private boolean enabled = false;
@@ -28,16 +30,18 @@ public class Shoulder extends SubsystemBase {
 
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
-        leftShoulderConfig.limitSwitch
-                .reverseLimitSwitchEnabled(true)
-                .reverseLimitSwitchType(Type.kNormallyOpen);
+                .inverted(true)
+                .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
+                .follow(rightShoulderMotor, true);
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
-
-        rightShoulderConfig.follow(leftShoulderMotor, true);
+        rightShoulderConfig.absoluteEncoder
+                .positionConversionFactor(ShoulderConstants.kEncoderConversion);
+        rightShoulderConfig.limitSwitch
+                .reverseLimitSwitchEnabled(true)
+                .reverseLimitSwitchType(Type.kNormallyOpen);
 
         leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
@@ -46,6 +50,12 @@ public class Shoulder extends SubsystemBase {
 
         shoulderController.setTolerance(ShoulderConstants.kTolerance);
         shoulderController.enableContinuousInput(0, 360);
+
+        Shuffleboard.getTab("Controls").add("ShoulderPID", shoulderController)
+                .withWidget(BuiltInWidgets.kPIDController);
+        Shuffleboard.getTab("Controls")
+                .addNumber("ShoulderCurrent", this::getPosition)
+                .withWidget(BuiltInWidgets.kTextView);
     }
 
     private static Shoulder instance;
@@ -67,7 +77,7 @@ public class Shoulder extends SubsystemBase {
 
     private void useOutput(double output) {
         double power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
-        leftShoulderMotor.set(power);
+        rightShoulderMotor.set(power);
     }
 
     public double getPosition() {
@@ -80,10 +90,11 @@ public class Shoulder extends SubsystemBase {
 
     private void setSetpoint(double setpoint) {
         setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance);
+        shoulderController.setSetpoint(setpoint);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        shoulderController.setSetpoint(setpoint.setpoint);
+        this.setSetpoint(setpoint.setpoint);
     }
 
     public void setP(double p) {

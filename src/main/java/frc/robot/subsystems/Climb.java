@@ -41,6 +41,7 @@ public class Climb extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
                 .inverted(false);
+        climbConfig.encoder.positionConversionFactor(ClimbConstants.climbConversionFactor);
 
         climbConfig.limitSwitch
                 .forwardLimitSwitchEnabled(true)
