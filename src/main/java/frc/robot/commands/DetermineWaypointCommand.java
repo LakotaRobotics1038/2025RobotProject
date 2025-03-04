@@ -96,7 +96,7 @@ public class DetermineWaypointCommand extends Command {
     public Optional<Pose2d> getPose2d() {
         return isMirrored
                 ? this.waypoint.map(driveWaypoints -> FlippingUtil.flipFieldPose(driveWaypoints.getEndpoint()))
-                : this.waypoint.map(driveWaypoints -> driveWaypoints.getEndpoint());
+                : this.waypoint.map(DriveWaypoints::getEndpoint);
     }
 
     private void getBestTarget(Set<Integer> set, List<PhotonPipelineResult> visionResults) {
