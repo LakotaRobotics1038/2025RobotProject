@@ -2,22 +2,23 @@ package frc.robot.commands;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.OperatorState;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
-    private int bestId = 0;
+    private int bestId = -1;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
 
@@ -27,19 +28,41 @@ public class DetermineWaypointCommand extends Command {
 
     @Override
     public void initialize() {
-        List<PhotonPipelineResult> visionResults = vision.getResults();
-        double area = 0.0;
-        for (PhotonPipelineResult result : visionResults) {
-            if (result.hasTargets() && result.getBestTarget().getArea() > area) {
-                area = result.getBestTarget().getArea();
-                this.bestId = result.getBestTarget().getFiducialId();
-            }
-        }
+        // List<PhotonPipelineResult> visionResults = vision.getResults();
+        // double area = 0.0;
+        // for (PhotonPipelineResult result : visionResults) {
+        // if (result.hasTargets() && result.getBestTarget().getArea() > area) {
+        // area = result.getBestTarget().getArea();
+        // this.bestId = result.getBestTarget().getFiducialId();
+        // }
+        // }
 
+        List<PhotonPipelineResult> visionResults = vision.getResults();
+        Set<Integer> reefIDs = Set.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
+        Set<Integer> processorIDs = Set.of(3, 16);
+        Set<Integer> feederStationIDs = Set.of(1, 2, 12, 13);
         // AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
         AcquisitionPositionSetpoint setpointLevel = AcquisitionPositionSetpoint.L2Coral;
         // boolean scoringFlipped = OperatorState.isScoringFlipped();
         boolean scoringFlipped = false;
+
+        switch (setpointLevel) {
+            case L1Coral:
+            case L2Coral:
+            case L3Coral:
+            case L4Coral:
+            case L23Algae:
+            case L34Algae:
+                getBestTarget(reefIDs, visionResults);
+                break;
+            case Processor:
+                getBestTarget(processorIDs, visionResults);
+            case FeederStation:
+                getBestTarget(feederStationIDs, visionResults);
+            default:
+                break;
+        }
+
         switch (setpointLevel) {
             case L1Coral:
             case L3Coral:
@@ -71,20 +94,24 @@ public class DetermineWaypointCommand extends Command {
         return true;
     }
 
-    public int getBestID() {
-        return this.bestId;
-    }
-
-    public boolean getIsMirrored() {
-        return this.isMirrored;
-    }
-
     public Optional<Pose2d> getPose2d() {
         return Optional.ofNullable(FlippingUtil.flipFieldPose(this.waypoint.get().getEndpoint()));
     }
 
-    public Optional<Rotation2d> getRotation2d() {
-        return Optional.ofNullable(waypoint.get().getRotation2d());
+    private void getBestTarget(Set<Integer> set, List<PhotonPipelineResult> visionResults) {
+        double area = 0.0;
+
+        for (PhotonPipelineResult result : visionResults) {
+            if (result.hasTargets()) {
+                PhotonTrackedTarget bestTarget = result.getBestTarget();
+                int targetId = bestTarget.getFiducialId();
+
+                if (set.contains(targetId) && bestTarget.getArea() > area) {
+                    area = bestTarget.getArea();
+                    this.bestId = targetId;
+                }
+            }
+        }
     }
 
     private Optional<DriveWaypoints> get134CoralWaypoint(boolean scoringFlipped) {
