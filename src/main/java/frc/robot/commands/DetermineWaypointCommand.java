@@ -18,7 +18,7 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 public class DetermineWaypointCommand extends Command {
     private Vision vision = Vision.getInstance();
     private int bestId = 0;
-    private Optional<DriveWaypoints> waypoint;
+    private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
 
     public DetermineWaypointCommand() {
@@ -36,8 +36,10 @@ public class DetermineWaypointCommand extends Command {
             }
         }
 
-        AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        boolean scoringFlipped = OperatorState.isScoringFlipped();
+        // AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
+        AcquisitionPositionSetpoint setpointLevel = AcquisitionPositionSetpoint.L2Coral;
+        // boolean scoringFlipped = OperatorState.isScoringFlipped();
+        boolean scoringFlipped = false;
         switch (setpointLevel) {
             case L1Coral:
             case L3Coral:
