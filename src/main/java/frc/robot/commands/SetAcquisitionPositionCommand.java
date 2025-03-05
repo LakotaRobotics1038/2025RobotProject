@@ -29,8 +29,6 @@ public class SetAcquisitionPositionCommand extends Command {
         if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
             retractExtension = true;
             extension.setSetpoint(ExtensionSetpoints.Storage);
-            shoulder.setSetpoint(shoulder.getPosition());
-            wrist.setSetpoint(wrist.getPosition());
         }
     }
 
