@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
+import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.ShoulderConstants;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
@@ -24,20 +25,24 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
-        if (!extension.isLimitSwitchPressed()
-                && this.shoulder.getPosition() > ShoulderConstants.kMaxExtendedShoulderAngle) {
-            extension.setSetpoint(ExtensionSetpoints.Zero);
+
+        if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
+            retractExtension = true;
+            extension.setSetpoint(ExtensionSetpoints.Storage);
+            shoulder.setSetpoint(shoulder.getPosition());
+            wrist.setSetpoint(wrist.getPosition());
         }
-        this.retractExtension = true;
     }
 
     public void execute() {
-        if (this.retractExtension && (extension.isLimitSwitchPressed()
-                || this.shoulder.getPosition() > ShoulderConstants.kMaxExtendedShoulderAngle)) {
+        if (this.retractExtension) {
+            if (extension.getPosition() <= ExtensionConstants.kExtensionMaxMove) {
+                this.retractExtension = false;
+            }
+        } else {
+            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
             shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
             wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
-            this.retractExtension = false;
         }
     }
 

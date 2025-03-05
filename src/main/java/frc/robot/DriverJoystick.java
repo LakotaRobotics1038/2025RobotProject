@@ -105,8 +105,9 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.leftBumper.whileTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral));
-        super.leftTrigger.whileTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation));
+        super.leftBumper.onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral));
+        super.leftTrigger.onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation));
+        super.bButton.onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));
         // super.aButton.whileTrue(
         // new InstantCommand(() -> {
         // this.currentPose = this.driveTrain.getState().Pose;
