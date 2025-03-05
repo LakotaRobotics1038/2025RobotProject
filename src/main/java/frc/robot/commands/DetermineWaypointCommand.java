@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,9 +32,9 @@ public class DetermineWaypointCommand extends Command {
 
     @Override
     public void initialize() {
-        Set<Integer> reefIDs = Set.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
-        Set<Integer> processorIDs = Set.of(3, 16);
-        Set<Integer> feederStationIDs = Set.of(1, 2, 12, 13);
+        int[] reefIDs = { 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22 };
+        int[] processorIDs = { 3, 16 };
+        int[] feederStationIDs = { 1, 2, 12, 13 };
         AcquisitionPositionSetpoint setpointLevel = operatorState.getLastInput();
         boolean scoringFlipped = operatorState.isScoringFlipped();
 
@@ -107,15 +109,14 @@ public class DetermineWaypointCommand extends Command {
                 : this.waypoint.map(DriveWaypoints::getEndpoint);
     }
 
-    private void getBestTarget(Set<Integer> set, List<PhotonPipelineResult> visionResults) {
+    private void getBestTarget(int[] ids, List<PhotonPipelineResult> visionResults) {
         double area = 0.0;
-
         for (PhotonPipelineResult result : visionResults) {
             if (result.hasTargets()) {
                 for (PhotonTrackedTarget photonTarget : result.getTargets()) {
                     int targetId = photonTarget.getFiducialId();
                     System.out.println(targetId);
-                    if (set.contains(targetId) && photonTarget.getArea() > area) {
+                    if (Arrays.stream(ids).anyMatch(x -> x == targetId) && photonTarget.getArea() > area) {
                         area = photonTarget.getArea();
                         this.bestId = targetId;
                         System.out.println(bestId);
