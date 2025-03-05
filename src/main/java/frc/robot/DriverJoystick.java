@@ -13,7 +13,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DetermineWaypointCommand;
+import frc.robot.commands.PrepClimbCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
@@ -23,6 +25,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
@@ -103,6 +106,11 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
+
+        super.rightBumper.whileTrue(new PrepClimbCommand());
+        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
+        super.rightTrigger.whileTrue(new ClimbUpCommand());
+
         super.aButton.onTrue(new DeferredCommand(() -> new SetAcquisitionPositionCommand(operatorState.getLastInput()),
                 Set.of(this.shoulder, this.extension, this.wrist)));
         super.aButton.whileTrue(determineWaypointCommand.andThen(
