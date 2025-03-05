@@ -38,13 +38,12 @@ public class OperatorState {
         }
     }
 
+    public boolean isCoral4() {
+        return getLastInput() == AcquisitionPositionSetpoint.L4Coral;
+    }
+
     public boolean isCoral2() {
-        switch (getLastInput()) {
-            case L2Coral:
-                return true;
-            default:
-                return false;
-        }
+        return getLastInput() == AcquisitionPositionSetpoint.L2Coral;
     }
 
     public boolean isAlgae() {

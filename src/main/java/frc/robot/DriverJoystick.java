@@ -12,7 +12,10 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AcquireAlgaeCommand;
+import frc.robot.commands.AcquireForL4Command;
 import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.PrepClimbCommand;
@@ -21,6 +24,7 @@ import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
+import frc.robot.subsystems.Acquisition;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
@@ -33,6 +37,7 @@ public class DriverJoystick extends XboxController1038 {
     private final Shoulder shoulder = Shoulder.getInstance();
     private final Extension extension = Extension.getInstance();
     private final Wrist wrist = Wrist.getInstance();
+    private final Acquisition acquisition = Acquisition.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
 
     // Commands
@@ -111,8 +116,12 @@ public class DriverJoystick extends XboxController1038 {
         super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
 
-        super.aButton.onTrue(new DeferredCommand(() -> new SetAcquisitionPositionCommand(operatorState.getLastInput()),
-                Set.of(this.shoulder, this.extension, this.wrist)));
+        super.aButton.onTrue(new ParallelCommandGroup(
+                new DeferredCommand(() -> new SetAcquisitionPositionCommand(operatorState.getLastInput()),
+                        Set.of(this.shoulder, this.extension, this.wrist))
+                        .andThen(new DeferredCommand(() -> new AcquireForL4Command(), Set.of(acquisition)))
+                        .onlyIf(() -> operatorState.isCoral4()),
+                new AcquireAlgaeCommand().onlyIf(() -> operatorState.isAlgae())));
         super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
