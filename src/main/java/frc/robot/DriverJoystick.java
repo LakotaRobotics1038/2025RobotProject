@@ -102,7 +102,7 @@ public class DriverJoystick extends XboxController1038 {
         super.xButton.whileTrue(this.driveTrain.setX());
 
         super.aButton.whileTrue(
-                determineWaypointCommand.andThen(
+                new ParallelCommandGroup(determineWaypointCommand.andThen(
                         new InstantCommand(() -> {
                             Pose2d currentPose = this.driveTrain.getState().Pose;
                             this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
@@ -124,7 +124,8 @@ public class DriverJoystick extends XboxController1038 {
                         })
                                 .andThen(
                                         new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                                Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+                                                Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))),
+                        new SetAcquisitionPositionCommand(OperatorState.getLastInput())));
 
         super.yButton.whileTrue(new DisposeCoral2Command());
         super.leftBumper.whileTrue(new AcquireCoralCommand());
