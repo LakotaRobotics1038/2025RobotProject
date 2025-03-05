@@ -6,6 +6,7 @@ import java.util.List;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
@@ -61,6 +63,19 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(0, 1)
                 .withSize(2, 1);
 
+        driversTab.addNumber("Pose X", () -> {
+            return driveTrain.getPose().getX();
+
+        }).withPosition(3, 0)
+                .withSize(2, 1);
+
+        driversTab.addNumber("Pose Y", () -> {
+            return driveTrain.getPose().getY();
+
+        })
+                .withPosition(4, 0)
+                .withSize(2, 1);
+
         driversTab.addNumber("Gyro", () -> {
             double angle = driveTrain.getHeading();
             angle %= 360;
@@ -77,6 +92,12 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(2, 1)
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
+
+        controlsTab.addNumber("Motor 1 Driving Current", driveTrain::getDrivingCurrent).withPosition(3, 0)
+                .withSize(2, 2);
+
+        controlsTab.addNumber("Motor 1 Turning Current", driveTrain::getTurningCurrent).withPosition(4, 0)
+                .withSize(2, 2);
 
         // PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
         // field.getObject("target pose").setPose(pose);
@@ -107,6 +128,10 @@ public class Dashboard extends SubsystemBase {
             driveTrain.zeroHeading();
             resetGyro.setBoolean(false);
         }
+        double headingAngle = driveTrain.getHeading();
+        headingAngle %= 360;
+        SmartDashboard.putNumber("Pose Y", driveTrain.getPose().getY());
+        SmartDashboard.putNumber("Angle", headingAngle < 0 ? headingAngle + 360 : headingAngle);
 
         field.setRobotPose(driveTrain.getPose());
     }
@@ -155,4 +180,5 @@ public class Dashboard extends SubsystemBase {
     public SendableChooser<Double> getDelayChooser() {
         return delayChooser;
     }
+
 }

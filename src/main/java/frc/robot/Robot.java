@@ -55,15 +55,17 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         // Correct pose estimate with vision measurements
-        Optional<EstimatedRobotPose> visionEst = vision.getEstimatedGlobalPose();
-        visionEst.ifPresent(
-                est -> {
-                    // Change our trust in the measurement based on the tags we can see
-                    Matrix<N3, N1> estStdDevs = vision.getEstimationStdDevs();
-
-                    driveTrain.addVisionMeasurement(
-                            est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-                });
+        /*
+         * Optional<EstimatedRobotPose> visionEst = vision.getEstimatedGlobalPose();
+         * visionEst.ifPresent(
+         * est -> {
+         * // Change our trust in the measurement based on the tags we can see
+         * Matrix<N3, N1> estStdDevs = vision.getEstimationStdDevs();
+         * 
+         * driveTrain.addVisionMeasurement(
+         * est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+         * });
+         */
 
     }
 

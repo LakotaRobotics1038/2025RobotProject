@@ -111,7 +111,8 @@ public class MAXSwerveModule {
     public REVLibError setDrivingIdleMode(IdleMode mode) {
         SparkMaxConfig config = new SparkMaxConfig();
         config.idleMode(SparkBaseConfig.IdleMode.kBrake);
-        return drivingSpark.configure(config, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
+        return drivingSpark.configure(config, SparkBase.ResetMode.kNoResetSafeParameters,
+                SparkBase.PersistMode.kPersistParameters);
     }
 
     /**
@@ -163,5 +164,13 @@ public class MAXSwerveModule {
     /** Zeroes all the SwerveModule encoders. */
     public void resetEncoders() {
         drivingEncoder.setPosition(0);
+    }
+
+    public double getDrivingCurrent() {
+        return drivingSpark.getOutputCurrent();
+    }
+
+    public double getTurningCurrent() {
+        return turningSpark.getOutputCurrent();
     }
 }

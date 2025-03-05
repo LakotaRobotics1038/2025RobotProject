@@ -224,6 +224,14 @@ public class DriveTrain extends SubsystemBase {
         };
     }
 
+    public double getDrivingCurrent() {
+        return frontLeft.getDrivingCurrent();
+    }
+
+    public double getTurningCurrent() {
+        return frontLeft.getTurningCurrent();
+    }
+
     public void setDrivingIdleMode(IdleMode mode) {
         frontLeft.setDrivingIdleMode(mode);
         rearLeft.setDrivingIdleMode(mode);
