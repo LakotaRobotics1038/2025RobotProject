@@ -18,6 +18,7 @@ import frc.robot.OperatorState;
 
 public class DetermineWaypointCommand extends Command {
     private final Vision vision = Vision.getInstance();
+    private final OperatorState operatorState = OperatorState.getInstance();
     private List<PhotonPipelineResult> visionResults;
     private int bestId = -1;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
@@ -32,8 +33,8 @@ public class DetermineWaypointCommand extends Command {
         Set<Integer> reefIDs = Set.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         Set<Integer> processorIDs = Set.of(3, 16);
         Set<Integer> feederStationIDs = Set.of(1, 2, 12, 13);
-        AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        boolean scoringFlipped = OperatorState.isScoringFlipped();
+        AcquisitionPositionSetpoint setpointLevel = operatorState.getLastInput();
+        boolean scoringFlipped = operatorState.isScoringFlipped();
 
         switch (setpointLevel) {
             case L2Coral:
