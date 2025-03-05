@@ -26,11 +26,17 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Extension;
+import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Extension extension = Extension.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
     private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
 
     private PathPlannerPath path;
@@ -125,15 +131,8 @@ public class DriverJoystick extends XboxController1038 {
                                 .andThen(
                                         new DeferredCommand(() -> AutoBuilder.followPath(this.path),
                                                 Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))),
-                        new SetAcquisitionPositionCommand(OperatorState.getLastInput())));
-
-        super.yButton.whileTrue(new DisposeCoral2Command());
-        super.leftBumper.whileTrue(new AcquireCoralCommand());
-        super.leftTrigger.whileTrue(new DisposeCoral134Command());
-        // super.rightBumper.whileTrue(new AcquireForL4Command());
-        super.rightBumper.onTrue(new PrepClimbCommand());
-        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
-        super.rightTrigger.whileTrue(new ClimbUpCommand());
+                        new DeferredCommand(() -> new SetAcquisitionPositionCommand(OperatorState.getLastInput()),
+                                Set.of(this.shoulder, this.extension, this.wrist))));
     }
 
     /**

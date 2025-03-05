@@ -29,31 +29,19 @@ public class DetermineWaypointCommand extends Command {
 
     @Override
     public void initialize() {
-        // List<PhotonPipelineResult> visionResults = vision.getResults();
-        // double area = 0.0;
-        // for (PhotonPipelineResult result : visionResults) {
-        // if (result.hasTargets() && result.getBestTarget().getArea() > area) {
-        // area = result.getBestTarget().getArea();
-        // this.bestId = result.getBestTarget().getFiducialId();
-        // }
-        // }
-
         Set<Integer> reefIDs = Set.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         Set<Integer> processorIDs = Set.of(3, 16);
         Set<Integer> feederStationIDs = Set.of(1, 2, 12, 13);
         AcquisitionPositionSetpoint setpointLevel = OperatorState.getLastInput();
-        // AcquisitionPositionSetpoint setpointLevel =
-        // AcquisitionPositionSetpoint.L2Coral;
         boolean scoringFlipped = OperatorState.isScoringFlipped();
-        // boolean scoringFlipped = false;
 
         switch (setpointLevel) {
             case L2Coral:
             case FeederStation:
-            case L34Algae:
-            case L23Algae:
                 this.visionResults = vision.getResultsBackCam();
                 break;
+            case L34Algae:
+            case L23Algae:
             case L3Coral:
             case L4Coral:
             case Processor:
