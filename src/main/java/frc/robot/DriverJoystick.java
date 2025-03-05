@@ -12,14 +12,8 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AcquireCoralCommand;
-import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DetermineWaypointCommand;
-import frc.robot.commands.DisposeCoral134Command;
-import frc.robot.commands.DisposeCoral2Command;
-import frc.robot.commands.PrepClimbCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
@@ -29,7 +23,6 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
-import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
@@ -37,8 +30,12 @@ public class DriverJoystick extends XboxController1038 {
     private final Shoulder shoulder = Shoulder.getInstance();
     private final Extension extension = Extension.getInstance();
     private final Wrist wrist = Wrist.getInstance();
+    private final OperatorState operatorState = OperatorState.getInstance();
+
+    // Commands
     private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
 
+    // Instance Variables
     private PathPlannerPath path;
     private Pose2d targetPose;
 
@@ -106,33 +103,31 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
+        super.aButton.onTrue(new DeferredCommand(() -> new SetAcquisitionPositionCommand(operatorState.getLastInput()),
+                Set.of(this.shoulder, this.extension, this.wrist)));
+        super.aButton.whileTrue(determineWaypointCommand.andThen(
+                new InstantCommand(() -> {
+                    Pose2d currentPose = this.driveTrain.getState().Pose;
+                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
 
-        super.aButton.whileTrue(
-                new ParallelCommandGroup(determineWaypointCommand.andThen(
-                        new InstantCommand(() -> {
-                            Pose2d currentPose = this.driveTrain.getState().Pose;
-                            this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
-
-                            if (this.targetPose != null) {
-                                this.path = new PathPlannerPath(
-                                        PathPlannerPath.waypointsFromPoses(currentPose,
-                                                targetPose),
-                                        new PathConstraints(
-                                                AutoConstants.maxSpeed,
-                                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                                        new IdealStartingState(
-                                                driveTrain.getState().Speeds.vxMetersPerSecond,
-                                                driveTrain.getState().Pose.getRotation()),
-                                        new GoalEndState(0, targetPose.getRotation()));
-                            }
-                        })
-                                .andThen(
-                                        new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                                Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))),
-                        new DeferredCommand(() -> new SetAcquisitionPositionCommand(OperatorState.getLastInput()),
-                                Set.of(this.shoulder, this.extension, this.wrist))));
+                    if (this.targetPose != null) {
+                        this.path = new PathPlannerPath(
+                                PathPlannerPath.waypointsFromPoses(currentPose,
+                                        targetPose),
+                                new PathConstraints(
+                                        AutoConstants.maxSpeed,
+                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                                new IdealStartingState(
+                                        driveTrain.getState().Speeds.vxMetersPerSecond,
+                                        driveTrain.getState().Pose.getRotation()),
+                                new GoalEndState(0, targetPose.getRotation()));
+                    }
+                })
+                        .andThen(
+                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
     }
 
     /**

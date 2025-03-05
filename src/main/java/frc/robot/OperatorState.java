@@ -3,11 +3,13 @@ package frc.robot;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorState {
-    private static AcquisitionPositionSetpoint lastInput;
-    private static boolean scoringFlipped;
+    private AcquisitionPositionSetpoint lastInput;
+    private boolean scoringFlipped;
+
+    private boolean isManual = true;
 
     private OperatorState() {
-        lastInput = AcquisitionPositionSetpoint.Storage;
+        this.lastInput = AcquisitionPositionSetpoint.Storage;
     }
 
     private static OperatorState instance;
@@ -20,7 +22,7 @@ public class OperatorState {
         return instance;
     }
 
-    public static AcquisitionPositionSetpoint getLastInput() {
+    public AcquisitionPositionSetpoint getLastInput() {
         return lastInput;
     }
 
@@ -61,14 +63,18 @@ public class OperatorState {
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
-        OperatorState.lastInput = lastInput;
+        this.lastInput = lastInput;
     }
 
     public void setScoringFlipped(boolean scoringFlipped) {
-        OperatorState.scoringFlipped = scoringFlipped;
+        this.scoringFlipped = scoringFlipped;
     }
 
-    public static boolean isScoringFlipped() {
+    public boolean isScoringFlipped() {
         return scoringFlipped;
+    }
+
+    public boolean getIsManual() {
+        return this.isManual;
     }
 }
