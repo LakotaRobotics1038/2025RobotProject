@@ -30,7 +30,8 @@ public class WristConstants {
     public static final double kEncoderConversion = 360.0;
     public static final double kMaxPower = 0.5;
     public static final double kMinPower = -0.5;
-    public static final double kMaxDistance = 0;
+    public static final double kMaxDistance = 180;
+    public static final double kMinDistance = -180;
     public static final double kWristControllerP = 0.018;
     public static final double kWristControllerI = 0.002;
     public static final double kWristControllerD = 0;

@@ -77,7 +77,7 @@ public class Wrist extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        double clampedPoint = MathUtil.clamp(setpoint, 0, WristConstants.kMaxDistance);
+        double clampedPoint = MathUtil.clamp(setpoint, WristConstants.kMinDistance, WristConstants.kMaxDistance);
         this.wristController.setSetpoint(clampedPoint);
     }
 
