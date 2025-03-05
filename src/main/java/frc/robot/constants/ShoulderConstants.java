@@ -5,13 +5,13 @@ public class ShoulderConstants {
         L1Coral(27.0),
         L2Coral(22.0),
         L3Coral(65.0),
-        L4Coral(58.0),
+        L4Coral(63.0),
         L23Algae(61.0),
         L34Algae(61.0),
         Processor(31.0),
         GroundAlgae(0.0),
         Storage(27.0),
-        FeederStation(21.0),
+        FeederStation(26.0),
         Barge(58.0),
         Climb(0.0);
 
