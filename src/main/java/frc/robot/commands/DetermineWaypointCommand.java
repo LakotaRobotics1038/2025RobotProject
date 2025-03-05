@@ -273,51 +273,51 @@ public class DetermineWaypointCommand extends Command {
         return switch (this.bestId) {
             case 6 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel22);
+                yield Optional.of(DriveWaypoints.Algae22);
             }
             case 7 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel21);
+                yield Optional.of(DriveWaypoints.Algae21);
             }
             case 8 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel20);
+                yield Optional.of(DriveWaypoints.Algae20);
             }
             case 9 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel19);
+                yield Optional.of(DriveWaypoints.Algae19);
             }
             case 10 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel18);
+                yield Optional.of(DriveWaypoints.Algae18);
             }
             case 11 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.AlgaeLevel17);
+                yield Optional.of(DriveWaypoints.Algae17);
             }
             case 17 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel17);
+                yield Optional.of(DriveWaypoints.Algae17);
             }
             case 18 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel18);
+                yield Optional.of(DriveWaypoints.Algae18);
             }
             case 19 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel19);
+                yield Optional.of(DriveWaypoints.Algae19);
             }
             case 20 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel20);
+                yield Optional.of(DriveWaypoints.Algae20);
             }
             case 21 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel21);
+                yield Optional.of(DriveWaypoints.Algae21);
             }
             case 22 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.AlgaeLevel22);
+                yield Optional.of(DriveWaypoints.Algae22);
             }
             default -> Optional.empty();
         };

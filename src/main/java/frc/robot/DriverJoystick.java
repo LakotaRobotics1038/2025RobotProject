@@ -130,8 +130,8 @@ public class DriverJoystick extends XboxController1038 {
         super.leftBumper.whileTrue(new AcquireCoralCommand());
         super.leftTrigger.whileTrue(new DisposeCoral134Command());
         // super.rightBumper.whileTrue(new AcquireForL4Command());
-        super.rightBumper.toggleOnTrue(new ParallelCommandGroup(new PrepClimbCommand(),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb)));
+        super.rightBumper.onTrue(new PrepClimbCommand());
+        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
     }
 
