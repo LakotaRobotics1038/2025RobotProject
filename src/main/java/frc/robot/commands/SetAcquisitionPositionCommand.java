@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ExtensionConstants;
-import frc.robot.constants.ShoulderConstants;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
@@ -49,6 +48,8 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public void end(boolean interrupted) {
-
+        wrist.disable();
+        extension.disable();
+        shoulder.disable();
     }
 }
