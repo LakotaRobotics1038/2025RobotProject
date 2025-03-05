@@ -7,6 +7,7 @@ public class ExtensionConstants {
     public static final double kMinExtensionPower = -1.0;
     public static final double kMaxExtensionPower = 1.0;
     public static final double kExtensionMaximum = 26.14;
+    public static final double kExtensionMaxMove = 0.0;
 
     public static final double kTolerance = 0.25;
     public static final double kEncoderConversion = 0.213;
@@ -26,7 +27,8 @@ public class ExtensionConstants {
         Storage(0.0),
         FeederStation(4.0),
         Barge(26.0),
-        Climb(0.0);
+        Climb(0.0),
+        Zero(0.0);
 
         public final double position;
 
