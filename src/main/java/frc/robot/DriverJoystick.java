@@ -75,15 +75,15 @@ public class DriverJoystick extends XboxController1038 {
             double y = super.getLeftY();
             double z = super.getRightX();
 
-            double forward = limitRate(y, prevY, forwardFilter);
-            double sideways = limitRate(x, prevX, sidewaysFilter);
-            double rotate = limitRate(z, prevZ, rotateFilter);
+            double forward = limitRate(y, this.prevY, forwardFilter);
+            double sideways = limitRate(x, this.prevX, sidewaysFilter);
+            double rotate = limitRate(z, this.prevZ, rotateFilter);
 
-            prevX = x;
-            prevY = y;
-            prevZ = z;
+            this.prevX = x;
+            this.prevY = y;
+            this.prevZ = z;
 
-            return driveTrain.drive(forward, -sideways, -rotate, true);
+            return this.driveTrain.drive(forward, -sideways, -rotate, true);
         }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);
@@ -114,8 +114,8 @@ public class DriverJoystick extends XboxController1038 {
         super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
 
-        super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
-        super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());
+        super.aButton.and(operatorState::isCoral4).onTrue(new AcquireForL4Command());
+        super.aButton.and(operatorState::isAlgae).onTrue(new AcquireAlgaeCommand());
         // TODO: "we need a comment to run this command?"
         super.aButton.onTrue(
                 new DeferredCommand(

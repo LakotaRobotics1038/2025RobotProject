@@ -45,27 +45,23 @@ public final class AutoConstants {
         Algae22(new Pose2d(new Translation2d(4.95, 2.71), Rotation2d.fromDegrees(120.0))),
         Processor3(new Pose2d(new Translation2d(12.07, 8.27), Rotation2d.fromDegrees(90.0))),
         Processor16(new Pose2d(new Translation2d(6.18, 0.20), Rotation2d.fromDegrees(-90.0))),
-        FeederStation12Point1(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point2(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point3(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point4(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point5(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point6(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point7(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point8(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point9(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation13Point1(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point2(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point3(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point4(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point5(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point6(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point7(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point8(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point9(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point1(new Pose2d(new Translation2d(1.43, 0.7), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point2(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point3(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point4(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point5(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point6(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point7(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation13Point1(new Pose2d(new Translation2d(0.67, 6.9), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point2(new Pose2d(new Translation2d(0.78, 7), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point3(new Pose2d(new Translation2d(0.98, 7.1), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point4(new Pose2d(new Translation2d(1.3, 7.35), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point5(new Pose2d(new Translation2d(1.32, 7.4), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point6(new Pose2d(new Translation2d(1.5, 7.45), Rotation2d.fromDegrees(-125.0))),
+        FeederStation13Point7(new Pose2d(new Translation2d(1.8, 7.71), Rotation2d.fromDegrees(-125.0))),
         Storage(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0.0)));
 
-        private Pose2d endpoint;
+        private final Pose2d endpoint;
 
         private DriveWaypoints(Pose2d endpoint) {
             this.endpoint = endpoint;

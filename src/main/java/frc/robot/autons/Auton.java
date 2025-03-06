@@ -28,9 +28,7 @@ public abstract class Auton extends SequentialCommandGroup {
     protected Alliance alliance;
 
     public Auton(Optional<Alliance> alliance) {
-        if (alliance.isPresent()) {
-            this.alliance = alliance.get();
-        }
+        alliance.ifPresent(value -> this.alliance = value);
         this.addCommands(new WaitCommand(AutonSelector.getInstance().chooseDelay()));
     }
 

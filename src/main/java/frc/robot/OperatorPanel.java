@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireCoralCommand;
@@ -25,7 +24,7 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
-    private OperatorState operatorState;
+    private final OperatorState operatorState;
 
     private final Extension extension = Extension.getInstance();
     private final Wrist wrist = Wrist.getInstance();

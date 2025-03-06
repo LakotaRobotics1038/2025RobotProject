@@ -21,11 +21,11 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public void initialize() {
-        wrist.enable();
-        shoulder.enable();
-        extension.enable();
+        this.wrist.enable();
+        this.shoulder.enable();
+        this.extension.enable();
 
-        if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
+        if (this.extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
             retractExtension = true;
             extension.setSetpoint(ExtensionSetpoints.Storage);
         }
