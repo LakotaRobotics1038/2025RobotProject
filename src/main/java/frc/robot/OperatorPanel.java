@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireCoralCommand;
@@ -103,10 +104,12 @@ public class OperatorPanel extends GenericHID {
         // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral));
         // this.coralL4Button
         // .and(operatorState::getIsManual)
-        // .onTrue(
-        // new ParallelCommandGroup(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral),
-        // new AcquireForL4Command()));
+        // .onTrue(new
+        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral));
+        // this.coralL4Button
+        // .and(operatorState::getIsManual)
+        // .onTrue(new PrintCommand("Running L4Command")
+        // .andThen(new AcquireForL4Command()));
         // this.algaeL23Button
         // .and(operatorState::getIsManual)
         // .onTrue(new
