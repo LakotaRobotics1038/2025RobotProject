@@ -12,28 +12,38 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AcquireCoralCommand;
+import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireForL4Command;
 import frc.robot.commands.ClimbUpCommand;
-import frc.robot.commands.DisposeCoral134Command;
-import frc.robot.commands.DisposeCoral2Command;
+import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.PrepClimbCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
-import frc.robot.constants.DriveWaypoints;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Extension;
+import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Extension extension = Extension.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final OperatorState operatorState = OperatorState.getInstance();
 
+    // Commands
+    private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
+
+    // Instance Variables
     private PathPlannerPath path;
+    private Pose2d targetPose;
 
     // Previous Status
     private double prevX = 0;
@@ -41,8 +51,6 @@ public class DriverJoystick extends XboxController1038 {
     private double prevZ = 0;
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
-
-    private Pose2d currentPose;
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -84,84 +92,57 @@ public class DriverJoystick extends XboxController1038 {
         super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
-                .whileTrue(this.driveTrain.applyRequest(() -> {
-                    return driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false);
-                }));
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
-                .whileTrue(this.driveTrain.applyRequest(() -> {
-                    return driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false);
-                }));
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
-                .whileTrue(this.driveTrain.applyRequest(() -> {
-                    return driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false);
-                }));
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
-                .whileTrue(this.driveTrain.applyRequest(() -> {
-                    return driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false);
-                }));
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        // super.aButton.whileTrue(
-        // new InstantCommand(() -> {
-        // this.currentPose = this.driveTrain.getState().Pose;
-        // }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-        // PathPlannerPath.waypointsFromPoses(this.currentPose,
-        // DriveWaypoints.Algae23.getEndpoint()),
-        // new PathConstraints(
-        // DriveConstants.MaxSpeed,
-        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-        // new IdealStartingState(
-        // driveTrain.getState().Speeds.vxMetersPerSecond,
-        // driveTrain.getState().Pose.getRotation()),
-        // new GoalEndState(0, Rotation2d.kZero))));
 
-        super.aButton.whileTrue(
+        super.rightBumper.whileTrue(new PrepClimbCommand());
+        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(operatorState::getLastInput));
+        super.rightTrigger.whileTrue(new ClimbUpCommand());
+
+        super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
+        super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());
+        // TODO: "we need a comment to run this command?"
+        super.aButton.onTrue(
+                new PrintCommand("Running SetAcquisitionPositionCommand")
+                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput)));
+        super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
-                    this.path = new PathPlannerPath(
-                            PathPlannerPath.waypointsFromPoses(currentPose,
-                                    DriveWaypoints.Level2RightCoral19.getEndpoint()),
-                            new PathConstraints(
-                                    AutoConstants.maxSpeed,
-                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                    AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                    AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                            new IdealStartingState(
-                                    driveTrain.getState().Speeds.vxMetersPerSecond,
-                                    driveTrain.getState().Pose.getRotation()),
-                            new GoalEndState(0, DriveWaypoints.Level2RightCoral19.getEndpoint().getRotation()));
+                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
+
+                    if (this.targetPose != null) {
+                        this.path = new PathPlannerPath(
+                                PathPlannerPath.waypointsFromPoses(currentPose,
+                                        targetPose),
+                                new PathConstraints(
+                                        AutoConstants.maxSpeed,
+                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                                new IdealStartingState(
+                                        driveTrain.getState().Speeds.vxMetersPerSecond,
+                                        driveTrain.getState().Pose.getRotation()),
+                                new GoalEndState(0, targetPose.getRotation()));
+                    }
                 })
                         .andThen(
                                 new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                        Set.of(this.driveTrain))));
-
-        // super.aButton.whileTrue(
-        // new DeferredCommand(() -> AutoBuilder.pathfindToPose(
-        // DriveWaypoints.LeftCoral2.getEndpoint(),
-        // new PathConstraints(
-        // DriveConstants.MaxSpeed,
-        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-        // 0),
-        // Set.of(this.driveTrain)));
-
-        // super.aButton.toggleOnTrue(new AcquireAlgaeCommand());
-        // super.bButton.whileTrue(new DisposeAlgaeCommand());
-
-        super.yButton.whileTrue(new DisposeCoral2Command());
-        super.leftBumper.whileTrue(new AcquireCoralCommand());
-        super.leftTrigger.whileTrue(new DisposeCoral134Command());
-        // super.rightBumper.whileTrue(new AcquireForL4Command());
-        super.rightBumper.toggleOnTrue(new ParallelCommandGroup(new PrepClimbCommand(),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb)));
-        super.rightTrigger.whileTrue(new ClimbUpCommand());
+                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
     }
 
     /**

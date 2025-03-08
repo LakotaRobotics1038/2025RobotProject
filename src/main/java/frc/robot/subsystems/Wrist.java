@@ -26,6 +26,8 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
     private boolean enabled;
+    private double lastPosition;
+
     private static Wrist instance;
 
     private Wrist() {
@@ -69,7 +71,18 @@ public class Wrist extends SubsystemBase {
 
     public double getPosition() {
         double position = this.wristEncoder.getPosition();
-        return position < 180 ? position : position - 360;
+        double normalizedPosition = position < 180 ? position : position - 360;
+        double delta = normalizedPosition - lastPosition;
+
+        if (delta > 180) {
+            normalizedPosition -= 360;
+        } else if (delta < -180) {
+            normalizedPosition += 360;
+        }
+
+        this.lastPosition = normalizedPosition;
+
+        return normalizedPosition;
     }
 
     public boolean onTarget() {
@@ -77,7 +90,7 @@ public class Wrist extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        double clampedPoint = MathUtil.clamp(setpoint, 0, WristConstants.kMaxDistance);
+        double clampedPoint = MathUtil.clamp(setpoint, WristConstants.kMinDistance, WristConstants.kMaxDistance);
         this.wristController.setSetpoint(clampedPoint);
     }
 

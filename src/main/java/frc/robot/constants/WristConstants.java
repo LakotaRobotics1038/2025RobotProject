@@ -3,15 +3,15 @@ package frc.robot.constants;
 public class WristConstants {
     public enum WristSetpoints {
         L1Coral(0),
-        L2Coral(90.0),
+        L2Coral(80.0),
         L3Coral(130.0),
-        L4Coral(170.0),
+        L4Coral(150.0),
         L23Algae(20),
         L34Algae(15),
         Processor(70.0),
         GroundAlgae(0),
-        Storage(0),
-        FeederStation(-24.0),
+        Storage(35),
+        FeederStation(-21.0),
         Climb(20.0),
         Barge(-70.0);
 
@@ -30,7 +30,8 @@ public class WristConstants {
     public static final double kEncoderConversion = 360.0;
     public static final double kMaxPower = 0.5;
     public static final double kMinPower = -0.5;
-    public static final double kMaxDistance = 0;
+    public static final double kMaxDistance = 180;
+    public static final double kMinDistance = -180;
     public static final double kWristControllerP = 0.018;
     public static final double kWristControllerI = 0.002;
     public static final double kWristControllerD = 0;
