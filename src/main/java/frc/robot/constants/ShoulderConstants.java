@@ -13,7 +13,7 @@ public class ShoulderConstants {
         Storage(34.0),
         FeederStation(28.0),
         Barge(58.0),
-        Climb(0.0);
+        Climb(60.0);
 
         public final double setpoint;
 
