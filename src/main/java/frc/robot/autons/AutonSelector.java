@@ -76,18 +76,18 @@ public class AutonSelector {
             switch (this.autoChooser.getSelected()) {
                 case MiddleThreePieceTopAuto:
                     return new MiddleThreePieceTopAuto(alliance);
-                case MiddleThreePieceBottomAuto:
-                    return new MiddleThreePieceBottomAuto(alliance);
-                case TopThreePieceAuto:
-                    return new TopThreePieceAuto(alliance);
-                case BottomThreePieceAuto:
-                    return new BottomThreePieceAuto(alliance);
-                case GetOutOfTheWayTopAuto:
-                    return new GetOutOfTheWayTopAuto(alliance);
-                case GetOutOfTheWayMiddleAuto:
-                    return new GetOutOfTheWayMiddleAuto(alliance);
-                case GetOutOfTheWayBottomAuto:
-                    return new GetOutOfTheWayBottomAuto(alliance);
+                // case MiddleThreePieceBottomAuto:
+                // return new MiddleThreePieceBottomAuto(alliance);
+                // case TopThreePieceAuto:
+                // return new TopThreePieceAuto(alliance);
+                // case BottomThreePieceAuto:
+                // return new BottomThreePieceAuto(alliance);
+                // case GetOutOfTheWayTopAuto:
+                // return new GetOutOfTheWayTopAuto(alliance);
+                // case GetOutOfTheWayMiddleAuto:
+                // return new GetOutOfTheWayMiddleAuto(alliance);
+                // case GetOutOfTheWayBottomAuto:
+                // return new GetOutOfTheWayBottomAuto(alliance);
                 case TopTaxi:
                     return new TopTaxi(alliance);
                 case BottomTaxi:

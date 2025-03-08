@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireCoralCommand;
-import frc.robot.commands.DisposeCoralCommand;
+import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.utils.AcquisitionPositionSetpoint;;
 
@@ -21,23 +21,33 @@ public class MiddleThreePieceTopAuto extends Auton {
 
         super.addCommands(
                 followPathCommand(Paths.getMiddlePosToRightTag21Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCoralCommand(),
-                followPathCommand(Paths.getRightTag21ToTopFeederStationPath())
-                        .alongWith(new SequentialCommandGroup(
-                                new WaitCommand(1),
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
-                new AcquireCoralCommand(),
-                followPathCommand(Paths.getTopFeederStationToLeftTag20Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCoralCommand(),
-                followPathCommand(Paths.getLeftTag20ToTopFeederStationPath())
-                        .alongWith(new SequentialCommandGroup(
-                                new WaitCommand(1),
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
-                new AcquireCoralCommand(),
-                followPathCommand(Paths.getTopFeederStationToRightTag20Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-                new DisposeCoralCommand());
+        // .alongWith(new
+        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
+        // new DisposeCoral134Command()
+        // ,
+        // followPathCommand(Paths.getRightTag21ToTopFeederStationPath())
+        // .alongWith(new SequentialCommandGroup(
+        // new WaitCommand(1),
+        // new
+        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
+        // new AcquireCoralCommand()
+        // ,
+        // followPathCommand(Paths.getTopFeederStationToLeftTag20Path())
+        // .alongWith(new
+        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
+        // new DisposeCoral134Command()
+        // ,
+        // followPathCommand(Paths.getLeftTag20ToTopFeederStationPath())
+        // // .alongWith(new SequentialCommandGroup(
+        // // new WaitCommand(1),
+        // // new
+        // // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation)))
+        // ,
+        // new AcquireCoralCommand(),
+        // followPathCommand(Paths.getTopFeederStationToRightTag20Path())
+        // .alongWith(new
+        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
+        // new DisposeCoral134Command()
+        );
     }
 }
