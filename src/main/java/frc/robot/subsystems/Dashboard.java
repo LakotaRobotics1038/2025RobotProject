@@ -31,8 +31,8 @@ public class Dashboard extends SubsystemBase {
 
     // Drivers Tab Inputs
     private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
-            .withPosition(1, 3)
-            .withSize(1, 1)
+            .withPosition(0, 3)
+            .withSize(2, 1)
             .withWidget(BuiltInWidgets.kToggleButton)
             .getEntry();
 
@@ -77,7 +77,7 @@ public class Dashboard extends SubsystemBase {
 
         driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
                 .withPosition(0, 4)
-                .withSize(1, 1)
+                .withSize(2, 1)
                 .withWidget(BuiltInWidgets.kBooleanBox);
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
