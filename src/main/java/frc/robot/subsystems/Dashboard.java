@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Climb climb = Climb.getInstance();
+    private OperatorState operatorState = OperatorState.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -25,6 +28,13 @@ public class Dashboard extends SubsystemBase {
     // Tabs
     private final ShuffleboardTab driversTab = Shuffleboard.getTab("Drivers");
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
+
+    // Drivers Tab Inputs
+    private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
+            .withPosition(1, 3)
+            .withSize(1, 1)
+            .withWidget(BuiltInWidgets.kToggleButton)
+            .getEntry();
 
     // Variables
     private final Field2d field = new Field2d();
@@ -65,6 +75,11 @@ public class Dashboard extends SubsystemBase {
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
+        driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
+                .withPosition(0, 4)
+                .withSize(1, 1)
+                .withWidget(BuiltInWidgets.kBooleanBox);
+
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
         });
@@ -100,6 +115,12 @@ public class Dashboard extends SubsystemBase {
     public void periodic() {
         // Controls Tab
         field.setRobotPose(driveTrain.getState().Pose);
+
+        // Drivers tab
+        if (manualOperatorMode.getBoolean(false)) {
+            operatorState.toggleIsManual();
+            manualOperatorMode.setBoolean(false);
+        }
     }
 
     /**
