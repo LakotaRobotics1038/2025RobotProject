@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ExtensionConstants;
@@ -13,11 +15,20 @@ public class SetAcquisitionPositionCommand extends Command {
     private Wrist wrist = Wrist.getInstance();
     private Extension extension = Extension.getInstance();
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
+    private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private boolean retractExtension;
+    private boolean isSupplier;
+
+    public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
+        addRequirements(shoulder, wrist, extension);
+        this.acquisitionPositionSetpointSupplier = acquisitionPositionSetpointSupplier;
+        this.isSupplier = true;
+    }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
         addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
+        this.isSupplier = false;
     }
 
     public void initialize() {
@@ -37,9 +48,15 @@ public class SetAcquisitionPositionCommand extends Command {
                 this.retractExtension = false;
             }
         } else {
-            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
-            shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
-            wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+            if (isSupplier) {
+                extension.setSetpoint(acquisitionPositionSetpointSupplier.get().getExtensionSetpoint());
+                shoulder.setSetpoint(acquisitionPositionSetpointSupplier.get().getShoulderSetpoint());
+                wrist.setSetpoint(acquisitionPositionSetpointSupplier.get().getWristSetpoint());
+            } else {
+                extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+                shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+                wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+            }
         }
     }
 

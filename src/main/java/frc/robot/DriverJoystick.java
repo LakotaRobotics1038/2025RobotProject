@@ -111,17 +111,15 @@ public class DriverJoystick extends XboxController1038 {
         super.xButton.whileTrue(this.driveTrain.setX());
 
         super.rightBumper.whileTrue(new PrepClimbCommand());
-        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb));
+        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(operatorState::getLastInput));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
 
         super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
         super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());
         // TODO: "we need a comment to run this command?"
         super.aButton.onTrue(
-                new DeferredCommand(
-                        () -> new PrintCommand("Running SetAcquisitionPositionCommand")
-                                .andThen(new SetAcquisitionPositionCommand(operatorState.getLastInput())),
-                        Set.of(this.shoulder, this.extension, this.wrist)));
+                new PrintCommand("Running SetAcquisitionPositionCommand")
+                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput)));
         super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
