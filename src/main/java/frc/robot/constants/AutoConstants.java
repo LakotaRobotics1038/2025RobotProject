@@ -70,11 +70,6 @@ public final class AutoConstants {
         public Pose2d getEndpoint() {
             return endpoint;
         }
-
-        public Rotation2d getRotation2d() {
-            return endpoint.getRotation();
-        }
-
     }
 
     public static final double kMaxAccelerationMetersPerSecondSquared = 7;

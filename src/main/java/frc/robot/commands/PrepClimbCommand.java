@@ -10,7 +10,7 @@ import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
 
 public class PrepClimbCommand extends Command {
-    private Climb climb = Climb.getInstance();
+    private final Climb climb = Climb.getInstance();
 
     public PrepClimbCommand() {
         addRequirements(climb);

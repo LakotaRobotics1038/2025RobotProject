@@ -16,9 +16,9 @@ import frc.robot.constants.NeoMotorConstants;
 
 public class Climb extends SubsystemBase {
 
-    private SparkMax climbMotor = new SparkMax(ClimbConstants.kClimbMotorPort, MotorType.kBrushless);
-    private RelativeEncoder climbEncoder = climbMotor.getEncoder();
-    private SparkLimitSwitch climbLimitSwitch = climbMotor.getForwardLimitSwitch();
+    private final SparkMax climbMotor = new SparkMax(ClimbConstants.kClimbMotorPort, MotorType.kBrushless);
+    private final RelativeEncoder climbEncoder = climbMotor.getEncoder();
+    private final SparkLimitSwitch climbLimitSwitch = climbMotor.getForwardLimitSwitch();
 
     private static Climb instance;
 

@@ -15,7 +15,7 @@ public class WristConstants {
         Climb(20.0),
         Barge(-70.0);
 
-        private double setpoint;
+        private final double setpoint;
 
         private WristSetpoints(double setpoint) {
             this.setpoint = setpoint;

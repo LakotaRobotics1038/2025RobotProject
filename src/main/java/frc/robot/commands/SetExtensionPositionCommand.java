@@ -5,8 +5,8 @@ import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.subsystems.Extension;
 
 public class SetExtensionPositionCommand extends Command {
-    private Extension extension = Extension.getInstance();
-    private ExtensionSetpoints setpoint;
+    private final Extension extension = Extension.getInstance();
+    private final ExtensionSetpoints setpoint;
 
     public SetExtensionPositionCommand(ExtensionSetpoints setpoint) {
         super.addRequirements(extension);

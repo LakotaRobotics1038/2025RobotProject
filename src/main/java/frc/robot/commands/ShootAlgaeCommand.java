@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
 public class ShootAlgaeCommand extends Command {
-    private Acquisition acquisition = Acquisition.getInstance();
+    private final Acquisition acquisition = Acquisition.getInstance();
 
     public ShootAlgaeCommand() {
         super.addRequirements(acquisition);

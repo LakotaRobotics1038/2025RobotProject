@@ -9,10 +9,10 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class SetAcquisitionPositionCommand extends Command {
-    private Shoulder shoulder = Shoulder.getInstance();
-    private Wrist wrist = Wrist.getInstance();
-    private Extension extension = Extension.getInstance();
-    private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final Extension extension = Extension.getInstance();
+    private final AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private boolean retractExtension;
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {

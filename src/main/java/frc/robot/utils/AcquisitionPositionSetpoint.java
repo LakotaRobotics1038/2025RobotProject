@@ -18,9 +18,9 @@ public enum AcquisitionPositionSetpoint {
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb);
 
-    private ShoulderSetpoints shoulderSetpoint;
-    private WristSetpoints wristSetPoint;
-    private ExtensionSetpoints extensionSetpoint;
+    private final ShoulderSetpoints shoulderSetpoint;
+    private final WristSetpoints wristSetPoint;
+    private final ExtensionSetpoints extensionSetpoint;
 
     private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint) {

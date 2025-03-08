@@ -5,8 +5,8 @@ import frc.robot.constants.WristConstants.WristSetpoints;
 import frc.robot.subsystems.Wrist;
 
 public class SetWristPositionCommand extends Command {
-    private Wrist wrist = Wrist.getInstance();
-    private WristSetpoints setpoint;
+    private final Wrist wrist = Wrist.getInstance();
+    private final WristSetpoints setpoint;
 
     public SetWristPositionCommand(WristSetpoints setpoint) {
         super.addRequirements(wrist);

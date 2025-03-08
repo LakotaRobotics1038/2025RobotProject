@@ -5,7 +5,7 @@ import frc.robot.subsystems.Acquisition;
 
 public class AcquireAlgaeCommand extends Command {
 
-    private Acquisition acquisition = Acquisition.getInstance();
+    private final Acquisition acquisition = Acquisition.getInstance();
 
     public AcquireAlgaeCommand() {
         this.addRequirements(acquisition);

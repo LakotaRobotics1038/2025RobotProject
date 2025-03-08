@@ -5,8 +5,8 @@ import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.subsystems.Shoulder;
 
 public class SetShoulderPositionCommand extends Command {
-    private Shoulder shoulder = Shoulder.getInstance();
-    private ShoulderSetpoints setpoint;
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final ShoulderSetpoints setpoint;
 
     public SetShoulderPositionCommand(ShoulderSetpoints setpoint) {
         super.addRequirements(shoulder);

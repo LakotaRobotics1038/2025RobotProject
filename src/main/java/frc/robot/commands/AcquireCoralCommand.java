@@ -5,7 +5,7 @@ import frc.robot.subsystems.Acquisition;
 
 public class AcquireCoralCommand extends Command {
 
-    private Acquisition acquisition = Acquisition.getInstance();
+    private final Acquisition acquisition = Acquisition.getInstance();
 
     public AcquireCoralCommand() {
         this.addRequirements(acquisition);

@@ -5,7 +5,7 @@ import frc.robot.constants.ClimbConstants;
 import frc.robot.subsystems.Climb;
 
 public class ClimbUpCommand extends Command {
-    private Climb climb = Climb.getInstance();
+    private final Climb climb = Climb.getInstance();
 
     public ClimbUpCommand() {
         super.addRequirements(climb);

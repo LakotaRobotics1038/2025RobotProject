@@ -5,7 +5,7 @@ import frc.robot.subsystems.Acquisition;
 
 public class AcquireForL4Command extends Command {
 
-    private Acquisition acquisition = Acquisition.getInstance();
+    private final Acquisition acquisition = Acquisition.getInstance();
 
     public AcquireForL4Command() {
         this.addRequirements(acquisition);

@@ -1,5 +1,6 @@
 package frc.robot;
 
+import java.util.Optional;
 import java.util.Set;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -43,7 +44,6 @@ public class DriverJoystick extends XboxController1038 {
 
     // Instance Variables
     private PathPlannerPath path;
-    private Pose2d targetPose;
 
     // Previous Status
     private double prevX = 0;
@@ -125,12 +125,11 @@ public class DriverJoystick extends XboxController1038 {
         super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
-                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
 
-                    if (this.targetPose != null) {
+                    if (this.determineWaypointCommand.getPose2d().isPresent()) {
                         this.path = new PathPlannerPath(
                                 PathPlannerPath.waypointsFromPoses(currentPose,
-                                        targetPose),
+                                        determineWaypointCommand.getPose2d().get()),
                                 new PathConstraints(
                                         AutoConstants.maxSpeed,
                                         AutoConstants.kMaxAccelerationMetersPerSecondSquared,
@@ -139,12 +138,12 @@ public class DriverJoystick extends XboxController1038 {
                                 new IdealStartingState(
                                         driveTrain.getState().Speeds.vxMetersPerSecond,
                                         driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, targetPose.getRotation()));
+                                new GoalEndState(0, determineWaypointCommand.getPose2d().get().getRotation()));
                     }
                 })
                         .andThen(
                                 new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+                                        Set.of(this.driveTrain)).onlyIf(() -> this.determineWaypointCommand.getPose2d().isPresent()))));
     }
 
     /**
