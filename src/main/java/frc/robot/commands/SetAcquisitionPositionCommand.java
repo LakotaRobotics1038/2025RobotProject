@@ -19,16 +19,19 @@ public class SetAcquisitionPositionCommand extends Command {
     private boolean retractExtension;
     private boolean isSupplier;
 
-    public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
+    private SetAcquisitionPositionCommand(boolean isSupplier) {
         addRequirements(shoulder, wrist, extension);
+        this.isSupplier = isSupplier;
+    }
+
+    public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
+        this(true);
         this.acquisitionPositionSetpointSupplier = acquisitionPositionSetpointSupplier;
-        this.isSupplier = true;
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
-        addRequirements(shoulder, wrist, extension);
+        this(false);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
-        this.isSupplier = false;
     }
 
     public void initialize() {
