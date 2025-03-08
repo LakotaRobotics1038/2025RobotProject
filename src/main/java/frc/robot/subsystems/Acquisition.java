@@ -42,12 +42,20 @@ public class Acquisition extends SubsystemBase {
         this.acquisitionMotor.set(AcquisitionConstants.kAcquireCoralSpeed);
     }
 
+    public void acquireCoralL4() {
+        this.acquisitionMotor.set(AcquisitionConstants.kAcquireCoralSpeedL4);
+    }
+
     public void acquireAlgae() {
         this.acquisitionMotor.set(AcquisitionConstants.kAcquireAlgaeSpeed);
     }
 
-    public void disposeCoral() {
-        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed);
+    public void disposeCoral134() {
+        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed134);
+    }
+
+    public void disposeCoral2() {
+        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed2);
     }
 
     public void disposeAlgae() {
@@ -63,11 +71,11 @@ public class Acquisition extends SubsystemBase {
     }
 
     public boolean getTopLaser() {
-        return this.topLaser.get();
+        return !this.topLaser.get();
     }
 
     public boolean getBottomLaser() {
-        return this.bottomLaser.get();
+        return !this.bottomLaser.get();
     }
 
     public boolean getAlgaeSwitch() {

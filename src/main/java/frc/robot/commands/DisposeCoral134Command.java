@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
-public class DisposeCoralCommand extends Command {
+public class DisposeCoral134Command extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
     private double secondsToDispose;
     private Timer timer = new Timer();
 
-    public DisposeCoralCommand() {
+    public DisposeCoral134Command() {
         this(0.0);
     }
 
-    public DisposeCoralCommand(double secondsToDispose) {
+    public DisposeCoral134Command(double secondsToDispose) {
         this.secondsToDispose = secondsToDispose;
         super.addRequirements(acquisition);
     }
@@ -21,7 +21,7 @@ public class DisposeCoralCommand extends Command {
     @Override
     public void execute() {
         timer.restart();
-        acquisition.disposeCoral();
+        acquisition.disposeCoral134();
     }
 
     @Override

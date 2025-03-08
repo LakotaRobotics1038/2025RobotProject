@@ -1,11 +1,6 @@
 package frc.robot;
 
-import frc.robot.constants.DriveConstants;
-import frc.robot.constants.IOConstants;
-import frc.robot.constants.AutoConstants;
-import frc.robot.constants.DriveWaypoints;
-import frc.robot.libraries.XboxController1038;
-import frc.robot.subsystems.DriveTrain;
+import java.util.Set;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
@@ -15,14 +10,40 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AcquireAlgaeCommand;
+import frc.robot.commands.AcquireForL4Command;
+import frc.robot.commands.ClimbUpCommand;
+import frc.robot.commands.DetermineWaypointCommand;
+import frc.robot.commands.PrepClimbCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.constants.AutoConstants;
+import frc.robot.constants.DriveConstants;
+import frc.robot.constants.IOConstants;
+import frc.robot.libraries.XboxController1038;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Extension;
+import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Wrist;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Extension extension = Extension.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final OperatorState operatorState = OperatorState.getInstance();
 
-    private Pose2d currentPose;
+    // Commands
+    private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
+
+    // Instance Variables
+    private PathPlannerPath path;
+    private Pose2d targetPose;
 
     // Previous Status
     private double prevX = 0;
@@ -62,28 +83,7 @@ public class DriverJoystick extends XboxController1038 {
             prevY = y;
             prevZ = z;
 
-            switch (this.getPOVPosition()) {
-                case Up:
-                    forward = DriveConstants.kFineAdjustmentPercent;
-                    sideways = 0;
-                    break;
-                case Down:
-                    forward = -DriveConstants.kFineAdjustmentPercent;
-                    sideways = 0;
-                    break;
-                case Left:
-                    forward = 0;
-                    sideways = -DriveConstants.kFineAdjustmentPercent;
-                    break;
-                case Right:
-                    forward = 0;
-                    sideways = DriveConstants.kFineAdjustmentPercent;
-                    break;
-                default:
-                    break;
-            }
-
-            return driveTrain.drive(forward, -sideways, -rotate);
+            return driveTrain.drive(forward, -sideways, -rotate, true);
         }));
 
         this.driveTrain.registerTelemetry(logger::telemeterize);
@@ -91,23 +91,58 @@ public class DriverJoystick extends XboxController1038 {
         // Re-orient robot to the field
         super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
+
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.aButton.whileTrue(
+
+        super.rightBumper.whileTrue(new PrepClimbCommand());
+        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(operatorState::getLastInput));
+        super.rightTrigger.whileTrue(new ClimbUpCommand());
+
+        super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
+        super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());
+        // TODO: "we need a comment to run this command?"
+        super.aButton.onTrue(
+                new PrintCommand("Running SetAcquisitionPositionCommand")
+                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput)));
+        super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
-                    this.currentPose = this.driveTrain.getState().Pose;
-                }).andThen(AutoBuilder.followPath(new PathPlannerPath(
-                        PathPlannerPath.waypointsFromPoses(this.currentPose,
-                                DriveWaypoints.Algae23.getEndpoint()),
-                        new PathConstraints(
-                                DriveConstants.MaxSpeed,
-                                AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                        new IdealStartingState(
-                                driveTrain.getState().Speeds.vxMetersPerSecond,
-                                driveTrain.getState().Pose.getRotation()),
-                        new GoalEndState(0, Rotation2d.kZero)))));
+                    Pose2d currentPose = this.driveTrain.getState().Pose;
+                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
+
+                    if (this.targetPose != null) {
+                        this.path = new PathPlannerPath(
+                                PathPlannerPath.waypointsFromPoses(currentPose,
+                                        targetPose),
+                                new PathConstraints(
+                                        AutoConstants.maxSpeed,
+                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+                                new IdealStartingState(
+                                        driveTrain.getState().Speeds.vxMetersPerSecond,
+                                        driveTrain.getState().Pose.getRotation()),
+                                new GoalEndState(0, targetPose.getRotation()));
+                    }
+                })
+                        .andThen(
+                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
     }
 
     /**

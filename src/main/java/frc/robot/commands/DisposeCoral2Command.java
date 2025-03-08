@@ -4,30 +4,31 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
-public class DisposeAlgaeCommand extends Command {
+public class DisposeCoral2Command extends Command {
     private Acquisition acquisition = Acquisition.getInstance();
     private double secondsToDispose;
     private Timer timer = new Timer();
 
-    public DisposeAlgaeCommand() {
+    public DisposeCoral2Command() {
         this(0.0);
     }
 
-    public DisposeAlgaeCommand(double secondsToDispose) {
+    public DisposeCoral2Command(double secondsToDispose) {
         this.secondsToDispose = secondsToDispose;
         super.addRequirements(acquisition);
     }
 
     @Override
     public void execute() {
-        acquisition.disposeAlgae();
+        acquisition.disposeCoral2();
     }
 
     @Override
     public boolean isFinished() {
-        // if algae limit switch is not pressed and set time has passed stop the command
-        if (!acquisition.getAlgaeSwitch()) {
-            return secondsToDispose != 0 && timer.get() >= secondsToDispose;
+        // if neither acquisition laser returns true command is finished
+
+        if (!(acquisition.getTopLaser() || acquisition.getBottomLaser())) {
+            return secondsToDispose != 0.0 && timer.get() >= secondsToDispose;
         }
 
         return false;

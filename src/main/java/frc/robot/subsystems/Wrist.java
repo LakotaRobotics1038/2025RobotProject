@@ -10,6 +10,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.WristConstants;
@@ -24,6 +26,8 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
     private boolean enabled;
+    private double lastPosition;
+
     private static Wrist instance;
 
     private Wrist() {
@@ -32,7 +36,17 @@ public class Wrist extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
                 .inverted(false);
+        wristConfig.absoluteEncoder
+                .positionConversionFactor(WristConstants.kEncoderConversion);
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        wristController.disableContinuousInput();
+        wristController.setTolerance(2);
+
+        Shuffleboard.getTab("Controls").add("WristPID", wristController)
+                .withWidget(BuiltInWidgets.kPIDController);
+        Shuffleboard.getTab("Controls")
+                .addNumber("WristCurrent", this::getPosition);
     }
 
     public static Wrist getInstance() {
@@ -51,11 +65,24 @@ public class Wrist extends SubsystemBase {
 
     protected void useOutput(double output) {
         double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
+        // power = MathUtil.applyDeadband(power, 0.1);
         this.wristMotor.set(power);
     }
 
     public double getPosition() {
-        return this.wristEncoder.getPosition();
+        double position = this.wristEncoder.getPosition();
+        double normalizedPosition = position < 180 ? position : position - 360;
+        double delta = normalizedPosition - lastPosition;
+
+        if (delta > 180) {
+            normalizedPosition -= 360;
+        } else if (delta < -180) {
+            normalizedPosition += 360;
+        }
+
+        this.lastPosition = normalizedPosition;
+
+        return normalizedPosition;
     }
 
     public boolean onTarget() {
@@ -63,7 +90,7 @@ public class Wrist extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        double clampedPoint = MathUtil.clamp(setpoint, 0, WristConstants.kMaxDistance);
+        double clampedPoint = MathUtil.clamp(setpoint, WristConstants.kMinDistance, WristConstants.kMaxDistance);
         this.wristController.setSetpoint(clampedPoint);
     }
 

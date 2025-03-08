@@ -18,35 +18,35 @@ public final class VisionConstants {
     public static final String kEnabled0Topic = "enable0";
     public static final String kEnabled1Topic = "enable1";
 
-    public static final double width = 800;
-    public static final double height = 600;
-    public static final double fov = 100;
+    public static final double kWidth = 800;
+    public static final double kHeight = 600;
+    public static final double kFov = 100;
 
-    public static final double driveP = 0.005;
-    public static final double driveI = 0;
-    public static final double driveD = 0.0002;
-    public static final double spinP = 0.005;
-    public static final double spinI = 0;
-    public static final double spinD = 0.0002;
-    public static final double spinSetpoint = 0.0;
-    public static final double aprilTagArea = 28908;
+    public static final double kDriveP = 0.005;
+    public static final double kDriveI = 0;
+    public static final double kDriveD = 0.0002;
+    public static final double kSpinP = 0.005;
+    public static final double kSpinI = 0;
+    public static final double kSpinD = 0.0002;
+    public static final double kSpinSetpoint = 0.0;
+    public static final double kAprilTagArea = 28908;
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-    private static final double kFrontCameraXOffset = 0.1;
-    private static final double kFrontCameraYOffset = 0.0;
-    private static final double kFrontCameraZOffset = 0.1;
+    private static final double kFrontCameraXOffset = -0.3368548 + .4826;
+    private static final double kFrontCameraYOffset = 0.050419 + .2032;
+    private static final double kFrontCameraZOffset = 0.349494323;
     public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(kFrontCameraXOffset, kFrontCameraYOffset, kFrontCameraZOffset),
             new Rotation3d(0, 0, 0));
-    public static final String kRobotToFrontCamName = "frontCam";
-    private static final double kBackCameraXOffset = 0.1;
-    private static final double kBackCameraYOffset = 0.0;
-    private static final double kBackCameraZOffset = 0.1;
+    public static final String kRobotToFrontCamName = "frontCamera";
+    private static final double kBackCameraXOffset = 0.3368548 + 0.2016;
+    private static final double kBackCameraYOffset = -0.0719836;
+    private static final double kBackCameraZOffset = 0.349494323;
     public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(kBackCameraXOffset, kBackCameraYOffset, kBackCameraZOffset),
-            new Rotation3d(0, 0, 0));
-    public static final String kRobotToBackCamName = "backCam";
+            new Rotation3d(0, 180, 0));
+    public static final String kRobotToBackCamName = "backCamera";
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 }

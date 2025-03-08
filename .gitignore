@@ -54,6 +54,7 @@
 *.nar
 *.ear
 *.zip
+!photonvision-settings-export.zip
 *.tar.gz
 *.rar
 
