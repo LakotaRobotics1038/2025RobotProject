@@ -25,7 +25,7 @@ public class ExtensionConstants {
         Processor(0.0),
         GroundAlgae(0.0),
         Storage(0.0),
-        FeederStation(4.0),
+        FeederStation(3.0),
         Barge(27.5),
         Climb(0.0),
         Zero(0.0);
