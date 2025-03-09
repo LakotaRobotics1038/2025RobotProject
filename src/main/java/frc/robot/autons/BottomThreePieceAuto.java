@@ -22,33 +22,29 @@ public class BottomThreePieceAuto extends Auton {
 
         super.addCommands(
                 new AcquireForL4Command(),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoDisable)
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)
                         .alongWith(new WaitCommand(0.5))
                         .andThen(followPathCommand(Paths.getBottomStartingPosToLeftReefTag22Path())),
                 new DisposeCoral134Command(1),
 
                 followPathCommand(Paths.getLeftReefTag22ToBottomFeederStationPath())
                         .alongWith(new WaitCommand(0.5).andThen(
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
-                                        FinishActions.NoDisable))),
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation, 4))),
                 new AcquireCoralCommand(),
 
                 new AcquireForL4Command(),
                 followPathCommand(Paths.getBottomFeederStationToRightTag17Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral,
-                                FinishActions.NoDisable)),
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)),
                 new DisposeCoral134Command(1),
 
                 followPathCommand(Paths.getRightTag17ToBottomFeederStationPath())
                         .alongWith(new WaitCommand(0.5).andThen(
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
-                                        FinishActions.NoDisable))),
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation, 3))),
                 new AcquireCoralCommand(),
 
                 new AcquireForL4Command(),
                 followPathCommand(Paths.getBottomFeederStationToLeftTag17Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral,
-                                FinishActions.NoDisable)),
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)),
                 new DisposeCoral134Command(1));
     }
 }

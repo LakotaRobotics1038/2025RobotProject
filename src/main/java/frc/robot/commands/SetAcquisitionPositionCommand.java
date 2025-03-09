@@ -20,6 +20,9 @@ public class SetAcquisitionPositionCommand extends Command {
     private boolean retractExtension;
     private boolean isSupplier;
     private FinishActions finishAction;
+    private boolean isAuton;
+    private double timeToMove;
+    private Timer timer = new Timer();
 
     public enum FinishActions {
         NoFinish,
@@ -28,23 +31,26 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
-        this(acquisitionPositionSetpointSupplier.get(), FinishActions.Default);
+        this(acquisitionPositionSetpointSupplier.get());
         this.isSupplier = true;
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
-        this(acquisitionPositionSetpoint, FinishActions.Default);
-    }
-
-    public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
-            FinishActions finishAction) {
         addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
         this.isSupplier = false;
-        this.finishAction = finishAction;
+    }
+
+    public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
+            double timeToMove) {
+        addRequirements(shoulder, wrist, extension);
+        this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
+        this.isSupplier = false;
+        this.timeToMove = timeToMove;
     }
 
     public void initialize() {
+        timer.restart();
         wrist.enable();
         shoulder.enable();
         extension.enable();
@@ -74,18 +80,20 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
-        return finishAction != FinishActions.NoFinish &&
-                extension.onTarget() &&
-                wrist.onTarget() &&
-                shoulder.onTarget();
-
+        // return finishAction != FinishActions.NoFinish &&
+        // extension.onTarget() &&
+        // wrist.onTarget() &&
+        // shoulder.onTarget();
+        return this.timeToMove != 0 && timer.get() >= timeToMove;
     }
 
     public void end(boolean interrupted) {
-        if (finishAction != FinishActions.NoDisable) {
-            wrist.disable();
-            extension.disable();
-            shoulder.disable();
-        }
+        timer.restart();
+        timer.stop();
+        // if (finishAction != FinishActions.NoDisable) {
+        wrist.disable();
+        extension.disable();
+        shoulder.disable();
+        // }
     }
 }
