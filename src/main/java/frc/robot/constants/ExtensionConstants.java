@@ -9,7 +9,7 @@ public class ExtensionConstants {
     public static final double kExtensionMaximum = 27.5;
     public static final double kExtensionMaxMove = 0.0;
 
-    public static final double kTolerance = 0.25;
+    public static final double kTolerance = 0.5;
     public static final double kEncoderConversion = 0.213;
     public static final double kP = 0.8;
     public static final double kI = 0.001;
