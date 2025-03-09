@@ -44,19 +44,19 @@ public class Paths {
         return PathPlannerPath.fromPathFile("LeftReefTag21 To BottomFeederStation");
     }
 
-    public static PathPlannerPath getBottomFeederStationToRightTag22Path()
+    public static PathPlannerPath getBottomFeederStationToRightTag17Path()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("BottomFeederStation To RightReefTag22");
+        return PathPlannerPath.fromPathFile("BottomFeederStation To RightReefTag17");
     }
 
-    public static PathPlannerPath getRightTag22ToBottomFeederStationPath()
+    public static PathPlannerPath getRightTag17ToBottomFeederStationPath()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("RightReefTag22 To BottomFeederStation");
+        return PathPlannerPath.fromPathFile("RightReefTag17 To BottomFeederStation");
     }
 
-    public static PathPlannerPath getBottomFeederStationToLeftTag22Path()
+    public static PathPlannerPath getBottomFeederStationToLeftTag17Path()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("BottomFeederStation To LeftReefTag22");
+        return PathPlannerPath.fromPathFile("BottomFeederStation To LeftReefTag17");
     }
 
     public static PathPlannerPath getTopPosToRightReefTag20Path()

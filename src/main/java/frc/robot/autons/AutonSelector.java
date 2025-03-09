@@ -76,8 +76,8 @@ public class AutonSelector {
             switch (this.autoChooser.getSelected()) {
                 case MiddleThreePieceTopAuto:
                     return new MiddleThreePieceTopAuto(alliance);
-                // case MiddleThreePieceBottomAuto:
-                // return new MiddleThreePieceBottomAuto(alliance);
+                case MiddleThreePieceBottomAuto:
+                    return new MiddleThreePieceBottomAuto(alliance);
                 case TopThreePieceAuto:
                     return new TopThreePieceAuto(alliance);
                 case BottomThreePieceAuto:
