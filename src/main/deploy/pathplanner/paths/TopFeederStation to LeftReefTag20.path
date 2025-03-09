@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1895,
-        "y": 7.2035
+        "x": 1.2706967213114755,
+        "y": 7.219723360655737
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1742500000000007,
-        "y": 7.12525
+        "x": 2.2554467213114764,
+        "y": 7.141473360655738
       },
       "isLocked": false,
       "linkedName": "TopFeederStation"

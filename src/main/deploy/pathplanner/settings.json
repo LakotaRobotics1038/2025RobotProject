@@ -3,15 +3,11 @@
   "robotLength": 0.89535,
   "holonomicMode": true,
   "pathFolders": [
-    "Top 3 Piece Auto Path",
-    "Taxi Top Auto",
-    "Taxi Bottom Auto",
-    "Get Out of the way middle auto",
-    "Middle 3 Piece Top Auto Paths",
+    "Bottom 3 Piece Auto Path",
     "Middle 3 Piece Bottom Auto Paths",
-    "Get Out Of The Way Top Auto",
-    "Get Out Of The Way Bottom Auto",
-    "Bottom 3 Piece Auto Path"
+    "Middle 3 Piece Top Auto Paths",
+    "Taxi Bottom Auto",
+    "Top 3 Piece Auto Path"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

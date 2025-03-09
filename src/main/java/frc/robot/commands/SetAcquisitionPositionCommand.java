@@ -20,6 +20,8 @@ public class SetAcquisitionPositionCommand extends Command {
     private boolean retractExtension;
     private boolean isSupplier;
     private boolean isAuton;
+    private double timeToMove;
+    private Timer timer = new Timer();
 
     public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
         addRequirements(shoulder, wrist, extension);
@@ -34,14 +36,15 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
-            boolean isAuton) {
+            double timeToMove) {
         addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
         this.isSupplier = false;
-        this.isAuton = isAuton;
+        this.timeToMove = timeToMove;
     }
 
     public void initialize() {
+        timer.restart();
         wrist.enable();
         shoulder.enable();
         extension.enable();
@@ -71,13 +74,14 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
-        if (isAuton) {
-            return extension.onTarget() && shoulder.onTarget() && wrist.onTarget();
-        }
-        return false;
+        // return isAuton && extension.onTarget() && shoulder.onTarget() &&
+        // wrist.onTarget();
+        return this.timeToMove != 0 && timer.get() >= timeToMove;
     }
 
     public void end(boolean interrupted) {
+        timer.restart();
+        timer.stop();
         if (!isAuton) {
             wrist.disable();
             extension.disable();

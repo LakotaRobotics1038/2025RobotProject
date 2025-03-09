@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireCoralCommand;
 import frc.robot.commands.AcquireForL4Command;
@@ -21,35 +20,30 @@ public class BottomThreePieceAuto extends Auton {
         super(alliance);
 
         super.addCommands(
-                followPathCommand(Paths.getBottomStartingPosToLeftReefTag22Path())
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, true))
-                        .alongWith(new AcquireForL4Command())
-        // new DisposeCoral134Command(),
-        // followPathCommand(Paths.getLeftReefTag22ToBottomFeederStationPath()),
-        // new WaitCommand(2),
-        // // .alongWith(new SequentialCommandGroup(
-        // // new WaitCommand(1),
-        // // new
-        // //
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
-        // // new AcquireCoralCommand(),
-        // followPathCommand(Paths.getBottomFeederStationToRightTag17Path()),
-        // new WaitCommand(2),
-        // // .alongWith(new
-        // // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-        // // new DisposeCoral134Command(),
-        // followPathCommand(Paths.getRightTag17ToBottomFeederStationPath()),
-        // new WaitCommand(2),
-        // // .alongWith(new SequentialCommandGroup(
-        // // new WaitCommand(1),
-        // // new
-        // //
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation))),
-        // // new AcquireCoralCommand(),
-        // followPathCommand(Paths.getBottomFeederStationToLeftTag17Path())
-        // .alongWith(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral)),
-        // new DisposeCoral134Command()
-        );
+                new AcquireForL4Command(),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)
+                        .alongWith(new WaitCommand(0.5))
+                        .andThen(followPathCommand(Paths.getBottomStartingPosToLeftReefTag22Path())),
+                new DisposeCoral134Command(1),
+
+                followPathCommand(Paths.getLeftReefTag22ToBottomFeederStationPath())
+                        .alongWith(new WaitCommand(0.5).andThen(
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation, 4))),
+                new AcquireCoralCommand(),
+
+                new AcquireForL4Command(),
+                followPathCommand(Paths.getBottomFeederStationToRightTag17Path())
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)),
+                new DisposeCoral134Command(1),
+
+                followPathCommand(Paths.getRightTag17ToBottomFeederStationPath())
+                        .alongWith(new WaitCommand(0.5).andThen(
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation, 3))),
+                new AcquireCoralCommand(),
+
+                new AcquireForL4Command(),
+                followPathCommand(Paths.getBottomFeederStationToLeftTag17Path())
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, 3)),
+                new DisposeCoral134Command(1));
     }
 }

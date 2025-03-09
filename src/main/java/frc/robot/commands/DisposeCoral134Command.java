@@ -14,13 +14,13 @@ public class DisposeCoral134Command extends Command {
     }
 
     public DisposeCoral134Command(double secondsToDispose) {
+        timer.restart();
         this.secondsToDispose = secondsToDispose;
         super.addRequirements(acquisition);
     }
 
     @Override
     public void execute() {
-        timer.restart();
         acquisition.disposeCoral134();
     }
 
@@ -37,6 +37,8 @@ public class DisposeCoral134Command extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        timer.restart();
+        timer.stop();
         acquisition.stopAcquisition();
     }
 }
