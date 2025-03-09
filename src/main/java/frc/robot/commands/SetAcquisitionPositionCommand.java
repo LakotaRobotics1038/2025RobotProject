@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
@@ -18,11 +17,8 @@ public class SetAcquisitionPositionCommand extends Command {
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private boolean retractExtension;
-    private boolean isSupplier;
     private FinishActions finishAction;
-    private boolean isAuton;
-    private double timeToMove;
-    private Timer timer = new Timer();
+    private boolean setpointsSet;
 
     public enum FinishActions {
         NoFinish,
@@ -31,29 +27,34 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
-        this(acquisitionPositionSetpointSupplier.get());
-        this.isSupplier = true;
+        this(FinishActions.Default);
+        this.acquisitionPositionSetpointSupplier = acquisitionPositionSetpointSupplier;
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
-        addRequirements(shoulder, wrist, extension);
+        this(FinishActions.Default);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
-        this.isSupplier = false;
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
-            double timeToMove) {
-        addRequirements(shoulder, wrist, extension);
+            FinishActions finishAction) {
+        this(finishAction);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
-        this.isSupplier = false;
-        this.timeToMove = timeToMove;
+    }
+
+    private SetAcquisitionPositionCommand(FinishActions finishAction) {
+        addRequirements(shoulder, wrist, extension);
+        this.finishAction = finishAction;
     }
 
     public void initialize() {
-        timer.restart();
         wrist.enable();
         shoulder.enable();
         extension.enable();
+
+        if (this.acquisitionPositionSetpoint == null) {
+            this.acquisitionPositionSetpoint = this.acquisitionPositionSetpointSupplier.get();
+        }
 
         if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
             retractExtension = true;
@@ -66,34 +67,29 @@ public class SetAcquisitionPositionCommand extends Command {
             if (extension.getPosition() <= ExtensionConstants.kExtensionMaxMove) {
                 this.retractExtension = false;
             }
-        } else {
-            if (isSupplier) {
-                extension.setSetpoint(acquisitionPositionSetpointSupplier.get().getExtensionSetpoint());
-                shoulder.setSetpoint(acquisitionPositionSetpointSupplier.get().getShoulderSetpoint());
-                wrist.setSetpoint(acquisitionPositionSetpointSupplier.get().getWristSetpoint());
-            } else {
-                extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
-                shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
-                wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-            }
+        } else if (!setpointsSet) {
+            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+            shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+            wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+            setpointsSet = true;
         }
     }
 
     public boolean isFinished() {
-        // return finishAction != FinishActions.NoFinish &&
-        // extension.onTarget() &&
-        // wrist.onTarget() &&
-        // shoulder.onTarget();
-        return this.timeToMove != 0 && timer.get() >= timeToMove;
+        return finishAction != FinishActions.NoFinish &&
+                extension.onTarget() &&
+                wrist.onTarget() &&
+                shoulder.onTarget()
+                && setpointsSet;
+
     }
 
     public void end(boolean interrupted) {
-        timer.restart();
-        timer.stop();
-        // if (finishAction != FinishActions.NoDisable) {
-        wrist.disable();
-        extension.disable();
-        shoulder.disable();
-        // }
+        if (finishAction != FinishActions.NoDisable) {
+            wrist.disable();
+            extension.disable();
+            shoulder.disable();
+        }
+        setpointsSet = false;
     }
 }

@@ -37,10 +37,10 @@ public class AutonSelector {
     private AutonSelector() {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
-        this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
+        this.autoChooser.addOption("No Auto", AutonChoices.NoAuto);
         this.autoChooser.addOption("Middle Three Piece Top Auto", AutonChoices.MiddleThreePieceTopAuto);
         this.autoChooser.addOption("Middle Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
-        this.autoChooser.addOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
+        this.autoChooser.setDefaultOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
         this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
         this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
         this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
