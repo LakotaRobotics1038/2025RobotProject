@@ -26,7 +26,7 @@ public class TopThreePieceAuto extends Auton {
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoDisable)
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(followPathCommand(Paths.getTopPosToRightReefTag20Path()))),
-                new DisposeCoral134Command().withTimeout(3),
+                new DisposeCoral134Command().withTimeout(1),
 
                 followPathCommand(Paths.getRightReefTag20ToTopFeederStationPath())
                         .alongWith(new WaitCommand(0.5).andThen(
