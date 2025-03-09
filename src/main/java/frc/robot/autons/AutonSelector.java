@@ -15,9 +15,6 @@ public class AutonSelector {
         MiddleThreePieceBottomAuto,
         TopThreePieceAuto,
         BottomThreePieceAuto,
-        GetOutOfTheWayTopAuto,
-        GetOutOfTheWayMiddleAuto,
-        GetOutOfTheWayBottomAuto,
         TopTaxi,
         BottomTaxi;
     }
