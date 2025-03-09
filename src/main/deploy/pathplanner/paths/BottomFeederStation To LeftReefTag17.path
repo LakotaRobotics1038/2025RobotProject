@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2107581967213117,
-        "y": 0.9741290983606552
+        "x": 1.14075,
+        "y": 0.85625
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5823770491803275,
-        "y": 1.3097848360655735
+        "x": 1.5123688524590158,
+        "y": 1.1919057377049183
       },
       "isLocked": false,
       "linkedName": "BottomFeederStation"
     },
     {
       "anchor": {
-        "x": 3.692213114754098,
-        "y": 3.000051229508196
+        "x": 3.5295000000000005,
+        "y": 3.186499999999999
       },
       "prevControl": {
-        "x": 3.1407786885245907,
-        "y": 2.49656762295082
+        "x": 2.9780655737704933,
+        "y": 2.683016393442623
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Middle 3 Piece Bottom Auto Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 55.0
   },
   "useDefaultConstraints": true
 }

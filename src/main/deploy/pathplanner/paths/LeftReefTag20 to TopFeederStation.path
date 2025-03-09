@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9799180327868857,
-        "y": 5.241752049180327
+        "x": 4.327561475409836,
+        "y": 5.325665983606557
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.296618852459016,
-        "y": 5.961014344262295
+        "x": 3.6442622950819663,
+        "y": 6.044928278688524
       },
       "isLocked": false,
       "linkedName": "LeftReefTag19"
     },
     {
       "anchor": {
-        "x": 1.2227459016393443,
-        "y": 7.06388319672131
+        "x": 1.1895,
+        "y": 7.2035
       },
       "prevControl": {
-        "x": 2.001946721311475,
-        "y": 6.7162397540983605
+        "x": 1.968700819672131,
+        "y": 6.8558565573770505
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": -55.0
   },
   "reversed": false,
   "folder": "Middle 3 Piece Top Auto Paths",

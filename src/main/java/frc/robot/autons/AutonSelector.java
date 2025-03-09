@@ -78,10 +78,10 @@ public class AutonSelector {
                     return new MiddleThreePieceTopAuto(alliance);
                 // case MiddleThreePieceBottomAuto:
                 // return new MiddleThreePieceBottomAuto(alliance);
-                // case TopThreePieceAuto:
-                // return new TopThreePieceAuto(alliance);
-                // case BottomThreePieceAuto:
-                // return new BottomThreePieceAuto(alliance);
+                case TopThreePieceAuto:
+                    return new TopThreePieceAuto(alliance);
+                case BottomThreePieceAuto:
+                    return new BottomThreePieceAuto(alliance);
                 // case GetOutOfTheWayTopAuto:
                 // return new GetOutOfTheWayTopAuto(alliance);
                 // case GetOutOfTheWayMiddleAuto:

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.992000000000001,
-        "y": 5.234
+        "x": 5.21625,
+        "y": 4.980499999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.00175,
-        "y": 6.00425
+        "x": 5.225999999999999,
+        "y": 5.750749999999999
       },
       "isLocked": false,
       "linkedName": "RightReefTag20"
     },
     {
       "anchor": {
-        "x": 1.2227459016393443,
-        "y": 7.06388319672131
+        "x": 1.1895,
+        "y": 7.2035
       },
       "prevControl": {
-        "x": 1.989,
-        "y": 6.930499999999999
+        "x": 1.9557540983606558,
+        "y": 7.070116803278689
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": -55.0
   },
   "reversed": false,
   "folder": "Top 3 Piece Auto Path",

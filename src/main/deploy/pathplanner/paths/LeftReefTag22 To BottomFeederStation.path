@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.9725,
-        "y": 2.8354999999999997
+        "x": 4.5435,
+        "y": 2.7184999999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.992000000000001,
-        "y": 1.7727499999999998
+        "x": 4.563000000000001,
+        "y": 1.6557499999999994
       },
       "isLocked": false,
       "linkedName": "LeftReefTag22"
     },
     {
       "anchor": {
-        "x": 1.2107581967213117,
-        "y": 0.9741290983606552
+        "x": 1.14075,
+        "y": 0.85625
       },
       "prevControl": {
-        "x": 2.01825,
-        "y": 1.5289999999999997
+        "x": 1.9482418032786886,
+        "y": 1.411120901639344
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 55.0
   },
   "reversed": false,
   "folder": "Bottom 3 Piece Auto Path",

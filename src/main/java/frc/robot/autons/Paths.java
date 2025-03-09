@@ -31,7 +31,7 @@ public class Paths {
 
     public static PathPlannerPath getTopFeederStationToRightTag20Path()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("LeftReefTag20 to TopFeederStation");
+        return PathPlannerPath.fromPathFile("TopFeederStation to RightReefTag20");
     }
 
     public static PathPlannerPath getMiddlePosToLeftTag21Path()

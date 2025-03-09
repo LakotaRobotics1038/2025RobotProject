@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.2107581967213117,
-        "y": 0.9741290983606552
+        "x": 1.14075,
+        "y": 0.85625
       },
       "prevControl": {
-        "x": 1.9899590163934429,
-        "y": 1.3097848360655735
+        "x": 1.919950819672131,
+        "y": 1.1919057377049183
       },
       "nextControl": null,
       "isLocked": false,
@@ -63,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 55.0
   },
   "reversed": false,
   "folder": "Middle 3 Piece Bottom Auto Paths",

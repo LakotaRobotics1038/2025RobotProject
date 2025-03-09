@@ -2,9 +2,10 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ExtensionConstants;
+import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
@@ -18,6 +19,7 @@ public class SetAcquisitionPositionCommand extends Command {
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private boolean retractExtension;
     private boolean isSupplier;
+    private boolean isAuton;
 
     public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
         addRequirements(shoulder, wrist, extension);
@@ -29,6 +31,14 @@ public class SetAcquisitionPositionCommand extends Command {
         addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
         this.isSupplier = false;
+    }
+
+    public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
+            boolean isAuton) {
+        addRequirements(shoulder, wrist, extension);
+        this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
+        this.isSupplier = false;
+        this.isAuton = isAuton;
     }
 
     public void initialize() {
@@ -61,12 +71,17 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
+        if (isAuton) {
+            return extension.onTarget() && shoulder.onTarget() && wrist.onTarget();
+        }
         return false;
     }
 
     public void end(boolean interrupted) {
-        wrist.disable();
-        extension.disable();
-        shoulder.disable();
+        if (!isAuton) {
+            wrist.disable();
+            extension.disable();
+            shoulder.disable();
+        }
     }
 }

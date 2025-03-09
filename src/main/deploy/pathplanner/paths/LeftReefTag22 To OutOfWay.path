@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.9725,
-        "y": 2.8354999999999997
+        "x": 4.5435,
+        "y": 2.7184999999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.7482500000000005,
-        "y": 2.377249999999999
+        "x": 4.31925,
+        "y": 2.2602499999999988
       },
       "isLocked": false,
       "linkedName": "LeftReefTag22"
