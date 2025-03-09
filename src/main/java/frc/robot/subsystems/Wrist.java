@@ -41,7 +41,7 @@ public class Wrist extends SubsystemBase {
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         wristController.disableContinuousInput();
-        wristController.setTolerance(2);
+        wristController.setTolerance(WristConstants.kTolerance);
 
         Shuffleboard.getTab("Controls").add("WristPID", wristController)
                 .withWidget(BuiltInWidgets.kPIDController);
