@@ -19,32 +19,32 @@ public class SetAcquisitionPositionCommand extends Command {
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private boolean retractExtension;
     private boolean isSupplier;
-    private boolean isAuton;
-    private double timeToMove;
-    private Timer timer = new Timer();
+    private FinishActions finishAction;
+
+    public enum FinishActions {
+        NoFinish,
+        NoDisable,
+        Default
+    }
 
     public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
-        addRequirements(shoulder, wrist, extension);
-        this.acquisitionPositionSetpointSupplier = acquisitionPositionSetpointSupplier;
+        this(acquisitionPositionSetpointSupplier.get(), FinishActions.Default);
         this.isSupplier = true;
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint) {
-        addRequirements(shoulder, wrist, extension);
-        this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
-        this.isSupplier = false;
+        this(acquisitionPositionSetpoint, FinishActions.Default);
     }
 
     public SetAcquisitionPositionCommand(AcquisitionPositionSetpoint acquisitionPositionSetpoint,
-            double timeToMove) {
+            FinishActions finishAction) {
         addRequirements(shoulder, wrist, extension);
         this.acquisitionPositionSetpoint = acquisitionPositionSetpoint;
         this.isSupplier = false;
-        this.timeToMove = timeToMove;
+        this.finishAction = finishAction;
     }
 
     public void initialize() {
-        timer.restart();
         wrist.enable();
         shoulder.enable();
         extension.enable();
@@ -74,15 +74,15 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public boolean isFinished() {
-        // return isAuton && extension.onTarget() && shoulder.onTarget() &&
-        // wrist.onTarget();
-        return this.timeToMove != 0 && timer.get() >= timeToMove;
+        return finishAction != FinishActions.NoFinish &&
+                extension.onTarget() &&
+                wrist.onTarget() &&
+                shoulder.onTarget();
+
     }
 
     public void end(boolean interrupted) {
-        timer.restart();
-        timer.stop();
-        if (!isAuton) {
+        if (finishAction != FinishActions.NoDisable) {
             wrist.disable();
             extension.disable();
             shoulder.disable();
