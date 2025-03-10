@@ -117,13 +117,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        operatorPanel.enableDefaults();
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
     }
 
     @Override
     public void teleopPeriodic() {
+        operatorPanel.enableDefaults();
     }
 
     @Override

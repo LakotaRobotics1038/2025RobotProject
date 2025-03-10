@@ -28,6 +28,7 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
     private OperatorState operatorState;
+    private boolean isDefaultEnabled;
 
     private final Extension extension = Extension.getInstance();
     private final Wrist wrist = Wrist.getInstance();
@@ -66,7 +67,8 @@ public class OperatorPanel extends GenericHID {
         this.disposeButton.and(operatorState::isBarge).whileTrue(new ShootAlgaeCommand());
 
         // Setpoints
-        this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));
+        this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage)
+                .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
         this.bargeButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge));
 
         // Operator State Updates
@@ -79,13 +81,16 @@ public class OperatorPanel extends GenericHID {
         this.coralL4Button
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L4Coral)));
         this.algaeL23Button
-                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae)));
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae))
+                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
         this.algaeL34Button
-                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae)));
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae))
+                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
         this.processorButton
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor)));
         this.feederButton.onTrue(
-                new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation)));
+                new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation))
+                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
         this.coralPosScoringSwitch
                 .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(true)))
                 .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
@@ -137,9 +142,11 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
-        wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
-        shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
+        if (isDefaultEnabled) {
+            extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
+            wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
+            shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
+        }
     }
 
     public void clearDefaults() {
