@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.041803278688524,
+        "y": 3.6713627049180326
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.761101145748617,
+        "y": 3.6713627049180326
+      },
+      "isLocked": false,
+      "linkedName": "BackofLeftReef21"
+    },
+    {
+      "anchor": {
+        "x": 5.622233606557376,
+        "y": 3.6713627049180326
+      },
+      "prevControl": {
+        "x": 5.872233606557376,
+        "y": 3.6713627049180326
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftReefTag21"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Middle L4 and Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

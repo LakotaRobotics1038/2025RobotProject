@@ -55,7 +55,7 @@ public class OperatorPanel extends GenericHID {
 
         // Acquire
         this.acquireButton.and(operatorState::isCoral134).whileTrue(new AcquireCoralCommand());
-        this.acquireButton.and(operatorState::isAlgae).whileTrue(new AcquireAlgaeCommand());
+        this.acquireButton.and(operatorState::isAlgae).onTrue(new AcquireAlgaeCommand());
         this.acquireButton.and(operatorState::isCoral4).whileTrue(new AcquireForL4Command());
 
         // Dispose
@@ -90,42 +90,34 @@ public class OperatorPanel extends GenericHID {
                 .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
 
         // Manual Control
-        // this.coralL1Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L1Coral));
-        // this.coralL2Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L2Coral));
-        // this.coralL3Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral));
-        // this.coralL4Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral));
-        // this.coralL4Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new PrintCommand("Running L4Command")
-        // .andThen(new AcquireForL4Command()));
-        // this.algaeL23Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae));
-        // this.algaeL34Button
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae));
-        // this.processorButton
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor));
-        // this.feederButton
-        // .and(operatorState::getIsManual)
-        // .onTrue(new
-        // SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation));
+        this.coralL1Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L1Coral));
+        this.coralL2Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L2Coral));
+        this.coralL3Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral));
+        this.coralL4Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral));
+        this.coralL4Button
+                .and(operatorState::getIsManual)
+                .onTrue(new PrintCommand("Running L4Command")
+                        .andThen(new AcquireForL4Command()));
+        this.algaeL23Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae));
+        this.algaeL34Button
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae));
+        this.processorButton
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor));
+        this.feederButton
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation));
     }
 
     // Singleton Setup
