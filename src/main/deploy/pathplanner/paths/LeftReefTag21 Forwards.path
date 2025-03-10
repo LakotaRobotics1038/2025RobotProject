@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.041803278688524,
-        "y": 3.6713627049180326
+        "x": 6.029815573770492,
+        "y": 3.50825
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.761101145748617,
-        "y": 3.6713627049180326
+        "x": 5.749113440830585,
+        "y": 3.50825
       },
       "isLocked": false,
       "linkedName": "BackofLeftReef21"
     },
     {
       "anchor": {
-        "x": 5.622233606557376,
-        "y": 3.6713627049180326
+        "x": 5.658196721311475,
+        "y": 3.725
       },
       "prevControl": {
-        "x": 5.872233606557376,
-        "y": 3.6713627049180326
+        "x": 5.908196721311475,
+        "y": 3.725
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftReefTag21"
+      "linkedName": "ReefTag21Algae"
     }
   ],
   "rotationTargets": [],
