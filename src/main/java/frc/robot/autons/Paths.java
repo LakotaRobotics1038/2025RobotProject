@@ -103,4 +103,19 @@ public class Paths {
             throws IOException, ParseException, FileVersionException {
         return PathPlannerPath.fromPathFile("BottomStartingPos Taxi");
     }
+
+    public static PathPlannerPath getLeftReefTag21ForwardsPath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("LeftReefTag21 Forwards");
+    }
+
+    public static PathPlannerPath getLeftReefTag21BackwardsPath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("LeftReefTag21 Backwards");
+    }
+
+    public static PathPlannerPath getLeftReefTag21ToProcessorPath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("LeftReefTag21 to Processor");
+    }
 }

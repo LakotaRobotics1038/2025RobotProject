@@ -15,6 +15,7 @@ public class AutonSelector {
         MiddleThreePieceBottomAuto,
         TopThreePieceAuto,
         BottomThreePieceAuto,
+        MiddleL4CoralProcessor,
         TopTaxi,
         BottomTaxi;
     }
@@ -42,6 +43,7 @@ public class AutonSelector {
         this.autoChooser.addOption("Middle Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
         this.autoChooser.setDefaultOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
         this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
+        this.autoChooser.addOption("Middle L4 Coral Processor", AutonChoices.MiddleL4CoralProcessor);
         this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
         this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
 
@@ -76,6 +78,8 @@ public class AutonSelector {
                     return new TopThreePieceAuto(alliance);
                 case BottomThreePieceAuto:
                     return new BottomThreePieceAuto(alliance);
+                case MiddleL4CoralProcessor:
+                    return new MiddleL4CoralProcessor(alliance);
                 case TopTaxi:
                     return new TopTaxi(alliance);
                 case BottomTaxi:
