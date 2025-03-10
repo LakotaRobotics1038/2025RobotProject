@@ -11,11 +11,11 @@ import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.commands.SetExtensionPositionCommand;
 import frc.robot.commands.SetShoulderPositionCommand;
 import frc.robot.commands.SetWristPositionCommand;
 import frc.robot.commands.ShootAlgaeCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.IOConstants;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
@@ -67,8 +67,8 @@ public class OperatorPanel extends GenericHID {
 
         // Setpoints
         this.storageButton.toggleOnTrue(
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish)
-                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish));
+        this.storageButton.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
 
@@ -82,16 +82,16 @@ public class OperatorPanel extends GenericHID {
         this.coralL4Button
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L4Coral)));
         this.algaeL23Button
-                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae))
-                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae)));
+        this.algaeL23Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.algaeL34Button
-                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae))
-                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae)));
+        this.algaeL34Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.processorButton
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor)));
         this.feederButton.onTrue(
-                new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation))
-                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
+                new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation)));
+        this.algaeL23Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.coralPosScoringSwitch
                 .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(true)))
                 .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
@@ -143,16 +143,19 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        if (isDefaultEnabled) {
-            extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
-            wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
-            shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
-        }
+        extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
+        wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
+        shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
+        isDefaultEnabled = true;
     }
 
     public void clearDefaults() {
         extension.removeDefaultCommand();
         wrist.removeDefaultCommand();
         shoulder.removeDefaultCommand();
+    }
+
+    public boolean getIsDefaultsEnabled() {
+        return isDefaultEnabled;
     }
 }
