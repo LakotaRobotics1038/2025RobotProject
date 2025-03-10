@@ -31,7 +31,7 @@ public class MiddleThreePieceTopAuto extends Auton {
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
                                         FinishActions.NoDisable))),
-                // new AcquireCoralCommand(),
+                new AcquireCoralCommand(),
 
                 new AcquireForL4Command(),
                 followPathCommand(Paths.getTopFeederStationToLeftTag20Path())
@@ -43,7 +43,7 @@ public class MiddleThreePieceTopAuto extends Auton {
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
                                         FinishActions.NoDisable))),
-                // new AcquireCoralCommand(),
+                new AcquireCoralCommand(),
 
                 new AcquireForL4Command(),
                 followPathCommand(Paths.getTopFeederStationToLeftTag20Path())

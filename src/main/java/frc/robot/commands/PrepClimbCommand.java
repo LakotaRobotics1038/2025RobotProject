@@ -1,13 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
-import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetpoints;
-import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;
 
 public class PrepClimbCommand extends Command {
     private Climb climb = Climb.getInstance();

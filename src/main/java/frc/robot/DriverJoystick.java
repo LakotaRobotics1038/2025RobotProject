@@ -26,17 +26,10 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Extension;
-import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;
-import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
-    private final Shoulder shoulder = Shoulder.getInstance();
-    private final Extension extension = Extension.getInstance();
-    private final Wrist wrist = Wrist.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
 
     // Commands

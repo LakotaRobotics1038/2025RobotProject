@@ -32,7 +32,7 @@ public class TopThreePieceAuto extends Auton {
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
                                         FinishActions.NoDisable))),
-                // new AcquireCoralCommand(),
+                new AcquireCoralCommand(),
                 new WaitCommand(1),
 
                 new AcquireForL4Command(),
@@ -45,7 +45,7 @@ public class TopThreePieceAuto extends Auton {
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
                                         FinishActions.NoDisable))),
-                // new AcquireCoralCommand(),
+                new AcquireCoralCommand(),
                 new WaitCommand(1),
 
                 new AcquireForL4Command(),
