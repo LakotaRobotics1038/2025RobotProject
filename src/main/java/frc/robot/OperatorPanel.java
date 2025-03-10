@@ -67,9 +67,11 @@ public class OperatorPanel extends GenericHID {
         this.disposeButton.and(operatorState::isBarge).whileTrue(new ShootAlgaeCommand());
 
         // Setpoints
-        this.storageButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage)
-                .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
-        this.bargeButton.toggleOnTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge));
+        this.storageButton.toggleOnTrue(
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish)
+                        .alongWith(new InstantCommand(() -> isDefaultEnabled = true)));
+        this.bargeButton.toggleOnTrue(
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
 
         // Operator State Updates
         this.coralL1Button.onTrue(

@@ -26,8 +26,9 @@ public class SetAcquisitionPositionCommand extends Command {
         Default
     }
 
-    public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier) {
-        this(FinishActions.Default);
+    public SetAcquisitionPositionCommand(Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier,
+            FinishActions finishAction) {
+        this(finishAction);
         this.acquisitionPositionSetpointSupplier = acquisitionPositionSetpointSupplier;
     }
 
