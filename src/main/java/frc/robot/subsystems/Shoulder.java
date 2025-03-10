@@ -94,7 +94,7 @@ public class Shoulder extends SubsystemBase {
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        this.setSetpoint(setpoint.setpoint);
+        this.setSetpoint(setpoint.setpoint + Dashboard.getInstance().getShoulderOffset());
     }
 
     public void setP(double p) {

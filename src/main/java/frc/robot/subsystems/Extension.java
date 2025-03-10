@@ -122,7 +122,7 @@ public class Extension extends SubsystemBase {
      * @param setpoint the setpoint for the subsystem
      */
     public void setSetpoint(ExtensionSetpoints setpoint) {
-        setSetpoint(setpoint.position);
+        setSetpoint(setpoint.position + Dashboard.getInstance().getExtensionOffset());
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -25,6 +26,25 @@ public class Dashboard extends SubsystemBase {
     // Tabs
     private final ShuffleboardTab driversTab = Shuffleboard.getTab("Drivers");
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
+
+    // Driver Tab Inputs
+    private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
+            .withPosition(2, 1)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
+            .withPosition(2, 2)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
+            .withPosition(2, 3)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
 
     // Variables
     private final Field2d field = new Field2d();
@@ -94,6 +114,22 @@ public class Dashboard extends SubsystemBase {
         controlsTab.addNumber("Climb", climb::getPosition)
                 .withPosition(3, 3)
                 .withSize(2, 1);
+
+        driversTab.addNumber("Extension Offset", this::getExtensionOffset)
+                .withPosition(2, 1)
+                .withSize(2, 1)
+                .withWidget(BuiltInWidgets.kTextView);
+
+        driversTab.addNumber("Shoulder Offset", this::getShoulderOffset)
+                .withPosition(2, 2)
+                .withSize(2, 1)
+                .withWidget(BuiltInWidgets.kTextView);
+
+        driversTab.addNumber("Wrist Offset", this::getWristOffset)
+                .withPosition(2, 3)
+                .withSize(2, 1)
+                .withWidget(BuiltInWidgets.kTextView);
+
     }
 
     @Override
@@ -129,5 +165,17 @@ public class Dashboard extends SubsystemBase {
 
     public SendableChooser<Double> getDelayChooser() {
         return delayChooser;
+    }
+
+    public double getExtensionOffset() {
+        return this.extensionOffset.getDouble(0);
+    }
+
+    public double getWristOffset() {
+        return this.wristOffset.getDouble(0);
+    }
+
+    public double getShoulderOffset() {
+        return this.shoulderOffset.getDouble(0);
     }
 }
