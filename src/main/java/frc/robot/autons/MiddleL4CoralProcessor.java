@@ -9,6 +9,7 @@ import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireForL4Command;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.DisposeCoral134Command;
@@ -31,7 +32,7 @@ public class MiddleL4CoralProcessor extends Auton {
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
                                         FinishActions.NoDisable))),
-                // new AcquireAlgaeCommand(),
+                new AcquireAlgaeCommand(),
                 followPathCommand(Paths.getLeftReefTag21ForwardsPath()),
                 followPathCommand(Paths.getLeftReefTag21ToProcessorPath())
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
