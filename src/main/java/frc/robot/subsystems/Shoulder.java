@@ -25,7 +25,7 @@ public class Shoulder extends SubsystemBase {
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
     private boolean enabled = false;
-    private double shoulderOffset;
+    private double shoulderOffset = 0.0;
 
     private Shoulder() {
 
@@ -90,12 +90,12 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance);
+        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, 0, ShoulderConstants.kMaxDistance);
         shoulderController.setSetpoint(setpoint);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
-        this.setSetpoint(setpoint.setpoint + this.shoulderOffset);
+        this.setSetpoint(setpoint.setpoint);
     }
 
     public void setP(double p) {
