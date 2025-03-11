@@ -85,8 +85,7 @@ public class Wrist extends SubsystemBase {
     }
 
     public boolean onTarget() {
-        // return this.wristController.atSetpoint();
-        return true;
+        return this.wristController.atSetpoint();
     }
 
     private void setSetpoint(double setpoint) {

@@ -71,6 +71,8 @@ public class OperatorPanel extends GenericHID {
         this.storageButton.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
+        this.feederButton.toggleOnTrue(
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation, FinishActions.NoFinish));
 
         // Operator State Updates
         this.coralL1Button.onTrue(
