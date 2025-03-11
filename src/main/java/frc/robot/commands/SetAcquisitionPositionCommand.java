@@ -52,28 +52,32 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
+        extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+        shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+        wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
 
-        if (this.acquisitionPositionSetpoint == null) {
-            this.acquisitionPositionSetpoint = this.acquisitionPositionSetpointSupplier.get();
-        }
+        // if (this.acquisitionPositionSetpoint == null) {
+        // this.acquisitionPositionSetpoint =
+        // this.acquisitionPositionSetpointSupplier.get();
+        // }
 
-        if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
-            retractExtension = true;
-            extension.setSetpoint(ExtensionSetpoints.Storage);
-        }
+        // if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
+        // retractExtension = true;
+        // extension.setSetpoint(ExtensionSetpoints.Storage);
+        // }
     }
 
     public void execute() {
-        if (this.retractExtension) {
-            if (extension.getPosition() <= ExtensionConstants.kExtensionMaxMove) {
-                this.retractExtension = false;
-            }
-        } else if (!setpointsSet) {
-            extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
-            shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
-            wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-            setpointsSet = true;
-        }
+        // if (this.retractExtension) {
+        // if (extension.getPosition() <= ExtensionConstants.kExtensionMaxMove) {
+        // this.retractExtension = false;
+        // }
+        // } else if (!setpointsSet) {
+        // setpointsSet = true;
+        // extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
+        // shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
+        // wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
+        // }
     }
 
     public boolean isFinished() {

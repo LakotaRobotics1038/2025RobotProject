@@ -110,7 +110,8 @@ public class OperatorPanel extends GenericHID {
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral, FinishActions.NoFinish));
         this.coralL4Button
                 .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoFinish));
+                .toggleOnTrue(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoFinish));
         this.coralL4Button
                 .and(operatorState::getIsManual)
                 .onTrue(new PrintCommand("Running L4Command")
