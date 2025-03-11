@@ -27,6 +27,7 @@ public class Extension extends SubsystemBase {
     private RelativeEncoder extensionEncoder = extensionMotor.getEncoder();
     private static Extension instance;
     private boolean enabled;
+    private double extensionOffset;
 
     /**
      * Creates an instance of the Arm subsystem if it does not exist.
@@ -122,7 +123,7 @@ public class Extension extends SubsystemBase {
      * @param setpoint the setpoint for the subsystem
      */
     public void setSetpoint(ExtensionSetpoints setpoint) {
-        setSetpoint(setpoint.position + Dashboard.getInstance().getExtensionOffset());
+        setSetpoint(setpoint.position + this.extensionOffset);
     }
 
     /**
@@ -172,5 +173,9 @@ public class Extension extends SubsystemBase {
     public void disable() {
         enabled = false;
         useOutput(0);
+    }
+
+    public void setOffset(double extensionOffset) {
+        this.extensionOffset = extensionOffset;
     }
 }

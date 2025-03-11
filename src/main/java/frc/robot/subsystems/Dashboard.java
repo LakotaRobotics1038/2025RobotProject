@@ -18,6 +18,9 @@ public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Climb climb = Climb.getInstance();
+    private Wrist wrist = Wrist.getInstance();
+    private Shoulder shoulder = Shoulder.getInstance();
+    private Extension extension = Extension.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -114,28 +117,15 @@ public class Dashboard extends SubsystemBase {
         controlsTab.addNumber("Climb", climb::getPosition)
                 .withPosition(3, 3)
                 .withSize(2, 1);
-
-        driversTab.addNumber("Extension Offset", this::getExtensionOffset)
-                .withPosition(2, 1)
-                .withSize(2, 1)
-                .withWidget(BuiltInWidgets.kTextView);
-
-        driversTab.addNumber("Shoulder Offset", this::getShoulderOffset)
-                .withPosition(2, 2)
-                .withSize(2, 1)
-                .withWidget(BuiltInWidgets.kTextView);
-
-        driversTab.addNumber("Wrist Offset", this::getWristOffset)
-                .withPosition(2, 3)
-                .withSize(2, 1)
-                .withWidget(BuiltInWidgets.kTextView);
-
     }
 
     @Override
     public void periodic() {
         // Controls Tab
         field.setRobotPose(driveTrain.getState().Pose);
+        wrist.setOffset(wristOffset.getDouble(0));
+        shoulder.setOffset(shoulderOffset.getDouble(0));
+        extension.setOffset(extensionOffset.getDouble(0));
     }
 
     /**
