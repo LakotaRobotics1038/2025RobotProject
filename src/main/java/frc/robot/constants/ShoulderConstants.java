@@ -13,7 +13,7 @@ public class ShoulderConstants {
         Storage(34.0),
         FeederStation(28.0),
         Barge(58.0),
-        Climb(60.0);
+        Climb(55.0);
 
         public final double setpoint;
 
@@ -32,7 +32,7 @@ public class ShoulderConstants {
     public static final double kMaxPower = 0.75;
     public static final double kMaxDistance = 76.0;
 
-    public static final double kTolerance = 0.0;
+    public static final double kTolerance = 2.0;
 
     public static final double kMaxExtendedShoulderAngle = 0.0;
     public static final double kEncoderConversion = 120.0;

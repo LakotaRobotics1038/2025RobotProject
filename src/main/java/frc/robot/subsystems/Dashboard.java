@@ -20,6 +20,9 @@ public class Dashboard extends SubsystemBase {
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Climb climb = Climb.getInstance();
     private OperatorState operatorState = OperatorState.getInstance();
+    private Wrist wrist = Wrist.getInstance();
+    private Shoulder shoulder = Shoulder.getInstance();
+    private Extension extension = Extension.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -34,6 +37,24 @@ public class Dashboard extends SubsystemBase {
             .withPosition(0, 3)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kToggleButton)
+            .getEntry();
+
+    private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
+            .withPosition(2, 1)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
+            .withPosition(2, 2)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
+            .withPosition(2, 3)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     // Variables
@@ -71,7 +92,7 @@ public class Dashboard extends SubsystemBase {
         // .withWidget(BuiltInWidgets.kGyro);
 
         driversTab.add(field)
-                .withPosition(2, 1)
+                .withPosition(3, 1)
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
@@ -121,6 +142,10 @@ public class Dashboard extends SubsystemBase {
             operatorState.toggleIsManual();
             manualOperatorMode.setBoolean(false);
         }
+
+        wrist.setOffset(wristOffset.getDouble(0));
+        shoulder.setOffset(shoulderOffset.getDouble(0));
+        extension.setOffset(extensionOffset.getDouble(0));
     }
 
     /**

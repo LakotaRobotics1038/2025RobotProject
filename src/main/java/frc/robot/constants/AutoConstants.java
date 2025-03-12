@@ -45,24 +45,8 @@ public final class AutoConstants {
         Algae22(new Pose2d(new Translation2d(4.95, 2.71), Rotation2d.fromDegrees(120.0))),
         Processor3(new Pose2d(new Translation2d(12.07, 8.27), Rotation2d.fromDegrees(90.0))),
         Processor16(new Pose2d(new Translation2d(6.18, 0.20), Rotation2d.fromDegrees(-90.0))),
-        FeederStation12Point1(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point2(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point3(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point4(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point5(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point6(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point7(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point8(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation12Point9(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-125.0))),
-        FeederStation13Point1(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point2(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point3(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point4(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point5(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point6(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point7(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point8(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
-        FeederStation13Point9(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(125.0))),
+        FeederStation12Point1(new Pose2d(new Translation2d(0.9, 1.13), Rotation2d.fromDegrees(55.0))),
+        FeederStation13Point1(new Pose2d(new Translation2d(1.39, 7.42), Rotation2d.fromDegrees(125.0))),
         Storage(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0.0)));
 
         private Pose2d endpoint;
@@ -86,10 +70,10 @@ public final class AutoConstants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 1.1;
-    public static final double kIXController = 0.01;
+    public static final double kPXController = 8;
+    public static final double kIXController = 0.02;
     public static final double kDController = 0.0;
-    public static final double kPThetaController = 1.0;
+    public static final double kPThetaController = 1.35;
     public static final double kIThetaController = 0.0;
     public static final double kDThetaController = 0.0;
 
