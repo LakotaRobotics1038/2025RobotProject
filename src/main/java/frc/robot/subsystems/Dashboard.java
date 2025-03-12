@@ -156,16 +156,4 @@ public class Dashboard extends SubsystemBase {
     public SendableChooser<Double> getDelayChooser() {
         return delayChooser;
     }
-
-    public double getExtensionOffset() {
-        return this.extensionOffset.getDouble(0);
-    }
-
-    public double getWristOffset() {
-        return this.wristOffset.getDouble(0);
-    }
-
-    public double getShoulderOffset() {
-        return this.shoulderOffset.getDouble(0);
-    }
 }
