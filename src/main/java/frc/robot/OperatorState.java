@@ -76,4 +76,8 @@ public class OperatorState {
     public boolean getIsManual() {
         return this.isManual;
     }
+
+    public void toggleIsManual() {
+        this.isManual = !isManual;
+    }
 }

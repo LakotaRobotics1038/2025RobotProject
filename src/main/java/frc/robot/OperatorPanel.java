@@ -99,6 +99,8 @@ public class OperatorPanel extends GenericHID {
                 .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
 
         // Manual Control
+        this.coralL1Button.and(processorButton).onTrue(new InstantCommand(operatorState::toggleIsManual));
+
         this.coralL1Button
                 .and(operatorState::getIsManual)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L1Coral, FinishActions.NoFinish));

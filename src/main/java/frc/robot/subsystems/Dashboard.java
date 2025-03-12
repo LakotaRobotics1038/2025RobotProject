@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Climb climb = Climb.getInstance();
+    private OperatorState operatorState = OperatorState.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
@@ -30,7 +32,13 @@ public class Dashboard extends SubsystemBase {
     private final ShuffleboardTab driversTab = Shuffleboard.getTab("Drivers");
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
 
-    // Driver Tab Inputs
+    // Drivers Tab Inputs
+    private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
+            .withPosition(0, 3)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kToggleButton)
+            .getEntry();
+
     private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
             .withPosition(2, 1)
             .withSize(2, 1)
@@ -88,6 +96,11 @@ public class Dashboard extends SubsystemBase {
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
+        driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
+                .withPosition(0, 4)
+                .withSize(2, 1)
+                .withWidget(BuiltInWidgets.kBooleanBox);
+
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
         });
@@ -123,6 +136,13 @@ public class Dashboard extends SubsystemBase {
     public void periodic() {
         // Controls Tab
         field.setRobotPose(driveTrain.getState().Pose);
+
+        // Drivers tab
+        if (manualOperatorMode.getBoolean(false)) {
+            operatorState.toggleIsManual();
+            manualOperatorMode.setBoolean(false);
+        }
+
         wrist.setOffset(wristOffset.getDouble(0));
         shoulder.setOffset(shoulderOffset.getDouble(0));
         extension.setOffset(extensionOffset.getDouble(0));
