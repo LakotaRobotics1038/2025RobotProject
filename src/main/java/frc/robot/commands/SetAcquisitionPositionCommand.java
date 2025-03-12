@@ -84,8 +84,7 @@ public class SetAcquisitionPositionCommand extends Command {
         return finishAction != FinishActions.NoFinish &&
                 extension.onTarget() &&
                 wrist.onTarget() &&
-                shoulder.onTarget()
-                && setpointsSet;
+                shoulder.onTarget();
 
     }
 

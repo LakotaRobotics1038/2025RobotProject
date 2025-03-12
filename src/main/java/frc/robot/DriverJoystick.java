@@ -26,6 +26,7 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
@@ -106,7 +107,8 @@ public class DriverJoystick extends XboxController1038 {
 
         super.rightBumper.whileTrue(new PrepClimbCommand());
         super.rightBumper
-                .toggleOnTrue(new SetAcquisitionPositionCommand(operatorState::getLastInput, FinishActions.NoFinish));
+                .toggleOnTrue(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
 
         super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
