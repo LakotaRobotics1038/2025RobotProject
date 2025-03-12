@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartMiddlePos to RightReefTag21"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightReefTag21 To TopFeederStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopFeederStation to LeftReefTag20"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftReefTag20 to TopFeederStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopFeederStation to RightReefTag20"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

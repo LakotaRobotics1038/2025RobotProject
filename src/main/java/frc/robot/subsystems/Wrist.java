@@ -42,7 +42,7 @@ public class Wrist extends SubsystemBase {
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         wristController.disableContinuousInput();
-        wristController.setTolerance(2);
+        wristController.setTolerance(WristConstants.kTolerance);
 
         Shuffleboard.getTab("Controls").add("WristPID", wristController)
                 .withWidget(BuiltInWidgets.kPIDController);
@@ -66,7 +66,6 @@ public class Wrist extends SubsystemBase {
 
     protected void useOutput(double output) {
         double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
-        // power = MathUtil.applyDeadband(power, 0.1);
         this.wristMotor.set(power);
     }
 

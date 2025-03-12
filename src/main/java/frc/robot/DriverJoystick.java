@@ -20,22 +20,17 @@ import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.PrepClimbCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Extension;
-import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
-    private final Shoulder shoulder = Shoulder.getInstance();
-    private final Extension extension = Extension.getInstance();
-    private final Wrist wrist = Wrist.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
 
     // Commands
@@ -111,7 +106,9 @@ public class DriverJoystick extends XboxController1038 {
         super.xButton.whileTrue(this.driveTrain.setX());
 
         super.rightBumper.whileTrue(new PrepClimbCommand());
-        super.rightBumper.toggleOnTrue(new SetAcquisitionPositionCommand(operatorState::getLastInput));
+        super.rightBumper
+                .toggleOnTrue(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
         super.rightTrigger.whileTrue(new ClimbUpCommand());
 
         super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
@@ -119,7 +116,8 @@ public class DriverJoystick extends XboxController1038 {
         // TODO: "we need a comment to run this command?"
         super.aButton.onTrue(
                 new PrintCommand("Running SetAcquisitionPositionCommand")
-                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput)));
+                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput,
+                                FinishActions.NoFinish)));
         super.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
