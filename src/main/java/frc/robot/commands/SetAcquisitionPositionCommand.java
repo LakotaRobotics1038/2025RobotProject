@@ -49,17 +49,15 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public void initialize() {
+        if (this.acquisitionPositionSetpoint == null) {
+            this.acquisitionPositionSetpoint = this.acquisitionPositionSetpointSupplier.get();
+        }
         wrist.enable();
         shoulder.enable();
         extension.enable();
         extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
         shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
         wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-
-        // if (this.acquisitionPositionSetpoint == null) {
-        // this.acquisitionPositionSetpoint =
-        // this.acquisitionPositionSetpointSupplier.get();
-        // }
 
         // if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
         // retractExtension = true;

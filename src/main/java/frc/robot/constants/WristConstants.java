@@ -8,10 +8,10 @@ public class WristConstants {
         L4Coral(140.0),
         L23Algae(20),
         L34Algae(15),
-        Processor(70.0),
+        Processor(65.0),
         GroundAlgae(0),
         Storage(35),
-        FeederStation(-23.0),
+        FeederStation(-26.0),
         Climb(20.0),
         Barge(-70.0);
 

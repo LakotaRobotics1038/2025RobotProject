@@ -329,19 +329,19 @@ public class DetermineWaypointCommand extends Command {
         return switch (this.bestId) {
             case 1 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.FeederStation12Point5);
+                yield Optional.of(DriveWaypoints.FeederStation12Point1);
             }
             case 2 -> {
                 this.isMirrored = true;
-                yield Optional.of(DriveWaypoints.FeederStation13Point5);
+                yield Optional.of(DriveWaypoints.FeederStation13Point1);
             }
             case 12 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.FeederStation12Point5);
+                yield Optional.of(DriveWaypoints.FeederStation12Point1);
             }
             case 13 -> {
                 this.isMirrored = false;
-                yield Optional.of(DriveWaypoints.FeederStation13Point5);
+                yield Optional.of(DriveWaypoints.FeederStation13Point1);
             }
             default -> Optional.empty();
         };
