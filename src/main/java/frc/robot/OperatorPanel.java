@@ -156,6 +156,7 @@ public class OperatorPanel extends GenericHID {
         extension.removeDefaultCommand();
         wrist.removeDefaultCommand();
         shoulder.removeDefaultCommand();
+        isDefaultEnabled = false;
     }
 
     public boolean getDefaultsDisabled() {
