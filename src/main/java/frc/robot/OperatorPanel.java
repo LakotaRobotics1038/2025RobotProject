@@ -68,7 +68,7 @@ public class OperatorPanel extends GenericHID {
         // Setpoints
         this.storageButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish));
-        this.storageButton.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
+        this.storageButton.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
         this.feederButton.toggleOnTrue(
@@ -85,15 +85,15 @@ public class OperatorPanel extends GenericHID {
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L4Coral)));
         this.algaeL23Button
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae)));
-        this.algaeL23Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
+        this.algaeL23Button.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.algaeL34Button
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae)));
-        this.algaeL34Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
+        this.algaeL34Button.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.processorButton
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor)));
         this.feederButton.onTrue(
                 new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.FeederStation)));
-        this.algaeL23Button.and(this::getIsDefaultsEnabled).onTrue(new InstantCommand(() -> enableDefaults()));
+        this.algaeL23Button.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.coralPosScoringSwitch
                 .onTrue(new InstantCommand(() -> operatorState.setScoringFlipped(true)))
                 .onFalse(new InstantCommand(() -> operatorState.setScoringFlipped(false)));
@@ -158,7 +158,7 @@ public class OperatorPanel extends GenericHID {
         shoulder.removeDefaultCommand();
     }
 
-    public boolean getIsDefaultsEnabled() {
-        return isDefaultEnabled;
+    public boolean getDefaultsDisabled() {
+        return !isDefaultEnabled;
     }
 }
