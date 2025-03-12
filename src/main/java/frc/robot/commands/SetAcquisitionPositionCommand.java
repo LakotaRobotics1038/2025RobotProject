@@ -3,8 +3,6 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.ExtensionConstants;
-import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
@@ -16,9 +14,7 @@ public class SetAcquisitionPositionCommand extends Command {
     private Extension extension = Extension.getInstance();
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
-    private boolean retractExtension;
     private FinishActions finishAction;
-    private boolean setpointsSet;
 
     public enum FinishActions {
         NoFinish,
@@ -58,24 +54,6 @@ public class SetAcquisitionPositionCommand extends Command {
         extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
         shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
         wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-
-        // if (extension.getPosition() >= ExtensionConstants.kExtensionMaxMove) {
-        // retractExtension = true;
-        // extension.setSetpoint(ExtensionSetpoints.Storage);
-        // }
-    }
-
-    public void execute() {
-        // if (this.retractExtension) {
-        // if (extension.getPosition() <= ExtensionConstants.kExtensionMaxMove) {
-        // this.retractExtension = false;
-        // }
-        // } else if (!setpointsSet) {
-        // setpointsSet = true;
-        // extension.setSetpoint(this.acquisitionPositionSetpoint.getExtensionSetpoint());
-        // shoulder.setSetpoint(this.acquisitionPositionSetpoint.getShoulderSetpoint());
-        // wrist.setSetpoint(this.acquisitionPositionSetpoint.getWristSetpoint());
-        // }
     }
 
     public boolean isFinished() {
@@ -92,6 +70,5 @@ public class SetAcquisitionPositionCommand extends Command {
             extension.disable();
             shoulder.disable();
         }
-        setpointsSet = false;
     }
 }
