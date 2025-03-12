@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -17,6 +18,9 @@ public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Climb climb = Climb.getInstance();
+    private Wrist wrist = Wrist.getInstance();
+    private Shoulder shoulder = Shoulder.getInstance();
+    private Extension extension = Extension.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -25,6 +29,25 @@ public class Dashboard extends SubsystemBase {
     // Tabs
     private final ShuffleboardTab driversTab = Shuffleboard.getTab("Drivers");
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
+
+    // Driver Tab Inputs
+    private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
+            .withPosition(2, 1)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
+            .withPosition(2, 2)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
+
+    private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
+            .withPosition(2, 3)
+            .withSize(2, 1)
+            .withWidget(BuiltInWidgets.kTextView)
+            .getEntry();
 
     // Variables
     private final Field2d field = new Field2d();
@@ -61,7 +84,7 @@ public class Dashboard extends SubsystemBase {
         // .withWidget(BuiltInWidgets.kGyro);
 
         driversTab.add(field)
-                .withPosition(2, 1)
+                .withPosition(3, 1)
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
@@ -100,6 +123,9 @@ public class Dashboard extends SubsystemBase {
     public void periodic() {
         // Controls Tab
         field.setRobotPose(driveTrain.getState().Pose);
+        wrist.setOffset(wristOffset.getDouble(0));
+        shoulder.setOffset(shoulderOffset.getDouble(0));
+        extension.setOffset(extensionOffset.getDouble(0));
     }
 
     /**

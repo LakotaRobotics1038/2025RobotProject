@@ -1,18 +1,18 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.LimitSwitchConfig.Type;
-import com.revrobotics.AbsoluteEncoder;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
@@ -25,6 +25,7 @@ public class Shoulder extends SubsystemBase {
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
     private boolean enabled = false;
+    private double shoulderOffset = 0.0;
 
     private Shoulder() {
 
@@ -89,7 +90,7 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint, 0, ShoulderConstants.kMaxDistance);
+        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, 0, ShoulderConstants.kMaxDistance);
         shoulderController.setSetpoint(setpoint);
     }
 
@@ -117,5 +118,9 @@ public class Shoulder extends SubsystemBase {
     public void disable() {
         this.enabled = false;
         this.useOutput(0);
+    }
+
+    public void setOffset(double shoulderOffset) {
+        this.shoulderOffset = shoulderOffset;
     }
 }
