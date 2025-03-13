@@ -1,6 +1,5 @@
 package frc.robot.constants;
 
-import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.Units;
 
 public class ExtensionConstants {
@@ -9,7 +8,7 @@ public class ExtensionConstants {
 
     public static final double kMinExtensionPower = -1.0;
     public static final double kMaxExtensionPower = 1.0;
-    public static final double kExtensionMaximum = 26.14791;
+    public static final double kExtensionMaximum = 26.0;
     public static final double kExtensionMaxMove = 0.0;
 
     public static final double kTolerance = 0.5;
