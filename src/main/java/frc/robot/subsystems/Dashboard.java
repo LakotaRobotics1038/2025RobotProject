@@ -34,7 +34,7 @@ public class Dashboard extends SubsystemBase {
 
     // Drivers Tab Inputs
     private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
-            .withPosition(0, 3)
+            .withPosition(0, 2)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kToggleButton)
             .getEntry();
@@ -92,12 +92,12 @@ public class Dashboard extends SubsystemBase {
         // .withWidget(BuiltInWidgets.kGyro);
 
         driversTab.add(field)
-                .withPosition(3, 1)
+                .withPosition(4, 0)
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
         driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
-                .withPosition(0, 4)
+                .withPosition(0, 3)
                 .withSize(2, 1)
                 .withWidget(BuiltInWidgets.kBooleanBox);
 
