@@ -45,7 +45,7 @@ public class Dashboard extends SubsystemBase {
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
-    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 7)
+    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 4)
             .withPosition(2, 2)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
