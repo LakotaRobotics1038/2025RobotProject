@@ -107,12 +107,12 @@ public class DriverJoystick extends XboxController1038 {
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down)).and(leftTrigger)
                 .and(this::getNotRightTrigger)
                 .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down)).and(rightTrigger)
                 .and(this::getNotleftTrigger)
                 .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left)).and(this::getNotRightTrigger)
                 .and(this::getNotleftTrigger)
