@@ -11,7 +11,7 @@ public class ShoulderConstants {
         Processor(31.0),
         GroundAlgae(0.0),
         Storage(34.0),
-        FeederStation(28.0),
+        FeederStation(21.0),
         Barge(58.0),
         Climb(55.0);
 
