@@ -5,7 +5,7 @@ public class WristConstants {
         L1Coral(135),
         L2Coral(80.0),
         L3Coral(110.0),
-        L4Coral(110.0),
+        L4Coral(117.5),
         L23Algae(10),
         L34Algae(10),
         Processor(65.0),
