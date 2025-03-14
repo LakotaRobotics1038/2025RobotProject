@@ -5,7 +5,7 @@ public class ShoulderConstants {
         L1Coral(27.0),
         L2Coral(22.0),
         L3Coral(65.0),
-        L4Coral(65.0),
+        L4Coral(61.0),
         L23Algae(61.0),
         L34Algae(61.0),
         Processor(31.0),
