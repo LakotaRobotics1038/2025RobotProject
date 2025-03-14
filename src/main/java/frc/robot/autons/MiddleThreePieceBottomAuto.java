@@ -25,7 +25,7 @@ public class MiddleThreePieceBottomAuto extends Auton {
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoDisable)
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(followPathCommand(Paths.getMiddlePosToLeftTag21Path()))),
-                new DisposeCoral134Command().withTimeout(1),
+                new DisposeCoral134Command(),
 
                 followPathCommand(Paths.getLeftTag21ToBottomFeederStationPath())
                         .alongWith(new WaitCommand(0.5).andThen(
@@ -37,7 +37,7 @@ public class MiddleThreePieceBottomAuto extends Auton {
                 followPathCommand(Paths.getBottomFeederStationToRightTag17Path())
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral,
                                 FinishActions.NoDisable)),
-                new DisposeCoral134Command().withTimeout(1),
+                new DisposeCoral134Command(),
 
                 followPathCommand(Paths.getRightTag17ToBottomFeederStationPath())
                         .alongWith(new WaitCommand(0.5).andThen(

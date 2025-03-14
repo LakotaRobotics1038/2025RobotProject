@@ -25,7 +25,7 @@ public class Shoulder extends SubsystemBase {
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
     private boolean enabled = false;
-    private double shoulderOffset = 4.0;
+    private double shoulderOffset = 0.0;
 
     private Shoulder() {
 
