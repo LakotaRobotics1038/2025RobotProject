@@ -28,7 +28,6 @@ public class OperatorState {
 
     public boolean isCoral134() {
         switch (getLastInput()) {
-            case L1Coral:
             case L3Coral:
             case L4Coral:
             case FeederStation:
@@ -48,6 +47,7 @@ public class OperatorState {
 
     public boolean isAlgae() {
         switch (getLastInput()) {
+            case L1Coral:
             case L23Algae:
             case L34Algae:
             case Processor:
