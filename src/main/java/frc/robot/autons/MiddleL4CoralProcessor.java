@@ -26,6 +26,7 @@ public class MiddleL4CoralProcessor extends Auton {
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoDisable)
                         .alongWith(new WaitCommand(1)
                                 .andThen(followPathCommand(Paths.getMiddlePosToLeftTag21Path())).withTimeout(7)),
+                new WaitCommand(1),
                 new DisposeCoral134Command(),
 
                 followPathCommand(Paths.getLeftReefTag21BackwardsPath())
