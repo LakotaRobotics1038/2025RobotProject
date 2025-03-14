@@ -13,7 +13,8 @@ public class WristConstants {
         Storage(35),
         FeederStation(166.0),
         Climb(20.0),
-        Barge(-70.0);
+        Barge(-61.0),
+        Ground2(180);
 
         private double setpoint;
 
