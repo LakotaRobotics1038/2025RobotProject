@@ -4,6 +4,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -24,6 +25,7 @@ public class Shoulder extends SubsystemBase {
     private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
+    private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
     private double lastPosition;
@@ -86,7 +88,7 @@ public class Shoulder extends SubsystemBase {
     public double getPosition() {
         double position = this.shoulderEncoder.getPosition();
 
-        if (lastPosition < 5 && position > 5) {
+        if (lastPosition < 5 && position > 90 && limitSwitch.isPressed()) {
             position = 0;
         }
 
