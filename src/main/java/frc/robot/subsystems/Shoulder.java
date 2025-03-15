@@ -88,12 +88,9 @@ public class Shoulder extends SubsystemBase {
     public double getPosition() {
         double position = this.shoulderEncoder.getPosition();
 
-        if (lastPosition < 5 && position > 90 && limitSwitch.isPressed()) {
+        if (limitSwitch.isPressed()) {
             position = 0;
         }
-
-        this.lastPosition = position;
-
         return position;
     }
 
