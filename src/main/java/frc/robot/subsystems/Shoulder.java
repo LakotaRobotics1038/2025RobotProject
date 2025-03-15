@@ -86,12 +86,13 @@ public class Shoulder extends SubsystemBase {
     }
 
     public double getPosition() {
-        double position = this.shoulderEncoder.getPosition();
+        // double position = this.shoulderEncoder.getPosition();
 
-        if (limitSwitch.isPressed()) {
-            position = 0;
-        }
-        return position;
+        // if (limitSwitch.isPressed()) {
+        // position = 0;
+        // }
+        // return position;
+        return shoulderEncoder.getPosition();
     }
 
     public boolean onTarget() {
