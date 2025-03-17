@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.658196721311475,
-        "y": 3.725
+        "x": 4.758,
+        "y": 2.855
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.658196721311475,
-        "y": 3.725
+        "x": 4.865863874326001,
+        "y": 2.6294664445910882
       },
       "isLocked": false,
-      "linkedName": "ReefTag21Algae"
+      "linkedName": "ReefTag22Algae"
     },
     {
       "anchor": {
-        "x": 6.653176229508197,
-        "y": 2.6404200819672123
+        "x": 5.02125,
+        "y": 2.3967499999999995
       },
       "prevControl": {
-        "x": 7.022390368852459,
-        "y": 3.408811987704917
+        "x": 4.82625,
+        "y": 2.66
       },
       "nextControl": {
-        "x": 6.283962090163934,
-        "y": 1.8720281762295072
+        "x": 5.402737026828722,
+        "y": 1.8817425137812247
       },
       "isLocked": false,
       "linkedName": null
@@ -36,15 +36,20 @@
         "y": -0.2246413934426232
       },
       "prevControl": {
-        "x": 6.271926229508196,
-        "y": 0.3507684426229506
+        "x": 6.981,
+        "y": 3.0694999999999997
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Processor"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 119.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -61,10 +66,10 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Middle L4 and Processor",
+  "folder": "Processor Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 118.21735585472932
   },
   "useDefaultConstraints": true
 }

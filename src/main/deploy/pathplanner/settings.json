@@ -3,12 +3,14 @@
   "robotLength": 0.89535,
   "holonomicMode": true,
   "pathFolders": [
-    "Bottom 3 Piece Auto Path",
-    "Middle 3 Piece Bottom Auto Paths",
-    "Middle 3 Piece Top Auto Paths",
-    "Middle L4 and Processor",
+    "Top 3 Piece Auto Path",
     "Taxi Bottom Auto",
-    "Top 3 Piece Auto Path"
+    "Processor Paths",
+    "Net Paths",
+    "Middle L4 and Processor",
+    "Middle 3 Piece Top Auto Paths",
+    "Middle 3 Piece Bottom Auto Paths",
+    "Bottom 3 Piece Auto Path"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

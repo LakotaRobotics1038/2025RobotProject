@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.658196721311475,
-        "y": 3.725
+        "x": 7.390499999999999,
+        "y": 5.67275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.658196721311475,
+        "x": 7.0395,
+        "y": 5.2145
+      },
+      "isLocked": false,
+      "linkedName": "net"
+    },
+    {
+      "anchor": {
+        "x": 5.658196721311475,
         "y": 3.725
       },
-      "isLocked": false,
-      "linkedName": "ReefTag21Algae"
-    },
-    {
-      "anchor": {
-        "x": 6.653176229508197,
-        "y": 2.6404200819672123
-      },
       "prevControl": {
-        "x": 7.022390368852459,
-        "y": 3.408811987704917
-      },
-      "nextControl": {
-        "x": 6.283962090163934,
-        "y": 1.8720281762295072
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.2,
-        "y": -0.2246413934426232
-      },
-      "prevControl": {
-        "x": 6.271926229508196,
-        "y": 0.3507684426229506
+        "x": 6.113250000000001,
+        "y": 4.0835
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Processor"
+      "linkedName": "ReefTag21Algae"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Middle L4 and Processor",
+  "folder": "Net Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

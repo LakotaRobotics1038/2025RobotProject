@@ -8,40 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.658196721311475,
-        "y": 3.725
+        "x": 5.908185786180406,
+        "y": 3.722661742965958
       },
       "isLocked": false,
       "linkedName": "ReefTag21Algae"
     },
     {
       "anchor": {
-        "x": 6.653176229508197,
-        "y": 2.6404200819672123
+        "x": 6.34725,
+        "y": 3.725
       },
       "prevControl": {
-        "x": 7.022390368852459,
-        "y": 3.408811987704917
+        "x": 6.106722575645071,
+        "y": 3.656834333178766
       },
       "nextControl": {
-        "x": 6.283962090163934,
-        "y": 1.8720281762295072
+        "x": 6.7177500000000006,
+        "y": 3.8299999999999996
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.2,
-        "y": -0.2246413934426232
+        "x": 7.390499999999999,
+        "y": 5.67275
       },
       "prevControl": {
-        "x": 6.271926229508196,
-        "y": 0.3507684426229506
+        "x": 6.805499999999999,
+        "y": 5.302249999999999
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Processor"
+      "linkedName": "net"
     }
   ],
   "rotationTargets": [],
@@ -58,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Middle L4 and Processor",
+  "folder": "Net Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

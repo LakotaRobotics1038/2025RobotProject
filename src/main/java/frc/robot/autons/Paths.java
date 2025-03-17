@@ -118,4 +118,39 @@ public class Paths {
             throws IOException, ParseException, FileVersionException {
         return PathPlannerPath.fromPathFile("LeftReefTag21 to Processor");
     }
+
+    public static PathPlannerPath getReefTag22ToProcessor()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Reef Tag 22 Algae To Processor");
+    }
+
+    public static PathPlannerPath getProcessorToAlgaePath22()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Processor to Algae Tag 22");
+    }
+
+    public static PathPlannerPath getMidPoseToTag21Algae()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Mid Pose to 21 Algae");
+    }
+
+    public static PathPlannerPath getTopPathToTag20Algae()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Top Pos to Tag 20 Algae");
+    }
+
+    public static PathPlannerPath getReefTag21ToNet()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Reef Tag 21 To Net");
+    }
+
+    public static PathPlannerPath getNetToReefTag21Algae()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Net to Reef Tag 21 Algae");
+    }
+
+    public static PathPlannerPath getReefTag20ToNet()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Reef Tag 20 To Net");
+    }
 }
