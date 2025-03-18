@@ -138,7 +138,7 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::getIsManual)
                 .and(operatorState::isGroundAlgae)
                 .onTrue(new SetAcquisitionPositionCommandGround(
-                        FinishActions.NoFinish));
+                        SetAcquisitionPositionCommandGround.FinishActions.NoFinish));
 
         this.feederButton
                 .and(operatorState::getIsManual)

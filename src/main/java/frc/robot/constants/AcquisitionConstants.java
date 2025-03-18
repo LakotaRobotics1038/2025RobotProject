@@ -11,10 +11,4 @@ public class AcquisitionConstants {
     public static final double kDisposeCoralSpeed2 = -0.5;
     public static final double kDisposeAlgaeSpeed = -1.0;
     public static final double kShootAlgaeSpeed = -1.0;
-
-    public enum FinishActions {
-        NoFinish,
-        NoDisable,
-        Default
-    }
 }
