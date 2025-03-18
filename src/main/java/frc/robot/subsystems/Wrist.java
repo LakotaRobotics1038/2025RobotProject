@@ -28,6 +28,7 @@ public class Wrist extends SubsystemBase {
     private boolean enabled;
     private double lastPosition;
     private double wristOffset = 0.0;
+    private WristSetpoints wristSetpoints;
 
     private static Wrist instance;
 
@@ -96,6 +97,7 @@ public class Wrist extends SubsystemBase {
 
     public void setSetpoint(WristSetpoints setPoints) {
         this.setSetpoint(setPoints.getSetpoint());
+        this.wristSetpoints = setPoints;
     }
 
     public void setP(double p) {
@@ -126,5 +128,9 @@ public class Wrist extends SubsystemBase {
 
     public void setOffset(double wristOffset) {
         this.wristOffset = wristOffset;
+    }
+
+    public WristSetpoints getSetpoint() {
+        return this.wristSetpoints;
     }
 }

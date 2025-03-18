@@ -4,6 +4,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -24,8 +25,11 @@ public class Shoulder extends SubsystemBase {
     private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
+    private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
+    private double lastPosition;
+    private ShoulderSetpoints shoulderSetpoints;
 
     private Shoulder() {
 
@@ -82,7 +86,12 @@ public class Shoulder extends SubsystemBase {
     }
 
     public double getPosition() {
-        return shoulderEncoder.getPosition();
+        double position = this.shoulderEncoder.getPosition();
+
+        if (limitSwitch.isPressed()) {
+            position = 0;
+        }
+        return position;
     }
 
     public boolean onTarget() {
@@ -96,6 +105,7 @@ public class Shoulder extends SubsystemBase {
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
         this.setSetpoint(setpoint.setpoint);
+        this.shoulderSetpoints = setpoint;
     }
 
     public void setP(double p) {
@@ -122,5 +132,9 @@ public class Shoulder extends SubsystemBase {
 
     public void setOffset(double shoulderOffset) {
         this.shoulderOffset = shoulderOffset;
+    }
+
+    public ShoulderSetpoints getSetpoint() {
+        return this.shoulderSetpoints;
     }
 }

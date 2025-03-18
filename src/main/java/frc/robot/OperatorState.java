@@ -4,6 +4,7 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorState {
     private AcquisitionPositionSetpoint lastInput;
+    private AcquisitionPositionSetpoint lastLastInput;
     private boolean scoringFlipped;
 
     private boolean isManual = false;
@@ -26,9 +27,12 @@ public class OperatorState {
         return lastInput;
     }
 
+    public AcquisitionPositionSetpoint getLastLastInput() {
+        return this.lastLastInput;
+    }
+
     public boolean isCoral134() {
         switch (getLastInput()) {
-            case L1Coral:
             case L3Coral:
             case L4Coral:
             case FeederStation:
@@ -48,6 +52,7 @@ public class OperatorState {
 
     public boolean isAlgae() {
         switch (getLastInput()) {
+            case L1Coral:
             case L23Algae:
             case L34Algae:
             case Processor:
@@ -57,11 +62,20 @@ public class OperatorState {
         }
     }
 
+    public boolean isGroundAlgae() {
+        return getLastLastInput() == AcquisitionPositionSetpoint.L1Coral;
+    }
+
+    public boolean isNotGroundAlgae() {
+        return !(getLastLastInput() == AcquisitionPositionSetpoint.L1Coral);
+    }
+
     public boolean isBarge() {
         return getLastInput().equals(AcquisitionPositionSetpoint.Barge);
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
+        this.lastLastInput = this.lastInput;
         this.lastInput = lastInput;
     }
 

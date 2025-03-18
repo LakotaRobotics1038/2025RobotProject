@@ -87,29 +87,85 @@ public class DriverJoystick extends XboxController1038 {
         super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
+                .and(rightTrigger.negate())
+                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
+                .and(leftTrigger)
+                .and(rightTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
+                .and(rightTrigger)
+                .and(leftTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
+                .and(rightTrigger.negate())
+                .and(leftTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
+                .and(leftTrigger)
+                .and(rightTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
+                .and(rightTrigger)
+                .and(leftTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
+                .and(rightTrigger.negate())
+                .and(leftTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
+                .and(leftTrigger)
+                .and(rightTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
+                .and(rightTrigger)
+                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
+                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
+                .and(rightTrigger.negate())
+                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
 
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
+                .and(leftTrigger)
+                .and(rightTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+
+        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
+                .and(rightTrigger)
+                .and(leftTrigger.negate())
+                .whileTrue(this.driveTrain
+                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-
-        super.rightBumper.whileTrue(new PrepClimbCommand());
-        super.rightBumper
+        super.yButton.whileTrue(new PrepClimbCommand());
+        super.yButton
                 .toggleOnTrue(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
-        super.rightTrigger.whileTrue(new ClimbUpCommand());
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb,
+                                FinishActions.NoFinish));
+        super.bButton.whileTrue(new ClimbUpCommand());
 
         super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
         super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());

@@ -44,8 +44,8 @@ public class AutonSelector {
         this.autoChooser.addOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
         this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
         this.autoChooser.addOption("Middle L4 Coral Processor", AutonChoices.MiddleL4CoralProcessor);
-        this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
-        this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
+        this.autoChooser.addOption("Taxi Not Processor", AutonChoices.TopTaxi);
+        this.autoChooser.addOption("Taxi Processor", AutonChoices.BottomTaxi);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
