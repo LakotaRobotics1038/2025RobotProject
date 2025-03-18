@@ -11,11 +11,9 @@ import frc.robot.subsystems.Dashboard;
 public class AutonSelector {
     public enum AutonChoices {
         NoAuto,
-        MiddleThreePieceTopAuto,
-        MiddleThreePieceBottomAuto,
-        TopThreePieceAuto,
-        BottomThreePieceAuto,
-        MiddleL4CoralProcessor,
+        BargeAuto,
+        ProcessorAuto,
+        BargeProcessorAuto,
         TopTaxi,
         BottomTaxi;
     }
@@ -39,11 +37,9 @@ public class AutonSelector {
         this.autoChooser = Dashboard.getInstance().getAutoChooser();
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
-        this.autoChooser.addOption("Middle Three Piece Top Auto", AutonChoices.MiddleThreePieceTopAuto);
-        this.autoChooser.addOption("Middle Three Piece Bottom Auto", AutonChoices.MiddleThreePieceBottomAuto);
-        this.autoChooser.addOption("Top Three Piece Auto", AutonChoices.TopThreePieceAuto);
-        this.autoChooser.addOption("Bottom Three Piece Auto", AutonChoices.BottomThreePieceAuto);
-        this.autoChooser.addOption("Middle L4 Coral Processor", AutonChoices.MiddleL4CoralProcessor);
+        this.autoChooser.addOption("Barge Auto", AutonChoices.BargeAuto);
+        this.autoChooser.addOption("Processor Auto", AutonChoices.ProcessorAuto);
+        this.autoChooser.addOption("Barge and Processor Auto", AutonChoices.BargeProcessorAuto);
         this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
         this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
 
@@ -70,20 +66,12 @@ public class AutonSelector {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         try {
             switch (this.autoChooser.getSelected()) {
-                case MiddleThreePieceTopAuto:
-                    return new MiddleThreePieceTopAuto(alliance);
-                case MiddleThreePieceBottomAuto:
-                    return new MiddleThreePieceBottomAuto(alliance);
-                case TopThreePieceAuto:
-                    return new TopThreePieceAuto(alliance);
-                case BottomThreePieceAuto:
-                    return new BottomThreePieceAuto(alliance);
-                case MiddleL4CoralProcessor:
-                    return new MiddleL4CoralProcessor(alliance);
-                case TopTaxi:
-                    return new TopTaxi(alliance);
-                case BottomTaxi:
-                    return new BottomTaxi(alliance);
+                case BargeAuto:
+                    return new BargeAuto(alliance);
+                case ProcessorAuto:
+                    return new ProcessorAuto(alliance);
+                case BargeProcessorAuto:
+                    return new BargeProcessorAuto(alliance);
                 default:
                     return null;
             }
