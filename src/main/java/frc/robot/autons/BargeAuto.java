@@ -21,7 +21,7 @@ public class BargeAuto extends Auton {
 
         super.addCommands(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                        .andThen(followPathCommand(Paths.getTopPathToTag20Algae())),
+                        .alongWith(followPathCommand(Paths.getTopPathToTag20Algae())),
                 new AcquireAlgaeCommand().withDeadline(followPathCommand(Paths.getReefTag21ToNet()))
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,

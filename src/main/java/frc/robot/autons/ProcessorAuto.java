@@ -21,23 +21,23 @@ public class ProcessorAuto extends Auton {
 
         super.addCommands(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
-                        .andThen(followPathCommand(Paths.getMidPoseToTag21Algae())),
-                new AcquireAlgaeCommand().withDeadline(followPathCommand(Paths.getLeftReefTag21ToProcessorPath()))
+                        .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
+                new AcquireAlgaeCommand()
+                        .withDeadline(
+                                new WaitCommand(1).andThen(followPathCommand(Paths.getLeftReefTag21ToProcessorPath())))
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                        FinishActions.NoFinish))),
+                                        FinishActions.NoFinish).withTimeout(1))),
                 new DisposeAlgaeCommand().withTimeout(0.5),
 
-                followPathCommand(Paths.getProcessorToAlgaePath22())
-                        .alongWith(
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
-                                        FinishActions.NoDisable)),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
+                        FinishActions.NoDisable).withDeadline(followPathCommand(Paths.getProcessorToAlgaePath22())),
 
                 new AcquireAlgaeCommand().withDeadline(
                         followPathCommand(Paths.getReefTag22ToProcessor()))
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                        FinishActions.NoDisable))),
+                                        FinishActions.NoDisable).withTimeout(1))),
                 new DisposeAlgaeCommand());
     }
 }

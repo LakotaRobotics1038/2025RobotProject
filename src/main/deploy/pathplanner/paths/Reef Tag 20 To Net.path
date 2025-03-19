@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3527499999999995,
-        "y": 4.882999999999999
+        "x": 4.878995901639344,
+        "y": 5.0379610655737705
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.445597669088526,
-        "y": 5.115119172721314
+        "x": 4.971843570727871,
+        "y": 5.270080238295085
       },
       "isLocked": false,
       "linkedName": "ReefTag20Algae"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 7.390499999999999,
-        "y": 5.67275
+        "x": 7.74,
+        "y": 5.6613217213114755
       },
       "prevControl": {
-        "x": 6.6885,
-        "y": 5.6922500000000005
+        "x": 7.038000000000001,
+        "y": 5.680821721311476
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,7 +69,7 @@
   "folder": "Net Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

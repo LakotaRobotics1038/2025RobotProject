@@ -59,6 +59,7 @@ public class Wrist extends SubsystemBase {
 
     @Override
     public void periodic() {
+        enabled = false;
         if (enabled) {
             this.useOutput(this.wristController.calculate(this.getPosition()));
         }
