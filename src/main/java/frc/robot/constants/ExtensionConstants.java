@@ -21,24 +21,38 @@ public class ExtensionConstants {
     public static final double kD = 0.0;
 
     public enum ExtensionSetpoints {
-        L1Coral(0.0),
-        L2Coral(0.0),
-        L3Coral(2.0),
-        L4Coral(kExtensionMaximum),
-        L23Algae(0.0),
-        L34Algae(15.0),
-        Processor(0.0),
-        GroundAlgae(0.0),
-        Storage(0.0),
-        FeederStation(0.0),
-        Barge(kExtensionMaximum),
-        Climb(0.0),
-        Zero(0.0);
+        L1Coral(0.0, 0.0, 0.0),
+        L2Coral(0.0, 0.0, 0.0),
+        L3Coral(2.0, 0.0, 0.0),
+        L4Coral(kExtensionMaximum, 0.0, 0.0),
+        L23Algae(0.0, 0.0, 0.0),
+        L34Algae(15.0, 0.0, 0.0),
+        Processor(0.0, 0.0, 0.0),
+        GroundAlgae(0.0, 0.0, 0.0),
+        Storage(0.0, 0.0, 0.0),
+        FeederStation(0.0, 0.0, 0.0),
+        Barge(kExtensionMaximum, 0.0, 0.0),
+        Climb(0.0, 0.0, 0.0),
+        Zero(0.0, 0.0, 0.0),
+        UpForWristEscape(20, 0.0, 0.0);
 
         public final double position;
+        private double shoulderMin;
+        private double shoulderMax;
 
-        ExtensionSetpoints(double position) {
+        ExtensionSetpoints(double position, double shoulderMin, double shoulderMax) {
             this.position = position;
+            this.shoulderMin = shoulderMin;
+            this.shoulderMax = shoulderMax;
+        }
+
+        public double getShoulderMin() {
+            return this.shoulderMin;
+        }
+
+        public double getShoulderMax() {
+            return this.shoulderMax;
         }
     }
+
 }

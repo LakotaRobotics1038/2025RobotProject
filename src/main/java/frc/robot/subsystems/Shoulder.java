@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
+import frc.robot.constants.WristConstants.WristSetpoints;
 
 public class Shoulder extends SubsystemBase {
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
@@ -98,7 +99,7 @@ public class Shoulder extends SubsystemBase {
         return shoulderController.atSetpoint();
     }
 
-    private void setSetpoint(double setpoint) {
+    public void setSetpoint(double setpoint) {
         setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, 0, ShoulderConstants.kMaxDistance);
         shoulderController.setSetpoint(setpoint);
     }
@@ -136,5 +137,10 @@ public class Shoulder extends SubsystemBase {
 
     public ShoulderSetpoints getSetpoint() {
         return this.shoulderSetpoints;
+    }
+
+    public boolean isSafe(WristSetpoints wristSetpoint) {
+        return this.getPosition() < wristSetpoint.getShoulderMax()
+                && this.getPosition() > wristSetpoint.getShoulderMin();
     }
 }

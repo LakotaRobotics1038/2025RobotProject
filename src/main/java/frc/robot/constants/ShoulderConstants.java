@@ -13,7 +13,9 @@ public class ShoulderConstants {
         Storage(34.0),
         FeederStation(0.0),
         Barge(58.0),
-        Climb(55.0);
+        Climb(55.0),
+        Vertical(50),
+        BackOfBot(10);
 
         public final double setpoint;
 
