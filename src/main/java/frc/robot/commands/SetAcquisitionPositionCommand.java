@@ -79,9 +79,7 @@ public class SetAcquisitionPositionCommand extends Command {
                     negativeWrist = false;
                 }
             }
-        }
-
-        if (shoulder.isSafe(wristSetpoint)) {
+        } else if (shoulder.isSafe(wristSetpoint)) {
             if (extension.isSafe(wristSetpoint)) {
                 wrist.setSetpoint(wristSetpoint);
             } else if (extension.getPosition() > wristSetpoint.getExtMax()) {
@@ -91,8 +89,6 @@ public class SetAcquisitionPositionCommand extends Command {
                     this.isExtensionGood = true;
                 } else if (shoulder.getPosition() > extensionSetpoint.getShoulderMax()) {
                     shoulder.setSetpoint(extensionSetpoint.getShoulderMax());
-                } else {
-                    shoulder.setSetpoint(extensionSetpoint.getShoulderMin());
                 }
             } else {
                 extension.setSetpoint(wristSetpoint.getExtMin());
