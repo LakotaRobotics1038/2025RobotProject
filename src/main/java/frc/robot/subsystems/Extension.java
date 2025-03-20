@@ -181,7 +181,6 @@ public class Extension extends SubsystemBase {
     }
 
     public boolean isSafe(WristSetpoints wristSetpoint) {
-        return this.getPosition() < wristSetpoint.getExtMax()
-                && this.getPosition() > wristSetpoint.getExtMin();
+        return this.getPosition() < wristSetpoint.getExtMax();
     }
 }

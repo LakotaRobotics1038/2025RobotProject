@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
@@ -18,10 +19,9 @@ public class SetAcquisitionPositionCommand extends Command {
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private FinishActions finishAction;
-    private boolean negativeWrist;
     private WristSetpoints wristSetpoint;
     private ExtensionSetpoints extensionSetpoint;
-    private boolean isExtensionGood;
+    private ShoulderSetpoints shoulderSetpoint;
 
     public enum FinishActions {
         NoFinish,
@@ -52,52 +52,47 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public void initialize() {
-        if (this.acquisitionPositionSetpoint == null) {
-            this.acquisitionPositionSetpoint = this.acquisitionPositionSetpointSupplier.get();
+        if (acquisitionPositionSetpoint == null) {
+            acquisitionPositionSetpoint = acquisitionPositionSetpointSupplier.get();
         }
-        this.wristSetpoint = acquisitionPositionSetpoint.getWristSetpoint();
-        this.extensionSetpoint = acquisitionPositionSetpoint.getExtensionSetpoint();
+
+        wristSetpoint = acquisitionPositionSetpoint.getWristSetpoint();
+        extensionSetpoint = acquisitionPositionSetpoint.getExtensionSetpoint();
+        shoulderSetpoint = acquisitionPositionSetpoint.getShoulderSetpoint();
+
         wrist.enable();
         shoulder.enable();
         extension.enable();
 
-        if (wrist.getPosition() < 0) {
-            shoulder.setSetpoint(ShoulderSetpoints.Vertical);
-            negativeWrist = true;
-        }
+        shoulder.setSetpoint(shoulderSetpoint);
     }
 
     @Override
     public void execute() {
-        if (negativeWrist) {
-            if (shoulder.onTarget()) {
-                extension.setSetpoint(ExtensionSetpoints.UpForWristEscape);
-            }
-            if (extension.onTarget()) {
-                shoulder.setSetpoint(ShoulderSetpoints.BackOfBot);
-                if (shoulder.onTarget()) {
-                    negativeWrist = false;
-                }
-            }
-        } else if (shoulder.isSafe(wristSetpoint)) {
-            if (extension.isSafe(wristSetpoint)) {
-                wrist.setSetpoint(wristSetpoint);
-            } else if (extension.getPosition() > wristSetpoint.getExtMax()) {
-                if (shoulder.getPosition() > extensionSetpoint.getShoulderMin()
-                        && shoulder.getPosition() < extensionSetpoint.getShoulderMax()) {
-                    extension.setSetpoint(wristSetpoint.getExtMax());
-                    this.isExtensionGood = true;
-                } else if (shoulder.getPosition() > extensionSetpoint.getShoulderMax()) {
-                    shoulder.setSetpoint(extensionSetpoint.getShoulderMax());
-                }
-            } else {
-                extension.setSetpoint(wristSetpoint.getExtMin());
-            }
-        } else if (shoulder.getPosition() > wristSetpoint.getShoulderMax() && isExtensionGood) {
-            shoulder.setSetpoint(wristSetpoint.getShoulderMax());
-        } else if (shoulder.getPosition() < wristSetpoint.getShoulderMin() && isExtensionGood) {
-            shoulder.setSetpoint(wristSetpoint.getShoulderMin());
+        double wristPos = wristSetpoint.getSetpoint();
+        double shoulderPos = shoulder.getPosition();
+        double extPos = extension.getPosition();
+
+        if (shoulderPos > 10) {
+            extension.setSetpoint(extensionSetpoint);
+        } else if (shoulderPos > 5) {
+            extPos = MathUtil.clamp(extPos, 0, 10);
+        } else {
+            extPos = MathUtil.clamp(extPos, 0, 0);
         }
+
+        if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, 20, 50);
+        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, 20, 50);
+        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, 20, 50);
+        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, 20, 50);
+        }
+
+        wrist.setSetpoint(wristPos);
+        extension.setSetpoint(extPos);
     }
 
     public boolean isFinished() {
@@ -114,6 +109,5 @@ public class SetAcquisitionPositionCommand extends Command {
             extension.disable();
             shoulder.disable();
         }
-        this.isExtensionGood = false;
     }
 }
