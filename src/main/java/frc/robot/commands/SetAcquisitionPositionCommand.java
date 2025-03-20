@@ -81,6 +81,13 @@ public class SetAcquisitionPositionCommand extends Command {
             extPos = MathUtil.clamp(extPos, 0, 0);
         }
 
+        // BAD ZONES
+
+        // Ground Pickup - 32 -> 36.292
+        // L23 Algae - 51.609 -> 150.492
+        // L34 Algae - 40.881 -> 155.55
+        // Barge - 200.798 -> 311.228
+
         if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, 20, 50);
         } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
