@@ -12,8 +12,7 @@ public class ShoulderConstants {
         GroundAlgae(0.0),
         Storage(34.0),
         FeederStation(0.0),
-        Barge(58.0),
-        Climb(55.0);
+        Barge(58.0);
 
         public final double setpoint;
 

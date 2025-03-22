@@ -32,7 +32,6 @@ public class ExtensionConstants {
         Storage(0.0),
         FeederStation(0.0),
         Barge(kExtensionMaximum),
-        Climb(0.0),
         Zero(0.0);
 
         public final double position;

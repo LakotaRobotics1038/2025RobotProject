@@ -18,7 +18,6 @@ import frc.robot.autons.AutonSelector.AutonChoices;
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Climb climb = Climb.getInstance();
     private OperatorState operatorState = OperatorState.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
@@ -126,9 +125,6 @@ public class Dashboard extends SubsystemBase {
                 .withSize(2, 1);
         controlsTab.addNumber("R", driveTrain::getRotation)
                 .withPosition(5, 4)
-                .withSize(2, 1);
-        controlsTab.addNumber("Climb", climb::getPosition)
-                .withPosition(3, 3)
                 .withSize(2, 1);
     }
 
