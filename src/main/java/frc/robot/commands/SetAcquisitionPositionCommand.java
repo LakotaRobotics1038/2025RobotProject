@@ -76,28 +76,22 @@ public class SetAcquisitionPositionCommand extends Command {
         if (extPos > 10 && shoulderPos < 24 && shoulderPos > 27) {
             shoulderPos = MathUtil.clamp(shoulderPos, 0, 44);
             wristPos = MathUtil.clamp(wristPos, -60, 0);
-
         } else if (extPos > 10 && shoulderPos > 22 && shoulderPos < 25) {
             shoulderPos = MathUtil.clamp(shoulderPos, 0, 23);
             wristPos = MathUtil.clamp(wristPos, -35, 0);
-
         } else if (extPos > 10 && shoulderPos < 20) {
             shoulderPos = MathUtil.clamp(shoulderPos, 0, extPos);
             wristPos = MathUtil.clamp(wristPos, -30, 0);
-
         } else if (shoulderPos > 0 && shoulderPos < 28 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -44, -36);
-
         } else if (shoulderPos > 10 && shoulderPos < 24 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -53, -38);
-
         } else if (shoulderPos > 24 && shoulderPos < 37 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -60, -40);
-
         } else if (shoulderPos > 37 && shoulderPos < 10 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, 20, 50);
-
         }
+
         // BAD ZONES
 
         // Ground Pickup - 32 -> 36.292
