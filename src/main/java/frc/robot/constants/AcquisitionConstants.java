@@ -1,6 +1,8 @@
 package frc.robot.constants;
 
 public class AcquisitionConstants {
+    // To get sin value: kSinLookupTable[Math.round((deg % (2 * Math.PI)) / (2 *
+    // Math.PI) * 100)]
     public static final double[] kSinLookupTable = {
             0.0,
             0.06279051952931337,
