@@ -15,7 +15,7 @@ public class WristConstants {
         Climb(20.0),
         Barge(-61.0),
         Ground(50),
-        Ground2(180);
+        Escape(180);
 
         private double setpoint;
         private double extMax;

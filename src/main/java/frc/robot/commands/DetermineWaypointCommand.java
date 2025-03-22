@@ -11,16 +11,17 @@ import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.OperatorState;
 import frc.robot.constants.AutoConstants.DriveWaypoints;
 import frc.robot.subsystems.Vision;
 import frc.robot.utils.AcquisitionPositionSetpoint;
-import frc.robot.OperatorState;
 
 public class DetermineWaypointCommand extends Command {
     private final Vision vision = Vision.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
     private List<PhotonPipelineResult> visionResults;
     private int bestId = -1;
+    private PhotonTrackedTarget bestAlgae;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
 
@@ -49,6 +50,9 @@ public class DetermineWaypointCommand extends Command {
             case L1Coral:
                 this.visionResults = vision.getResultsFrontCam();
                 break;
+            case GroundAlgae:
+                vision.setAlgaeMode();
+                this.visionResults = vision.getResultsBackCam();
             default:
                 break;
         }
@@ -66,6 +70,8 @@ public class DetermineWaypointCommand extends Command {
                 getBestTarget(processorIDs, this.visionResults);
             case FeederStation:
                 getBestTarget(feederStationIDs, this.visionResults);
+            case GroundAlgae:
+                getBestAlgae(visionResults);
             default:
                 break;
         }
@@ -107,6 +113,10 @@ public class DetermineWaypointCommand extends Command {
                 : this.waypoint.map(DriveWaypoints::getEndpoint);
     }
 
+    public double getYaw() {
+        return bestAlgae.getYaw();
+    }
+
     private void getBestTarget(int[] ids, List<PhotonPipelineResult> visionResults) {
         double area = 0.0;
         for (PhotonPipelineResult result : visionResults) {
@@ -120,7 +130,22 @@ public class DetermineWaypointCommand extends Command {
                         System.out.println(bestId);
                     }
                 }
+            }
+        }
+    }
 
+    private void getBestAlgae(List<PhotonPipelineResult> visionResults) {
+        double area = 0.0;
+        for (PhotonPipelineResult result : visionResults) {
+            if (result.hasTargets()) {
+                for (PhotonTrackedTarget photonTarget : result.getTargets()) {
+                    if (photonTarget.getArea() > area) {
+                        area = photonTarget.getArea();
+                        bestAlgae = photonTarget;
+                        this.bestId = photonTarget.objDetectId;
+                        System.out.println(bestId);
+                    }
+                }
             }
         }
     }
