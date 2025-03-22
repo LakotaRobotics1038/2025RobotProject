@@ -11,7 +11,6 @@ import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.DisposeCoral134Command;
 import frc.robot.commands.DisposeCoral2Command;
 import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionCommandGround;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.commands.SetExtensionPositionCommand;
 import frc.robot.commands.SetShoulderPositionCommand;
@@ -133,12 +132,6 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::isNotGroundAlgae)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
                         FinishActions.NoFinish));
-
-        this.processorButton
-                .and(operatorState::getIsManual)
-                .and(operatorState::isGroundAlgae)
-                .onTrue(new SetAcquisitionPositionCommandGround(
-                        SetAcquisitionPositionCommandGround.FinishActions.NoFinish));
 
         this.feederButton
                 .and(operatorState::getIsManual)
