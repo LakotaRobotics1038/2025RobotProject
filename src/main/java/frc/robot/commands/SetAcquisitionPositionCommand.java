@@ -92,6 +92,9 @@ public class SetAcquisitionPositionCommand extends Command {
             wristPos = MathUtil.clamp(wristPos, 20, 50);
         }
 
+        if (wrist.onTarget()) {
+            wrist.disable();
+        }
         // BAD ZONES
 
         // Ground Pickup - 32 -> 36.292
