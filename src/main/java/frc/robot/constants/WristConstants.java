@@ -9,7 +9,7 @@ public class WristConstants {
         L23Algae(10.),
         L34Algae(10.0),
         Processor(65.0),
-        GroundAlgae(0.0),
+        GroundAlgae(-36.0),
         Storage(35.0),
         FeederStation(166.0),
         Climb(20.0),
@@ -24,9 +24,6 @@ public class WristConstants {
 
         private WristSetpoints(double setpoint) {
             this.setpoint = setpoint;
-            this.extMax = extMax;
-            this.shoulderMin = shoulderMin;
-            this.shoulderMax = shoulderMax;
         }
 
         public double getSetpoint() {

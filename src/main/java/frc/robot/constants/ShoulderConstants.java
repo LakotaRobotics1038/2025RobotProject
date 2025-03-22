@@ -9,7 +9,7 @@ public class ShoulderConstants {
         L23Algae(61.0),
         L34Algae(61.0),
         Processor(46.0),
-        GroundAlgae(0.0),
+        GroundAlgae(4.0),
         Storage(34.0),
         FeederStation(0.0),
         Barge(58.0),

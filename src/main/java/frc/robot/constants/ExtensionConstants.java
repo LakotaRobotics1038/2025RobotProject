@@ -8,7 +8,7 @@ public class ExtensionConstants {
 
     public static final double kMinExtensionPower = -1.0;
     public static final double kMaxExtensionPower = 1.0;
-    public static final double kExtensionMaximum = 25.9;
+    public static final double kExtensionMaximum = 25.7;
     public static final double kExtensionMaxMove = 0.0;
 
     public static final double kTolerance = 0.5;
@@ -28,7 +28,7 @@ public class ExtensionConstants {
         L23Algae(0.0),
         L34Algae(15.0),
         Processor(0.0),
-        GroundAlgae(0.0),
+        GroundAlgae(9.0),
         Storage(0.0),
         FeederStation(0.0),
         Barge(kExtensionMaximum),

@@ -37,7 +37,7 @@ public class Wrist extends SubsystemBase {
         wristConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(NeoMotorConstants.kMaxVortexCurrent)
-                .inverted(false);
+                .inverted(true);
         wristConfig.absoluteEncoder
                 .positionConversionFactor(WristConstants.kEncoderConversion);
         wristMotor.configure(wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
