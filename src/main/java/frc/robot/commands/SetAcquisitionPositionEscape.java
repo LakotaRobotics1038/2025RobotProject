@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
+import frc.robot.constants.WristConstants.WristSetpoints;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
@@ -43,9 +44,12 @@ public class SetAcquisitionPositionEscape extends Command {
                 extension.setSetpoint(ExtensionSetpoints.UpForWristEscape);
             }
             if (extension.onTarget()) {
-                shoulder.setSetpoint(ShoulderSetpoints.BackOfBot);
-                if (shoulder.onTarget()) {
-                    negativeWrist = false;
+                wrist.setSetpoint(WristSetpoints.Escape);
+                if (wrist.onTarget()) {
+                    shoulder.setSetpoint(ShoulderSetpoints.BackOfBot);
+                    if (shoulder.onTarget()) {
+                        negativeWrist = false;
+                    }
                 }
             }
         }
