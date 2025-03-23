@@ -6,8 +6,8 @@ public class ExtensionConstants {
     public static final int kExtensionMotorPort = 2;
     public static final int kExtensionLaserPort = 36;
 
-    public static final double kMinExtensionPower = -1.0;
-    public static final double kMaxExtensionPower = 1.0;
+    public static final double kMinExtensionPower = -0.5;
+    public static final double kMaxExtensionPower = 0.25;
     public static final double kExtensionMaximum = 25.7;
     public static final double kExtensionMaxMove = 0.0;
 
