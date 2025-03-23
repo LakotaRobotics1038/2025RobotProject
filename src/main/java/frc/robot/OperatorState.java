@@ -7,7 +7,7 @@ public class OperatorState {
     private AcquisitionPositionSetpoint lastLastInput;
     private boolean scoringFlipped;
 
-    private boolean isManual = false;
+    private boolean isManual = true;
 
     private OperatorState() {
         this.lastInput = AcquisitionPositionSetpoint.Storage;

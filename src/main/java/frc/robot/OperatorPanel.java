@@ -103,21 +103,9 @@ public class OperatorPanel extends GenericHID {
 
         this.coralL1Button
                 .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L1Coral, FinishActions.NoFinish));
-        this.coralL2Button
-                .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L2Coral, FinishActions.NoFinish));
-        this.coralL3Button
-                .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L3Coral, FinishActions.NoFinish));
-        this.coralL4Button
-                .and(operatorState::getIsManual)
-                .toggleOnTrue(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L4Coral, FinishActions.NoFinish));
-        this.coralL4Button
-                .and(operatorState::getIsManual)
-                .onTrue(new PrintCommand("Running L4Command")
-                        .andThen(new AcquireForL4Command()));
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.GroundAlgae,
+                        FinishActions.NoFinish));
+
         this.algaeL23Button
                 .and(operatorState::getIsManual)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
@@ -131,11 +119,6 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::getIsManual)
                 .and(operatorState::isNotGroundAlgae)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                        FinishActions.NoFinish));
-
-        this.feederButton
-                .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.FeederStation,
                         FinishActions.NoFinish));
     }
 

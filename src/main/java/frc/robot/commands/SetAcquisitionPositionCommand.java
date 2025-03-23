@@ -65,6 +65,7 @@ public class SetAcquisitionPositionCommand extends Command {
         extension.enable();
 
         shoulder.setSetpoint(shoulderSetpoint);
+        extension.setSetpoint(extensionSetpoint);
     }
 
     @Override
@@ -73,22 +74,27 @@ public class SetAcquisitionPositionCommand extends Command {
         double shoulderPos = shoulder.getPosition();
         double extPos = extension.getPosition();
 
-        if (extPos > 10 && shoulderPos > 24 && shoulderPos < 27) {
-            shoulderPos = MathUtil.clamp(shoulderPos, 0, 44);
+        // if (shoulderPos > 10) {
+        // extension.setSetpoint(extensionSetpoint);
+        // } else if (shoulderPos > 5) {
+        // extPos = MathUtil.clamp(extPos, 0, 10);
+        // } else {
+        // extPos = MathUtil.clamp(extPos, 0, 0);
+        // }
+
+        if (extPos > 10 && shoulderPos < 336 && shoulderPos > 333) {
             wristPos = MathUtil.clamp(wristPos, -60, 0);
-        } else if (extPos > 10 && shoulderPos > 22 && shoulderPos < 25) {
-            shoulderPos = MathUtil.clamp(shoulderPos, 0, 23);
+        } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
             wristPos = MathUtil.clamp(wristPos, -35, 0);
-        } else if (extPos > 10 && shoulderPos < 20) {
-            shoulderPos = MathUtil.clamp(shoulderPos, 0, extPos);
+        } else if (extPos > 10 && shoulderPos < 340) {
             wristPos = MathUtil.clamp(wristPos, -30, 0);
-        } else if (shoulderPos > 0 && shoulderPos < 28 && extPos < 10) {
+        } else if (shoulderPos < 360 && shoulderPos > 332 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -44, -36);
-        } else if (shoulderPos > 10 && shoulderPos < 24 && extPos < 10) {
+        } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -53, -38);
-        } else if (shoulderPos > 24 && shoulderPos < 37 && extPos < 20) {
+        } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -60, -40);
-        } else if (shoulderPos < 37 && shoulderPos > 10 && extPos < 20) {
+        } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, 20, 50);
         }
 
@@ -103,7 +109,6 @@ public class SetAcquisitionPositionCommand extends Command {
         // Barge - 200.798 -> 311.22
 
         wrist.setSetpoint(wristPos);
-        extension.setSetpoint(extPos);
     }
 
     public boolean isFinished() {
