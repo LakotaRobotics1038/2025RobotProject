@@ -42,6 +42,7 @@ public class Shoulder extends SubsystemBase {
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
+                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
         rightShoulderConfig.absoluteEncoder
                 .positionConversionFactor(ShoulderConstants.kEncoderConversion);

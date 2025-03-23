@@ -32,7 +32,7 @@ public class ShoulderConstants {
     public static final double kD = 0.0;
 
     public static final double kMaxPower = 0.75;
-    public static final double kMaxDistance = 76.0;
+    public static final double kMaxDistance = 290.0;
 
     public static final double kTolerance = 2.0;
 
