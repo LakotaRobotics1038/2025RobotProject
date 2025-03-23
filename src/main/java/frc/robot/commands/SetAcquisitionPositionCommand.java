@@ -73,7 +73,7 @@ public class SetAcquisitionPositionCommand extends Command {
         double shoulderPos = shoulder.getPosition();
         double extPos = extension.getPosition();
 
-        if (extPos > 10 && shoulderPos < 24 && shoulderPos > 27) {
+        if (extPos > 10 && shoulderPos > 24 && shoulderPos < 27) {
             shoulderPos = MathUtil.clamp(shoulderPos, 0, 44);
             wristPos = MathUtil.clamp(wristPos, -60, 0);
         } else if (extPos > 10 && shoulderPos > 22 && shoulderPos < 25) {
@@ -88,7 +88,7 @@ public class SetAcquisitionPositionCommand extends Command {
             wristPos = MathUtil.clamp(wristPos, -53, -38);
         } else if (shoulderPos > 24 && shoulderPos < 37 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -60, -40);
-        } else if (shoulderPos > 37 && shoulderPos < 10 && extPos < 20) {
+        } else if (shoulderPos < 37 && shoulderPos > 10 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, 20, 50);
         }
 

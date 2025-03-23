@@ -37,5 +37,5 @@ public class ShoulderConstants {
     public static final double kTolerance = 2.0;
 
     public static final double kMaxExtendedShoulderAngle = 0.0;
-    public static final double kEncoderConversion = 120.0;
+    public static final double kEncoderConversion = 360.0;
 }

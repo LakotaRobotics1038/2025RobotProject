@@ -45,12 +45,12 @@ public class WristConstants {
 
     public static final int kWristCanId = 3;
     public static final double kEncoderConversion = 360.0;
-    public static final double kTolerance = 2.0;
-    public static final double kMaxPower = 0.5;
-    public static final double kMinPower = -0.5;
+    public static final double kTolerance = 1.0;
+    public static final double kMaxPower = 0.25;
+    public static final double kMinPower = -0.25;
     public static final double kMaxDistance = 180;
     public static final double kMinDistance = -180;
-    public static final double kWristControllerP = 0.018;
-    public static final double kWristControllerI = 0.002;
+    public static final double kWristControllerP = 0.02;
+    public static final double kWristControllerI = 0.001;
     public static final double kWristControllerD = 0;
 }
