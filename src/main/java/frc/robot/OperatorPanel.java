@@ -134,9 +134,11 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
-        wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
-        shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
+        // extension.setDefaultCommand(new
+        // SetExtensionPositionCommand(ExtensionSetpoints.Storage));
+        // wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
+        // shoulder.setDefaultCommand(new
+        // SetShoulderPositionCommand(ShoulderSetpoints.Storage));
         isDefaultEnabled = true;
     }
 

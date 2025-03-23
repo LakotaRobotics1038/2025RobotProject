@@ -9,12 +9,11 @@ public class WristConstants {
         L23Algae(-42.5),
         L34Algae(-36.0),
         Processor(-42.0),
-        GroundAlgae(-36.0),
+        GroundAlgae(-31.0),
         Storage(-28.0),
         FeederStation(166.0),
         Climb(20.0),
         Barge(-161.5),
-        Ground(50),
         Escape(180);
 
         private double setpoint;
@@ -46,8 +45,8 @@ public class WristConstants {
     public static final int kWristCanId = 3;
     public static final double kEncoderConversion = 360.0;
     public static final double kTolerance = 1.0;
-    public static final double kMaxPower = 0.05;
-    public static final double kMinPower = -0.25;
+    public static final double kMaxPower = 0.3;
+    public static final double kMinPower = -0.3;
     public static final double kMaxDistance = 180;
     public static final double kMinDistance = -180;
     public static final double kWristControllerP = 0.02;
