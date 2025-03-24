@@ -29,7 +29,6 @@ public class Shoulder extends SubsystemBase {
     private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
-    private double lastPosition;
     private ShoulderSetpoints shoulderSetpoints;
 
     private Shoulder() {

@@ -23,7 +23,6 @@ public class SetAcquisitionPositionCommand extends Command {
     private ExtensionSetpoints extensionSetpoint;
     private ShoulderSetpoints shoulderSetpoint;
     private boolean isGroundAngle;
-    private boolean isFromGround;
 
     public enum FinishActions {
         NoFinish,
@@ -81,14 +80,6 @@ public class SetAcquisitionPositionCommand extends Command {
         double shoulderPos = shoulder.getPosition();
         double extPos = extension.getPosition();
 
-        // if (shoulderPos > 10) {
-        // extension.setSetpoint(extensionSetpoint);
-        // } else if (shoulderPos > 5) {
-        // extPos = MathUtil.clamp(extPos, 0, 10);
-        // } else {
-        // extPos = MathUtil.clamp(extPos, 0, 0);
-        // }
-
         if (!isGroundAngle) {
             if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
                 wristPos = MathUtil.clamp(wristPos, -165, -42.5);
@@ -117,8 +108,6 @@ public class SetAcquisitionPositionCommand extends Command {
             } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
                 wristPos = MathUtil.clamp(wristPos, -44, -31);
             }
-            // sh 316, wr -38, ext 6
-            // ramp clearence
 
             wrist.setSetpoint(wristPos);
         } else {
@@ -133,16 +122,6 @@ public class SetAcquisitionPositionCommand extends Command {
                 }
             }
         }
-
-        if (!isGroundAngle && wrist.onTarget()) {
-            wrist.disable();
-        }
-        // BAD ZONES
-
-        // Ground Pickup - 32 -> 36.292
-        // L23 Algae - 51.609 -> 150.492
-        // L34 Algae - 40.881 -> 155.55
-        // Barge - 200.798 -> 311.22
     }
 
     public boolean isFinished() {
