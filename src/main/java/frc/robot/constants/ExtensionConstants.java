@@ -21,16 +21,11 @@ public class ExtensionConstants {
     public static final double kD = 0.0;
 
     public enum ExtensionSetpoints {
-        L1Coral(0.0),
-        L2Coral(0.0),
-        L3Coral(2.0),
-        L4Coral(kExtensionMaximum),
         L23Algae(9),
         L34Algae(kExtensionMaximum),
         Processor(2.0),
         GroundAlgae(9.0),
         Storage(5.0),
-        FeederStation(0.0),
         Barge(kExtensionMaximum),
         Zero(0.0),
         UpForWristEscape(20);
