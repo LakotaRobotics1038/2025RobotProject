@@ -16,9 +16,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.AcquireForL4Command;
-import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.DetermineWaypointCommand;
-import frc.robot.commands.PrepClimbCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.AutoConstants;
@@ -160,12 +158,6 @@ public class DriverJoystick extends XboxController1038 {
 
         // Lock the wheels into an X formation
         super.xButton.whileTrue(this.driveTrain.setX());
-        super.yButton.whileTrue(new PrepClimbCommand());
-        super.yButton
-                .toggleOnTrue(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb,
-                                FinishActions.NoFinish));
-        super.bButton.whileTrue(new ClimbUpCommand());
 
         super.aButton.and(() -> operatorState.isCoral4()).onTrue(new AcquireForL4Command());
         super.aButton.and(() -> operatorState.isAlgae()).onTrue(new AcquireAlgaeCommand());
