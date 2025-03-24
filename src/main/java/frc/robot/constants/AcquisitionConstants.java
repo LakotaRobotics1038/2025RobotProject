@@ -66,15 +66,15 @@ public class AcquisitionConstants {
     public static final double kShootAlgaeSpeed = -1.0;
 
     public static float getSine(double degrees) {
-        double deg = degrees % (Math.PI * 2);
+        double deg = Math.toRadians(degrees) % (Math.PI * 2);
         short sine;
         if ((deg > Math.PI * 0.5 && deg < Math.PI) || deg > Math.PI * 1.5) {
-            sine = kSinLookupTable[(int) Math.round((1 - Math.toRadians(deg) / (2 * Math.PI)) * kSinLookupTable.length)
-                    - 1];
+            sine = kSinLookupTable[(int) Math
+                    .round((1 - Math.abs(deg) / (Math.PI * 0.5)) * (kSinLookupTable.length - 1))];
         } else {
-            sine = kSinLookupTable[(int) Math.round(Math.toRadians(deg) / (2 * Math.PI) * kSinLookupTable.length) - 1];
+            sine = kSinLookupTable[(int) Math.round(Math.abs(deg) / (Math.PI * 0.5) * (kSinLookupTable.length - 1))];
         }
-        return deg > Math.PI ? sine / 10000 : -sine / 10000;
+        return deg < Math.PI ? sine / 10000.f : -sine / 10000.f;
     }
 
     public static float getCosine(double radian) {
