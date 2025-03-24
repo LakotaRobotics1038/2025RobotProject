@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
+import frc.robot.constants.VisionConstants;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
@@ -99,6 +100,17 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(0, 3)
                 .withSize(2, 1)
                 .withWidget(BuiltInWidgets.kBooleanBox);
+
+        driversTab
+                .addCamera("Front Camera", VisionConstants.kRobotToFrontCamName,
+                        "mjpg:http://10.10.38.11:1182/?action=stream")
+                .withPosition(0, 4)
+                .withSize(2, 2);
+        driversTab
+                .addCamera("Back Camera", VisionConstants.kRobotToBackCamName,
+                        "mjpg:http://10.10.38.1:1184/?action=stream")
+                .withPosition(1, 4)
+                .withSize(2, 2);
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
