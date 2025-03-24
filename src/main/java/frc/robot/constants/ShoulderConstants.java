@@ -13,7 +13,6 @@ public class ShoulderConstants {
         Storage(301.0),
         FeederStation(0.0),
         Barge(300.0),
-        Climb(55.0),
         Vertical(50),
         BackOfBot(10);
 

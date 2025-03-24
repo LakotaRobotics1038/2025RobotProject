@@ -16,7 +16,6 @@ public enum AcquisitionPositionSetpoint {
     FeederStation(ShoulderSetpoints.FeederStation, WristSetpoints.FeederStation, ExtensionSetpoints.FeederStation),
     Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Storage),
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
-    Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae);
 
     private ShoulderSetpoints shoulderSetpoint;

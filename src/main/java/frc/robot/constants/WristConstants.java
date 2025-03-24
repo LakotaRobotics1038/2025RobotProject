@@ -12,7 +12,6 @@ public class WristConstants {
         GroundAlgae(-31.0),
         Storage(-28.0),
         FeederStation(166.0),
-        Climb(20.0),
         Barge(-161.5),
         Escape(180);
 
