@@ -151,8 +151,6 @@ public class Vision extends SubsystemBase {
     }
 
     public List<PhotonPipelineResult> getResultsFrontCam() {
-        // return Stream.concat(frontCam.getAllUnreadResults().stream(),
-        // backCam.getAllUnreadResults().stream()).toList();
         return frontCam.getAllUnreadResults();
     }
 
