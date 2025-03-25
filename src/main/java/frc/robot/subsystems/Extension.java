@@ -179,8 +179,4 @@ public class Extension extends SubsystemBase {
     public void setOffset(double extensionOffset) {
         this.extensionOffset = extensionOffset;
     }
-
-    public boolean isSafe(WristSetpoints wristSetpoint) {
-        return this.getPosition() < wristSetpoint.getExtMax();
-    }
 }

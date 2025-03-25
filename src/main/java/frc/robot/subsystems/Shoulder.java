@@ -137,9 +137,4 @@ public class Shoulder extends SubsystemBase {
     public ShoulderSetpoints getSetpoint() {
         return this.shoulderSetpoints;
     }
-
-    public boolean isSafe(WristSetpoints wristSetpoint) {
-        return this.getPosition() < wristSetpoint.getShoulderMax()
-                && this.getPosition() > wristSetpoint.getShoulderMin();
-    }
 }
