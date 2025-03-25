@@ -61,6 +61,7 @@ public class Wrist extends SubsystemBase {
     @Override
     public void periodic() {
         enabled = false;
+        System.out.println(enabled);
         if (enabled) {
             this.useOutput(this.wristController.calculate(this.getPosition()));
         }
@@ -68,6 +69,7 @@ public class Wrist extends SubsystemBase {
 
     protected void useOutput(double output) {
         double power = MathUtil.clamp(output, -WristConstants.kMaxPower, WristConstants.kMaxPower);
+        System.out.println(power);
         this.wristMotor.set(power);
     }
 
