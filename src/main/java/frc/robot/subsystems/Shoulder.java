@@ -28,19 +28,18 @@ public class Shoulder extends SubsystemBase {
     private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
-    private double lastPosition;
     private ShoulderSetpoints shoulderSetpoints;
 
     private Shoulder() {
 
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
-                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
                 .follow(rightShoulderMotor, true);
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
+                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
         rightShoulderConfig.absoluteEncoder
                 .positionConversionFactor(ShoulderConstants.kEncoderConversion);
@@ -99,7 +98,7 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, 0, ShoulderConstants.kMaxDistance);
+        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
         shoulderController.setSetpoint(setpoint);
     }
 

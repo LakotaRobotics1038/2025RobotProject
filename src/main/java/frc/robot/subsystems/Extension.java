@@ -131,7 +131,7 @@ public class Extension extends SubsystemBase {
      *
      * @param setpoint the setpoint for the subsystem
      */
-    private final void setSetpoint(double setpoint) {
+    public final void setSetpoint(double setpoint) {
         setpoint = MathUtil.clamp(setpoint + extensionOffset, 0, ExtensionConstants.kExtensionMaximum);
         extensionController.setSetpoint(setpoint);
     }

@@ -25,7 +25,7 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerP,
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
-    private boolean enabled;
+    private boolean enabled = false;
     private double lastPosition;
     private double wristOffset = 0.0;
     private WristSetpoints wristSetpoints;
@@ -66,7 +66,7 @@ public class Wrist extends SubsystemBase {
     }
 
     protected void useOutput(double output) {
-        double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
+        double power = MathUtil.clamp(output, -WristConstants.kMaxPower, WristConstants.kMaxPower);
         this.wristMotor.set(power);
     }
 
@@ -90,7 +90,7 @@ public class Wrist extends SubsystemBase {
         return this.wristController.atSetpoint();
     }
 
-    private void setSetpoint(double setpoint) {
+    public void setSetpoint(double setpoint) {
         double clampedPoint = MathUtil.clamp(setpoint, WristConstants.kMinDistance, WristConstants.kMaxDistance);
         this.wristController.setSetpoint(clampedPoint + this.wristOffset);
     }

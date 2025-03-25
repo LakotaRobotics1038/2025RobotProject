@@ -13,30 +13,6 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public final class AutoConstants {
     public enum DriveWaypoints {
-        LeftCoral17(new Pose2d(new Translation2d(4.16, 2.72), Rotation2d.fromDegrees(60.00))),
-        Level2LeftCoral17(new Pose2d(new Translation2d(3.98, 2.84), Rotation2d.fromDegrees(-120.00))),
-        RightCoral17(new Pose2d(new Translation2d(3.58, 3.30), Rotation2d.fromDegrees(60.00))),
-        Level2RightCoral17(new Pose2d(new Translation2d(4.4, 2.49), Rotation2d.fromDegrees(-120.00))),
-        LeftCoral18(new Pose2d(new Translation2d(3.22, 4.54), Rotation2d.fromDegrees(0.0))),
-        Level2LeftCoral18(new Pose2d(new Translation2d(3.17, 3.76), Rotation2d.fromDegrees(180.0))),
-        RightCoral18(new Pose2d(new Translation2d(3.21, 4.10), Rotation2d.fromDegrees(0.0))),
-        Level2RightCoral18(new Pose2d(new Translation2d(3.0, 3.48), Rotation2d.fromDegrees(180.0))),
-        LeftCoral19(new Pose2d(new Translation2d(4.21, 5.34), Rotation2d.fromDegrees(-60.0))),
-        Level2LeftCoral19(new Pose2d(new Translation2d(3.84, 5.05), Rotation2d.fromDegrees(120.0))),
-        RightCoral19(new Pose2d(new Translation2d(3.88, 5.01), Rotation2d.fromDegrees(-60.0))),
-        Level2RightCoral19(new Pose2d(new Translation2d(3.38, 5), Rotation2d.fromDegrees(Math.toRadians(120.0)))),
-        LeftCoral20(new Pose2d(new Translation2d(5.36, 4.94), Rotation2d.fromDegrees(-120.0))),
-        Level2LeftCoral20(new Pose2d(new Translation2d(5.43, 5.23), Rotation2d.fromDegrees(60.0))),
-        RightCoral20(new Pose2d(new Translation2d(5.09, 5.04), Rotation2d.fromDegrees(-120.0))),
-        Level2RightCoral20(new Pose2d(new Translation2d(4.73, 5.57), Rotation2d.fromDegrees(60.0))),
-        LeftCoral21(new Pose2d(new Translation2d(5.37, 3.77), Rotation2d.fromDegrees(180.000))),
-        Level2LeftCoral21(new Pose2d(new Translation2d(5.78, 4.27), Rotation2d.fromDegrees(0.0))),
-        RightCoral21(new Pose2d(new Translation2d(5.39, 4.24), Rotation2d.fromDegrees(180.0))),
-        Level2RightCoral21(new Pose2d(new Translation2d(5.90, 4.57), Rotation2d.fromDegrees(0))),
-        LeftCoral22(new Pose2d(new Translation2d(4.78, 2.67), Rotation2d.fromDegrees(120.0))),
-        Level2LeftCoral22(new Pose2d(new Translation2d(5.41, 2.9), Rotation2d.fromDegrees(-60.0))),
-        RightCoral22(new Pose2d(new Translation2d(5.02, 2.83), Rotation2d.fromDegrees(120.0))),
-        Level2RightCoral22(new Pose2d(new Translation2d(5.73, 3.03), Rotation2d.fromDegrees(-60.0))),
         Algae17(new Pose2d(new Translation2d(3.4, 3.23), Rotation2d.fromDegrees(60.0))),
         Algae18(new Pose2d(new Translation2d(3.14, 4.34), Rotation2d.fromDegrees(0))),
         Algae19(new Pose2d(new Translation2d(4.03, 5.29), Rotation2d.fromDegrees(-60.0))),
@@ -45,8 +21,6 @@ public final class AutoConstants {
         Algae22(new Pose2d(new Translation2d(4.95, 2.71), Rotation2d.fromDegrees(120.0))),
         Processor3(new Pose2d(new Translation2d(12.07, 8.27), Rotation2d.fromDegrees(90.0))),
         Processor16(new Pose2d(new Translation2d(6.18, 0.20), Rotation2d.fromDegrees(-90.0))),
-        FeederStation12Point1(new Pose2d(new Translation2d(0.9, 1.13), Rotation2d.fromDegrees(55.0))),
-        FeederStation13Point1(new Pose2d(new Translation2d(1.39, 7.42), Rotation2d.fromDegrees(125.0))),
         Storage(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0.0)));
 
         private Pose2d endpoint;
