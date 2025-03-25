@@ -6,8 +6,7 @@ public class ExtensionConstants {
     public static final int kExtensionMotorPort = 2;
     public static final int kExtensionLaserPort = 36;
 
-    public static final double kMinExtensionPower = -0.5;
-    public static final double kMaxExtensionPower = 0.25;
+    public static final double kMaxExtensionPower = 1;
     public static final double kExtensionMaximum = 25.7;
     public static final double kExtensionMaxMove = 0.0;
 
@@ -28,7 +27,7 @@ public class ExtensionConstants {
         Storage(5.0),
         Barge(kExtensionMaximum),
         Zero(0.0),
-        UpForWristEscape(20);
+        UpForWristEscape(10);
 
         public final double position;
 

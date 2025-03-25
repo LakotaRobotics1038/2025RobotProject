@@ -13,12 +13,16 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
+import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.commands.SetAcquisitionPositionEscape;
+import frc.robot.commands.SetAcquisitionPositionEscape.FinishActions;
 import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Wrist;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -118,6 +122,9 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
+        if (Wrist.getInstance().getPosition() > 0) {
+            new SetAcquisitionPositionEscape(FinishActions.Default).schedule();
+        }
     }
 
     @Override

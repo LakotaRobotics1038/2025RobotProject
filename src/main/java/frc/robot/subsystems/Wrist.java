@@ -66,7 +66,7 @@ public class Wrist extends SubsystemBase {
     }
 
     protected void useOutput(double output) {
-        double power = MathUtil.clamp(output, WristConstants.kMinPower, WristConstants.kMaxPower);
+        double power = MathUtil.clamp(output, -WristConstants.kMaxPower, WristConstants.kMaxPower);
         this.wristMotor.set(power);
     }
 

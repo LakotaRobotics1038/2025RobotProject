@@ -67,6 +67,9 @@ public class SetAcquisitionPositionCommand extends Command {
         if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
             wrist.setSetpoint(-42);
             isGroundAngle = true;
+        } else if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.Processor) {
+            wrist.setSetpoint(-54);
+            isGroundAngle = true;
         } else {
             shoulder.setSetpoint(shoulderSetpoint);
             extension.setSetpoint(extensionSetpoint);
@@ -91,14 +94,14 @@ public class SetAcquisitionPositionCommand extends Command {
                 wristPos = MathUtil.clamp(wristPos, -44, -36);
             } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
                 wristPos = MathUtil.clamp(wristPos, -53, -40);
+            } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -60, -60);
             } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
                 wristPos = MathUtil.clamp(wristPos, -60, -43);
             } else if (shoulderPos > 323 && shoulderPos < 336 && extPos < 20) {
                 wristPos = MathUtil.clamp(wristPos, -56, -44);
             } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
                 wristPos = MathUtil.clamp(wristPos, -56, -44);
-            } else if (shoulderPos > 317 && shoulderPos < 323 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -50, -44);
             } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
                 wristPos = MathUtil.clamp(wristPos, -55, -50);
             } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {

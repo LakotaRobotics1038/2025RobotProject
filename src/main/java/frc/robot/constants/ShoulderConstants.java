@@ -8,7 +8,7 @@ public class ShoulderConstants {
         GroundAlgae(355.0),
         Storage(301.0),
         Barge(300.0),
-        Vertical(50),
+        Vertical(300),
         BackOfBot(10);
 
         public final double setpoint;
@@ -25,7 +25,7 @@ public class ShoulderConstants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
 
-    public static final double kMaxPower = 0.1;
+    public static final double kMaxPower = 0.3;
     public static final double kMaxDistance = 290.0;
 
     public static final double kTolerance = 2.0;

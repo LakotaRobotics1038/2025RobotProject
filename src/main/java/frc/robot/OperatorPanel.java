@@ -50,7 +50,7 @@ public class OperatorPanel extends GenericHID {
         operatorState.setScoringFlipped(coralPosScoringSwitch.getAsBoolean());
 
         // Acquire
-        this.acquireButton.and(operatorState::isAlgae).onTrue(new AcquireAlgaeCommand());
+        this.acquireButton.onTrue(new AcquireAlgaeCommand());
 
         // Dispose
         this.disposeButton.and(operatorState::isAlgae).whileTrue(new DisposeAlgaeCommand());
@@ -62,7 +62,8 @@ public class OperatorPanel extends GenericHID {
         this.storageButton.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
-
+        this.bargeButton
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Barge)));
         // Operator State Updates
         this.algaeL23Button
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae)));
