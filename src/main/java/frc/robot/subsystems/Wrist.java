@@ -25,7 +25,7 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerP,
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
-    private boolean enabled = false;
+    private boolean enabled;
     private double lastPosition;
     private double wristOffset = 0.0;
     private WristSetpoints wristSetpoints;
@@ -60,8 +60,6 @@ public class Wrist extends SubsystemBase {
 
     @Override
     public void periodic() {
-        enabled = false;
-        System.out.println(enabled);
         if (enabled) {
             this.useOutput(this.wristController.calculate(this.getPosition()));
         }
@@ -69,7 +67,6 @@ public class Wrist extends SubsystemBase {
 
     protected void useOutput(double output) {
         double power = MathUtil.clamp(output, -WristConstants.kMaxPower, WristConstants.kMaxPower);
-        System.out.println(power);
         this.wristMotor.set(power);
     }
 
