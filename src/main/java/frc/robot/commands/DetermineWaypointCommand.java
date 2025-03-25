@@ -21,7 +21,6 @@ public class DetermineWaypointCommand extends Command {
     private final OperatorState operatorState = OperatorState.getInstance();
     private List<PhotonPipelineResult> visionResults;
     private int bestId = -1;
-    private PhotonTrackedTarget bestAlgae;
     private Optional<DriveWaypoints> waypoint = Optional.empty();
     private boolean isMirrored;
 
