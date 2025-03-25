@@ -13,6 +13,7 @@ import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
+import frc.robot.commands.SetAcquisitionPositionEscape;
 import frc.robot.utils.AcquisitionPositionSetpoint;;
 
 public class BargeAuto extends Auton {
@@ -20,6 +21,7 @@ public class BargeAuto extends Auton {
         super(alliance);
 
         super.addCommands(
+                new SetAcquisitionPositionEscape(SetAcquisitionPositionEscape.FinishActions.Default),
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
                         .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand().withDeadline(followPathCommand(Paths.getReefTag21ToNet()))

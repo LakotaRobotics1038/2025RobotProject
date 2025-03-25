@@ -12,14 +12,16 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.commands.SetAcquisitionPositionEscape;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
-import frc.robot.utils.AcquisitionPositionSetpoint;;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class ProcessorAuto extends Auton {
     ProcessorAuto(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
         super(alliance);
 
         super.addCommands(
+                new SetAcquisitionPositionEscape(SetAcquisitionPositionEscape.FinishActions.Default),
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
                         .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand()
