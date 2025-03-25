@@ -7,7 +7,7 @@ public class OperatorState {
     private AcquisitionPositionSetpoint lastLastInput;
     private boolean scoringFlipped;
 
-    private boolean isManual = false;
+    private boolean isManual = true;
 
     private OperatorState() {
         this.lastInput = AcquisitionPositionSetpoint.Storage;
@@ -31,31 +31,12 @@ public class OperatorState {
         return this.lastLastInput;
     }
 
-    public boolean isCoral134() {
-        switch (getLastInput()) {
-            case L3Coral:
-            case L4Coral:
-            case FeederStation:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public boolean isCoral4() {
-        return getLastInput() == AcquisitionPositionSetpoint.L4Coral;
-    }
-
-    public boolean isCoral2() {
-        return getLastInput() == AcquisitionPositionSetpoint.L2Coral;
-    }
-
     public boolean isAlgae() {
         switch (getLastInput()) {
-            case L1Coral:
             case L23Algae:
             case L34Algae:
             case Processor:
+            case GroundAlgae:
                 return true;
             default:
                 return false;
@@ -63,11 +44,11 @@ public class OperatorState {
     }
 
     public boolean isGroundAlgae() {
-        return getLastLastInput() == AcquisitionPositionSetpoint.L1Coral;
+        return getLastLastInput() == AcquisitionPositionSetpoint.GroundAlgae;
     }
 
     public boolean isNotGroundAlgae() {
-        return !(getLastLastInput() == AcquisitionPositionSetpoint.L1Coral);
+        return !(getLastLastInput() == AcquisitionPositionSetpoint.GroundAlgae);
     }
 
     public boolean isBarge() {

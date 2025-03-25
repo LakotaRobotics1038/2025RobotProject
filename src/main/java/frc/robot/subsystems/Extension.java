@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
-import frc.robot.constants.WristConstants.WristSetpoints;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Extension extends SubsystemBase {
@@ -178,9 +177,5 @@ public class Extension extends SubsystemBase {
 
     public void setOffset(double extensionOffset) {
         this.extensionOffset = extensionOffset;
-    }
-
-    public boolean isSafe(WristSetpoints wristSetpoint) {
-        return this.getPosition() < wristSetpoint.getExtMax();
     }
 }

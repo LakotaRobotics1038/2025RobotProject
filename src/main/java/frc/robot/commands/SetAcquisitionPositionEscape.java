@@ -13,7 +13,7 @@ public class SetAcquisitionPositionEscape extends Command {
     private Wrist wrist = Wrist.getInstance();
     private Extension extension = Extension.getInstance();
     private FinishActions finishAction;
-    private boolean negativeWrist;
+    private boolean positiveWrist;
 
     public enum FinishActions {
         NoFinish,
@@ -21,7 +21,7 @@ public class SetAcquisitionPositionEscape extends Command {
         Default
     }
 
-    private SetAcquisitionPositionEscape(FinishActions finishAction) {
+    public SetAcquisitionPositionEscape(FinishActions finishAction) {
         addRequirements(shoulder, wrist, extension);
         this.finishAction = finishAction;
     }
@@ -31,25 +31,21 @@ public class SetAcquisitionPositionEscape extends Command {
         shoulder.enable();
         extension.enable();
 
-        if (wrist.getPosition() < 0) {
+        if (wrist.getPosition() > 0) {
             shoulder.setSetpoint(ShoulderSetpoints.Vertical);
-            negativeWrist = true;
+            extension.setSetpoint(ExtensionSetpoints.UpForWristEscape);
+            positiveWrist = true;
         }
     }
 
     @Override
     public void execute() {
-        if (negativeWrist) {
-            if (shoulder.onTarget()) {
-                extension.setSetpoint(ExtensionSetpoints.UpForWristEscape);
-            }
-            if (extension.onTarget()) {
-                wrist.setSetpoint(WristSetpoints.Escape);
+        if (positiveWrist) {
+            if (extension.onTarget() && shoulder.onTarget()) {
+                wrist.setSetpoint(WristSetpoints.Storage);
                 if (wrist.onTarget()) {
-                    shoulder.setSetpoint(ShoulderSetpoints.BackOfBot);
-                    if (shoulder.onTarget()) {
-                        negativeWrist = false;
-                    }
+                    extension.setSetpoint(ExtensionSetpoints.Storage);
+                    shoulder.setSetpoint(ShoulderSetpoints.Storage);
                 }
             }
         }
@@ -69,5 +65,6 @@ public class SetAcquisitionPositionEscape extends Command {
             extension.disable();
             shoulder.disable();
         }
+        positiveWrist = false;
     }
 }

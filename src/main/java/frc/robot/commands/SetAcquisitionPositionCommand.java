@@ -22,6 +22,7 @@ public class SetAcquisitionPositionCommand extends Command {
     private WristSetpoints wristSetpoint;
     private ExtensionSetpoints extensionSetpoint;
     private ShoulderSetpoints shoulderSetpoint;
+    private boolean isGroundAngle;
 
     public enum FinishActions {
         NoFinish,
@@ -63,8 +64,17 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
+        if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
+            wrist.setSetpoint(-42);
+            isGroundAngle = true;
+        } else if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.Processor) {
+            wrist.setSetpoint(-54);
+            isGroundAngle = true;
+        } else {
+            shoulder.setSetpoint(shoulderSetpoint);
+            extension.setSetpoint(extensionSetpoint);
+        }
 
-        shoulder.setSetpoint(shoulderSetpoint);
     }
 
     @Override
@@ -73,33 +83,45 @@ public class SetAcquisitionPositionCommand extends Command {
         double shoulderPos = shoulder.getPosition();
         double extPos = extension.getPosition();
 
-        if (shoulderPos > 10) {
-            extension.setSetpoint(extensionSetpoint);
-        } else if (shoulderPos > 5) {
-            extPos = MathUtil.clamp(extPos, 0, 10);
+        if (!isGroundAngle) {
+            if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
+                wristPos = MathUtil.clamp(wristPos, -165, -42.5);
+            } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
+                wristPos = MathUtil.clamp(wristPos, -35, 0);
+            } else if (extPos > 20 && shoulderPos < 340) {
+                wristPos = MathUtil.clamp(wristPos, -41.5, 0);
+            } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -44, -36);
+            } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -53, -40);
+            } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -60, -60);
+            } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
+                wristPos = MathUtil.clamp(wristPos, -60, -43);
+            } else if (shoulderPos > 323 && shoulderPos < 336 && extPos < 20) {
+                wristPos = MathUtil.clamp(wristPos, -56, -44);
+            } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
+                wristPos = MathUtil.clamp(wristPos, -56, -44);
+            } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -55, -50);
+            } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -44, -31);
+            } else if (shoulderPos < 308 && shoulderPos > 300) {
+                wristPos = MathUtil.clamp(wristPos, -40, 0);
+            } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
+                wristPos = MathUtil.clamp(wristPos, -44, -31);
+            }
+
+            wrist.setSetpoint(wristPos);
         } else {
-            extPos = MathUtil.clamp(extPos, 0, 0);
+            if (wrist.onTarget()) {
+                shoulder.setSetpoint(shoulderSetpoint);
+                extension.setSetpoint(extensionSetpoint);
+                if (shoulder.onTarget() && extension.onTarget()) {
+                    wrist.setSetpoint(wristPos);
+                }
+            }
         }
-
-        // BAD ZONES
-
-        // Ground Pickup - 32 -> 36.292
-        // L23 Algae - 51.609 -> 150.492
-        // L34 Algae - 40.881 -> 155.55
-        // Barge - 200.798 -> 311.228
-
-        if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
-            wristPos = MathUtil.clamp(wristPos, 20, 50);
-        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
-            wristPos = MathUtil.clamp(wristPos, 20, 50);
-        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
-            wristPos = MathUtil.clamp(wristPos, 20, 50);
-        } else if (shoulderPos > 0 && shoulderPos < 10 && extPos < 20) {
-            wristPos = MathUtil.clamp(wristPos, 20, 50);
-        }
-
-        wrist.setSetpoint(wristPos);
-        extension.setSetpoint(extPos);
     }
 
     public boolean isFinished() {
@@ -107,7 +129,6 @@ public class SetAcquisitionPositionCommand extends Command {
                 extension.onTarget() &&
                 wrist.onTarget() &&
                 shoulder.onTarget();
-
     }
 
     public void end(boolean interrupted) {

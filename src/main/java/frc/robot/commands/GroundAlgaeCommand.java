@@ -41,7 +41,7 @@ public class GroundAlgaeCommand extends Command {
         visionResults = vision.getResultsBackCam();
         getBestAlgae(visionResults);
 
-        double turn = turnController.calculate(bestAlgae.getYaw());
+        double turn = turnController.calculate(bestAlgae.getYaw(), 0);
         driveTrain.drive(xMove.get(), yMove.get(), turn, true);
     }
 

@@ -57,11 +57,7 @@ public class AcquisitionConstants {
     public static final int kTopLaserPort = 1;
     public static final int kBottomLaserPort = 0;
     public static final int kAcquisitionMotorPort = 4;
-    public static final double kAcquireCoralSpeed = 1.0;
-    public static final double kAcquireCoralSpeedL4 = -0.1;
     public static final double kAcquireAlgaeSpeed = 1.0;
-    public static final double kDisposeCoralSpeed134 = 0.5;
-    public static final double kDisposeCoralSpeed2 = -0.5;
     public static final double kDisposeAlgaeSpeed = -1.0;
     public static final double kShootAlgaeSpeed = -1.0;
 
@@ -69,14 +65,15 @@ public class AcquisitionConstants {
         double deg = Math.toRadians(degrees) % (Math.PI * 2);
         short sine;
         if ((Math.abs(deg) > Math.PI * 0.5 && Math.abs(deg) < Math.PI) || Math.abs(deg) > Math.PI * 1.5) {
-            sine = kSinLookupTable[(int) Math.round((1 - Math.abs(deg) / (Math.PI * 0.5) % 1) * (kSinLookupTable.length - 1))];
+            sine = kSinLookupTable[(int) Math
+                    .round((1 - Math.abs(deg) / (Math.PI * 0.5) % 1) * (kSinLookupTable.length - 1))];
         } else {
-            sine = kSinLookupTable[(int) Math.round(Math.abs(deg) / (Math.PI * 0.5) % 1 * (kSinLookupTable.length - 1))];
+            sine = kSinLookupTable[(int) Math
+                    .round(Math.abs(deg) / (Math.PI * 0.5) % 1 * (kSinLookupTable.length - 1))];
         }
         if ((deg >= 0 && deg < Math.PI) || deg < -Math.PI) {
             return sine / 10000.f;
-        }
-        else {
+        } else {
             return -sine / 10000.f;
         }
     }
