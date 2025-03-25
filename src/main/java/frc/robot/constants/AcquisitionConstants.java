@@ -68,13 +68,17 @@ public class AcquisitionConstants {
     public static float getSine(double degrees) {
         double deg = Math.toRadians(degrees) % (Math.PI * 2);
         short sine;
-        if ((deg > Math.PI * 0.5 && deg < Math.PI) || deg > Math.PI * 1.5) {
-            sine = kSinLookupTable[(int) Math
-                    .round((1 - Math.abs(deg) / (Math.PI * 0.5)) * (kSinLookupTable.length - 1))];
+        if ((Math.abs(deg) > Math.PI * 0.5 && Math.abs(deg) < Math.PI) || Math.abs(deg) > Math.PI * 1.5) {
+            sine = kSinLookupTable[(int) Math.round((1 - Math.abs(deg) / (Math.PI * 0.5) % 1) * (kSinLookupTable.length - 1))];
         } else {
-            sine = kSinLookupTable[(int) Math.round(Math.abs(deg) / (Math.PI * 0.5) * (kSinLookupTable.length - 1))];
+            sine = kSinLookupTable[(int) Math.round(Math.abs(deg) / (Math.PI * 0.5) % 1 * (kSinLookupTable.length - 1))];
         }
-        return deg < Math.PI ? sine / 10000.f : -sine / 10000.f;
+        if ((deg >= 0 && deg < Math.PI) || deg < -Math.PI) {
+            return sine / 10000.f;
+        }
+        else {
+            return -sine / 10000.f;
+        }
     }
 
     public static float getCosine(double radian) {
