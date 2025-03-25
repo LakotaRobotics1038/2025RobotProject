@@ -48,9 +48,9 @@ public class Paths {
         return PathPlannerPath.fromPathFile("Mid Pose to 21 Algae");
     }
 
-    public static PathPlannerPath getTopPathToTag20Algae()
+    public static PathPlannerPath getNetToTag20Algae()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("Top Pos to Tag 20 Algae");
+        return PathPlannerPath.fromPathFile("Net to Tag 20 Algae");
     }
 
     public static PathPlannerPath getReefTag21ToNet()
@@ -58,9 +58,9 @@ public class Paths {
         return PathPlannerPath.fromPathFile("Reef Tag 21 To Net");
     }
 
-    public static PathPlannerPath getNetToReefTag21Algae()
+    public static PathPlannerPath getNetToReefTag22Algae()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("Net to Reef Tag 21 Algae");
+        return PathPlannerPath.fromPathFile("Net to Reef Tag 22 Algae");
     }
 
     public static PathPlannerPath getReefTag20ToNet()

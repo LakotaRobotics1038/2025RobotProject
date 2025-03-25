@@ -20,8 +20,8 @@ public class BargeAuto extends Auton {
         super(alliance);
 
         super.addCommands(
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                        .alongWith(followPathCommand(Paths.getTopPathToTag20Algae())),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
+                        .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand().withDeadline(followPathCommand(Paths.getReefTag21ToNet()))
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
@@ -29,11 +29,11 @@ public class BargeAuto extends Auton {
                         .withTimeout(3),
 
                 new DisposeAlgaeCommand().withTimeout(0.5),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable),
 
-                followPathCommand(Paths.getNetToReefTag21Algae()),
+                followPathCommand(Paths.getNetToTag20Algae()),
                 new AcquireAlgaeCommand().withDeadline(
-                        followPathCommand(Paths.getReefTag21ToNet()))
+                        followPathCommand(Paths.getNetToTag20Algae()))
                         .alongWith(new WaitCommand(0.5))
                         .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
                                 FinishActions.NoDisable))

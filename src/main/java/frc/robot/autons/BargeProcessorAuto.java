@@ -21,7 +21,7 @@ public class BargeProcessorAuto extends Auton {
 
         super.addCommands(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                        .andThen(followPathCommand(Paths.getTopPathToTag20Algae())),
+                        .andThen(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand().withDeadline(followPathCommand(Paths.getReefTag21ToNet()))
                         .alongWith(new WaitCommand(0.5).andThen(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
@@ -31,9 +31,9 @@ public class BargeProcessorAuto extends Auton {
                 new DisposeAlgaeCommand().withTimeout(0.5),
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable),
 
-                followPathCommand(Paths.getNetToReefTag21Algae()),
+                followPathCommand(Paths.getNetToReefTag22Algae()),
                 new AcquireAlgaeCommand().withDeadline(
-                        followPathCommand(Paths.getLeftReefTag21ToProcessorPath())
+                        followPathCommand(Paths.getReefTag22ToProcessor())
                                 .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
                                         FinishActions.NoDisable))),
                 new DisposeAlgaeCommand());

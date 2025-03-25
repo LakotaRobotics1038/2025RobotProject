@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.389000000000001,
-        "y": 5.203071721311476
+        "x": 7.320750000000001,
+        "y": 5.359071721311476
       },
       "isLocked": false,
       "linkedName": "net"
     },
     {
       "anchor": {
-        "x": 5.7,
-        "y": 4.2
+        "x": 4.878995901639344,
+        "y": 5.0379610655737705
       },
       "prevControl": {
-        "x": 6.155053278688523,
-        "y": 4.5584999999999996
+        "x": 5.2200488299840195,
+        "y": 5.193870975674193
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefTag21Algae"
+      "linkedName": "ReefTag20Algae"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Net Paths",

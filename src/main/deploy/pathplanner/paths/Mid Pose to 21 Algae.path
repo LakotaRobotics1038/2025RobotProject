@@ -12,7 +12,7 @@
         "y": 4.2
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "midStartPose"
     },
     {
       "anchor": {
@@ -20,7 +20,7 @@
         "y": 4.2
       },
       "prevControl": {
-        "x": 5.949999999999998,
+        "x": 5.95,
         "y": 4.2
       },
       "nextControl": null,
