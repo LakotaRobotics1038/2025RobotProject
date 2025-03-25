@@ -14,8 +14,6 @@ import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Acquisition extends SubsystemBase {
-    private final DigitalInput topLaser = new DigitalInput(AcquisitionConstants.kTopLaserPort);
-    private final DigitalInput bottomLaser = new DigitalInput(AcquisitionConstants.kBottomLaserPort);
     private final SparkFlex acquisitionMotor = new SparkFlex(AcquisitionConstants.kAcquisitionMotorPort,
             MotorType.kBrushless);
     private final SparkLimitSwitch algaeSwitch = acquisitionMotor.getForwardLimitSwitch();
@@ -38,24 +36,8 @@ public class Acquisition extends SubsystemBase {
         return instance;
     }
 
-    public void acquireCoral() {
-        this.acquisitionMotor.set(AcquisitionConstants.kAcquireCoralSpeed);
-    }
-
-    public void acquireCoralL4() {
-        this.acquisitionMotor.set(AcquisitionConstants.kAcquireCoralSpeedL4);
-    }
-
     public void acquireAlgae() {
         this.acquisitionMotor.set(AcquisitionConstants.kAcquireAlgaeSpeed);
-    }
-
-    public void disposeCoral134() {
-        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed134);
-    }
-
-    public void disposeCoral2() {
-        this.acquisitionMotor.set(AcquisitionConstants.kDisposeCoralSpeed2);
     }
 
     public void disposeAlgae() {
@@ -68,14 +50,6 @@ public class Acquisition extends SubsystemBase {
 
     public void stopAcquisition() {
         this.acquisitionMotor.stopMotor();
-    }
-
-    public boolean getTopLaser() {
-        return !this.topLaser.get();
-    }
-
-    public boolean getBottomLaser() {
-        return !this.bottomLaser.get();
     }
 
     public boolean getAlgaeSwitch() {
