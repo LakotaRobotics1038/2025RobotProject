@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 7.32225,
-        "y": 0.7294999999999994
+        "y": 0.729
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.825,
-        "y": 0.8075
+        "y": 0.8070000000000006
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.928,
-        "y": 1.060999999999999
+        "x": 4.208011363636363,
+        "y": 0.729
       },
       "prevControl": {
-        "x": 6.3375,
-        "y": 1.0024999999999988
+        "x": 4.617511363636363,
+        "y": 0.6704999999999998
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Taxi Bottom Auto",

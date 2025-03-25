@@ -72,6 +72,10 @@ public class AutonSelector {
                     return new ProcessorAuto(alliance);
                 case BargeProcessorAuto:
                     return new BargeProcessorAuto(alliance);
+                case TopTaxi:
+                    return new TopTaxi(alliance);
+                case BottomTaxi:
+                    return new BottomTaxi(alliance);
                 default:
                     return null;
             }

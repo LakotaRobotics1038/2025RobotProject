@@ -18,7 +18,6 @@ import frc.robot.autons.AutonSelector.AutonChoices;
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Climb climb = Climb.getInstance();
     private OperatorState operatorState = OperatorState.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
@@ -34,7 +33,7 @@ public class Dashboard extends SubsystemBase {
 
     // Drivers Tab Inputs
     private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
-            .withPosition(0, 3)
+            .withPosition(0, 2)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kToggleButton)
             .getEntry();
@@ -92,12 +91,12 @@ public class Dashboard extends SubsystemBase {
         // .withWidget(BuiltInWidgets.kGyro);
 
         driversTab.add(field)
-                .withPosition(3, 1)
+                .withPosition(4, 0)
                 .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
         driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
-                .withPosition(0, 4)
+                .withPosition(0, 3)
                 .withSize(2, 1)
                 .withWidget(BuiltInWidgets.kBooleanBox);
 
@@ -126,9 +125,6 @@ public class Dashboard extends SubsystemBase {
                 .withSize(2, 1);
         controlsTab.addNumber("R", driveTrain::getRotation)
                 .withPosition(5, 4)
-                .withSize(2, 1);
-        controlsTab.addNumber("Climb", climb::getPosition)
-                .withPosition(3, 3)
                 .withSize(2, 1);
     }
 

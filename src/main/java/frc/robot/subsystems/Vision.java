@@ -24,14 +24,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.VisionConstants;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +33,14 @@ import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.VisionConstants;
 
 public class Vision extends SubsystemBase {
     private final PhotonCamera frontCam = new PhotonCamera(VisionConstants.kRobotToFrontCamName);
@@ -151,8 +151,6 @@ public class Vision extends SubsystemBase {
     }
 
     public List<PhotonPipelineResult> getResultsFrontCam() {
-        // return Stream.concat(frontCam.getAllUnreadResults().stream(),
-        // backCam.getAllUnreadResults().stream()).toList();
         return frontCam.getAllUnreadResults();
     }
 
@@ -169,5 +167,13 @@ public class Vision extends SubsystemBase {
      */
     public Matrix<N3, N1> getEstimationStdDevs() {
         return curStdDevs;
+    }
+
+    public void setAlgaeMode() {
+        backCam.setPipelineIndex(0);
+    }
+
+    public void setAprilTagMode() {
+        backCam.setPipelineIndex(1);
     }
 }

@@ -4,6 +4,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -24,19 +25,21 @@ public class Shoulder extends SubsystemBase {
     private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
     private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
+    private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
+    private ShoulderSetpoints shoulderSetpoints;
 
     private Shoulder() {
 
         SparkMaxConfig leftShoulderConfig = new SparkMaxConfig();
         leftShoulderConfig.idleMode(IdleMode.kBrake)
-                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent)
                 .follow(rightShoulderMotor, true);
 
         SparkMaxConfig rightShoulderConfig = new SparkMaxConfig();
         rightShoulderConfig.idleMode(IdleMode.kBrake)
+                .inverted(true)
                 .smartCurrentLimit(NeoMotorConstants.kMaxNeoCurrent);
         rightShoulderConfig.absoluteEncoder
                 .positionConversionFactor(ShoulderConstants.kEncoderConversion);
@@ -82,7 +85,12 @@ public class Shoulder extends SubsystemBase {
     }
 
     public double getPosition() {
-        return shoulderEncoder.getPosition();
+        double position = this.shoulderEncoder.getPosition();
+
+        if (limitSwitch.isPressed()) {
+            position = 0;
+        }
+        return position;
     }
 
     public boolean onTarget() {
@@ -90,12 +98,13 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, 0, ShoulderConstants.kMaxDistance);
+        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
         shoulderController.setSetpoint(setpoint);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
         this.setSetpoint(setpoint.setpoint);
+        this.shoulderSetpoints = setpoint;
     }
 
     public void setP(double p) {
@@ -122,5 +131,9 @@ public class Shoulder extends SubsystemBase {
 
     public void setOffset(double shoulderOffset) {
         this.shoulderOffset = shoulderOffset;
+    }
+
+    public ShoulderSetpoints getSetpoint() {
+        return this.shoulderSetpoints;
     }
 }
