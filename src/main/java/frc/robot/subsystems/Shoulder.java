@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetpoints;
 
 public class Shoulder extends SubsystemBase {
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
