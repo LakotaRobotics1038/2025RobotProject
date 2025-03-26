@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.878995901639344,
-        "y": 5.0379610655737705
+        "x": 4.68975,
+        "y": 4.99025
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.971843570727871,
-        "y": 5.270080238295085
+        "x": 4.782597669088527,
+        "y": 5.222369172721314
       },
       "isLocked": false,
       "linkedName": "ReefTag20Algae"
     },
     {
       "anchor": {
-        "x": 5.655,
-        "y": 5.38025
+        "x": 5.733,
+        "y": 5.82875
       },
       "prevControl": {
-        "x": 5.528250000000001,
-        "y": 5.14625
+        "x": 5.474457432126808,
+        "y": 5.765684136828746
       },
       "nextControl": {
-        "x": 5.77772550297363,
-        "y": 5.606820159335933
+        "x": 6.259499999999999,
+        "y": 5.9571782786885255
       },
       "isLocked": false,
       "linkedName": null
@@ -47,10 +47,24 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -119.99999999999999
+      "rotationDegrees": 33.388513576111365
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

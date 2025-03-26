@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 5.6,
-        "y": 0.325
+        "y": 0.625
       },
       "prevControl": null,
       "nextControl": {
         "x": 5.22075,
-        "y": 1.2986413934426229
+        "y": 1.5986413934426227
       },
       "isLocked": false,
       "linkedName": "Processor"
     },
     {
       "anchor": {
-        "x": 5.070799180327868,
-        "y": 3.131915983606557
+        "x": 5.21625,
+        "y": 3.2352499999999993
       },
       "prevControl": {
-        "x": 5.402299180327868,
-        "y": 2.4299159836065565
+        "x": 5.54775,
+        "y": 2.533249999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,21 @@
       "rotationDegrees": 90.0
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

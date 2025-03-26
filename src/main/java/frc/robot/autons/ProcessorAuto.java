@@ -26,20 +26,20 @@ public class ProcessorAuto extends Auton {
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
                         .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand()
-                        .withDeadline(
-                                new WaitCommand(1).andThen(followPathCommand(Paths.getReefTag21ToProcessor())))
+                        .raceWith(
+                                followPathCommand(Paths.getReefTag21ToProcessor()))
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                FinishActions.NoFinish).withTimeout(2)),
+                                FinishActions.NoDisable).withTimeout(2)),
                 new DisposeAlgaeCommand().withTimeout(0.5),
 
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
                         FinishActions.NoDisable).withDeadline(followPathCommand(Paths.getProcessorToAlgaePath22())),
 
-                new AcquireAlgaeCommand().withDeadline(
+                new AcquireAlgaeCommand().raceWith(
                         followPathCommand(Paths.getReefTag22ToProcessor()))
-                        .alongWith(new WaitCommand(0.5)
-                                .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                        FinishActions.NoDisable).withTimeout(2))),
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
+                                FinishActions.NoDisable).withTimeout(2)),
                 new DisposeAlgaeCommand());
+
     }
 }

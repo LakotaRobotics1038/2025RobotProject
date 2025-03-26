@@ -127,7 +127,8 @@ public class SetAcquisitionPositionCommand extends Command {
     public boolean isFinished() {
         return finishAction != FinishActions.NoFinish &&
                 extension.onTarget() &&
-                shoulder.onTarget();
+                shoulder.onTarget() &&
+                wrist.onTarget();
     }
 
     public void end(boolean interrupted) {
