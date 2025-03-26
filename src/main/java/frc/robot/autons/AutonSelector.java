@@ -64,6 +64,7 @@ public class AutonSelector {
 
     public Auton chooseAuton() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
+        System.out.println(this.autoChooser.getSelected());
         try {
             switch (this.autoChooser.getSelected()) {
                 case BargeAuto:

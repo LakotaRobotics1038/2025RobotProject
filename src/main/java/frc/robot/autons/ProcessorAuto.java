@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
@@ -26,10 +27,9 @@ public class ProcessorAuto extends Auton {
                         .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
                 new AcquireAlgaeCommand()
                         .withDeadline(
-                                new WaitCommand(1).andThen(followPathCommand(Paths.getLeftReefTag21ToProcessorPath())))
-                        .alongWith(new WaitCommand(0.5)
-                                .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                        FinishActions.NoFinish).withTimeout(1))),
+                                new WaitCommand(1).andThen(followPathCommand(Paths.getReefTag21ToProcessor())))
+                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
+                                FinishActions.NoFinish).withTimeout(2)),
                 new DisposeAlgaeCommand().withTimeout(0.5),
 
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
@@ -39,7 +39,7 @@ public class ProcessorAuto extends Auton {
                         followPathCommand(Paths.getReefTag22ToProcessor()))
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                        FinishActions.NoDisable).withTimeout(1))),
+                                        FinishActions.NoDisable).withTimeout(2))),
                 new DisposeAlgaeCommand());
     }
 }

@@ -28,9 +28,9 @@ public class Paths {
         return PathPlannerPath.fromPathFile("LeftReefTag21 Backwards");
     }
 
-    public static PathPlannerPath getLeftReefTag21ToProcessorPath()
+    public static PathPlannerPath getReefTag21ToProcessor()
             throws IOException, ParseException, FileVersionException {
-        return PathPlannerPath.fromPathFile("LeftReefTag21 to Processor");
+        return PathPlannerPath.fromPathFile("Reef 21 to processor");
     }
 
     public static PathPlannerPath getReefTag22ToProcessor()
