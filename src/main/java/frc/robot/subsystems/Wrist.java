@@ -25,7 +25,7 @@ public class Wrist extends SubsystemBase {
             WristConstants.kWristControllerP,
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);
-    private boolean enabled = false;
+    private boolean enabled;
     private double lastPosition;
     private double wristOffset = 0.0;
     private WristSetpoints wristSetpoints;

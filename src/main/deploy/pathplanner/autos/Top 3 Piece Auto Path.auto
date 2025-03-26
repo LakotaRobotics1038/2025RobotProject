@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartTopPos to RightReefTag20"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RightReefTag20 To TopFeederStation"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopFeederStation to LeftReefTag20"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LeftReefTag20 to TopFeederStation"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopFeederStation to RightReefTag20"
+            "pathName": null
           }
         }
       ]

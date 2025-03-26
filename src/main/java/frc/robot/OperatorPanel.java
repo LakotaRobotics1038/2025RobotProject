@@ -7,25 +7,15 @@ import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
-import frc.robot.commands.SetExtensionPositionCommand;
-import frc.robot.commands.SetShoulderPositionCommand;
-import frc.robot.commands.SetWristPositionCommand;
 import frc.robot.commands.ShootAlgaeCommand;
-import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.IOConstants;
-import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
-import frc.robot.constants.WristConstants.WristSetpoints;
-import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
     private OperatorState operatorState;
     private boolean isDefaultEnabled;
 
-    private final Extension extension = Extension.getInstance();
-    private final Wrist wrist = Wrist.getInstance();
     private final Shoulder shoulder = Shoulder.getInstance();
 
     public final JoystickButton acquireButton = new JoystickButton(this, IOConstants.kAcquireButtonNumber);
@@ -112,15 +102,12 @@ public class OperatorPanel extends GenericHID {
     }
 
     public void enableDefaults() {
-        extension.setDefaultCommand(new SetExtensionPositionCommand(ExtensionSetpoints.Storage));
-        wrist.setDefaultCommand(new SetWristPositionCommand(WristSetpoints.Storage));
-        shoulder.setDefaultCommand(new SetShoulderPositionCommand(ShoulderSetpoints.Storage));
+        shoulder.setDefaultCommand(
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish));
         isDefaultEnabled = true;
     }
 
     public void clearDefaults() {
-        extension.removeDefaultCommand();
-        wrist.removeDefaultCommand();
         shoulder.removeDefaultCommand();
         isDefaultEnabled = false;
     }

@@ -58,9 +58,9 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
 
         vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-                    estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
+        driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+        estimatedPose.timestampSeconds,
+        vision.getEstimationStdDevs());
         });
 
         vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
