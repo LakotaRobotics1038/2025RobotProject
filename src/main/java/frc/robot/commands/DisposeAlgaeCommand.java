@@ -29,7 +29,6 @@ public class DisposeAlgaeCommand extends Command {
         if (!acquisition.getAlgaeSwitch()) {
             return secondsToDispose != 0 && timer.get() >= secondsToDispose;
         }
-
         return false;
     }
 

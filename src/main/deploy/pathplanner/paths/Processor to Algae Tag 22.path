@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.384659090909091,
-        "y": 3.282116477272727
+        "x": 5.284943181818181,
+        "y": 3.252201704545454
       },
       "prevControl": {
-        "x": 5.716159090909091,
-        "y": 2.5801164772727265
+        "x": 5.616443181818181,
+        "y": 2.5502017045454535
       },
       "nextControl": null,
       "isLocked": false,
@@ -67,7 +67,7 @@
   "folder": "Processor Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 104.55588487858412
   },
   "useDefaultConstraints": true
 }

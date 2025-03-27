@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.384659090909091,
-        "y": 3.282116477272727
+        "x": 5.284943181818181,
+        "y": 3.252201704545454
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.492522965235092,
-        "y": 3.056582921863815
+        "x": 5.392807056144182,
+        "y": 3.026668149136542
       },
       "isLocked": false,
       "linkedName": "ReefTag22Algae"
@@ -63,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 104.55588487858412
   },
   "reversed": false,
   "folder": "Processor Paths",
