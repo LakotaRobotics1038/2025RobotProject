@@ -59,7 +59,7 @@ public class Dashboard extends SubsystemBase {
             .getEntry();
 
     private GenericEntry driveExponent = driversTab.add("Drive Exponent", 2)
-            .withPosition(2, 4)
+            .withPosition(4, 3)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();

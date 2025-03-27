@@ -62,9 +62,10 @@ public class DriverJoystick extends XboxController1038 {
         SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
-            double x = Math.pow(super.getLeftX(), exponent);
-            double y = Math.pow(super.getLeftY(), exponent);
-            double z = Math.pow(super.getRightX(), exponent);
+            Math.copySign(prevX, exponent);
+            double x = Math.copySign(Math.pow(super.getLeftX(), exponent), super.getLeftX());
+            double y = Math.copySign(Math.pow(super.getLeftY(), exponent), super.getLeftY());
+            double z = super.getRightX();
 
             double forward = limitRate(y, prevY, forwardFilter);
             double sideways = limitRate(x, prevX, sidewaysFilter);

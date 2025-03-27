@@ -63,11 +63,11 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
     private boolean hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.FieldCentric fieldCentricDriveRequest = new SwerveRequest.FieldCentric()
-            .withDeadband(DriveConstants.MaxSpeed * 0.1) // Add a 10% deadband
+            .withDeadband(DriveConstants.MaxSpeed * 0.03) // Add a 10% deadband
             .withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.RobotCentric robotCentricDriveRequest = new SwerveRequest.RobotCentric()
-            .withDeadband(DriveConstants.MaxSpeed * 0.1) // Add a 10% deadband
+            .withDeadband(DriveConstants.MaxSpeed * 0.03) // Add a 10% deadband
             .withRotationalDeadband(DriveConstants.MaxAngularRate * 0.1)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brakeRequest = new SwerveRequest.SwerveDriveBrake();
