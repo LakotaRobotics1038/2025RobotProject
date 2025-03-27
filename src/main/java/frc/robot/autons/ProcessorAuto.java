@@ -23,7 +23,7 @@ public class ProcessorAuto extends Auton {
 
         super.addCommands(
                 new SetAcquisitionPositionEscape(SetAcquisitionPositionEscape.FinishActions.Default),
-                new AcquireAlgaeCommand().withTimeout(2).alongWith(
+                new AcquireAlgaeCommand().raceWith(
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
                                 .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())).withTimeout(2)),
                 new AcquireAlgaeCommand()
