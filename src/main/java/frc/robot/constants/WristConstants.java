@@ -7,7 +7,7 @@ public class WristConstants {
         Processor(-42.0),
         GroundAlgae(-31.0),
         Storage(-28.0),
-        Barge(-161.5);
+        Barge(-156.5);
 
         private double setpoint;
         private double extMax;

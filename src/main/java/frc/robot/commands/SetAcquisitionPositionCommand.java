@@ -113,6 +113,9 @@ public class SetAcquisitionPositionCommand extends Command {
             }
 
             wrist.setSetpoint(wristPos);
+            if (wrist.onTarget()) {
+                wrist.disable();
+            }
         } else {
             if (wrist.onTarget()) {
                 shoulder.setSetpoint(shoulderSetpoint);
