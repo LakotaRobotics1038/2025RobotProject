@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.6,
-        "y": 0.6
+        "x": 5.773551136363636,
+        "y": 0.35046875
       },
       "prevControl": {
-        "x": 5.6,
-        "y": 1.5999999999999985
+        "x": 5.773551136363636,
+        "y": 1.3504687499999986
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Processor"
     }
   ],
   "rotationTargets": [],
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 105.6713850006023
+    "rotation": 104.55588487858412
   },
   "reversed": false,
   "folder": "Processor Paths",
