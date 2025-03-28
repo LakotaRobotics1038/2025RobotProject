@@ -112,7 +112,24 @@ public class SetAcquisitionPositionCommand extends Command {
                 wristPos = MathUtil.clamp(wristPos, -44, -31);
             }
 
-            wrist.setSetpoint(wristPos);
+            /*
+             * if (acquisitionPositionSetpoint != AcquisitionPositionSetpoint.ZeroExtend
+             * || (extension.onTarget() && shoulder.onTarget()) &&) {
+             * wrist.setSetpoint(wristPos);
+             * }
+             */
+
+            if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.ZeroExtend) {
+                if (extension.onTarget() && shoulder.onTarget()) {
+                    wrist.setSetpoint(wristPos);
+                }
+            } else {
+                wrist.setSetpoint(wristPos);
+            }
+            // isZero, isTarget = move wrist
+            // isntZero, isTarget = move wrist
+            // isZero, isntTarget = no wrist
+            // isntZero, isntTarget = moveWrist
 
         } else {
             if (wrist.onTarget()) {
