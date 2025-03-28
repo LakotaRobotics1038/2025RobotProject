@@ -113,7 +113,7 @@ public class SetAcquisitionPositionCommand extends Command {
             }
 
             wrist.setSetpoint(wristPos);
-            if (wrist.onTarget() && shoulderPos < 336) {
+            if (wrist.onTarget() && shoulderPos < 326) {
                 wrist.disable();
             }
         } else {
