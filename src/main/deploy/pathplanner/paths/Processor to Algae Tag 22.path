@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.773551136363636,
+        "x": 5.674,
         "y": 0.35046875
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.394301136363636,
-        "y": 1.3241101434426221
+        "x": 5.2947500000000005,
+        "y": 1.324110143442622
       },
       "isLocked": false,
       "linkedName": "Processor"
