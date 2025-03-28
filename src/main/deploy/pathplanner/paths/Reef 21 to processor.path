@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 5.6,
-        "y": 4.25
+        "y": 4.15
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.972999999999999,
-        "y": 4.331
+        "y": 4.231000000000001
       },
       "isLocked": false,
       "linkedName": "ReefTag21Algae"
