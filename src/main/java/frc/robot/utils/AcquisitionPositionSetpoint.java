@@ -13,7 +13,7 @@ public enum AcquisitionPositionSetpoint {
     Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Storage),
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
-    ZeroExtend(null, WristSetpoints.ZeroExt, ExtensionSetpoints.Zero);
+    ZeroExtend(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Zero);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;
