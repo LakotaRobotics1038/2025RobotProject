@@ -14,10 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
-import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionEscape;
 import frc.robot.commands.SetAcquisitionPositionEscape.FinishActions;
-import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
@@ -58,9 +56,9 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
 
         vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-        driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-        estimatedPose.timestampSeconds,
-        vision.getEstimationStdDevs());
+            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+                    estimatedPose.timestampSeconds,
+                    vision.getEstimationStdDevs());
         });
 
         vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
