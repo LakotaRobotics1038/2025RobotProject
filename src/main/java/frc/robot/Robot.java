@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
-import frc.robot.commands.SetAcquisitionPositionEscape;
-import frc.robot.commands.SetAcquisitionPositionEscape.FinishActions;
+import frc.robot.commands.SetAcquisitionPositionEscapeCommand;
+import frc.robot.commands.SetAcquisitionPositionEscapeCommand.FinishActions;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
         if (Wrist.getInstance().getPosition() > 0) {
-            new SetAcquisitionPositionEscape(FinishActions.Default)
+            new SetAcquisitionPositionEscapeCommand(FinishActions.Default)
                     .andThen(new InstantCommand(() -> operatorPanel.enableDefaults()))
                     .schedule();
         }

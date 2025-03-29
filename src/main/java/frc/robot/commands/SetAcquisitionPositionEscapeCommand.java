@@ -8,7 +8,7 @@ import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.Wrist;
 
-public class SetAcquisitionPositionEscape extends Command {
+public class SetAcquisitionPositionEscapeCommand extends Command {
     private Shoulder shoulder = Shoulder.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Extension extension = Extension.getInstance();
@@ -21,7 +21,7 @@ public class SetAcquisitionPositionEscape extends Command {
         Default
     }
 
-    public SetAcquisitionPositionEscape(FinishActions finishAction) {
+    public SetAcquisitionPositionEscapeCommand(FinishActions finishAction) {
         addRequirements(shoulder, wrist, extension);
         this.finishAction = finishAction;
     }
