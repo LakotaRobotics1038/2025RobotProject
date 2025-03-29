@@ -86,6 +86,10 @@ public class Wrist extends SubsystemBase {
         return normalizedPosition;
     }
 
+    public boolean isNegative() {
+        return this.getPosition() < 0;
+    }
+
     public boolean onTarget() {
         return this.wristController.atSetpoint();
     }
