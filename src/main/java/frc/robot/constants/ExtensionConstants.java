@@ -27,7 +27,8 @@ public class ExtensionConstants {
         Storage(7.0),
         Barge(kExtensionMaximum),
         Zero(0.0),
-        UpForWristEscape(10);
+        UpForWristEscape(10),
+        StartingPos(0.0);
 
         public final double position;
 

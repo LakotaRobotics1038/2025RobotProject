@@ -78,6 +78,9 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::getIsManual)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.ZeroExtend,
                         FinishActions.NoFinish));
+        this.feederButton
+                .and(operatorState::getIsManual)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Defense, FinishActions.NoFinish));
 
         this.algaeL23Button
                 .and(operatorState::getIsManual)
