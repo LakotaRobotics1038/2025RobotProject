@@ -50,6 +50,11 @@ public class OperatorPanel extends GenericHID {
         this.storageButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish));
         this.storageButton.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
+
+        this.feederButton
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.StartingConfig,
+                        FinishActions.NoFinish));
+
         this.coralL1Button.and(this::getDefaultsDisabled).onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton.toggleOnTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish));
@@ -78,9 +83,6 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::getIsManual)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.ZeroExtend,
                         FinishActions.NoFinish));
-        this.feederButton
-                .and(operatorState::getIsManual)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Defense, FinishActions.NoFinish));
 
         this.algaeL23Button
                 .and(operatorState::getIsManual)

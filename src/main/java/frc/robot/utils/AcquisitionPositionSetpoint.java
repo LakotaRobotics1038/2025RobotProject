@@ -14,7 +14,7 @@ public enum AcquisitionPositionSetpoint {
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
     ZeroExtend(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Zero),
-    Defense(ShoulderSetpoints.StartingPos, WristSetpoints.StartingPos, ExtensionSetpoints.StartingPos);
+    StartingConfig(ShoulderSetpoints.StartingPos, WristSetpoints.StartingPos, ExtensionSetpoints.Zero);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;

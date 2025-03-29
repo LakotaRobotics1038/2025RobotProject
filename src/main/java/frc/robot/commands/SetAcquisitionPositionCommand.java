@@ -126,10 +126,6 @@ public class SetAcquisitionPositionCommand extends Command {
             } else {
                 wrist.setSetpoint(wristPos);
             }
-            // isZero, isTarget = move wrist
-            // isntZero, isTarget = move wrist
-            // isZero, isntTarget = no wrist
-            // isntZero, isntTarget = moveWrist
 
         } else {
             if (wrist.onTarget()) {

@@ -69,6 +69,7 @@
         "edu.wpi.first.math.**.struct.*",
     ],
     "cSpell.words": [
+        "Auton",
         "setpoint",
         "Setpoints"
     ]
