@@ -23,23 +23,35 @@ public class ProcessorAuto extends Auton {
 
         super.addCommands(
                 new SetAcquisitionPositionEscape(SetAcquisitionPositionEscape.FinishActions.Default),
-                (new AcquireAlgaeCommand().withTimeout(2)).raceWith(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
-                                .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())).withTimeout(2)),
-                (new AcquireAlgaeCommand().withTimeout(2))
+                new AcquireAlgaeCommand()
+                        .withTimeout(2)
+                        .raceWith(
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
+                                        FinishActions.NoDisable)
+                                        .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae()))
+                                        .withTimeout(2)),
+                new AcquireAlgaeCommand()
+                        .withTimeout(2)
                         .raceWith(followPathCommand(Paths.getReefTag21ToProcessor()))
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                FinishActions.NoDisable).withTimeout(2)),
-                new DisposeAlgaeCommand().withTimeout(0.5),
+                                FinishActions.NoDisable)
+                                .withTimeout(2)),
+                new DisposeAlgaeCommand()
+                        .withTimeout(0.5),
 
-                new AcquireAlgaeCommand().raceWith(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                                .alongWith(followPathCommand(Paths.getProcessorToAlgaePath22())).withTimeout(2)),
+                new AcquireAlgaeCommand()
+                        .raceWith(
+                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
+                                        FinishActions.NoDisable)
+                                        .alongWith(followPathCommand(Paths.getProcessorToAlgaePath22()))
+                                        .withTimeout(2)),
 
-                new AcquireAlgaeCommand().raceWith(
-                        followPathCommand(Paths.getReefTag22ToProcessor()))
+                new AcquireAlgaeCommand()
+                        .raceWith(
+                                followPathCommand(Paths.getReefTag22ToProcessor()))
                         .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
-                                FinishActions.NoDisable).withTimeout(2)),
+                                FinishActions.NoDisable)
+                                .withTimeout(2)),
                 new DisposeAlgaeCommand());
 
     }
