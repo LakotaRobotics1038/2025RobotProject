@@ -116,9 +116,9 @@ public class Dashboard extends SubsystemBase {
             field.getObject("poses").setPoses(poses);
         });
 
-        // driversTab.add("Camera Stream", camera)
-        // .withPosition(6, 0)
-        // .withSize(4, 4);
+        driversTab.addCamera("Back Camera", "Back Camera", "photonvision.local:1183/?action=stream")
+                .withPosition(6, 0)
+                .withSize(4, 4);
 
         controlsTab.add(field)
                 .withPosition(2, 0)

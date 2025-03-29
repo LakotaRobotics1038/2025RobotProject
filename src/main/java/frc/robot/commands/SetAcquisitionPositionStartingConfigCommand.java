@@ -33,6 +33,7 @@ public class SetAcquisitionPositionStartingConfigCommand extends Command {
 
         if (wrist.getPosition() < 0) {
             shoulder.setSetpoint(ShoulderSetpoints.StartingPos);
+            wrist.setSetpoint(WristSetpoints.StartingPos);
             negativeWrist = true;
         }
     }
