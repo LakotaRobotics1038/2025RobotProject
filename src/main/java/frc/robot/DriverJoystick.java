@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AlignToAlgaeCommand;
 import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
@@ -61,12 +62,9 @@ public class DriverJoystick extends XboxController1038 {
         SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
-            double x = super.getLeftX();
-            double y = super.getLeftY();
-            double z = super.getRightX();
-
-            x = Math.copySign(Math.pow(x, 3), x);
-            y = Math.copySign(Math.pow(y, 3), y);
+            double x = this.getCubedLeftX();
+            double y = this.getCubedLeftY();
+            double z = this.getRightX();
 
             double forward = limitRate(y, prevY, forwardFilter);
             double sideways = limitRate(x, prevX, sidewaysFilter);
@@ -103,6 +101,8 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
+        this.bButton.whileTrue(new AlignToAlgaeCommand(this::getCubedLeftX, this::getCubedLeftY));
+
         // TODO: "we need a comment to run this command?"
         this.aButton.onTrue(
                 new PrintCommand("Running SetAcquisitionPositionCommand")
@@ -131,6 +131,28 @@ public class DriverJoystick extends XboxController1038 {
                         .andThen(
                                 new DeferredCommand(() -> AutoBuilder.followPath(this.path),
                                         Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+    }
+
+    /**
+     * Gets the value of the left X axis and cubes it
+     *
+     * @return
+     */
+    private double getCubedLeftX() {
+        double x = this.getLeftX();
+
+        return Math.copySign(Math.pow(x, 3), x);
+    }
+
+    /**
+     * Gets the value of the left Y axis and cubes it
+     *
+     * @return
+     */
+    private double getCubedLeftY() {
+        double y = this.getLeftY();
+
+        return Math.copySign(Math.pow(y, 3), y);
     }
 
     /**
