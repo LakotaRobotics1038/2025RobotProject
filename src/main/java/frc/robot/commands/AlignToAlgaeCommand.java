@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Vision;
 
-public class GroundAlgaeCommand extends Command {
+public class AlignToAlgaeCommand extends Command {
     private Vision vision = Vision.getInstance();
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private List<PhotonPipelineResult> visionResults;
@@ -23,7 +23,7 @@ public class GroundAlgaeCommand extends Command {
     private double kI;
     private double kD;
 
-    public GroundAlgaeCommand(Supplier<Double> xMove, Supplier<Double> yMove) {
+    public AlignToAlgaeCommand(Supplier<Double> xMove, Supplier<Double> yMove) {
         super.addRequirements(vision, driveTrain);
         this.xMove = xMove;
         this.yMove = yMove;
