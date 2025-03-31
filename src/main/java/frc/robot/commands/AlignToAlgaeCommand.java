@@ -14,10 +14,13 @@ import frc.robot.subsystems.Vision;
 public class AlignToAlgaeCommand extends Command {
     private Vision vision = Vision.getInstance();
     private DriveTrain driveTrain = DriveTrain.getInstance();
+
     private List<PhotonPipelineResult> visionResults;
     private PhotonTrackedTarget bestAlgae;
+
     private Supplier<Double> xMove;
     private Supplier<Double> yMove;
+
     private PIDController turnController;
     private double kP;
     private double kI;
