@@ -82,7 +82,7 @@ public class DriverJoystick extends XboxController1038 {
         this.driveTrain.registerTelemetry(logger::telemeterize);
 
         // Re-orient robot to the field
-        super.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
+        this.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
                 .and(rightTrigger.negate())
@@ -157,14 +157,14 @@ public class DriverJoystick extends XboxController1038 {
                         .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         // Lock the wheels into an X formation
-        super.xButton.whileTrue(this.driveTrain.setX());
+        this.xButton.whileTrue(this.driveTrain.setX());
 
         // TODO: "we need a comment to run this command?"
-        super.aButton.onTrue(
+        this.aButton.onTrue(
                 new PrintCommand("Running SetAcquisitionPositionCommand")
                         .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput,
                                 FinishActions.NoFinish)));
-        super.aButton.whileTrue(determineWaypointCommand.andThen(
+        this.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
                     this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
