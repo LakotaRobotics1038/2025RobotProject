@@ -39,7 +39,6 @@ public class DriverJoystick extends XboxController1038 {
     private double prevX = 0;
     private double prevY = 0;
     private double prevZ = 0;
-    private double exponent = 2;
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
@@ -62,10 +61,12 @@ public class DriverJoystick extends XboxController1038 {
         SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
-            Math.copySign(prevX, exponent);
-            double x = Math.copySign(Math.pow(super.getLeftX(), exponent), super.getLeftX());
-            double y = Math.copySign(Math.pow(super.getLeftY(), exponent), super.getLeftY());
+            double x = super.getLeftX();
+            double y = super.getLeftY();
             double z = super.getRightX();
+
+            x = Math.copySign(Math.pow(x, 3), x);
+            y = Math.copySign(Math.pow(y, 3), y);
 
             double forward = limitRate(y, prevY, forwardFilter);
             double sideways = limitRate(x, prevX, sidewaysFilter);
@@ -214,9 +215,4 @@ public class DriverJoystick extends XboxController1038 {
     private boolean signChange(double a, double b) {
         return a > 0 && b < 0 || b > 0 && a < 0;
     }
-
-    public void setExponent(double exponent) {
-        this.exponent = exponent;
-    }
-
 }

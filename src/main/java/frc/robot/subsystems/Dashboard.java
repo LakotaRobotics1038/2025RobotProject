@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.DriverJoystick;
 import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
@@ -23,7 +22,6 @@ public class Dashboard extends SubsystemBase {
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
-    private DriverJoystick driverJoystick = DriverJoystick.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -54,12 +52,6 @@ public class Dashboard extends SubsystemBase {
 
     private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
             .withPosition(2, 3)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kTextView)
-            .getEntry();
-
-    private GenericEntry driveExponent = driversTab.add("Drive Exponent", 4)
-            .withPosition(4, 3)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
@@ -150,7 +142,6 @@ public class Dashboard extends SubsystemBase {
         wrist.setOffset(wristOffset.getDouble(0));
         shoulder.setOffset(shoulderOffset.getDouble(0));
         extension.setOffset(extensionOffset.getDouble(0));
-        driverJoystick.setExponent(driveExponent.getDouble(2));
     }
 
     /**
