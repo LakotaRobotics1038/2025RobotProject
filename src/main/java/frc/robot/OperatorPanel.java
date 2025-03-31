@@ -65,16 +65,11 @@ public class OperatorPanel extends GenericHID {
                 .and(wrist::isNegative)
                 .onTrue(new SetAcquisitionPositionStartingConfigCommand(
                         SetAcquisitionPositionStartingConfigCommand.FinishActions.NoFinish));
-
         this.feederButton
                 .and(new Trigger(wrist::isNegative).negate())
                 .onTrue(new SetAcquisitionPositionEscapeCommand(
                         SetAcquisitionPositionEscapeCommand.FinishActions.NoFinish));
 
-        this.coralL1Button
-                .and(wrist::isNegative)
-                .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
         this.bargeButton
                 .and(wrist::isNegative)
                 .toggleOnTrue(
@@ -82,6 +77,7 @@ public class OperatorPanel extends GenericHID {
         this.bargeButton
                 .and(wrist::isNegative)
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Barge)));
+
         // Operator State Updates
         this.algaeL23Button
                 .and(wrist::isNegative)
@@ -90,6 +86,7 @@ public class OperatorPanel extends GenericHID {
                 .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
+
         this.algaeL34Button
                 .and(wrist::isNegative)
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae)));
@@ -97,16 +94,26 @@ public class OperatorPanel extends GenericHID {
                 .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
+
         this.processorButton
                 .and(wrist::isNegative)
                 .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor)));
-        this.algaeL23Button
+        this.processorButton
                 .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
+        this.coralL1Button
+                .and(wrist::isNegative)
+                .and(this::getDefaultsDisabled)
+                .onTrue(new InstantCommand(() -> enableDefaults()));
+        this.coralL1Button
+                .and(wrist::isNegative)
+                .onTrue(new InstantCommand(() -> operatorState.setLastInput(AcquisitionPositionSetpoint.GroundAlgae)));
+
         // Manual Control
-        this.coralL1Button.and(processorButton).onTrue(new InstantCommand(operatorState::toggleIsManual));
+        this.coralL1Button.and(processorButton)
+                .onTrue(new InstantCommand(operatorState::toggleIsManual));
 
         this.coralL1Button
                 .and(wrist::isNegative)
@@ -125,6 +132,7 @@ public class OperatorPanel extends GenericHID {
                 .and(operatorState::getIsManual)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
                         FinishActions.NoFinish));
+
         this.algaeL34Button
                 .and(wrist::isNegative)
                 .and(operatorState::getIsManual)
