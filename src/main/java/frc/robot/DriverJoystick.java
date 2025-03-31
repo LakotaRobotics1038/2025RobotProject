@@ -85,76 +85,20 @@ public class DriverJoystick extends XboxController1038 {
         this.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
-                .and(rightTrigger.negate())
-                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
-                .and(leftTrigger)
-                .and(rightTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Up))
-                .and(rightTrigger)
-                .and(leftTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
-
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
-                .and(rightTrigger.negate())
-                .and(leftTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
-                .and(leftTrigger)
-                .and(rightTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Down))
-                .and(rightTrigger)
-                .and(leftTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
-                .and(rightTrigger.negate())
-                .and(leftTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
-                .and(leftTrigger)
-                .and(rightTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Left))
-                .and(rightTrigger)
-                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
+                        .applyRequest(() -> driveTrain.drive(0, DriveConstants.kFineAdjustmentPercent, 0, false)));
 
         new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
-                .and(rightTrigger.negate())
-                .and(leftTrigger.negate())
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
-                .and(leftTrigger)
-                .and(rightTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
-
-        new Trigger(() -> this.getPOVPosition().equals(PovPositions.Right))
-                .and(rightTrigger)
-                .and(leftTrigger.negate())
-                .whileTrue(this.driveTrain
-                        .applyRequest(() -> driveTrain.drive(-DriveConstants.kFineAdjustmentPercent, 0, 0, false)));
 
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
