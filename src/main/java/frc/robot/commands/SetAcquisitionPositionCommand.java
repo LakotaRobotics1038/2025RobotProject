@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.AcquisitionConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetpoints;
@@ -84,6 +85,16 @@ public class SetAcquisitionPositionCommand extends Command {
         double extPos = extension.getPosition();
 
         if (!isGroundAngle) {
+            final double WRIST_LENGTH = 3; // TODO Random Value. Should be changed and placed in a constants file.
+            final double WRIST_WHEEL_OFFSET_ANGLE = 2; // TODO Random Value. Should be changed and placed in a constants
+                                                       // file.
+            double extVertLength = extPos * AcquisitionConstants.cos(shoulderPos);
+            double wristTopWheelVertLength = extVertLength
+                    + WRIST_LENGTH * AcquisitionConstants.cos(shoulderPos + wristPos);
+            double wristBottomWheelVertLength = extVertLength
+                    + WRIST_LENGTH * AcquisitionConstants.cos(shoulderPos + wristPos + WRIST_WHEEL_OFFSET_ANGLE);
+
+
             if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
                 wristPos = MathUtil.clamp(wristPos, -165, -42.5);
             } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
