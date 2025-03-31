@@ -3,6 +3,7 @@ package frc.robot.utils;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetpoints;
+import frc.robot.subsystems.Shoulder;
 
 public enum AcquisitionPositionSetpoint {
 
@@ -11,7 +12,9 @@ public enum AcquisitionPositionSetpoint {
     Processor(ShoulderSetpoints.Processor, WristSetpoints.Processor, ExtensionSetpoints.Processor),
     Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Storage),
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
-    GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae);
+    GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
+    ZeroExtend(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Zero),
+    StartingConfig(ShoulderSetpoints.StartingPos, WristSetpoints.StartingPos, ExtensionSetpoints.Zero);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;
@@ -25,6 +28,9 @@ public enum AcquisitionPositionSetpoint {
     }
 
     public ShoulderSetpoints getShoulderSetpoint() {
+        if (shoulderSetpoint == null) {
+            return Shoulder.getInstance().getSetpoint();
+        }
         return this.shoulderSetpoint;
     }
 

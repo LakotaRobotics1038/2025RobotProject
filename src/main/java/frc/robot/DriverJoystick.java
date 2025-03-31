@@ -65,6 +65,9 @@ public class DriverJoystick extends XboxController1038 {
             double y = super.getLeftY();
             double z = super.getRightX();
 
+            x = Math.copySign(Math.pow(x, 3), x);
+            y = Math.copySign(Math.pow(y, 3), y);
+
             double forward = limitRate(y, prevY, forwardFilter);
             double sideways = limitRate(x, prevX, sidewaysFilter);
             double rotate = limitRate(z, prevZ, rotateFilter);

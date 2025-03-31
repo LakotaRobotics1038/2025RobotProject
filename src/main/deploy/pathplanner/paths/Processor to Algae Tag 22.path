@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.6,
-        "y": 0.625
+        "x": 5.674,
+        "y": 0.35046875
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.22075,
-        "y": 1.5986413934426227
+        "x": 5.29475,
+        "y": 1.324110143442622
       },
       "isLocked": false,
       "linkedName": "Processor"
     },
     {
       "anchor": {
-        "x": 5.21625,
-        "y": 3.2352499999999993
+        "x": 5.0356534090909095,
+        "y": 3.511463068181818
       },
       "prevControl": {
-        "x": 5.54775,
-        "y": 2.533249999999999
+        "x": 5.514289772727272,
+        "y": 2.923139204545454
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.2,
-      "rotationDegrees": 90.0
+      "rotationDegrees": 51.607740138343814
+    },
+    {
+      "waypointRelativePos": 0.5664893617021268,
+      "rotationDegrees": -52.768942213898804
     }
   ],
   "constraintZones": [
@@ -67,7 +71,7 @@
   "folder": "Processor Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 104.55588487858412
   },
   "useDefaultConstraints": true
 }

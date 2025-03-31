@@ -14,6 +14,7 @@ public class AutonSelector {
         BargeAuto,
         ProcessorAuto,
         BargeProcessorAuto,
+        DefensiveProcessorAuto,
         TopTaxi,
         BottomTaxi;
     }
@@ -40,6 +41,7 @@ public class AutonSelector {
         this.autoChooser.addOption("Barge Auto", AutonChoices.BargeAuto);
         this.autoChooser.addOption("Processor Auto", AutonChoices.ProcessorAuto);
         this.autoChooser.addOption("Barge and Processor Auto", AutonChoices.BargeProcessorAuto);
+        this.autoChooser.addOption("Defensive Processor Auto", AutonChoices.DefensiveProcessorAuto);
         this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
         this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
 
@@ -73,6 +75,8 @@ public class AutonSelector {
                     return new ProcessorAuto(alliance);
                 case BargeProcessorAuto:
                     return new BargeProcessorAuto(alliance);
+                case DefensiveProcessorAuto:
+                    return new DefensiveProcessorAuto(alliance);
                 case TopTaxi:
                     return new TopTaxi(alliance);
                 case BottomTaxi:

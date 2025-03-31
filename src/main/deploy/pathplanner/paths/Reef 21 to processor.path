@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.6,
-        "y": 4.1
+        "x": 5.55,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.972999999999999,
-        "y": 4.181
+        "x": 7.922999999999999,
+        "y": 4.281000000000001
       },
       "isLocked": false,
       "linkedName": "ReefTag21Algae"
     },
     {
       "anchor": {
-        "x": 5.6,
-        "y": 0.6
+        "x": 5.674,
+        "y": 0.35046875
       },
       "prevControl": {
-        "x": 5.6,
-        "y": 1.5999999999999985
+        "x": 5.673999999999999,
+        "y": 1.3504687499999983
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Processor"
     }
   ],
   "rotationTargets": [],
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 104.55588487858412
   },
   "reversed": false,
   "folder": "Processor Paths",

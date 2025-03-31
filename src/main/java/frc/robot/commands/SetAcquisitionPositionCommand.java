@@ -93,7 +93,7 @@ public class SetAcquisitionPositionCommand extends Command {
             } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
                 wristPos = MathUtil.clamp(wristPos, -44, -36);
             } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -53, -40);
+                wristPos = MathUtil.clamp(wristPos, -53, -44);
             } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
                 wristPos = MathUtil.clamp(wristPos, -60, -60);
             } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
@@ -112,7 +112,21 @@ public class SetAcquisitionPositionCommand extends Command {
                 wristPos = MathUtil.clamp(wristPos, -44, -31);
             }
 
-            wrist.setSetpoint(wristPos);
+            /*
+             * if (acquisitionPositionSetpoint != AcquisitionPositionSetpoint.ZeroExtend
+             * || (extension.onTarget() && shoulder.onTarget()) &&) {
+             * wrist.setSetpoint(wristPos);
+             * }
+             */
+
+            if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.ZeroExtend) {
+                if (extension.onTarget() && shoulder.onTarget()) {
+                    wrist.setSetpoint(wristPos);
+                }
+            } else {
+                wrist.setSetpoint(wristPos);
+            }
+
         } else {
             if (wrist.onTarget()) {
                 shoulder.setSetpoint(shoulderSetpoint);

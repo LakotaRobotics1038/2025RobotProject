@@ -67,4 +67,9 @@ public class Paths {
             throws IOException, ParseException, FileVersionException {
         return PathPlannerPath.fromPathFile("Reef Tag 20 To Net");
     }
+
+    public static PathPlannerPath getProcessorTaxi()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Processor Taxi");
+    }
 }

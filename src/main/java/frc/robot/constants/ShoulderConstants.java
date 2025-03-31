@@ -9,7 +9,8 @@ public class ShoulderConstants {
         Storage(301.0),
         Barge(300.0),
         Vertical(300),
-        BackOfBot(10);
+        BackOfBot(10),
+        StartingPos(330.0);
 
         public final double setpoint;
 
@@ -28,7 +29,7 @@ public class ShoulderConstants {
     public static final double kMaxPower = 0.3;
     public static final double kMaxDistance = 290.0;
 
-    public static final double kTolerance = 2.0;
+    public static final double kTolerance = 3.0;
 
     public static final double kMaxExtendedShoulderAngle = 0.0;
     public static final double kEncoderConversion = 360.0;
