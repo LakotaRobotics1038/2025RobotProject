@@ -101,7 +101,7 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
-        this.bButton.whileTrue(new AlignToAlgaeCommand(this::getCubedLeftX, this::getCubedLeftY));
+        this.bButton.whileTrue(new AlignToAlgaeCommand(this::getCubedLeftY, this::getCubedLeftX));
 
         // TODO: "we need a comment to run this command?"
         this.aButton.onTrue(
