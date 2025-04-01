@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -9,9 +10,9 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,12 +24,11 @@ public class Shoulder extends SubsystemBase {
     private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
     private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
     private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
-    private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
-            ShoulderConstants.kD);
     private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
-    private ShoulderSetpoints shoulderSetpoints;
+    private ShoulderSetpoints enumSetpoint;
+    private double setpoint;
 
     private Shoulder() {
 
@@ -46,17 +46,18 @@ public class Shoulder extends SubsystemBase {
         rightShoulderConfig.limitSwitch
                 .reverseLimitSwitchEnabled(true)
                 .reverseLimitSwitchType(Type.kNormallyOpen);
+        rightShoulderConfig.closedLoop
+                .pidf(ShoulderConstants.kP, ShoulderConstants.kI, ShoulderConstants.kD, 1)
+                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                .outputRange(-ShoulderConstants.kMaxPower, -ShoulderConstants.kMaxPower)
+                .positionWrappingEnabled(true)
+                .positionWrappingInputRange(0, 360);
 
         leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
         rightShoulderMotor.configure(rightShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
-        shoulderController.setTolerance(ShoulderConstants.kTolerance);
-        shoulderController.enableContinuousInput(0, 360);
-
-        Shuffleboard.getTab("Controls").add("ShoulderPID", shoulderController)
-                .withWidget(BuiltInWidgets.kPIDController);
         Shuffleboard.getTab("Controls")
                 .addNumber("ShoulderCurrent", this::getPosition)
                 .withWidget(BuiltInWidgets.kTextView);
@@ -70,13 +71,6 @@ public class Shoulder extends SubsystemBase {
         }
 
         return instance;
-    }
-
-    @Override
-    public void periodic() {
-        if (this.enabled) {
-            this.useOutput(this.shoulderController.calculate(this.getPosition()));
-        }
     }
 
     private void useOutput(double output) {
@@ -94,34 +88,22 @@ public class Shoulder extends SubsystemBase {
     }
 
     public boolean onTarget() {
-        return shoulderController.atSetpoint();
+        return MathUtil.isNear(this.setpoint, this.getPosition(), ShoulderConstants.kTolerance);
     }
 
     private void setSetpoint(double setpoint) {
         setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
-        shoulderController.setSetpoint(setpoint);
+        this.setpoint = setpoint;
+        rightShoulderMotor.getClosedLoopController().setReference(setpoint, ControlType.kPosition);
     }
 
     public void setSetpoint(ShoulderSetpoints setpoint) {
         this.setSetpoint(setpoint.setpoint);
-        this.shoulderSetpoints = setpoint;
-    }
-
-    public void setP(double p) {
-        shoulderController.setP(p);
-    }
-
-    public void setI(double i) {
-        shoulderController.setI(i);
-    }
-
-    public void setD(double d) {
-        shoulderController.setD(d);
+        this.enumSetpoint = setpoint;
     }
 
     public void enable() {
         this.enabled = true;
-        this.shoulderController.reset();
     }
 
     public void disable() {
@@ -134,6 +116,6 @@ public class Shoulder extends SubsystemBase {
     }
 
     public ShoulderSetpoints getSetpoint() {
-        return this.shoulderSetpoints;
+        return this.enumSetpoint;
     }
 }
