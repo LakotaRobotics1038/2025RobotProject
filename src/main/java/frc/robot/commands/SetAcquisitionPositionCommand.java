@@ -9,6 +9,7 @@ import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 import frc.robot.constants.WristConstants.WristSetpoints;
 import frc.robot.subsystems.Extension;
 import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
@@ -16,6 +17,8 @@ public class SetAcquisitionPositionCommand extends Command {
     private Shoulder shoulder = Shoulder.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Extension extension = Extension.getInstance();
+    private Vision vision = Vision.getInstance();
+
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
     private FinishActions finishAction;
@@ -55,6 +58,10 @@ public class SetAcquisitionPositionCommand extends Command {
     public void initialize() {
         if (acquisitionPositionSetpoint == null) {
             acquisitionPositionSetpoint = acquisitionPositionSetpointSupplier.get();
+        }
+
+        if (this.acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
+            vision.setAlgaeMode();
         }
 
         wristSetpoint = acquisitionPositionSetpoint.getWristSetpoint();
@@ -146,6 +153,9 @@ public class SetAcquisitionPositionCommand extends Command {
     }
 
     public void end(boolean interrupted) {
+        if (this.acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
+            vision.setAprilTagMode();
+        }
         if (finishAction != FinishActions.NoDisable) {
             wrist.disable();
             extension.disable();
