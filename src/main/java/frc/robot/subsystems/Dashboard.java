@@ -39,19 +39,19 @@ public class Dashboard extends SubsystemBase {
             .getEntry();
 
     private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
-            .withPosition(2, 1)
+            .withPosition(2, 0)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
-            .withPosition(2, 2)
+            .withPosition(2, 1)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
-            .withPosition(2, 3)
+            .withPosition(4, 0)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
@@ -81,18 +81,9 @@ public class Dashboard extends SubsystemBase {
                 .withPosition(0, 1)
                 .withSize(2, 1);
 
-        driversTab.addNumber("Gyro", () -> {
-            double angle = driveTrain.getState().RawHeading.getDegrees();
-            angle %= 360;
-            return angle < 0 ? angle + 360 : angle;
-        })
-                .withPosition(2, 0)
-                .withSize(2, 1);
-        // .withWidget(BuiltInWidgets.kGyro);
-
         driversTab.add(field)
-                .withPosition(4, 0)
-                .withSize(4, 3)
+                .withPosition(2, 2)
+                .withSize(4, 2)
                 .withWidget(BuiltInWidgets.kField);
 
         driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
