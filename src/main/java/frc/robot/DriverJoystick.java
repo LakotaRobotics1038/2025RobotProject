@@ -8,6 +8,7 @@ import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
@@ -23,11 +24,13 @@ import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Extension;
 
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
+    private final Extension extension = Extension.getInstance();
 
     // Commands
     private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
@@ -65,6 +68,12 @@ public class DriverJoystick extends XboxController1038 {
             double x = this.getCubedLeftX();
             double y = this.getCubedLeftY();
             double z = this.getRightX();
+
+            if (extension.getPosition() > 10) {
+                x = MathUtil.clamp(x, -0.25, 0.25);
+                y = MathUtil.clamp(y, -0.25, 0.25);
+                z = MathUtil.clamp(z, -0.25, 0.25);
+            }
 
             double forward = limitRate(y, prevY, forwardFilter);
             double sideways = limitRate(x, prevX, sidewaysFilter);
