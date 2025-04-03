@@ -42,7 +42,7 @@ public class OperatorState {
     }
 
     public boolean isGroundAlgae() {
-        return getLastLastInput() == AcquisitionPositionSetpoint.GroundAlgae;
+        return getLastInput() == AcquisitionPositionSetpoint.GroundAlgae;
     }
 
     public boolean isBarge() {
@@ -52,6 +52,7 @@ public class OperatorState {
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
         this.lastLastInput = this.lastInput;
         this.lastInput = lastInput;
+        System.out.println(lastInput);
     }
 
     public void setScoringFlipped(boolean scoringFlipped) {
