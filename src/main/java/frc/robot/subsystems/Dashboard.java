@@ -32,12 +32,6 @@ public class Dashboard extends SubsystemBase {
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
 
     // Drivers Tab Inputs
-    private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
-            .withPosition(0, 2)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kToggleButton)
-            .getEntry();
-
     private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
             .withPosition(2, 0)
             .withSize(2, 1)
@@ -86,11 +80,6 @@ public class Dashboard extends SubsystemBase {
                 .withSize(4, 2)
                 .withWidget(BuiltInWidgets.kField);
 
-        driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
-                .withPosition(0, 3)
-                .withSize(2, 1)
-                .withWidget(BuiltInWidgets.kBooleanBox);
-
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
         });
@@ -125,11 +114,6 @@ public class Dashboard extends SubsystemBase {
         field.setRobotPose(driveTrain.getState().Pose);
 
         // Drivers tab
-        if (manualOperatorMode.getBoolean(false)) {
-            operatorState.toggleIsManual();
-            manualOperatorMode.setBoolean(false);
-        }
-
         wrist.setOffset(wristOffset.getDouble(0));
         shoulder.setOffset(shoulderOffset.getDouble(0));
         extension.setOffset(extensionOffset.getDouble(0));
