@@ -142,7 +142,6 @@ public class OperatorPanel extends GenericHID {
         this.processorButton
                 .and(wrist::isNegative)
                 .and(operatorState::getIsManual)
-                .and(operatorState::isNotGroundAlgae)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
                         FinishActions.NoFinish));
     }

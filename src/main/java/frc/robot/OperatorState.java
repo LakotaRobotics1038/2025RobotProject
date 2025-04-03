@@ -47,10 +47,6 @@ public class OperatorState {
         return getLastLastInput() == AcquisitionPositionSetpoint.GroundAlgae;
     }
 
-    public boolean isNotGroundAlgae() {
-        return !(getLastLastInput() == AcquisitionPositionSetpoint.GroundAlgae);
-    }
-
     public boolean isBarge() {
         return getLastInput().equals(AcquisitionPositionSetpoint.Barge);
     }
