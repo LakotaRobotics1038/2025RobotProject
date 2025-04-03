@@ -34,19 +34,19 @@ public final class VisionConstants {
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-    private static final double kFrontCameraXOffset = Units.inchesToMeters(1.882649);
-    private static final double kFrontCameraYOffset = Units.inchesToMeters(13.261999);
-    private static final double kFrontCameraZOffset = Units.inchesToMeters(12.009619);
+    private static final double kFrontCameraXOffset = Units.inchesToMeters(-13.555);
+    private static final double kFrontCameraYOffset = Units.inchesToMeters(-11.995);
+    private static final double kFrontCameraZOffset = Units.inchesToMeters(7.35);
     public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(kFrontCameraXOffset, kFrontCameraYOffset, kFrontCameraZOffset),
-            new Rotation3d(Math.toRadians(12.321320), 0, 0));
+            new Rotation3d(0, 0, 0));
     public static final String kRobotToFrontCamName = "frontCamera";
-    private static final double kBackCameraXOffset = Units.inchesToMeters(-2.641);
-    private static final double kBackCameraYOffset = Units.inchesToMeters(13.469);
-    private static final double kBackCameraZOffset = Units.inchesToMeters(14.713);
+    private static final double kBackCameraXOffset = Units.inchesToMeters(11.532728);
+    private static final double kBackCameraYOffset = Units.inchesToMeters(-11.532728);
+    private static final double kBackCameraZOffset = Units.inchesToMeters(7.6);
     public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(kBackCameraXOffset, kBackCameraYOffset, kBackCameraZOffset),
-            new Rotation3d(0, 0, Math.toRadians(180 + 21.0)));
+            new Rotation3d(0, 0, Math.toRadians(180 - 45)));
     public static final String kRobotToBackCamName = "backCamera";
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
