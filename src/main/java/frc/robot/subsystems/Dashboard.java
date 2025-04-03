@@ -12,13 +12,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
-    private OperatorState operatorState = OperatorState.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
@@ -33,19 +31,19 @@ public class Dashboard extends SubsystemBase {
 
     // Drivers Tab Inputs
     private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
-            .withPosition(2, 0)
+            .withPosition(0, 2)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
-            .withPosition(2, 1)
+            .withPosition(0, 3)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
-            .withPosition(4, 0)
+            .withPosition(0, 1)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
@@ -72,12 +70,12 @@ public class Dashboard extends SubsystemBase {
                 .withSize(2, 1);
 
         driversTab.add("Delay Choices", delayChooser)
-                .withPosition(0, 1)
+                .withPosition(2, 0)
                 .withSize(2, 1);
 
         driversTab.add(field)
-                .withPosition(2, 2)
-                .withSize(4, 2)
+                .withPosition(2, 1)
+                .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
