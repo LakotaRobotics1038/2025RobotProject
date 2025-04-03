@@ -20,7 +20,7 @@ public class ExtensionConstants {
     public static final double kD = 0.0;
 
     public enum ExtensionSetpoints {
-        L23Algae(9),
+        L23Algae(13),
         L34Algae(kExtensionMaximum),
         Processor(2.0),
         GroundAlgae(9.0),
