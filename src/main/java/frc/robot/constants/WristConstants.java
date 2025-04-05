@@ -9,7 +9,7 @@ public class WristConstants {
         Storage(-28.0),
         ZeroExt(-75.0),
         Barge(-160.5),
-        StartingPos(16);
+        StartingPos(-5);
 
         private double setpoint;
         private double extMax;
