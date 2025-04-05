@@ -9,8 +9,8 @@ import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class TopTaxi extends Auton {
-    TopTaxi(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
+public class LeftTaxi extends Auton {
+    LeftTaxi(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {
         super(alliance);
 
         super.addCommands(
