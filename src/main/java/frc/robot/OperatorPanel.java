@@ -7,9 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionEscapeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
-import frc.robot.commands.SetAcquisitionPositionStartingConfigCommand;
 import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.constants.IOConstants;
 import frc.robot.subsystems.Shoulder;
@@ -65,14 +63,14 @@ public class OperatorPanel extends GenericHID {
 
         this.feederButton
                 .and(wrist::isNegative)
-                .onTrue(new SetAcquisitionPositionStartingConfigCommand(
-                        SetAcquisitionPositionStartingConfigCommand.FinishActions.NoFinish)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.StartingConfig,
+                        FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.StartingConfig))));
         this.feederButton
                 .and(new Trigger(wrist::isNegative).negate())
-                .onTrue(new SetAcquisitionPositionEscapeCommand(
-                        SetAcquisitionPositionEscapeCommand.FinishActions.NoFinish)
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage,
+                        FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Storage))));
 

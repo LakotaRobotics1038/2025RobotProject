@@ -14,14 +14,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
-import frc.robot.commands.SetAcquisitionPositionEscapeCommand;
-import frc.robot.commands.SetAcquisitionPositionEscapeCommand.FinishActions;
+import frc.robot.commands.SetAcquisitionPositionCommand;
+import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Wrist;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -122,7 +123,8 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
         if (Wrist.getInstance().getPosition() > 0) {
-            new SetAcquisitionPositionEscapeCommand(FinishActions.Default)
+            new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage,
+                    FinishActions.Default)
                     .andThen(new InstantCommand(() -> operatorPanel.enableDefaults()))
                     .schedule();
         }
