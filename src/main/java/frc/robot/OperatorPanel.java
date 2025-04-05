@@ -51,64 +51,53 @@ public class OperatorPanel extends GenericHID {
 
         // Setpoints
         this.storageButton
-                .and(wrist::isNegative)
                 .toggleOnTrue(
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish)
                                 .alongWith(new InstantCommand(
                                         () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Storage))));
         this.storageButton
-                .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
         this.bargeButton
-                .and(wrist::isNegative)
                 .toggleOnTrue(
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge, FinishActions.NoFinish)
                                 .alongWith(new InstantCommand(
                                         () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Barge))));
 
         this.groundAlgaeButton
-                .and(wrist::isNegative)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.GroundAlgae,
                         FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.GroundAlgae))));
         this.groundAlgaeButton
-                .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
         this.algaeL23Button
-                .and(wrist::isNegative)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
                         FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae))));
         this.algaeL23Button
-                .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
         this.algaeL34Button
-                .and(wrist::isNegative)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
                         FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae))));
         this.algaeL34Button
-                .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
         this.processorButton
-                .and(wrist::isNegative)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
                         FinishActions.NoFinish)
                         .alongWith(new InstantCommand(
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor))));
         this.processorButton
-                .and(wrist::isNegative)
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
     }

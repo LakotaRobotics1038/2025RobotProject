@@ -114,11 +114,6 @@ public class DriverJoystick extends XboxController1038 {
                 .and(operatorState::isGroundAlgae)
                 .whileTrue(new AlignToAlgaeCommand(this::getCubedLeftY, this::getCubedLeftX));
 
-        // TODO: "we need a comment to run this command?"
-        this.aButton.onTrue(
-                new PrintCommand("Running SetAcquisitionPositionCommand")
-                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput,
-                                FinishActions.NoFinish)));
         this.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;

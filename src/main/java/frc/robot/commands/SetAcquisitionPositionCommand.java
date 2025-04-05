@@ -25,6 +25,7 @@ public class SetAcquisitionPositionCommand extends Command {
     private WristSetpoints wristSetpoint;
     private ExtensionSetpoints extensionSetpoint;
     private ShoulderSetpoints shoulderSetpoint;
+    private boolean isGroundAlgae;
 
     public enum FinishActions {
         NoFinish,
@@ -61,6 +62,11 @@ public class SetAcquisitionPositionCommand extends Command {
 
         if (this.acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
             vision.setAlgaeMode();
+            if (shoulder.getPosition() > 328 && shoulder.getPosition() < 332 && extension.getPosition() < 1) {
+                wrist.setSetpoint(-20);
+                extension.setSetpoint(9);
+                isGroundAlgae = true;
+            }
         }
 
         wristSetpoint = acquisitionPositionSetpoint.getWristSetpoint();
@@ -70,8 +76,10 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
-        shoulder.setSetpoint(shoulderSetpoint);
-        extension.setSetpoint(extensionSetpoint);
+        if (!isGroundAlgae) {
+            shoulder.setSetpoint(shoulderSetpoint);
+            extension.setSetpoint(extensionSetpoint);
+        }
     }
 
     @Override
@@ -89,9 +97,11 @@ public class SetAcquisitionPositionCommand extends Command {
         } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -44, -5);
         } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
-            wristPos = MathUtil.clamp(wristPos, -43, -5);
+            wristPos = MathUtil.clamp(wristPos, -43, -20);
         } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -40, -5);
+        } else if (shoulderPos < 336 && shoulderPos > 331 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, -45, -30);
         } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -45, -5);
         } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
@@ -104,6 +114,11 @@ public class SetAcquisitionPositionCommand extends Command {
             wristPos = MathUtil.clamp(wristPos, -40, -5);
         } else if (shoulderPos > 345 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -35, -5);
+        }
+
+        if (isGroundAlgae && wrist.onTarget() && extension.onTarget()) {
+            shoulder.setSetpoint(shoulderSetpoint);
+            extension.setSetpoint(extensionSetpoint);
         }
 
         if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.ZeroExtend) {
@@ -131,5 +146,6 @@ public class SetAcquisitionPositionCommand extends Command {
             extension.disable();
             shoulder.disable();
         }
+        isGroundAlgae = false;
     }
 }
