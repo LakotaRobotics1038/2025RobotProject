@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.55,
-        "y": 4.2
+        "x": 5.773551136363636,
+        "y": 3.770724431818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.799989064868931,
-        "y": 4.197661742965958
+        "x": 6.023540201232567,
+        "y": 3.76838617478414
       },
       "isLocked": false,
       "linkedName": "ReefTag21Algae"
