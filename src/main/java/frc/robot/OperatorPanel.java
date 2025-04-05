@@ -65,6 +65,10 @@ public class OperatorPanel extends GenericHID {
                                 .alongWith(new InstantCommand(
                                         () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Barge))));
 
+        this.bargeButton
+                .and(this::getDefaultsDisabled)
+                .onTrue(new InstantCommand(() -> enableDefaults()));
+
         this.groundAlgaeButton
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.GroundAlgae,
                         FinishActions.NoFinish)
