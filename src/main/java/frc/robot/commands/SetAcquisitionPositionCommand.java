@@ -100,7 +100,7 @@ public class SetAcquisitionPositionCommand extends Command {
             wristPos = MathUtil.clamp(wristPos, -43, -20);
         } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -40, -5);
-        } else if (shoulderPos < 336 && shoulderPos > 331 && extPos < 20) {
+        } else if (shoulderPos < 336 && shoulderPos > 333 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -45, -30);
         } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
             wristPos = MathUtil.clamp(wristPos, -45, -5);

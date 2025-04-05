@@ -20,24 +20,60 @@ public class BargeAuto extends Auton {
         super(alliance);
 
         super.addCommands(
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
-                        .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae())),
-                new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag21ToNet()))
-                        .alongWith(new WaitCommand(0.5).andThen(
-                                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
-                                        FinishActions.NoDisable)))
-                        .withTimeout(3),
-
-                new DisposeAlgaeCommand().withTimeout(1),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                        .withDeadline(
-                                followPathCommand(Paths.getNetToTag20Algae())),
-                new AcquireAlgaeCommand().raceWith(
-                        followPathCommand(Paths.getReefTag20ToNet()))
-                        .alongWith(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
-                                FinishActions.NoDisable)
-                                .withTimeout(3.0)),
-                new DisposeAlgaeCommand().withTimeout(1),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage));
+                new AcquireAlgaeCommand().withTimeout(3).alongWith(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
+                                .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae()))),
+                new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag21ToNet()))/*
+                                                                                                 * .alongWith(new
+                                                                                                 * WaitCommand(0.5).
+                                                                                                 * andThen(
+                                                                                                 * new
+                                                                                                 * SetAcquisitionPositionCommand
+                                                                                                 * (
+                                                                                                 * AcquisitionPositionSetpoint
+                                                                                                 * .Barge,
+                                                                                                 * FinishActions.
+                                                                                                 * NoDisable)))
+                                                                                                 * .withTimeout(3)
+                                                                                                 * ,
+                                                                                                 *
+                                                                                                 * new
+                                                                                                 * DisposeAlgaeCommand()
+                                                                                                 * .withTimeout(1),
+                                                                                                 * new
+                                                                                                 * SetAcquisitionPositionCommand
+                                                                                                 * (
+                                                                                                 * AcquisitionPositionSetpoint
+                                                                                                 * .L34Algae,
+                                                                                                 * FinishActions.
+                                                                                                 * NoDisable)
+                                                                                                 * .withDeadline(
+                                                                                                 * followPathCommand(
+                                                                                                 * Paths.
+                                                                                                 * getNetToTag20Algae())
+                                                                                                 * ),
+                                                                                                 * new
+                                                                                                 * AcquireAlgaeCommand()
+                                                                                                 * .raceWith(
+                                                                                                 * followPathCommand(
+                                                                                                 * Paths.
+                                                                                                 * getReefTag20ToNet()))
+                                                                                                 * .alongWith(new
+                                                                                                 * SetAcquisitionPositionCommand
+                                                                                                 * (
+                                                                                                 * AcquisitionPositionSetpoint
+                                                                                                 * .Barge,
+                                                                                                 * FinishActions.
+                                                                                                 * NoDisable)
+                                                                                                 * .withTimeout(3.0)),
+                                                                                                 * new
+                                                                                                 * DisposeAlgaeCommand()
+                                                                                                 * .withTimeout(1),
+                                                                                                 * new
+                                                                                                 * SetAcquisitionPositionCommand
+                                                                                                 * (
+                                                                                                 * AcquisitionPositionSetpoint
+                                                                                                 * .Storage)
+                                                                                                 */);
     }
 }
