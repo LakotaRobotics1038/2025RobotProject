@@ -60,9 +60,9 @@ public class DriverJoystick extends XboxController1038 {
     private DriverJoystick() {
         super(IOConstants.kDriverControllerPort);
 
-        SlewRateLimiter forwardFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter sidewaysFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
+        SlewRateLimiter forwardFilter = new SlewRateLimiter(2.0);
+        SlewRateLimiter sidewaysFilter = new SlewRateLimiter(2.0);
+        SlewRateLimiter rotateFilter = new SlewRateLimiter(2.0);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
             double x = this.getCubedLeftX();
