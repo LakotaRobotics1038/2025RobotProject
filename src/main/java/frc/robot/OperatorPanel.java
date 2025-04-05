@@ -61,19 +61,6 @@ public class OperatorPanel extends GenericHID {
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
 
-        this.feederButton
-                .and(wrist::isNegative)
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.StartingConfig,
-                        FinishActions.NoFinish)
-                        .alongWith(new InstantCommand(
-                                () -> operatorState.setLastInput(AcquisitionPositionSetpoint.StartingConfig))));
-        this.feederButton
-                .and(new Trigger(wrist::isNegative).negate())
-                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage,
-                        FinishActions.NoFinish)
-                        .alongWith(new InstantCommand(
-                                () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Storage))));
-
         this.bargeButton
                 .and(wrist::isNegative)
                 .toggleOnTrue(

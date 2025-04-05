@@ -122,12 +122,6 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
-        if (Wrist.getInstance().getPosition() > 0) {
-            new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage,
-                    FinishActions.Default)
-                    .andThen(new InstantCommand(() -> operatorPanel.enableDefaults()))
-                    .schedule();
-        }
     }
 
     @Override

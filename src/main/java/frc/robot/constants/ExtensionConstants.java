@@ -24,7 +24,6 @@ public class ExtensionConstants {
         L34Algae(kExtensionMaximum),
         Processor(2.0),
         GroundAlgae(9.0),
-        Storage(7.0),
         Barge(kExtensionMaximum),
         Zero(0.0),
         UpForWristEscape(10);

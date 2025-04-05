@@ -31,7 +31,7 @@ public class DefensiveProcessorAuto extends Auton {
                 new DisposeAlgaeCommand()
                         .withTimeout(0.5),
 
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.StartingConfig,
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage,
                         SetAcquisitionPositionCommand.FinishActions.NoFinish)
                         .raceWith(followPathCommand(Paths.getProcessorTaxi())));
     }

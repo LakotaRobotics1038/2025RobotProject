@@ -6,11 +6,10 @@ public class ShoulderConstants {
         L34Algae(318.0),
         Processor(336.0),
         GroundAlgae(355.0),
-        Storage(301.0),
         Barge(300.0),
         Vertical(300),
         BackOfBot(10),
-        StartingPos(330.0);
+        Storage(330.0);
 
         public final double setpoint;
 
