@@ -14,6 +14,6 @@ public class LeftTaxi extends Auton {
         super(alliance);
 
         super.addCommands(
-                followPathCommand(Paths.getTopPosTaxiPath()));
+                followPathCommand(Paths.getLeftPosTaxiPath()));
     }
 }
