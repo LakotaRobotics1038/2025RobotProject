@@ -88,40 +88,77 @@ public class SetAcquisitionPositionCommand extends Command {
             final double WRIST_LENGTH = 3; // TODO Random Value. Should be changed and placed in a constants file.
             final double WRIST_WHEEL_OFFSET_ANGLE = 2; // TODO Random Value. Should be changed and placed in a constants
                                                        // file.
+            final double MAX_EXTENSION = 18; // TODO Random Value. Should be changed and placed in a constants file.
+            final double SWERVE_MODULE_HEIGHT = 1;
             double extVertLength = extPos * AcquisitionConstants.cos(shoulderPos);
+            double extHoriLength = extPos * AcquisitionConstants.sin(shoulderPos);
             double wristTopWheelVertLength = extVertLength
                     + WRIST_LENGTH * AcquisitionConstants.cos(shoulderPos + wristPos);
+            double wristTopWheelHoriLength = extHoriLength
+                    + WRIST_LENGTH * AcquisitionConstants.sin(shoulderPos + wristPos);
             double wristBottomWheelVertLength = extVertLength
                     + WRIST_LENGTH * AcquisitionConstants.cos(shoulderPos + wristPos + WRIST_WHEEL_OFFSET_ANGLE);
+            double wristBottomWheelHoriLength = extHoriLength
+                    + WRIST_LENGTH * AcquisitionConstants.sin(shoulderPos + wristPos + WRIST_WHEEL_OFFSET_ANGLE);
 
+            shoulderPos = MathUtil.clamp(shoulderPos,
+                    -AcquisitionConstants.acos(MAX_EXTENSION / extPos)
+                            + Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
+                                    AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)),
+                    AcquisitionConstants.acos(MAX_EXTENSION / extPos)
+                            - Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
+                                    AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
+            shoulderPos = MathUtil.clamp(shoulderPos,
+                    -AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                            + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+                                    AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)),
+                    AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                            - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+                                    AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
 
-            if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
-                wristPos = MathUtil.clamp(wristPos, -165, -42.5);
-            } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
-                wristPos = MathUtil.clamp(wristPos, -35, 0);
-            } else if (extPos > 20 && shoulderPos < 340) {
-                wristPos = MathUtil.clamp(wristPos, -41.5, 0);
-            } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -44, -36);
-            } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -53, -40);
-            } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -60, -60);
-            } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -60, -43);
-            } else if (shoulderPos > 323 && shoulderPos < 336 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -56, -44);
-            } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -56, -44);
-            } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -55, -50);
-            } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -44, -31);
-            } else if (shoulderPos < 308 && shoulderPos > 300) {
-                wristPos = MathUtil.clamp(wristPos, -40, 0);
-            } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -44, -31);
-            }
+            // Will something bad happen if MAX_EXTENSION - extVertLength < 0? idk probably
+            // but is this even possible?
+
+            // Should a max be put here with and without the offset varaible to accound for
+            // both the points?
+            wristPos = MathUtil.clamp(wristPos,
+                    -AcquisitionConstants.acos((MAX_EXTENSION - extVertLength) / WRIST_LENGTH)
+                            + WRIST_WHEEL_OFFSET_ANGLE,
+                    AcquisitionConstants.acos((MAX_EXTENSION - extVertLength) / WRIST_LENGTH)
+                            - WRIST_WHEEL_OFFSET_ANGLE);
+            wristPos = MathUtil.clamp(wristPos,
+                    -AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
+                            + WRIST_WHEEL_OFFSET_ANGLE,
+                    AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
+                            - WRIST_WHEEL_OFFSET_ANGLE);
+
+            // if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
+            // wristPos = MathUtil.clamp(wristPos, -165, -42.5);
+            // } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
+            // wristPos = MathUtil.clamp(wristPos, -35, 0);
+            // } else if (extPos > 20 && shoulderPos < 340) {
+            // wristPos = MathUtil.clamp(wristPos, -41.5, 0);
+            // } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -44, -36);
+            // } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -53, -40);
+            // } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -60, -60);
+            // } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
+            // wristPos = MathUtil.clamp(wristPos, -60, -43);
+            // } else if (shoulderPos > 323 && shoulderPos < 336 && extPos < 20) {
+            // wristPos = MathUtil.clamp(wristPos, -56, -44);
+            // } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
+            // wristPos = MathUtil.clamp(wristPos, -56, -44);
+            // } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -55, -50);
+            // } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -44, -31);
+            // } else if (shoulderPos < 308 && shoulderPos > 300) {
+            // wristPos = MathUtil.clamp(wristPos, -40, 0);
+            // } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
+            // wristPos = MathUtil.clamp(wristPos, -44, -31);
+            // }
 
             wrist.setSetpoint(wristPos);
         } else {

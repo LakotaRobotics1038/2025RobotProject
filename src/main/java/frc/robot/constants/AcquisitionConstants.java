@@ -20,6 +20,9 @@ public class AcquisitionConstants {
     }
 
     public static double acos(double radian) {
+        if (radian > 1 || radian < -1) {
+            return Double.NaN;
+        }
         return (-0.798325 * radian * radian - 0.686357) * radian + 1.570796;
     }
 
