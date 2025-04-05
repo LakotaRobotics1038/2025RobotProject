@@ -60,9 +60,9 @@ public class DriverJoystick extends XboxController1038 {
     private DriverJoystick() {
         super(IOConstants.kDriverControllerPort);
 
-        SlewRateLimiter forwardFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter sidewaysFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
+        SlewRateLimiter forwardFilter = new SlewRateLimiter(2.0);
+        SlewRateLimiter sidewaysFilter = new SlewRateLimiter(2.0);
+        SlewRateLimiter rotateFilter = new SlewRateLimiter(2.0);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
             double x = this.getCubedLeftX();
@@ -110,13 +110,10 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
-        this.bButton.whileTrue(new AlignToAlgaeCommand(this::getCubedLeftY, this::getCubedLeftX));
+        this.bButton
+                .and(operatorState::isGroundAlgae)
+                .whileTrue(new AlignToAlgaeCommand(this::getCubedLeftY, this::getCubedLeftX));
 
-        // TODO: "we need a comment to run this command?"
-        this.aButton.onTrue(
-                new PrintCommand("Running SetAcquisitionPositionCommand")
-                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput,
-                                FinishActions.NoFinish)));
         this.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;

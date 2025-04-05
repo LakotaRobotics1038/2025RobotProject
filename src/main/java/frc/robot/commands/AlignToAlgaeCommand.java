@@ -40,6 +40,7 @@ public class AlignToAlgaeCommand extends Command {
 
     @Override
     public void initialize() {
+        this.bestAlgae = Optional.empty();
     }
 
     @Override
@@ -48,7 +49,6 @@ public class AlignToAlgaeCommand extends Command {
         getBestAlgae(visionResults);
 
         double turn = 0;
-
         if (this.bestAlgae.isPresent()) {
             turn = turnController.calculate(bestAlgae.get().getYaw(), 0);
         }

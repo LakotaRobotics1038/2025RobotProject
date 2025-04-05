@@ -13,16 +13,17 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public final class AutoConstants {
     public enum DriveWaypoints {
-        Algae17(new Pose2d(new Translation2d(3.4, 3.23), Rotation2d.fromDegrees(60.0))),
-        Algae18(new Pose2d(new Translation2d(3.14, 4.34), Rotation2d.fromDegrees(0))),
-        Algae19(new Pose2d(new Translation2d(4.03, 5.29), Rotation2d.fromDegrees(-60.0))),
-        Algae20(new Pose2d(new Translation2d(5.28, 5.09), Rotation2d.fromDegrees(-120.0))),
-        Algae21(new Pose2d(new Translation2d(5.77, 3.83), Rotation2d.fromDegrees(180.0))),
-        Algae22(new Pose2d(new Translation2d(4.95, 2.71), Rotation2d.fromDegrees(120.0))),
-        Processor3(new Pose2d(new Translation2d(12.07, 8.27), Rotation2d.fromDegrees(90.0))),
-        Processor16(new Pose2d(new Translation2d(6.18, 0.20), Rotation2d.fromDegrees(-90.0))),
+        Algae17(new Pose2d(new Translation2d(3.288, 2.57), Rotation2d.fromDegrees(-120))),
+        Algae18(new Pose2d(new Translation2d(3.86, 4.3), Rotation2d.fromDegrees(-180))),
+        Algae19(new Pose2d(new Translation2d(4.17, 4.99), Rotation2d.fromDegrees(120.0))),
+        Algae20(new Pose2d(new Translation2d(5.05, 4.57), Rotation2d.fromDegrees(60.0))),
+        Algae21(new Pose2d(new Translation2d(5.12, 3.699), Rotation2d.fromDegrees(0.0))),
+        Algae22(new Pose2d(new Translation2d(4.58, 3.30), Rotation2d.fromDegrees(-60.0))),
+        Processor3(new Pose2d(new Translation2d(11.21, 6.911), Rotation2d.fromDegrees(-90.0))),
+        Processor16(new Pose2d(new Translation2d(6.00, 1.17), Rotation2d.fromDegrees(90.0))),
         Storage(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0.0)));
 
+        // BARGE X: 8.023
         private Pose2d endpoint;
 
         private DriveWaypoints(Pose2d endpoint) {
