@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.646209016393443,
-        "y": 3.725
+        "x": 5.225113636363636,
+        "y": 3.770724431818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.896198081262374,
-        "y": 3.722661742965958
+        "x": 5.475102701232567,
+        "y": 3.76838617478414
       },
       "isLocked": false,
       "linkedName": "ReefTag21Algae"
     },
     {
       "anchor": {
-        "x": 6.34725,
-        "y": 3.725
+        "x": 5.658205128205128,
+        "y": 3.770724431818182
       },
       "prevControl": {
-        "x": 6.10672257564507,
-        "y": 3.656834333178766
+        "x": 5.429215056279513,
+        "y": 3.6704072002001733
       },
       "nextControl": {
-        "x": 6.7177500000000006,
-        "y": 3.8299999999999996
+        "x": 5.887195200130744,
+        "y": 3.871041663436191
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.773053278688525,
-        "y": 5.25373975409836
+        "x": 6.95,
+        "y": 5.28640625
       },
       "prevControl": {
-        "x": 6.188053278688525,
-        "y": 4.883239754098359
+        "x": 6.365,
+        "y": 4.915906249999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
@@ -71,7 +71,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 0.0
   },
   "reversed": false,
