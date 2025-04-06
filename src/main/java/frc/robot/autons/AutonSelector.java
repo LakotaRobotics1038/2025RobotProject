@@ -15,8 +15,8 @@ public class AutonSelector {
         ProcessorAuto,
         BargeProcessorAuto,
         DefensiveProcessorAuto,
-        TopTaxi,
-        BottomTaxi;
+        LeftTaxi,
+        RightTaxi;
     }
 
     // Choosers
@@ -42,8 +42,8 @@ public class AutonSelector {
         this.autoChooser.addOption("Processor Auto", AutonChoices.ProcessorAuto);
         this.autoChooser.addOption("Barge and Processor Auto", AutonChoices.BargeProcessorAuto);
         this.autoChooser.addOption("Defensive Processor Auto", AutonChoices.DefensiveProcessorAuto);
-        this.autoChooser.addOption("Top Taxi", AutonChoices.TopTaxi);
-        this.autoChooser.addOption("Bottom Taxi", AutonChoices.BottomTaxi);
+        this.autoChooser.addOption("Left Taxi", AutonChoices.LeftTaxi);
+        this.autoChooser.addOption("Right Taxi", AutonChoices.RightTaxi);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
@@ -77,10 +77,10 @@ public class AutonSelector {
                     return new BargeProcessorAuto(alliance);
                 case DefensiveProcessorAuto:
                     return new DefensiveProcessorAuto(alliance);
-                case TopTaxi:
-                    return new TopTaxi(alliance);
-                case BottomTaxi:
-                    return new BottomTaxi(alliance);
+                case LeftTaxi:
+                    return new LeftTaxi(alliance);
+                case RightTaxi:
+                    return new RightTaxi(alliance);
                 default:
                     return null;
             }

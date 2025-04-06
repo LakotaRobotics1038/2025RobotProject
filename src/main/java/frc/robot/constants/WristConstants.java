@@ -3,13 +3,12 @@ package frc.robot.constants;
 public class WristConstants {
     public enum WristSetpoints {
         L23Algae(-42.5),
-        L34Algae(-36.0),
+        L34Algae(-41.0),
         Processor(-42.0),
         GroundAlgae(-31.0),
-        Storage(-28.0),
         ZeroExt(-75.0),
         Barge(-160.5),
-        StartingPos(16);
+        Storage(-5);
 
         private double setpoint;
         private double extMax;

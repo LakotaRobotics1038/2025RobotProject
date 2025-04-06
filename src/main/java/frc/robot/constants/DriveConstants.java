@@ -13,6 +13,9 @@ public final class DriveConstants {
     public static final Matrix<N3, N1> kOdometryStdDev = VecBuilder.fill(0.1, 0.1, 0.1);
     public static final Matrix<N3, N1> kVisionStdDevs = VecBuilder.fill(1, 1, 1);
 
+    public static final double defaultMaxPower = 0.75;
+    public static final double overdrivePower = 1.0;
+
     // Chassis configuration
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = 25; // Inches

@@ -9,16 +9,14 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AlignToAlgaeCommand;
 import frc.robot.commands.DetermineWaypointCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
@@ -38,11 +36,20 @@ public class DriverJoystick extends XboxController1038 {
     // Instance Variables
     private PathPlannerPath path;
     private Pose2d targetPose;
+    private double maxPower = DriveConstants.defaultMaxPower;
 
     // Previous Status
-    private double prevX = 0;
-    private double prevY = 0;
-    private double prevZ = 0;
+    private double prevSideways = 0;
+    private double prevForward = 0;
+    private double prevRotate = 0;
+
+    // Limiters
+    SlewRateLimiter forwardLimiter = new SlewRateLimiter(2.0);
+    SlewRateLimiter sidewaysLimiter = new SlewRateLimiter(2.0);
+    SlewRateLimiter rotateLimiter = new SlewRateLimiter(2.0);
+
+    LinearFilter forwardFilter = LinearFilter.movingAverage(5);
+    LinearFilter sidewaysFilter = LinearFilter.movingAverage(5);
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
@@ -60,28 +67,16 @@ public class DriverJoystick extends XboxController1038 {
     private DriverJoystick() {
         super(IOConstants.kDriverControllerPort);
 
-        SlewRateLimiter forwardFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter sidewaysFilter = new SlewRateLimiter(1.0);
-        SlewRateLimiter rotateFilter = new SlewRateLimiter(1.0);
-
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
-            double x = this.getCubedLeftX();
-            double y = this.getCubedLeftY();
-            double z = this.getRightX();
+            double sideways = this.getSidewaysValue();
+            double forward = this.getForwardValue();
+            double rotate = this.getRotateValue();
 
             if (extension.getPosition() > 10) {
-                x = MathUtil.clamp(x, -0.25, 0.25);
-                y = MathUtil.clamp(y, -0.25, 0.25);
-                z = MathUtil.clamp(z, -0.25, 0.25);
+                sideways = MathUtil.clamp(sideways, -0.25, 0.25);
+                forward = MathUtil.clamp(forward, -0.25, 0.25);
+                rotate = MathUtil.clamp(rotate, -0.25, 0.25);
             }
-
-            double forward = limitRate(y, prevY, forwardFilter);
-            double sideways = limitRate(x, prevX, sidewaysFilter);
-            double rotate = limitRate(z, prevZ, rotateFilter);
-
-            prevX = x;
-            prevY = y;
-            prevZ = z;
 
             return driveTrain.drive(forward, -sideways, -rotate, true);
         }));
@@ -107,16 +102,17 @@ public class DriverJoystick extends XboxController1038 {
                 .whileTrue(this.driveTrain
                         .applyRequest(() -> driveTrain.drive(0, -DriveConstants.kFineAdjustmentPercent, 0, false)));
 
+        this.rightBumper
+                .onTrue(new InstantCommand(() -> this.maxPower = DriveConstants.overdrivePower))
+                .onFalse(new InstantCommand(() -> this.maxPower = DriveConstants.defaultMaxPower));
+
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
-        this.bButton.whileTrue(new AlignToAlgaeCommand(this::getCubedLeftY, this::getCubedLeftX));
+        this.bButton
+                .and(operatorState::isGroundAlgae)
+                .whileTrue(new AlignToAlgaeCommand(this::getForwardValue, this::getSidewaysValue));
 
-        // TODO: "we need a comment to run this command?"
-        this.aButton.onTrue(
-                new PrintCommand("Running SetAcquisitionPositionCommand")
-                        .andThen(new SetAcquisitionPositionCommand(operatorState::getLastInput,
-                                FinishActions.NoFinish)));
         this.aButton.whileTrue(determineWaypointCommand.andThen(
                 new InstantCommand(() -> {
                     Pose2d currentPose = this.driveTrain.getState().Pose;
@@ -143,25 +139,50 @@ public class DriverJoystick extends XboxController1038 {
     }
 
     /**
-     * Gets the value of the left X axis and cubes it
+     * Gets the value of the left X axis, filters it, and applies an acceleration
+     * limit
      *
-     * @return
+     * @return sideways value
      */
-    private double getCubedLeftX() {
-        double x = this.getLeftX();
+    private double getSidewaysValue() {
+        double x = this.getLeftX() * maxPower;
 
-        return Math.copySign(Math.pow(x, 3), x);
+        double sideways = sidewaysFilter.calculate(x);
+        sideways = limitRate(x, prevSideways, sidewaysLimiter);
+        prevSideways = sideways;
+
+        return sideways;
     }
 
     /**
-     * Gets the value of the left Y axis and cubes it
+     * Gets the value of the left Y axis, filters it, and applies an acceleration
+     * limit
      *
-     * @return
+     * @return forward value
      */
-    private double getCubedLeftY() {
-        double y = this.getLeftY();
+    private double getForwardValue() {
+        double y = this.getLeftY() * maxPower;
 
-        return Math.copySign(Math.pow(y, 3), y);
+        double forward = forwardFilter.calculate(y);
+        forward = limitRate(y, prevForward, forwardLimiter);
+        prevForward = forward;
+
+        return forward;
+    }
+
+    /**
+     * Gets the value of the Right X axis and applies an acceleration
+     * limit
+     *
+     * @return rotate value
+     */
+    private double getRotateValue() {
+        double z = this.getRightX() * 0.75;
+
+        double rotate = limitRate(z, prevRotate, rotateLimiter);
+        prevRotate = rotate;
+
+        return rotate;
     }
 
     /**
