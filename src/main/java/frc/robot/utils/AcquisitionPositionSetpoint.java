@@ -10,11 +10,10 @@ public enum AcquisitionPositionSetpoint {
     L23Algae(ShoulderSetpoints.L23Algae, WristSetpoints.L23Algae, ExtensionSetpoints.L23Algae),
     L34Algae(ShoulderSetpoints.L34Algae, WristSetpoints.L34Algae, ExtensionSetpoints.L34Algae),
     Processor(ShoulderSetpoints.Processor, WristSetpoints.Processor, ExtensionSetpoints.Processor),
-    Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Storage),
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
     ZeroExtend(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Zero),
-    StartingConfig(ShoulderSetpoints.StartingPos, WristSetpoints.StartingPos, ExtensionSetpoints.Zero);
+    Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Zero);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;

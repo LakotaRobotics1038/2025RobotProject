@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionEscapeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
@@ -21,7 +20,6 @@ public class ProcessorAuto extends Auton {
         super(alliance);
 
         super.addCommands(
-                new SetAcquisitionPositionEscapeCommand(SetAcquisitionPositionEscapeCommand.FinishActions.Default),
                 new AcquireAlgaeCommand()
                         .raceWith(
                                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
