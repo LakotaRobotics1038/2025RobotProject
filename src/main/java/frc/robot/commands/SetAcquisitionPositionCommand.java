@@ -70,7 +70,7 @@ public class SetAcquisitionPositionCommand extends Command {
             }
         }
 
-        if (shoulder.getPosition() < 310 && extension.getPosition() > 10) {
+        if (shoulder.getPosition() < 310 && extension.getPosition() > 20) {
             isFromBarge = true;
         }
 
@@ -81,8 +81,10 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.enable();
         shoulder.enable();
         extension.enable();
-        if (!isGroundAlgae) {
+        if (!isGroundAlgae && !isFromBarge) {
             shoulder.setSetpoint(shoulderSetpoint);
+            extension.setSetpoint(extensionSetpoint);
+        } else if (isFromBarge) {
             extension.setSetpoint(extensionSetpoint);
         }
     }
@@ -122,7 +124,8 @@ public class SetAcquisitionPositionCommand extends Command {
             }
         }
 
-        if (extension.getPosition() < 15 && isFromBarge) {
+        if (extension.getPosition() < 10 && isFromBarge) {
+            shoulder.setSetpoint(shoulderSetpoint);
             isFromBarge = false;
         }
 
@@ -135,7 +138,7 @@ public class SetAcquisitionPositionCommand extends Command {
             if (extension.onTarget() && shoulder.onTarget()) {
                 wrist.setSetpoint(wristPos);
             }
-        } else {
+        } else if (!isFromBarge) {
             wrist.setSetpoint(wristPos);
         }
     }
