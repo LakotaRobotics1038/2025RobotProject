@@ -11,7 +11,6 @@ import frc.robot.subsystems.Vision;
 
 public class AlignWithBargeCommand extends Command {
     public DriveTrain driveTrain = DriveTrain.getInstance();
-    private Vision vision = Vision.getInstance();
 
     private Supplier<Double> yMove;
     // private Alliance alliance;
@@ -27,7 +26,7 @@ public class AlignWithBargeCommand extends Command {
     private PIDController xController = new PIDController(kXP, kXI, kXD);
 
     public void AlignToAlgaeCommand(Supplier<Double> yMove) {
-        super.addRequirements(vision, driveTrain);
+        super.addRequirements(driveTrain);
         this.yMove = yMove;
 
         Shuffleboard.getTab("Controls").add("z Controller barge", zController);
