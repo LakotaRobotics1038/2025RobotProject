@@ -12,9 +12,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -32,7 +29,6 @@ public class DriverJoystick extends XboxController1038 {
     private final DriveTrain driveTrain = DriveTrain.getInstance();
     private final OperatorState operatorState = OperatorState.getInstance();
     private final Extension extension = Extension.getInstance();
-    private final ShuffleboardTab tab = Shuffleboard.getTab("LOGGING");
 
     // Commands
     private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
@@ -70,13 +66,6 @@ public class DriverJoystick extends XboxController1038 {
 
     private DriverJoystick() {
         super(IOConstants.kDriverControllerPort);
-
-        tab.addNumber("Sideways", this::getSidewaysValue)
-                .withWidget(BuiltInWidgets.kGraph);
-        tab.addNumber("Forward", this::getForwardValue)
-                .withWidget(BuiltInWidgets.kGraph);
-        tab.addNumber("Rotate", this::getRightX)
-                .withWidget(BuiltInWidgets.kGraph);
 
         driveTrain.setDefaultCommand(this.driveTrain.applyRequest(() -> {
             double sideways = this.getSidewaysValue();

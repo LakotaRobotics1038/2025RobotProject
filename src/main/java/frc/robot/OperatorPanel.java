@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.DisposeAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
@@ -11,7 +10,6 @@ import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.constants.IOConstants;
 import frc.robot.subsystems.Shoulder;
-import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
@@ -19,7 +17,6 @@ public class OperatorPanel extends GenericHID {
     private boolean isDefaultEnabled;
 
     private final Shoulder shoulder = Shoulder.getInstance();
-    private final Wrist wrist = Wrist.getInstance();
 
     public final JoystickButton acquireButton = new JoystickButton(this, IOConstants.kAcquireButtonNumber);
     public final JoystickButton disposeButton = new JoystickButton(this, IOConstants.kDisposeButtonNumber);
