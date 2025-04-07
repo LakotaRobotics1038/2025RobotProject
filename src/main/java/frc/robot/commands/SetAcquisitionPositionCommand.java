@@ -94,34 +94,32 @@ public class SetAcquisitionPositionCommand extends Command {
         double wristPos = wristSetpoint.getSetpoint();
         double shoulderPos = shoulder.getPosition();
         double extPos = extension.getPosition();
-        if (!isFromBarge) {
-            if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
-                wristPos = MathUtil.clamp(wristPos, -165, -5);
-            } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
-                wristPos = MathUtil.clamp(wristPos, -35, 0);
-            } else if (extPos > 20 && shoulderPos < 340) {
-                wristPos = MathUtil.clamp(wristPos, -41.5, 0);
-            } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -44, -5);
-            } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -43, -20);
-            } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -40, -5);
-            } else if (shoulderPos < 336 && shoulderPos > 333 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -45, -30);
-            } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -45, -5);
-            } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -56, -5);
-            } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -55, -5);
-            } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
-                wristPos = MathUtil.clamp(wristPos, -44, -5);
-            } else if (shoulderPos < 308 && shoulderPos > 300) {
-                wristPos = MathUtil.clamp(wristPos, -40, -5);
-            } else if (shoulderPos > 345 && extPos < 20) {
-                wristPos = MathUtil.clamp(wristPos, -35, -5);
-            }
+        if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
+            wristPos = MathUtil.clamp(wristPos, -165, -5);
+        } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
+            wristPos = MathUtil.clamp(wristPos, -35, 0);
+        } else if (extPos > 20 && shoulderPos < 340) {
+            wristPos = MathUtil.clamp(wristPos, -41.5, 0);
+        } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
+            wristPos = MathUtil.clamp(wristPos, -44, -5);
+        } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {
+            wristPos = MathUtil.clamp(wristPos, -43, -20);
+        } else if (shoulderPos > 317 && shoulderPos < 327 && extPos < 10) {
+            wristPos = MathUtil.clamp(wristPos, -40, -5);
+        } else if (shoulderPos < 336 && shoulderPos > 333 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, -45, -30);
+        } else if (shoulderPos < 336 && shoulderPos > 323 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, -45, -5);
+        } else if (shoulderPos > 323 && shoulderPos < 350 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, -56, -5);
+        } else if (shoulderPos > 308 && shoulderPos < 317 && extPos < 10) {
+            wristPos = MathUtil.clamp(wristPos, -55, -5);
+        } else if (shoulderPos > 350 && shoulderPos < 360 && extPos < 10) {
+            wristPos = MathUtil.clamp(wristPos, -44, -5);
+        } else if (shoulderPos < 308 && shoulderPos > 300) {
+            wristPos = MathUtil.clamp(wristPos, -40, -5);
+        } else if (shoulderPos > 345 && extPos < 20) {
+            wristPos = MathUtil.clamp(wristPos, -35, -5);
         }
 
         if (extension.getPosition() < 10 && isFromBarge) {
@@ -134,13 +132,7 @@ public class SetAcquisitionPositionCommand extends Command {
             extension.setSetpoint(extensionSetpoint);
         }
 
-        if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.ZeroExtend) {
-            if (extension.onTarget() && shoulder.onTarget()) {
-                wrist.setSetpoint(wristPos);
-            }
-        } else if (!isFromBarge) {
-            wrist.setSetpoint(wristPos);
-        }
+        wrist.setSetpoint(wristPos);
     }
 
     public boolean isFinished() {
