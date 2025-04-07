@@ -30,42 +30,19 @@ public class BargeAuto extends Auton {
                         .withTimeout(3),
 
                 new ShootAlgaeCommand().withTimeout(1),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish)
-        /*
-         * , new
-         * SetAcquisitionPositionCommand
-         * (
-         * AcquisitionPositionSetpoint
-         * .L34Algae,
-         * FinishActions.
-         * NoDisable)
-         * .withDeadline(
-         * followPathCommand(
-         * Paths.
-         * getNetToTag20Algae())
-         * ),
-         * new
-         * AcquireAlgaeCommand()
-         * .raceWith(
-         * followPathCommand(
-         * Paths.
-         * getReefTag20ToNet()))
-         * .alongWith(new
-         * SetAcquisitionPositionCommand
-         * (
-         * AcquisitionPositionSetpoint
-         * .Barge,
-         * FinishActions.
-         * NoDisable)
-         * .withTimeout(3.0)),
-         * new
-         * DisposeAlgaeCommand()
-         * .withTimeout(1),
-         * new
-         * SetAcquisitionPositionCommand
-         * (
-         * AcquisitionPositionSetpoint
-         * .Storage)
-         */);
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoDisable)
+                        .withTimeout(1),
+
+                new AcquireAlgaeCommand().raceWith(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
+                                .alongWith(followPathCommand(Paths.getNetToTag20Algae()))),
+                new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag20ToNet())
+                        .alongWith(new WaitCommand(1.0)
+                                .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
+                                        FinishActions.NoDisable))))
+                        .withTimeout(3),
+
+                new ShootAlgaeCommand().withTimeout(1),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoDisable));
     }
 }
