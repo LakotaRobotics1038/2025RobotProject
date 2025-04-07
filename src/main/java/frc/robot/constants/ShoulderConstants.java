@@ -2,15 +2,14 @@ package frc.robot.constants;
 
 public class ShoulderConstants {
     public enum ShoulderSetpoints {
-        L23Algae(318.0),
-        L34Algae(314.0),
+        L23Algae(321.0),
+        L34Algae(318.0),
         Processor(336.0),
         GroundAlgae(355.0),
-        Storage(301.0),
         Barge(300.0),
         Vertical(300),
         BackOfBot(10),
-        StartingPos(330.0);
+        Storage(330.0);
 
         public final double setpoint;
 
@@ -26,7 +25,7 @@ public class ShoulderConstants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
 
-    public static final double kMaxPower = 0.3;
+    public static final double kMaxPower = 0.75;
     public static final double kMaxDistance = 290.0;
 
     public static final double kTolerance = 3.0;

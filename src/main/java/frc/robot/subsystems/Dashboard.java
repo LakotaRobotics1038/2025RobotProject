@@ -12,13 +12,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OperatorState;
 import frc.robot.autons.AutonSelector.AutonChoices;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
     private DriveTrain driveTrain = DriveTrain.getInstance();
-    private OperatorState operatorState = OperatorState.getInstance();
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
@@ -32,26 +30,20 @@ public class Dashboard extends SubsystemBase {
     private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
 
     // Drivers Tab Inputs
-    private GenericEntry manualOperatorMode = driversTab.add("Manual Operator", false)
-            .withPosition(0, 2)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kToggleButton)
-            .getEntry();
-
     private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
-            .withPosition(2, 0)
+            .withPosition(0, 2)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
-            .withPosition(2, 1)
+            .withPosition(0, 3)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
 
     private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
-            .withPosition(4, 0)
+            .withPosition(0, 1)
             .withSize(2, 1)
             .withWidget(BuiltInWidgets.kTextView)
             .getEntry();
@@ -78,18 +70,13 @@ public class Dashboard extends SubsystemBase {
                 .withSize(2, 1);
 
         driversTab.add("Delay Choices", delayChooser)
-                .withPosition(0, 1)
+                .withPosition(2, 0)
                 .withSize(2, 1);
 
         driversTab.add(field)
-                .withPosition(2, 2)
-                .withSize(4, 2)
+                .withPosition(2, 1)
+                .withSize(4, 3)
                 .withWidget(BuiltInWidgets.kField);
-
-        driversTab.addBoolean("Manual Mode", operatorState::getIsManual)
-                .withPosition(0, 3)
-                .withSize(2, 1)
-                .withWidget(BuiltInWidgets.kBooleanBox);
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
@@ -99,7 +86,7 @@ public class Dashboard extends SubsystemBase {
             field.getObject("poses").setPoses(poses);
         });
 
-        driversTab.addCamera("Back Camera", "Back Camera", "http://photonvision.local:1183/stream.mjpg")
+        driversTab.addCamera("Back Camera", "Back Camera", "http://photonvision.local:1183/stream.mjpg?fps=25")
                 .withPosition(6, 0)
                 .withSize(4, 4);
 
@@ -125,11 +112,6 @@ public class Dashboard extends SubsystemBase {
         field.setRobotPose(driveTrain.getState().Pose);
 
         // Drivers tab
-        if (manualOperatorMode.getBoolean(false)) {
-            operatorState.toggleIsManual();
-            manualOperatorMode.setBoolean(false);
-        }
-
         wrist.setOffset(wristOffset.getDouble(0));
         shoulder.setOffset(shoulderOffset.getDouble(0));
         extension.setOffset(extensionOffset.getDouble(0));
