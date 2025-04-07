@@ -10,7 +10,7 @@ import com.pathplanner.lib.util.FileVersionException;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AcquireAlgaeCommand;
-import frc.robot.commands.DisposeAlgaeCommand;
+import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.utils.AcquisitionPositionSetpoint;;
@@ -29,7 +29,7 @@ public class BargeAuto extends Auton {
                                         FinishActions.NoDisable))))
                         .withTimeout(3),
 
-                new DisposeAlgaeCommand().withTimeout(1),
+                new ShootAlgaeCommand().withTimeout(1),
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoFinish)
         /*
          * , new
