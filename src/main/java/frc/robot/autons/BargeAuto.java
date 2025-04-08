@@ -24,23 +24,25 @@ public class BargeAuto extends Auton {
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae, FinishActions.NoDisable)
                                 .alongWith(followPathCommand(Paths.getMidPoseToTag21Algae()))),
                 new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag21ToNet())
-                        .alongWith(new WaitCommand(1.5)
-                                .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
-                                        FinishActions.NoDisable))))
-                        .withTimeout(3),
-
-                new ShootAlgaeCommand().withTimeout(1),
-
-                new AcquireAlgaeCommand().raceWith(
-                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
-                                .alongWith(followPathCommand(Paths.getNetToTag20Algae()))),
-                new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag20ToNet())
                         .alongWith(new WaitCommand(1.0)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
                                         FinishActions.NoDisable))))
                         .withTimeout(3),
 
-                new ShootAlgaeCommand().withTimeout(1),
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoDisable));
+                new ShootAlgaeCommand().withTimeout(0.25),
+
+                new AcquireAlgaeCommand().raceWith(
+                        new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
+                                .alongWith(followPathCommand(Paths.getNetToTag20Algae()))),
+                new AcquireAlgaeCommand().raceWith(followPathCommand(Paths.getReefTag20ToNet())
+                        .alongWith(new WaitCommand(0.5)
+                                .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
+                                        FinishActions.NoDisable))))
+                        .withTimeout(3),
+
+                new WaitCommand(0.25),
+                new ShootAlgaeCommand().withTimeout(0.25),
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Storage, FinishActions.NoDisable)
+                        .alongWith(followPathCommand(Paths.getBackOffLinePath())));
     }
 }

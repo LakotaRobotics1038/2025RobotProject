@@ -70,7 +70,8 @@ public class SetAcquisitionPositionCommand extends Command {
             }
         }
 
-        if (shoulder.getPosition() < 310 && extension.getPosition() > 20) {
+        if (shoulder.getPosition() < 310 && extension.getPosition() > 20
+                && acquisitionPositionSetpoint.getExtensionSetpoint().position < 10) {
             isFromBarge = true;
         }
 
@@ -99,7 +100,7 @@ public class SetAcquisitionPositionCommand extends Command {
         } else if (extPos > 10 && shoulderPos < 338 && shoulderPos > 335) {
             wristPos = MathUtil.clamp(wristPos, -35, 0);
         } else if (extPos > 20 && shoulderPos < 340) {
-            wristPos = MathUtil.clamp(wristPos, -41.5, 0);
+            wristPos = MathUtil.clamp(wristPos, -50, 0);
         } else if (shoulderPos < 360 && shoulderPos > 350 && extPos < 10) {
             wristPos = MathUtil.clamp(wristPos, -44, -5);
         } else if (shoulderPos < 350 && shoulderPos > 336 && extPos < 10) {

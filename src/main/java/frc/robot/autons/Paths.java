@@ -37,4 +37,9 @@ public class Paths {
             throws IOException, ParseException, FileVersionException {
         return PathPlannerPath.fromPathFile("Reef Tag 20 To Net");
     }
+
+    public static PathPlannerPath getBackOffLinePath()
+            throws IOException, ParseException, FileVersionException {
+        return PathPlannerPath.fromPathFile("Back off line");
+    }
 }
