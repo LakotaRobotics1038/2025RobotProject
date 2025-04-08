@@ -3,7 +3,7 @@ package frc.robot.constants;
 public class ShoulderConstants {
     public enum ShoulderSetpoints {
         L23Algae(321.0),
-        L34Algae(318.0),
+        L34Algae(310.0),
         Processor(336.0),
         GroundAlgae(355.0),
         Barge(300.0),
