@@ -88,7 +88,8 @@ public class SetAcquisitionPositionCommand extends Command {
             final double WRIST_LENGTH = 3; // TODO Random Value. Should be changed and placed in a constants file.
             final double WRIST_WHEEL_OFFSET_ANGLE = 2; // TODO Random Value. Should be changed and placed in a constants
                                                        // file.
-            final double MAX_EXTENSION = 18; // TODO Random Value. Should be changed and placed in a constants file.
+            final double MAX_VERT_EXTENSION = 18; // TODO Random Value. Should be changed and placed in a constants
+                                                  // file.
             final double SWERVE_MODULE_HEIGHT = 1;
             double extVertLength = extPos * AcquisitionConstants.cos(shoulderPos);
             double extHoriLength = extPos * AcquisitionConstants.sin(shoulderPos);
@@ -101,36 +102,48 @@ public class SetAcquisitionPositionCommand extends Command {
             double wristBottomWheelHoriLength = extHoriLength
                     + WRIST_LENGTH * AcquisitionConstants.sin(shoulderPos + wristPos + WRIST_WHEEL_OFFSET_ANGLE);
 
-            shoulderPos = MathUtil.clamp(shoulderPos,
-                    -AcquisitionConstants.acos(MAX_EXTENSION / extPos)
-                            + Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
-                                    AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)),
-                    AcquisitionConstants.acos(MAX_EXTENSION / extPos)
-                            - Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
-                                    AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
-            shoulderPos = MathUtil.clamp(shoulderPos,
-                    -AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
-                            + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                    AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)),
-                    AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
-                            - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                    AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
+            if (shoulderPos <= 0) {
+                shoulderPos = Math.min(shoulderPos,
+                        AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
+                                - Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
+                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
+                shoulderPos = Math.min(shoulderPos,
+                        AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                                - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
+            } else {
+                shoulderPos = Math.max(shoulderPos,
+                        -AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
+                                + Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
+                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
+                shoulderPos = Math.max(shoulderPos,
+                        -AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                                + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
+            }
 
-            // Will something bad happen if MAX_EXTENSION - extVertLength < 0? idk probably
+            // Will something bad happen if MAX_VERT_EXTENSION - extVertLength < 0? idk
+            // probably
             // but is this even possible?
 
-            // Should a max be put here with and without the offset varaible to accound for
+            // Should a max be put here with and without the offset variable to account for
             // both the points?
-            wristPos = MathUtil.clamp(wristPos,
-                    -AcquisitionConstants.acos((MAX_EXTENSION - extVertLength) / WRIST_LENGTH)
-                            + WRIST_WHEEL_OFFSET_ANGLE,
-                    AcquisitionConstants.acos((MAX_EXTENSION - extVertLength) / WRIST_LENGTH)
-                            - WRIST_WHEEL_OFFSET_ANGLE);
-            wristPos = MathUtil.clamp(wristPos,
-                    -AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
-                            + WRIST_WHEEL_OFFSET_ANGLE,
-                    AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
-                            - WRIST_WHEEL_OFFSET_ANGLE);
+
+            if (wristPos <= 0) {
+                wristPos = Math.min(wristPos,
+                        -AcquisitionConstants.acos((MAX_VERT_EXTENSION - extVertLength) / WRIST_LENGTH)
+                                + WRIST_WHEEL_OFFSET_ANGLE);
+                wristPos = Math.min(wristPos,
+                        -AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
+                                + WRIST_WHEEL_OFFSET_ANGLE);
+            } else {
+                wristPos = Math.max(wristPos,
+                        AcquisitionConstants.acos((MAX_VERT_EXTENSION - extVertLength) / WRIST_LENGTH)
+                                - WRIST_WHEEL_OFFSET_ANGLE);
+                wristPos = Math.max(wristPos,
+                        AcquisitionConstants.asin((SWERVE_MODULE_HEIGHT - extHoriLength) / WRIST_LENGTH)
+                                - WRIST_WHEEL_OFFSET_ANGLE);
+            }
 
             // if (shoulderPos > 290 && shoulderPos < 305 && extPos > 20) {
             // wristPos = MathUtil.clamp(wristPos, -165, -42.5);
