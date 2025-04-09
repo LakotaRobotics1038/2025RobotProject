@@ -18,5 +18,8 @@
 - Stream Resolution
 - Anything in the Apriltag and Output tabs
 
-### Values To Change And What They Do
-- Auto Exposure - **TURN OFF FOR COMPETITIONs** This adusts the shutter of the camera  Adjusts the amount of light that hits the camera each frame automatically in lighting for areas
+### Values To Adjust And What They Do
+- Auto Exposure - **TURN OFF FOR COMPETITIONs** This adusts the shutter of the camera meaning more light hits the camera but it does this on it's own and isn't exactly reliable and can cause weird effects to the camera.
+- Exposure - Ideally set the exposure low (left side of the slider) as the lower the exposure **generally** the faster PV will be able to recognize objects and Apriltags, if you'd like more information click [here](https://docs.photonvision.org/en/v2025.3.1/docs/pipelines/input.html)
+- Gain
+- Brightness
