@@ -13,7 +13,7 @@ import frc.robot.subsystems.Shoulder;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
-    private OperatorState operatorState;
+    private OperatorState operatorState = OperatorState.getInstance();
     private boolean isDefaultEnabled;
 
     private final Shoulder shoulder = Shoulder.getInstance();
@@ -35,7 +35,6 @@ public class OperatorPanel extends GenericHID {
 
     private OperatorPanel() {
         super(IOConstants.kOperatorPanelPort);
-        this.operatorState = OperatorState.getInstance();
         operatorState.setLastInput(AcquisitionPositionSetpoint.Storage);
         operatorState.setScoringFlipped(coralPosScoringSwitch.getAsBoolean());
 
