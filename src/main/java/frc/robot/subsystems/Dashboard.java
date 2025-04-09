@@ -4,15 +4,12 @@ import java.util.ArrayList;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
 
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.autons.AutonSelector.AutonChoices;
+import frc.robot.constants.DashboardConstants;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
@@ -24,29 +21,6 @@ public class Dashboard extends SubsystemBase {
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
     private SendableChooser<Double> delayChooser = new SendableChooser<>();
-
-    // Tabs
-    private final ShuffleboardTab driversTab = Shuffleboard.getTab("Drivers");
-    private final ShuffleboardTab controlsTab = Shuffleboard.getTab("Controls");
-
-    // Drivers Tab Inputs
-    private GenericEntry extensionOffset = driversTab.add("Extension Offset", 0)
-            .withPosition(0, 2)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kTextView)
-            .getEntry();
-
-    private GenericEntry shoulderOffset = driversTab.add("Shoulder Offset", 0)
-            .withPosition(0, 3)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kTextView)
-            .getEntry();
-
-    private GenericEntry wristOffset = driversTab.add("Wrist Offset", 0)
-            .withPosition(0, 1)
-            .withSize(2, 1)
-            .withWidget(BuiltInWidgets.kTextView)
-            .getEntry();
 
     // Variables
     private final Field2d field = new Field2d();
@@ -65,18 +39,14 @@ public class Dashboard extends SubsystemBase {
     private Dashboard() {
         super();
 
-        driversTab.add("Auton Choices", autoChooser)
-                .withPosition(0, 0)
-                .withSize(2, 1);
+        SmartDashboard.putNumber(DashboardConstants.kExtensionOffset, 0);
+        SmartDashboard.putNumber(DashboardConstants.kShoulderOffset, 0);
+        SmartDashboard.putNumber(DashboardConstants.kWristOffset, 0);
 
-        driversTab.add("Delay Choices", delayChooser)
-                .withPosition(2, 0)
-                .withSize(2, 1);
+        SmartDashboard.putData(DashboardConstants.kAutonChoices, autoChooser);
+        SmartDashboard.putData(DashboardConstants.kDelayChoices, delayChooser);
 
-        driversTab.add(field)
-                .withPosition(2, 1)
-                .withSize(4, 3)
-                .withWidget(BuiltInWidgets.kField);
+        SmartDashboard.putData(field);
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
@@ -85,45 +55,25 @@ public class Dashboard extends SubsystemBase {
         PathPlannerLogging.setLogActivePathCallback((poses) -> {
             field.getObject("poses").setPoses(poses);
         });
-
-        driversTab.addCamera("Back Camera", "Back Camera", "http://photonvision.local:1183/stream.mjpg?fps=25")
-                .withPosition(6, 0)
-                .withSize(4, 4);
-
-        controlsTab.add(field)
-                .withPosition(2, 0)
-                .withSize(8, 5)
-                .withWidget(BuiltInWidgets.kField);
-
-        controlsTab.addNumber("X", driveTrain::getX)
-                .withPosition(5, 5)
-                .withSize(2, 1);
-        controlsTab.addNumber("Y", driveTrain::getY)
-                .withPosition(5, 4)
-                .withSize(2, 1);
-        controlsTab.addNumber("R", driveTrain::getRotation)
-                .withPosition(5, 4)
-                .withSize(2, 1);
     }
 
     @Override
     public void periodic() {
         // Controls Tab
+        SmartDashboard.putNumber(DashboardConstants.kRobotX, driveTrain.getX());
+        SmartDashboard.putNumber(DashboardConstants.kRobotY, driveTrain.getY());
+        SmartDashboard.putNumber(DashboardConstants.kRobotRot, driveTrain.getRotation());
+
         field.setRobotPose(driveTrain.getState().Pose);
 
         // Drivers tab
-        wrist.setOffset(wristOffset.getDouble(0));
-        shoulder.setOffset(shoulderOffset.getDouble(0));
-        extension.setOffset(extensionOffset.getDouble(0));
-    }
+        wrist.setOffset(SmartDashboard.getNumber(DashboardConstants.kWristOffset, 0));
+        shoulder.setOffset(SmartDashboard.getNumber(DashboardConstants.kShoulderOffset, 0));
+        extension.setOffset(SmartDashboard.getNumber(DashboardConstants.kExtensionOffset, 0));
 
-    /**
-     * Puts the given {@link Trajectory} on the dashboard
-     *
-     * @param trajectory
-     */
-    public void setTrajectory(Trajectory trajectory) {
-        this.field.getObject("traj").setTrajectory(trajectory);
+        SmartDashboard.putNumber(DashboardConstants.kExtensionCurrent, extension.getPosition());
+        SmartDashboard.putNumber(DashboardConstants.kShoulderCurrent, shoulder.getPosition());
+        SmartDashboard.putNumber(DashboardConstants.kWristCurrent, wrist.getPosition());
     }
 
     /**

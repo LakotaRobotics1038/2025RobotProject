@@ -10,9 +10,9 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.DashboardConstants;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.WristConstants;
 import frc.robot.constants.WristConstants.WristSetpoints;
@@ -45,10 +45,7 @@ public class Wrist extends SubsystemBase {
         wristController.disableContinuousInput();
         wristController.setTolerance(WristConstants.kTolerance);
 
-        Shuffleboard.getTab("Controls").add("WristPID", wristController)
-                .withWidget(BuiltInWidgets.kPIDController);
-        Shuffleboard.getTab("Controls")
-                .addNumber("WristCurrent", this::getPosition);
+        SmartDashboard.putData(DashboardConstants.kWristPID, wristController);
     }
 
     public static Wrist getInstance() {

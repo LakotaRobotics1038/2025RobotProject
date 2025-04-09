@@ -9,6 +9,8 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autons.Auton;
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
         // PathfindingCommand.warmupCommand().schedule();
         FollowPathCommand.warmupCommand().schedule();
+
+        WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
 
         addPeriodic(swagLights::periodic, 0.25);
     }

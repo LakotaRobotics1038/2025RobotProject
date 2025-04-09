@@ -1,297 +1,297 @@
 {
-  "version": 1.0,
-  "grid_size": 128,
-  "tabs": [
-    {
-      "name": "Controls",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "WristCurrent",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/WristCurrent",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
+    "version": 1.0,
+    "grid_size": 128,
+    "tabs": [
+        {
+            "name": "Controls",
+            "grid_layout": {
+                "layouts": [],
+                "containers": [
+                    {
+                        "title": "WristCurrent",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/WristCurrent",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "X",
+                        "x": 640.0,
+                        "y": 640.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/X Pos",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Y",
+                        "x": 768.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Y Pos",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "WristPID",
+                        "x": 0.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 384.0,
+                        "type": "PIDController",
+                        "properties": {
+                            "topic": "/SmartDashboard/WristPID",
+                            "period": 0.06
+                        }
+                    },
+                    {
+                        "title": "ShoulderPID",
+                        "x": 256.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 384.0,
+                        "type": "PIDController",
+                        "properties": {
+                            "topic": "/SmartDashboard/ShoulderPID",
+                            "period": 0.06
+                        }
+                    },
+                    {
+                        "title": "ExtPID",
+                        "x": 512.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 384.0,
+                        "type": "PIDController",
+                        "properties": {
+                            "topic": "/SmartDashboard/ExtPID",
+                            "period": 0.06
+                        }
+                    },
+                    {
+                        "title": "ExtCurrent",
+                        "x": 512.0,
+                        "y": 0.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/ExtCurrent",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "ShoulderCurrent",
+                        "x": 256.0,
+                        "y": 0.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/ShoulderCurrent",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "X",
+                        "x": 768.0,
+                        "y": 0.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/X",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Rot",
+                        "x": 768.0,
+                        "y": 256.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Rot",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Algae Align",
+                        "x": 1024.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 384.0,
+                        "type": "PIDController",
+                        "properties": {
+                            "topic": "/SmartDashboard/Algae Align",
+                            "period": 0.06
+                        }
+                    }
+                ]
             }
-          },
-          {
-            "title": "X",
-            "x": 640.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/X",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
+        },
+        {
+            "name": "Drivers",
+            "grid_layout": {
+                "layouts": [],
+                "containers": [
+                    {
+                        "title": "Extension Offset",
+                        "x": 0.0,
+                        "y": 384.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Extension Offset",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Shoulder Offset",
+                        "x": 0.0,
+                        "y": 512.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Shoulder Offset",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Wrist Offset",
+                        "x": 0.0,
+                        "y": 256.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Wrist Offset",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Back Camera",
+                        "x": 896.0,
+                        "y": 0.0,
+                        "width": 640.0,
+                        "height": 640.0,
+                        "type": "Camera Stream",
+                        "properties": {
+                            "topic": "/CameraPublisher/Back Camera",
+                            "period": 0.06,
+                            "rotation_turns": 0
+                        }
+                    },
+                    {
+                        "title": "Auton Choices",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "ComboBox Chooser",
+                        "properties": {
+                            "topic": "/SmartDashboard/Auton Choices",
+                            "period": 0.06,
+                            "sort_options": false
+                        }
+                    },
+                    {
+                        "title": "Delay Choices",
+                        "x": 0.0,
+                        "y": 128.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "ComboBox Chooser",
+                        "properties": {
+                            "topic": "/SmartDashboard/Delay Choices",
+                            "period": 0.06,
+                            "sort_options": false
+                        }
+                    },
+                    {
+                        "title": "Field",
+                        "x": 256.0,
+                        "y": 0.0,
+                        "width": 640.0,
+                        "height": 384.0,
+                        "type": "Field",
+                        "properties": {
+                            "topic": "/SmartDashboard/Field",
+                            "period": 0.06,
+                            "field_game": "Reefscape",
+                            "robot_width": 0.85,
+                            "robot_length": 0.85,
+                            "show_other_objects": true,
+                            "show_trajectories": true,
+                            "field_rotation": 0.0,
+                            "robot_color": 4294198070,
+                            "trajectory_color": 4294967295
+                        }
+                    }
+                ]
             }
-          },
-          {
-            "title": "Y",
-            "x": 768.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/Y",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
+        },
+        {
+            "name": "Field",
+            "grid_layout": {
+                "layouts": [],
+                "containers": [
+                    {
+                        "title": "Field",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "width": 1536.0,
+                        "height": 640.0,
+                        "type": "Field",
+                        "properties": {
+                            "topic": "/SmartDashboard/Field",
+                            "period": 0.06,
+                            "field_game": "Reefscape",
+                            "robot_width": 0.85,
+                            "robot_length": 0.85,
+                            "show_other_objects": true,
+                            "show_trajectories": true,
+                            "field_rotation": 0.0,
+                            "robot_color": 4294198070,
+                            "trajectory_color": 4294967295
+                        }
+                    }
+                ]
             }
-          },
-          {
-            "title": "WristPID",
-            "x": 0.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "PIDController",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/WristPID",
-              "period": 0.06
-            }
-          },
-          {
-            "title": "ShoulderPID",
-            "x": 256.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "PIDController",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/ShoulderPID",
-              "period": 0.06
-            }
-          },
-          {
-            "title": "ExtPID",
-            "x": 512.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "PIDController",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/ExtPID",
-              "period": 0.06
-            }
-          },
-          {
-            "title": "ExtCurrent",
-            "x": 512.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/ExtCurrent",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "ShoulderCurrent",
-            "x": 256.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/ShoulderCurrent",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "X",
-            "x": 768.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/X",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "R",
-            "x": 768.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/R",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Algae Align",
-            "x": 1024.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "PIDController",
-            "properties": {
-              "topic": "/Shuffleboard/Controls/Algae Align",
-              "period": 0.06
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Drivers",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "Extension Offset",
-            "x": 0.0,
-            "y": 384.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Extension Offset",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Shoulder Offset",
-            "x": 0.0,
-            "y": 512.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Shoulder Offset",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Wrist Offset",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Wrist Offset",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Back Camera",
-            "x": 896.0,
-            "y": 0.0,
-            "width": 640.0,
-            "height": 640.0,
-            "type": "Camera Stream",
-            "properties": {
-              "topic": "/CameraPublisher/Back Camera",
-              "period": 0.06,
-              "rotation_turns": 0
-            }
-          },
-          {
-            "title": "Auton Choices",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "ComboBox Chooser",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Auton Choices",
-              "period": 0.06,
-              "sort_options": false
-            }
-          },
-          {
-            "title": "Delay Choices",
-            "x": 0.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "ComboBox Chooser",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Delay Choices",
-              "period": 0.06,
-              "sort_options": false
-            }
-          },
-          {
-            "title": "Field",
-            "x": 256.0,
-            "y": 0.0,
-            "width": 640.0,
-            "height": 384.0,
-            "type": "Field",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Field",
-              "period": 0.06,
-              "field_game": "Reefscape",
-              "robot_width": 0.85,
-              "robot_length": 0.85,
-              "show_other_objects": true,
-              "show_trajectories": true,
-              "field_rotation": 0.0,
-              "robot_color": 4294198070,
-              "trajectory_color": 4294967295
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Field",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "Field",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 1536.0,
-            "height": 640.0,
-            "type": "Field",
-            "properties": {
-              "topic": "/Shuffleboard/Drivers/Field",
-              "period": 0.06,
-              "field_game": "Reefscape",
-              "robot_width": 0.85,
-              "robot_length": 0.85,
-              "show_other_objects": true,
-              "show_trajectories": true,
-              "field_rotation": 0.0,
-              "robot_color": 4294198070,
-              "trajectory_color": 4294967295
-            }
-          }
-        ]
-      }
-    }
-  ]
+        }
+    ]
 }
