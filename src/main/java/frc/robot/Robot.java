@@ -9,20 +9,17 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autons.Auton;
 import frc.robot.autons.AutonSelector;
-import frc.robot.commands.SetAcquisitionPositionCommand;
-import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
 import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Wrist;
-import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -48,6 +45,8 @@ public class Robot extends TimedRobot {
         Dashboard.getInstance();
         // PathfindingCommand.warmupCommand().schedule();
         FollowPathCommand.warmupCommand().schedule();
+
+        WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
 
         addPeriodic(swagLights::periodic, 0.25);
     }

@@ -4,7 +4,6 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorState {
     private AcquisitionPositionSetpoint lastInput;
-    private AcquisitionPositionSetpoint lastLastInput;
     private boolean scoringFlipped;
 
     private OperatorState() {
@@ -23,10 +22,6 @@ public class OperatorState {
 
     public AcquisitionPositionSetpoint getLastInput() {
         return lastInput;
-    }
-
-    public AcquisitionPositionSetpoint getLastLastInput() {
-        return this.lastLastInput;
     }
 
     public boolean isAlgae() {
@@ -50,9 +45,7 @@ public class OperatorState {
     }
 
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
-        this.lastLastInput = this.lastInput;
         this.lastInput = lastInput;
-        System.out.println(lastInput);
     }
 
     public void setScoringFlipped(boolean scoringFlipped) {

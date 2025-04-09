@@ -12,9 +12,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.DashboardConstants;
 import frc.robot.constants.NeoMotorConstants;
 import frc.robot.constants.ShoulderConstants;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
@@ -55,11 +55,7 @@ public class Shoulder extends SubsystemBase {
         shoulderController.setTolerance(ShoulderConstants.kTolerance);
         shoulderController.enableContinuousInput(0, 360);
 
-        Shuffleboard.getTab("Controls").add("ShoulderPID", shoulderController)
-                .withWidget(BuiltInWidgets.kPIDController);
-        Shuffleboard.getTab("Controls")
-                .addNumber("ShoulderCurrent", this::getPosition)
-                .withWidget(BuiltInWidgets.kTextView);
+        SmartDashboard.putData(DashboardConstants.kShoulderPID, shoulderController);
     }
 
     private static Shoulder instance;

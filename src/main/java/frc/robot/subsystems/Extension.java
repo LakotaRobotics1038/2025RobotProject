@@ -12,8 +12,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ExtensionConstants;
 import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
@@ -58,11 +57,7 @@ public class Extension extends SubsystemBase {
         extensionController.setTolerance(ExtensionConstants.kTolerance);
         extensionController.disableContinuousInput();
 
-        Shuffleboard.getTab("Controls").add("ExtPID", extensionController)
-                .withWidget(BuiltInWidgets.kPIDController);
-        Shuffleboard.getTab("Controls")
-                .addNumber("ExtCurrent", this::getPosition)
-                .withWidget(BuiltInWidgets.kTextView);
+        SmartDashboard.putData("ExtPID", extensionController);
     }
 
     @Override
