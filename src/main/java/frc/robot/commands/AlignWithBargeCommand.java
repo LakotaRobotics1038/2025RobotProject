@@ -34,8 +34,8 @@ public class AlignWithBargeCommand extends Command {
         zController.disableContinuousInput();
 
         Shuffleboard.getTab("Controls").add("x Controller barge", xController);
-        zController.setSetpoint(0);
-        zController.disableContinuousInput();
+        xController.setSetpoint(0);
+        xController.disableContinuousInput();
     }
 
     @Override
