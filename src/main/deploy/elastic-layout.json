@@ -211,9 +211,10 @@
                         "height": 640.0,
                         "type": "Camera Stream",
                         "properties": {
-                            "topic": "/CameraPublisher/Back Camera",
+                            "topic": "/CameraPublisher/photonvision_Port_1183_Input_MJPEG_Server",
                             "period": 0.06,
-                            "rotation_turns": 0
+                            "rotation_turns": 0,
+                            "fps": 30
                         }
                     },
                     {
