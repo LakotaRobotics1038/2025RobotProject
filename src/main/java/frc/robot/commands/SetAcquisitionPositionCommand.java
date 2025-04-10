@@ -104,22 +104,22 @@ public class SetAcquisitionPositionCommand extends Command {
 
             if (shoulderPos <= 0) {
                 shoulderPos = Math.min(shoulderPos,
-                        AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
+                        90 - Math.toDegrees(AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
                                 - Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
-                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
+                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH))));
                 shoulderPos = Math.min(shoulderPos,
-                        AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                        90 - Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
                                 - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
+                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
             } else {
                 shoulderPos = Math.max(shoulderPos,
-                        -AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
+                        -90 + Math.toDegrees(AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
                                 + Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
-                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH)));
+                                        AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH))));
                 shoulderPos = Math.max(shoulderPos,
-                        -AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+                        -90 + Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
                                 + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH)));
+                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
             }
 
             // Will something bad happen if MAX_VERT_EXTENSION - extVertLength < 0? idk
