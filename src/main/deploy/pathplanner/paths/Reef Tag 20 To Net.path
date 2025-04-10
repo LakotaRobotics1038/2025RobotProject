@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.68975,
-        "y": 4.99025
+        "x": 5.0468237704918035,
+        "y": 4.954047131147541
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.782597669088527,
-        "y": 5.222369172721314
+        "x": 5.13967143958033,
+        "y": 5.1861663038688555
       },
       "isLocked": false,
       "linkedName": "ReefTag20Algae"
+    },
+    {
+      "anchor": {
+        "x": 5.394467213114754,
+        "y": 5.529456967213114
+      },
+      "prevControl": {
+        "x": 5.250296413715089,
+        "y": 5.3252150013969235
+      },
+      "nextControl": {
+        "x": 5.538638012514419,
+        "y": 5.733698933029304
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -32,12 +48,12 @@
     },
     {
       "anchor": {
-        "x": 7.74,
-        "y": 5.6613217213114755
+        "x": 7.9,
+        "y": 5.254
       },
       "prevControl": {
-        "x": 7.038000000000001,
-        "y": 5.680821721311476
+        "x": 7.198000000000001,
+        "y": 5.2735
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,29 +63,19 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 33.388513576111365
-    }
-  ],
-  "constraintZones": [
+      "rotationDegrees": 60.250277196778214
+    },
     {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 2.0,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 43.16154248746595
     }
   ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -80,7 +86,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Net Paths",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.99999999999999
