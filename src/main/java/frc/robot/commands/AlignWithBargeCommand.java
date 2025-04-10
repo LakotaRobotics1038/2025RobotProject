@@ -4,12 +4,10 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.DashboardConstants;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Vision;
 
 public class AlignWithBargeCommand extends Command {
     public DriveTrain driveTrain = DriveTrain.getInstance();
@@ -17,12 +15,12 @@ public class AlignWithBargeCommand extends Command {
     private Supplier<Double> yMove;
     // private Alliance alliance;
 
-    private static double kZP = 0.0;
+    private static double kZP = 0.015;
     private static double kZI = 0.0;
     private static double kZD = 0.0;
     private PIDController zController = new PIDController(kZP, kZI, kZD);
 
-    private static double kXP = 0.0;
+    private static double kXP = 0.1;
     private static double kXI = 0.0;
     private static double kXD = 0.0;
     private PIDController xController = new PIDController(kXP, kXI, kXD);
