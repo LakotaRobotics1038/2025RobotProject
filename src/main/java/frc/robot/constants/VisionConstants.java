@@ -34,7 +34,7 @@ public final class VisionConstants {
 
     public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-    private static final double kFrontCameraXOffset = Units.inchesToMeters(-13.730);
+    private static final double kFrontCameraXOffset = Units.inchesToMeters(13.730);
     private static final double kFrontCameraYOffset = Units.inchesToMeters(-11.995);
     private static final double kFrontCameraZOffset = Units.inchesToMeters(7.35);
     public static final Transform3d kRobotToFrontCam = new Transform3d(
@@ -42,7 +42,7 @@ public final class VisionConstants {
             new Rotation3d(0, 0, 0));
     public static final String kRobotToFrontCamName = "frontCamera";
 
-    private static final double kBackCameraXOffset = Units.inchesToMeters(10.5277);
+    private static final double kBackCameraXOffset = Units.inchesToMeters(-10.5277);
     private static final double kBackCameraYOffset = Units.inchesToMeters(-11.391);
     private static final double kBackCameraZOffset = Units.inchesToMeters(7.6);
     public static final Transform3d kRobotToBackCam = new Transform3d(
