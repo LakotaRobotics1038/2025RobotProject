@@ -3,12 +3,12 @@ package frc.robot.constants;
 public class WristConstants {
     public enum WristSetpoints {
         L23Algae(-42.5),
-        L34Algae(-41.0),
+        L34Algae(-42.0),
         Processor(-42.0),
         GroundAlgae(-31.0),
         ZeroExt(-75.0),
         Barge(-160.5),
-        Storage(-5);
+        Storage(-15);
 
         private double setpoint;
         private double extMax;
@@ -38,7 +38,7 @@ public class WristConstants {
 
     public static final int kWristCanId = 3;
     public static final double kEncoderConversion = 360.0;
-    public static final double kTolerance = 2.0;
+    public static final double kTolerance = 3.0;
     public static final double kMaxPower = 0.5;
     public static final double kMaxDistance = 180;
     public static final double kMinDistance = -180;

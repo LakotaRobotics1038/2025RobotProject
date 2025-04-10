@@ -12,9 +12,6 @@ public class AutonSelector {
     public enum AutonChoices {
         NoAuto,
         BargeAuto,
-        ProcessorAuto,
-        BargeProcessorAuto,
-        DefensiveProcessorAuto,
         LeftTaxi,
         RightTaxi;
     }
@@ -39,9 +36,6 @@ public class AutonSelector {
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
         this.autoChooser.addOption("Barge Auto", AutonChoices.BargeAuto);
-        this.autoChooser.addOption("Processor Auto", AutonChoices.ProcessorAuto);
-        this.autoChooser.addOption("Barge and Processor Auto", AutonChoices.BargeProcessorAuto);
-        this.autoChooser.addOption("Defensive Processor Auto", AutonChoices.DefensiveProcessorAuto);
         this.autoChooser.addOption("Left Taxi", AutonChoices.LeftTaxi);
         this.autoChooser.addOption("Right Taxi", AutonChoices.RightTaxi);
 
@@ -71,12 +65,6 @@ public class AutonSelector {
             switch (this.autoChooser.getSelected()) {
                 case BargeAuto:
                     return new BargeAuto(alliance);
-                case ProcessorAuto:
-                    return new ProcessorAuto(alliance);
-                case BargeProcessorAuto:
-                    return new BargeProcessorAuto(alliance);
-                case DefensiveProcessorAuto:
-                    return new DefensiveProcessorAuto(alliance);
                 case LeftTaxi:
                     return new LeftTaxi(alliance);
                 case RightTaxi:
