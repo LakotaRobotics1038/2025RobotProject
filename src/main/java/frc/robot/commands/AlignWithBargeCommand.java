@@ -5,7 +5,9 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.DashboardConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Vision;
 
@@ -25,17 +27,13 @@ public class AlignWithBargeCommand extends Command {
     private static double kXD = 0.0;
     private PIDController xController = new PIDController(kXP, kXI, kXD);
 
-    public void AlignToAlgaeCommand(Supplier<Double> yMove) {
+    public AlignWithBargeCommand(Supplier<Double> yMove) {
         super.addRequirements(driveTrain);
         this.yMove = yMove;
 
-        Shuffleboard.getTab("Controls").add("z Controller barge", zController);
-        zController.setSetpoint(0);
-        zController.disableContinuousInput();
-
-        Shuffleboard.getTab("Controls").add("x Controller barge", xController);
-        xController.setSetpoint(0);
-        xController.disableContinuousInput();
+        zController.enableContinuousInput(-180, 180);
+        SmartDashboard.putData(DashboardConstants.kBargeAlignPIDX, xController);
+        SmartDashboard.putData(DashboardConstants.kBargeAlignPIDZ, zController);
     }
 
     @Override
@@ -49,13 +47,13 @@ public class AlignWithBargeCommand extends Command {
     @Override
     public void execute() {
         if (driveTrain.getX() > 9) {
-            double x = xController.calculate(driveTrain.getX(), 9.578);
-            double z = zController.calculate(driveTrain.getRotation(), 0);
-            x = MathUtil.clamp(x, -.25, .25);
+            double x = xController.calculate(driveTrain.getX(), 9.84);
+            double z = zController.calculate(driveTrain.getRotation(), 180);
+            x = MathUtil.clamp(x, -.4, .4);
             z = MathUtil.clamp(z, -.5, .5);
             driveTrain.setControl(driveTrain.drive(x, -yMove.get(), z, true));
         } else if (driveTrain.getX() < 8.6) {
-            double x = xController.calculate(driveTrain.getX(), 8.023);
+            double x = xController.calculate(driveTrain.getX(), 7.900);
             double z = zController.calculate(driveTrain.getRotation(), 0);
             x = MathUtil.clamp(x, -.25, .25);
             z = MathUtil.clamp(z, -.5, .5);
