@@ -9,7 +9,9 @@ public class ShoulderConstants {
         Barge(300.0),
         Vertical(300),
         BackOfBot(10),
-        Storage(330.0);
+        Storage(330.0),
+        PrepClimb(295.0),
+        Climb(10);
 
         public final double setpoint;
 
