@@ -10,7 +10,7 @@ public class ShoulderConstants {
         Vertical(300),
         BackOfBot(10),
         Storage(330.0),
-        PrepClimb(295.0),
+        PrepClimb(290.0),
         Climb(10);
 
         public final double setpoint;
