@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AlignToAlgaeCommand;
+import frc.robot.commands.AlignWithBargeCommand;
 import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
@@ -106,6 +107,7 @@ public class DriverJoystick extends XboxController1038 {
                 .onTrue(new InstantCommand(() -> this.maxPower = DriveConstants.overdrivePower))
                 .onFalse(new InstantCommand(() -> this.maxPower = DriveConstants.defaultMaxPower));
 
+        this.yButton.whileTrue(new AlignWithBargeCommand(this::getSidewaysValue));
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 

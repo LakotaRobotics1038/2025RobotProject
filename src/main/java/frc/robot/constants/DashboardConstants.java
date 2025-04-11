@@ -13,6 +13,8 @@ public final class DashboardConstants {
     public static final String kRobotRot = "Rot";
 
     public static final String kAlgaeAlignPID = "Algae Align";
+    public static final String kBargeAlignPIDX = "X Barge Align";
+    public static final String kBargeAlignPIDZ = "Z Barge Align";
     public static final String kExtensionPID = "ExtPID";
     public static final String kExtensionCurrent = "ExtCurrent";
     public static final String kShoulderPID = "ShoulderPID";
