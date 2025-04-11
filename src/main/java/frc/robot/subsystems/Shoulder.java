@@ -44,8 +44,8 @@ public class Shoulder extends SubsystemBase {
         rightShoulderConfig.absoluteEncoder
                 .positionConversionFactor(ShoulderConstants.kEncoderConversion);
         rightShoulderConfig.limitSwitch
-                .reverseLimitSwitchEnabled(true)
-                .reverseLimitSwitchType(Type.kNormallyOpen);
+                .forwardLimitSwitchEnabled(true)
+                .forwardLimitSwitchType(Type.kNormallyOpen);
 
         leftShoulderMotor.configure(leftShoulderConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
