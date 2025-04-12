@@ -37,14 +37,6 @@ public class AlignWithBargeCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-        // Optional<Alliance> opAlliance = DriverStation.getAlliance();
-        // if (opAlliance.isPresent()) {
-        // alliance = opAlliance.get();
-        // }
-    }
-
-    @Override
     public void execute() {
         if (driveTrain.getX() > 9) {
             double x = xController.calculate(driveTrain.getX(), 9.84);
