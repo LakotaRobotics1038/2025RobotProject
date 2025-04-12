@@ -15,7 +15,6 @@ public class AlignWithBargeCommand extends Command {
     public SwagLights swagLights = SwagLights.getInstance();
 
     private Supplier<Double> yMove;
-    // private Alliance alliance;
 
     private static double kZP = 0.015;
     private static double kZI = 0.0;
