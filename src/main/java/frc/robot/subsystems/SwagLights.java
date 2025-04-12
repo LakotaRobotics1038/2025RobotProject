@@ -19,8 +19,7 @@ public class SwagLights implements Subsystem {
 
     public enum OperatorStates {
         Default("X"),
-        NoteSeen("N"),
-        NoteAcquired("G");
+        ReadyState("G");
 
         public final String value;
 
@@ -97,5 +96,13 @@ public class SwagLights implements Subsystem {
      */
     public void setEStop() {
         this.robotState = RobotStates.EmergencyStop;
+    }
+
+    public void setReadyState() {
+        this.operatorState = OperatorStates.ReadyState;
+    }
+
+    public void setDefaultState() {
+        this.operatorState = OperatorStates.Default;
     }
 }
