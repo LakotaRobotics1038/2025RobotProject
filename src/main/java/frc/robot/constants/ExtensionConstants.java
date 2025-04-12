@@ -13,7 +13,7 @@ public class ExtensionConstants {
     public static final double kTolerance = 0.5;
     private static final double kLeadScrewPitch = 80.0; // millimeters
     private static final double kLeadScrewPitchInInches = Units.Inches.convertFrom(kLeadScrewPitch, Units.Millimeters);
-    private static final double kGearboxReduction = 16.0;
+    private static final double kGearboxReduction = 20.0;
     public static final double kEncoderConversion = kLeadScrewPitchInInches / kGearboxReduction;
     public static final double kP = 0.8;
     public static final double kI = 0.001;
