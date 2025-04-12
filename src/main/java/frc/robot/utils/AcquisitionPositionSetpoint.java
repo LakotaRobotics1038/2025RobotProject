@@ -13,7 +13,9 @@ public enum AcquisitionPositionSetpoint {
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
     ZeroExtend(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Zero),
-    Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Zero);
+    Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Zero),
+    PrepClimb(ShoulderSetpoints.PrepClimb, WristSetpoints.PrepClimb, ExtensionSetpoints.PrepClimb),
+    Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;
