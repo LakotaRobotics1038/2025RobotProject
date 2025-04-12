@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AlignToAlgaeCommand;
+import frc.robot.commands.AlignWithBargeCommand;
 import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
@@ -75,7 +76,7 @@ public class DriverJoystick extends XboxController1038 {
             double forward = this.getForwardValue();
             double rotate = this.getRotateValue();
 
-            if (extension.getPosition() > 10) {
+            if (extension.getPosition() > 15) {
                 sideways = MathUtil.clamp(sideways, -0.25, 0.25);
                 forward = MathUtil.clamp(forward, -0.25, 0.25);
                 rotate = MathUtil.clamp(rotate, -0.25, 0.25);
@@ -109,10 +110,13 @@ public class DriverJoystick extends XboxController1038 {
                 .onTrue(new InstantCommand(() -> this.maxPower = DriveConstants.overdrivePower))
                 .onFalse(new InstantCommand(() -> this.maxPower = DriveConstants.defaultMaxPower));
 
+        this.yButton.whileTrue(new AlignWithBargeCommand(this::getSidewaysValue));
+      
         this.leftBumper.onTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.PrepClimb, FinishActions.NoFinish));
         this.leftTrigger
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
+      
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
