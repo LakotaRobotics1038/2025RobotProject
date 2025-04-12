@@ -26,7 +26,8 @@ public class ExtensionConstants {
         GroundAlgae(9.0),
         Barge(kExtensionMaximum),
         Zero(0.0),
-        UpForWristEscape(10);
+        PrepClimb(0.0),
+        Climb(0.0);
 
         public final double position;
 
