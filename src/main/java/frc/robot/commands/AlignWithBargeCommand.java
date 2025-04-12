@@ -47,7 +47,7 @@ public class AlignWithBargeCommand extends Command {
         if (driveTrain.getX() > 9) {
             double x = xController.calculate(driveTrain.getX(), 9.84);
             double z = zController.calculate(driveTrain.getRotation(), 180);
-            x = MathUtil.clamp(x, -.4, .4);
+            x = MathUtil.clamp(x, -1.0, 1.0);
             z = MathUtil.clamp(z, -.5, .5);
             driveTrain.setControl(driveTrain.drive(x, -yMove.get(), z, true));
         } else if (driveTrain.getX() < 8.6) {
