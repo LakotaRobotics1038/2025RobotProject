@@ -30,7 +30,7 @@ public class ExtensionConstants {
         Barge(kExtensionMaximum),
         Zero(0.0),
         PrepClimb(0.0),
-        Climb(9.0);
+        Climb(10.5);
 
         public final double position;
 
