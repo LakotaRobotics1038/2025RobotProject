@@ -94,7 +94,8 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
+        if (setpoint != 10)
+            setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
         shoulderController.setSetpoint(setpoint);
     }
 
