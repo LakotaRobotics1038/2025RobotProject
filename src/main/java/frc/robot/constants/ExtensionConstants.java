@@ -16,7 +16,7 @@ public class ExtensionConstants {
     private static final double kGearboxReduction = 20.0;
     private static final double kDrivePulley = 24;
     private static final double kFollowPulley = 24;
-    private static final double kPulleyRatio = kFollowPulley / kDrivePulley;
+    private static final double kPulleyRatio = kDrivePulley / kFollowPulley;
     public static final double kEncoderConversion = kLeadScrewPitchInInches / kGearboxReduction * kPulleyRatio;
     public static final double kP = 0.8;
     public static final double kI = 0.001;

@@ -77,8 +77,11 @@ public class Shoulder extends SubsystemBase {
 
     private void useOutput(double output) {
         double power = output;
-        if (!this.getSetpoint().equals(ShoulderSetpoints.Climb))
+        if (this.getSetpoint().equals(ShoulderSetpoints.Climb)) {
+            power = MathUtil.clamp(output, -1, 1);
+        } else {
             power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);
+        }
         rightShoulderMotor.set(power);
     }
 
@@ -96,8 +99,9 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void setSetpoint(double setpoint) {
-        if (setpoint != 10)
+        if (setpoint != 10) {
             setpoint = MathUtil.clamp(setpoint + this.shoulderOffset, ShoulderConstants.kMaxDistance, 360);
+        }
         shoulderController.setSetpoint(setpoint);
     }
 
