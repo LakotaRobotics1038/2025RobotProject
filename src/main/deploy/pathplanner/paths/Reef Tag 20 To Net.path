@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0468237704918035,
-        "y": 4.954047131147541
+        "x": 4.9269467213114755,
+        "y": 5.001997950819672
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.13967143958033,
-        "y": 5.1861663038688555
+        "x": 5.070799180327869,
+        "y": 5.277715163934426
       },
       "isLocked": false,
       "linkedName": "ReefTag20Algae"
     },
     {
       "anchor": {
-        "x": 5.394467213114754,
-        "y": 5.529456967213114
+        "x": 5.2985655737704915,
+        "y": 5.68529713114754
       },
       "prevControl": {
-        "x": 5.250296413715089,
-        "y": 5.3252150013969235
+        "x": 5.0790916805418975,
+        "y": 5.565584098477398
       },
       "nextControl": {
-        "x": 5.538638012514419,
-        "y": 5.733698933029304
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.733,
-        "y": 5.82875
-      },
-      "prevControl": {
-        "x": 5.474457432126808,
-        "y": 5.765684136828746
-      },
-      "nextControl": {
-        "x": 6.259499999999999,
-        "y": 5.9571782786885255
+        "x": 5.957889344262295,
+        "y": 6.044928278688524
       },
       "isLocked": false,
       "linkedName": null
@@ -49,28 +33,42 @@
     {
       "anchor": {
         "x": 7.9,
-        "y": 5.254
+        "y": 5.253499999999999
       },
       "prevControl": {
-        "x": 7.198000000000001,
-        "y": 5.2735
+        "x": 7.254000000000001,
+        "y": 5.4777499999999995
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "net"
+      "linkedName": "secondNet"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 60.250277196778214
+      "rotationDegrees": 61.587208221648815
     },
     {
-      "waypointRelativePos": 2.0,
-      "rotationDegrees": 43.16154248746595
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 34.69368710358007
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 2.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

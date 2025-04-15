@@ -14,7 +14,10 @@ public class ExtensionConstants {
     private static final double kLeadScrewPitch = 80.0; // millimeters
     private static final double kLeadScrewPitchInInches = Units.Inches.convertFrom(kLeadScrewPitch, Units.Millimeters);
     private static final double kGearboxReduction = 20.0;
-    public static final double kEncoderConversion = kLeadScrewPitchInInches / kGearboxReduction;
+    private static final double kDrivePulley = 24;
+    private static final double kFollowPulley = 24;
+    private static final double kPulleyRatio = kDrivePulley / kFollowPulley;
+    public static final double kEncoderConversion = kLeadScrewPitchInInches / kGearboxReduction * kPulleyRatio;
     public static final double kP = 0.8;
     public static final double kI = 0.001;
     public static final double kD = 0.0;
@@ -27,7 +30,7 @@ public class ExtensionConstants {
         Barge(kExtensionMaximum),
         Zero(0.0),
         PrepClimb(0.0),
-        Climb(0.0);
+        Climb(10.5);
 
         public final double position;
 
