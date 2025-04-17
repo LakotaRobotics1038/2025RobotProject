@@ -1,6 +1,11 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
 
@@ -17,6 +22,10 @@ public class Dashboard extends SubsystemBase {
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
+    private Vision vision = Vision.getInstance();
+    private double greenLightThreshold;
+    private double yellowLightThreshold;
+    private double redLightThreshold;
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -46,8 +55,6 @@ public class Dashboard extends SubsystemBase {
         SmartDashboard.putData(DashboardConstants.kAutonChoices, autoChooser);
         SmartDashboard.putData(DashboardConstants.kDelayChoices, delayChooser);
 
-        SmartDashboard.putData(field);
-
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
         });
@@ -74,6 +81,26 @@ public class Dashboard extends SubsystemBase {
         SmartDashboard.putNumber(DashboardConstants.kExtensionCurrent, extension.getPosition());
         SmartDashboard.putNumber(DashboardConstants.kShoulderCurrent, shoulder.getPosition());
         SmartDashboard.putNumber(DashboardConstants.kWristCurrent, wrist.getPosition());
+
+        if (vision.getPipelineIndex() == 0) {
+            List<PhotonPipelineResult> camResults = vision.getResultsBackCam();
+            Optional<PhotonTrackedTarget> bestTarget = Optional.empty();
+            for (PhotonPipelineResult result : camResults) {
+                if (result.hasTargets()) {
+                    bestTarget = Optional.of(result.getBestTarget());
+                }
+            }
+            if (Optional.of(bestTarget).orElse(null) != null) {
+                double pitch = Math.abs(bestTarget.get().getPitch());
+                if (pitch > redLightThreshold) {
+                    SmartDashboard.putString(DashboardConstants.kStoplight, DashboardConstants.kRed.toHexString());
+                } else if (pitch < redLightThreshold && pitch > yellowLightThreshold) {
+                    SmartDashboard.putString(DashboardConstants.kStoplight, DashboardConstants.kYellow.toHexString());
+                } else if (pitch < greenLightThreshold) {
+                    SmartDashboard.putString(DashboardConstants.kStoplight, DashboardConstants.kGreen.toHexString());
+                }
+            }
+        }
     }
 
     /**

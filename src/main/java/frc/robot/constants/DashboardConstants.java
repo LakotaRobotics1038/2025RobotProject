@@ -1,5 +1,7 @@
 package frc.robot.constants;
 
+import edu.wpi.first.wpilibj.util.Color;
+
 public final class DashboardConstants {
     public static final String kShoulderOffset = "Shoulder Offset";
     public static final String kExtensionOffset = "Extension Offset";
@@ -21,4 +23,8 @@ public final class DashboardConstants {
     public static final String kShoulderCurrent = "ShoulderCurrent";
     public static final String kWristPID = "WristPID";
     public static final String kWristCurrent = "WristCurrent";
+    public static final String kStoplight = "Stoplight";
+    public static final Color kRed = new Color(255, 0, 0);
+    public static final Color kGreen = new Color(0, 255, 0);
+    public static final Color kYellow = new Color(255, 255, 0);
 }

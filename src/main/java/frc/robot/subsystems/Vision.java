@@ -176,4 +176,8 @@ public class Vision extends SubsystemBase {
     public void setAprilTagMode() {
         backCam.setPipelineIndex(1);
     }
+
+    public int getPipelineIndex() {
+        return backCam.getPipelineIndex();
+    }
 }

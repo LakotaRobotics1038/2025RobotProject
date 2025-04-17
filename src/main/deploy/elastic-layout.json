@@ -108,6 +108,21 @@
                             "robot_color": 4294198070,
                             "trajectory_color": 4294967295
                         }
+                    },
+                    {
+                        "title": "Stoplight",
+                        "x": 0.0,
+                        "y": 640.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Stoplight",
+                            "period": 0.06,
+                            "field_game": "Reefscape",
+                            "data_type": "String",
+                            "show_submit_button": false
+                        }
                     }
                 ]
             }
