@@ -100,6 +100,10 @@ public class OperatorPanel extends GenericHID {
         this.processorButton
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
+        this.coralL4Button.onTrue(
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.PrepClimb, FinishActions.NoFinish));
+        this.coralL3Button
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
     }
 
     // Singleton Setup
