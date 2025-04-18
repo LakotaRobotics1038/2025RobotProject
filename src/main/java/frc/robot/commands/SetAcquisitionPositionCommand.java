@@ -63,8 +63,7 @@ public class SetAcquisitionPositionCommand extends Command {
             acquisitionPositionSetpoint = acquisitionPositionSetpointSupplier.get();
         }
 
-        if (acquisitionPositionSetpoint == AcquisitionPositionSetpoint.Climb && shoulder.getPosition() < 300
-                && extension.getPosition() < 1) {
+        if (acquisitionPositionSetpoint.getIsClimb()) {
             isClimb = true;
         }
 

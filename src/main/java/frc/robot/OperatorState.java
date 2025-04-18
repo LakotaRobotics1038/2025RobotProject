@@ -44,6 +44,10 @@ public class OperatorState {
         return getLastInput().equals(AcquisitionPositionSetpoint.Barge);
     }
 
+    public boolean isClimbReady() {
+        return getLastInput() == AcquisitionPositionSetpoint.PrepClimb;
+    }
+
     public void setLastInput(AcquisitionPositionSetpoint lastInput) {
         this.lastInput = lastInput;
     }

@@ -9,8 +9,8 @@ public class WristConstants {
         ZeroExt(-75.0),
         Barge(-160.5),
         Storage(-15),
-        PrepClimb(-15),
-        Climb(5);
+        PrepClimb(20),
+        Climb(100);
 
         private double setpoint;
         private double extMax;

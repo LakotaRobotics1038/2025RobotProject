@@ -13,18 +13,26 @@ public enum AcquisitionPositionSetpoint {
     Barge(ShoulderSetpoints.Barge, WristSetpoints.Barge, ExtensionSetpoints.Barge),
     GroundAlgae(ShoulderSetpoints.GroundAlgae, WristSetpoints.GroundAlgae, ExtensionSetpoints.GroundAlgae),
     Storage(ShoulderSetpoints.Storage, WristSetpoints.Storage, ExtensionSetpoints.Zero),
-    PrepClimb(ShoulderSetpoints.PrepClimb, WristSetpoints.PrepClimb, ExtensionSetpoints.PrepClimb),
-    Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb);
+    LatchClimb(ShoulderSetpoints.LatchClimb, WristSetpoints.PrepClimb, ExtensionSetpoints.LatchClimb, true),
+    PrepClimb(ShoulderSetpoints.Storage, WristSetpoints.PrepClimb, ExtensionSetpoints.LatchClimb, true),
+    Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb, true);
 
     private ShoulderSetpoints shoulderSetpoint;
     private WristSetpoints wristSetPoint;
     private ExtensionSetpoints extensionSetpoint;
+    private boolean isClimb;
 
     private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint) {
+        this(shoulderSetpoint, wristSetPoint, extensionSetpoint, false);
+    }
+
+    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+            ExtensionSetpoints extensionSetpoint, boolean isClimb) {
         this.shoulderSetpoint = shoulderSetpoint;
         this.wristSetPoint = wristSetPoint;
         this.extensionSetpoint = extensionSetpoint;
+        this.isClimb = isClimb;
     }
 
     public ShoulderSetpoints getShoulderSetpoint() {
@@ -40,5 +48,9 @@ public enum AcquisitionPositionSetpoint {
 
     public ExtensionSetpoints getExtensionSetpoint() {
         return this.extensionSetpoint;
+    }
+
+    public boolean getIsClimb() {
+        return this.isClimb;
     }
 }

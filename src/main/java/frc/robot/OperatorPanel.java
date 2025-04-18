@@ -101,8 +101,14 @@ public class OperatorPanel extends GenericHID {
                 .and(this::getDefaultsDisabled)
                 .onTrue(new InstantCommand(() -> enableDefaults()));
         this.coralL4Button.onTrue(
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.PrepClimb, FinishActions.NoFinish));
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.LatchClimb, FinishActions.NoFinish));
         this.coralL3Button
+                .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.PrepClimb,
+                        FinishActions.NoFinish)
+                        .alongWith(new InstantCommand(
+                                () -> operatorState.setLastInput(AcquisitionPositionSetpoint.PrepClimb))));
+        this.coralL2Button
+                .and(this.operatorState::isClimbReady)
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
     }
 
