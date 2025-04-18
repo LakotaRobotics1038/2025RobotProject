@@ -54,6 +54,7 @@ public class Dashboard extends SubsystemBase {
 
         SmartDashboard.putData(DashboardConstants.kAutonChoices, autoChooser);
         SmartDashboard.putData(DashboardConstants.kDelayChoices, delayChooser);
+        SmartDashboard.putString(DashboardConstants.kStoplight, DashboardConstants.kRed.toHexString());
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             field.getObject("target pose").setPose(pose);
