@@ -77,7 +77,7 @@ public class Shoulder extends SubsystemBase {
 
     private void useOutput(double output) {
         double power = output;
-        if (this.getSetpoint().equals(ShoulderSetpoints.Climb)) {
+        if (this.getSetpoint().equals(ShoulderSetpoints.Climb) && this.getPosition() > 350) {
             power = MathUtil.clamp(output, -1, 1);
         } else {
             power = MathUtil.clamp(output, -ShoulderConstants.kMaxPower, ShoulderConstants.kMaxPower);

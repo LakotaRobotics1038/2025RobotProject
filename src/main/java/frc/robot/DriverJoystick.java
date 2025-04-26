@@ -111,12 +111,12 @@ public class DriverJoystick extends XboxController1038 {
                 .onFalse(new InstantCommand(() -> this.maxPower = DriveConstants.defaultMaxPower));
 
         this.yButton.whileTrue(new AlignWithBargeCommand(this::getSidewaysValue));
-      
+
         this.leftBumper.onTrue(
-                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.PrepClimb, FinishActions.NoFinish));
+                new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.LatchClimb, FinishActions.NoFinish));
         this.leftTrigger
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
-      
+
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
