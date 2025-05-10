@@ -36,8 +36,8 @@ public class AutonSelector {
 
         this.autoChooser.setDefaultOption("No Auto", AutonChoices.NoAuto);
         this.autoChooser.addOption("Barge Auto", AutonChoices.BargeAuto);
-        this.autoChooser.addOption("Left Taxi", AutonChoices.LeftTaxi);
-        this.autoChooser.addOption("Right Taxi", AutonChoices.RightTaxi);
+        this.autoChooser.addOption("Alliance Cage Taxi", AutonChoices.LeftTaxi);
+        this.autoChooser.addOption("Processor Taxi", AutonChoices.RightTaxi);
 
         this.delayChooser = Dashboard.getInstance().getDelayChooser();
 
