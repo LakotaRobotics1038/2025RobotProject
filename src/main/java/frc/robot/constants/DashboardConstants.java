@@ -8,6 +8,9 @@ public final class DashboardConstants {
     public static final String kAutonChoices = "Auton Choices";
     public static final String kDelayChoices = "Delay Choices";
 
+    public static final String kUnfilteredValue = "Sideways Unfiltered Value";
+    public static final String kFilteredValue = "Sideways Output Value";
+
     public static final String kRobotX = "X Pos";
     public static final String kRobotY = "Y Pos";
     public static final String kRobotRot = "Rot";

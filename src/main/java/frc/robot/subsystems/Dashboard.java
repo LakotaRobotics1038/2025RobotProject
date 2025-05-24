@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.DriverJoystick;
 import frc.robot.autons.AutonSelector.AutonChoices;
 import frc.robot.constants.DashboardConstants;
 
@@ -17,6 +18,7 @@ public class Dashboard extends SubsystemBase {
     private Wrist wrist = Wrist.getInstance();
     private Shoulder shoulder = Shoulder.getInstance();
     private Extension extension = Extension.getInstance();
+    private DriverJoystick joystick = DriverJoystick.getInstance();
 
     // Choosers
     private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
@@ -74,6 +76,10 @@ public class Dashboard extends SubsystemBase {
         SmartDashboard.putNumber(DashboardConstants.kExtensionCurrent, extension.getPosition());
         SmartDashboard.putNumber(DashboardConstants.kShoulderCurrent, shoulder.getPosition());
         SmartDashboard.putNumber(DashboardConstants.kWristCurrent, wrist.getPosition());
+
+        SmartDashboard.putNumber(DashboardConstants.kUnfilteredValue, joystick.getUnfilteredSidewaysValue());
+        SmartDashboard.putNumber(DashboardConstants.kFilteredValue, joystick.getFilteredSidewaysValue());
+
     }
 
     /**

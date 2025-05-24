@@ -108,6 +108,34 @@
                             "robot_color": 4294198070,
                             "trajectory_color": 4294967295
                         }
+                    },
+                    {
+                        "title": "Sideways Unfiltered Value",
+                        "x": 256.0,
+                        "y": 384.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Sideways Unfiltered Value",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Sideways Output Value",
+                        "x": 256.0,
+                        "y": 512.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Sideways Output Value",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
                     }
                 ]
             }

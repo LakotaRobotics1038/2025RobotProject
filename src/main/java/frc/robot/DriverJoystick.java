@@ -57,6 +57,10 @@ public class DriverJoystick extends XboxController1038 {
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
+    // Filtered & Unfiltered Variables
+    private double filteredSideways;
+    private double unfilteredSideways;
+
     // Singleton Setup
     private static DriverJoystick instance;
 
@@ -75,6 +79,8 @@ public class DriverJoystick extends XboxController1038 {
             double sideways = this.getSidewaysValue();
             double forward = this.getForwardValue();
             double rotate = this.getRotateValue();
+
+            this.filteredSideways = sideways;
 
             if (extension.getPosition() > 15) {
                 sideways = MathUtil.clamp(sideways, -0.25, 0.25);
@@ -157,6 +163,7 @@ public class DriverJoystick extends XboxController1038 {
      */
     private double getSidewaysValue() {
         double x = this.getLeftX() * maxPower;
+        this.unfilteredSideways = x;
 
         double sideways = sidewaysFilter.calculate(x);
         sideways = limitRate(x, prevSideways, sidewaysLimiter);
@@ -221,5 +228,13 @@ public class DriverJoystick extends XboxController1038 {
      */
     private boolean signChange(double a, double b) {
         return a > 0 && b < 0 || b > 0 && a < 0;
+    }
+
+    public double getUnfilteredSidewaysValue() {
+        return this.unfilteredSideways;
+    }
+
+    public double getFilteredSidewaysValue() {
+        return this.filteredSideways;
     }
 }
