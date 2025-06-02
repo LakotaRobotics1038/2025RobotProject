@@ -44,6 +44,8 @@ public class Dashboard extends SubsystemBase {
         SmartDashboard.putNumber(DashboardConstants.kExtensionOffset, 0);
         SmartDashboard.putNumber(DashboardConstants.kShoulderOffset, 0);
         SmartDashboard.putNumber(DashboardConstants.kWristOffset, 0);
+        SmartDashboard.putNumber(DashboardConstants.kDeadbandAdjustment, 0);
+        SmartDashboard.putNumber(DashboardConstants.kRateLimitAdjustment, 0);
 
         SmartDashboard.putData(DashboardConstants.kAutonChoices, autoChooser);
         SmartDashboard.putData(DashboardConstants.kDelayChoices, delayChooser);

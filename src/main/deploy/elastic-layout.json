@@ -50,6 +50,34 @@
                         }
                     },
                     {
+                        "title": "Deadband Adjustment",
+                        "x": 0.0,
+                        "y": 256.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Deadband",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
+                        "title": "Rate Limit Adjustment",
+                        "x": 0.0,
+                        "y": 256.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Rate Limit",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
                         "title": "Back Camera",
                         "x": 896.0,
                         "y": 0.0,

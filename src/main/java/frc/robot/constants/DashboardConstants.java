@@ -4,6 +4,8 @@ public final class DashboardConstants {
     public static final String kShoulderOffset = "Shoulder Offset";
     public static final String kExtensionOffset = "Extension Offset";
     public static final String kWristOffset = "Wrist Offset";
+    public static final String kDeadbandAdjustment = "Deadband";
+    public static final String kRateLimitAdjustment = "Rate Limit";
 
     public static final String kAutonChoices = "Auton Choices";
     public static final String kDelayChoices = "Delay Choices";

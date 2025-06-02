@@ -19,6 +19,7 @@ public class XboxController1038 extends XboxController {
     public final Trigger rightTrigger;
     public final JoystickButton backButton;
     public final JoystickButton startButton;
+    private double deadBandValue;
 
     // Enums
     public enum PovPositions {
@@ -44,6 +45,7 @@ public class XboxController1038 extends XboxController {
         rightTrigger = new Trigger(this::getRightTriggerDigital);
         backButton = new JoystickButton(this, XboxController.Button.kBack.value);
         startButton = new JoystickButton(this, XboxController.Button.kStart.value);
+        this.deadBandValue = 0.1;
     }
 
     /**
@@ -71,13 +73,21 @@ public class XboxController1038 extends XboxController {
         }
     }
 
+    public void setDeadbandValue(double value) {
+        this.deadBandValue = value;
+    }
+
+    public double getDeadbandValue() {
+        return this.deadBandValue;
+    }
+
     /**
      * Returns the joystick axis value or 0 if less than deadband
      *
      * @return value of input axis, after deadband
      */
     public double deadband(double value) {
-        return MathUtil.applyDeadband(value, 0.1);
+        return MathUtil.applyDeadband(value, deadBandValue);
     }
 
     /**
@@ -155,4 +165,5 @@ public class XboxController1038 extends XboxController {
     public void setRightRumble(double speed) {
         setRumble(RumbleType.kRightRumble, speed);
     }
+
 }
