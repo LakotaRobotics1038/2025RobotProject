@@ -52,7 +52,7 @@
                     {
                         "title": "Deadband Adjustment",
                         "x": 0.0,
-                        "y": 256.0,
+                        "y": 768.0,
                         "width": 256.0,
                         "height": 128.0,
                         "type": "Text Display",
@@ -66,7 +66,7 @@
                     {
                         "title": "Rate Limit Adjustment",
                         "x": 0.0,
-                        "y": 256.0,
+                        "y": 640.0,
                         "width": 256.0,
                         "height": 128.0,
                         "type": "Text Display",

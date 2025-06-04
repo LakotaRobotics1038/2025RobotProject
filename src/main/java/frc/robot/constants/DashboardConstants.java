@@ -26,4 +26,7 @@ public final class DashboardConstants {
     public static final String kShoulderCurrent = "ShoulderCurrent";
     public static final String kWristPID = "WristPID";
     public static final String kWristCurrent = "WristCurrent";
+
+    public static final double kDeadbandDefault = 0.1;
+    public static final double kRateLimitDefault = 2.0;
 }
