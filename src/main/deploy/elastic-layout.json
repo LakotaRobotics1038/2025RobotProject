@@ -50,9 +50,23 @@
                         }
                     },
                     {
+                        "title": "Rate Limit Adjustment",
+                        "x": 256.0,
+                        "y": 384.0,
+                        "width": 256.0,
+                        "height": 128.0,
+                        "type": "Text Display",
+                        "properties": {
+                            "topic": "/SmartDashboard/Rate Limit",
+                            "period": 0.06,
+                            "data_type": "double",
+                            "show_submit_button": false
+                        }
+                    },
+                    {
                         "title": "Deadband Adjustment",
-                        "x": 0.0,
-                        "y": 768.0,
+                        "x": 256.0,
+                        "y": 512.0,
                         "width": 256.0,
                         "height": 128.0,
                         "type": "Text Display",
@@ -64,14 +78,14 @@
                         }
                     },
                     {
-                        "title": "Rate Limit Adjustment",
-                        "x": 0.0,
-                        "y": 640.0,
+                        "title": "Gain Tuning Adjustment",
+                        "x": 512.0,
+                        "y": 384.0,
                         "width": 256.0,
                         "height": 128.0,
                         "type": "Text Display",
                         "properties": {
-                            "topic": "/SmartDashboard/Rate Limit",
+                            "topic": "/SmartDashboard/Gain Adjustment",
                             "period": 0.06,
                             "data_type": "double",
                             "show_submit_button": false

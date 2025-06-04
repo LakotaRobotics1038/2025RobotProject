@@ -6,6 +6,7 @@ public final class DashboardConstants {
     public static final String kWristOffset = "Wrist Offset";
     public static final String kDeadbandAdjustment = "Deadband";
     public static final String kRateLimitAdjustment = "Rate Limit";
+    public static final String kGainAdjustment = "Gain Adjustment";
 
     public static final String kAutonChoices = "Auton Choices";
     public static final String kDelayChoices = "Delay Choices";
@@ -29,4 +30,5 @@ public final class DashboardConstants {
 
     public static final double kDeadbandDefault = 0.1;
     public static final double kRateLimitDefault = 2.0;
+    public static final double kGainDefault = 1.0;
 }

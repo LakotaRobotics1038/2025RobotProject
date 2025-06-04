@@ -46,6 +46,7 @@ public class Dashboard extends SubsystemBase {
         SmartDashboard.putNumber(DashboardConstants.kWristOffset, 0);
         SmartDashboard.putNumber(DashboardConstants.kDeadbandAdjustment, DashboardConstants.kDeadbandDefault);
         SmartDashboard.putNumber(DashboardConstants.kRateLimitAdjustment, DashboardConstants.kRateLimitDefault);
+        SmartDashboard.putNumber(DashboardConstants.kGainAdjustment, DashboardConstants.kGainDefault);
 
         SmartDashboard.putData(DashboardConstants.kAutonChoices, autoChooser);
         SmartDashboard.putData(DashboardConstants.kDelayChoices, delayChooser);
@@ -78,6 +79,8 @@ public class Dashboard extends SubsystemBase {
                 SmartDashboard.getNumber(DashboardConstants.kDeadbandAdjustment, DashboardConstants.kDeadbandDefault));
         joystick.adjustRateLimit(SmartDashboard.getNumber(DashboardConstants.kRateLimitAdjustment,
                 DashboardConstants.kRateLimitDefault));
+        joystick.setAValue(
+                SmartDashboard.getNumber(DashboardConstants.kGainAdjustment, DashboardConstants.kGainDefault));
 
         SmartDashboard.putNumber(DashboardConstants.kExtensionCurrent, extension.getPosition());
         SmartDashboard.putNumber(DashboardConstants.kShoulderCurrent, shoulder.getPosition());
