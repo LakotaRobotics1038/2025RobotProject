@@ -30,5 +30,5 @@ public final class DashboardConstants {
 
     public static final double kDeadbandDefault = 0.1;
     public static final double kRateLimitDefault = 2.0;
-    public static final double kGainDefault = 1.0;
+    public static final double kGainDefault = 0.0;
 }
