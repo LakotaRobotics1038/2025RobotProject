@@ -77,8 +77,11 @@ public class Dashboard extends SubsystemBase {
         extension.setOffset(SmartDashboard.getNumber(DashboardConstants.kExtensionOffset, 0));
         joystick.setDeadbandValue(
                 SmartDashboard.getNumber(DashboardConstants.kDeadbandAdjustment, DashboardConstants.kDeadbandDefault));
-        joystick.adjustRateLimit(SmartDashboard.getNumber(DashboardConstants.kRateLimitAdjustment,
-                DashboardConstants.kRateLimitDefault));
+        /*
+         * joystick.adjustRateLimit(SmartDashboard.getNumber(DashboardConstants.
+         * kRateLimitAdjustment,
+         * DashboardConstants.kRateLimitDefault));
+         */
         joystick.setAValue(
                 SmartDashboard.getNumber(DashboardConstants.kGainAdjustment, DashboardConstants.kGainDefault));
 

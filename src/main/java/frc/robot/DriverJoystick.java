@@ -255,8 +255,10 @@ public class DriverJoystick extends XboxController1038 {
         return this.filteredSideways;
     }
 
-    public void adjustRateLimit(double newRate) {
-        sidewaysLimiter = new SlewRateLimiter(newRate);
-        forwardLimiter = new SlewRateLimiter(newRate);
-    }
+    /*
+     * public void adjustRateLimit(double newRate) {
+     * sidewaysLimiter = new SlewRateLimiter(newRate);
+     * forwardLimiter = new SlewRateLimiter(newRate);
+     * }
+     */
 }

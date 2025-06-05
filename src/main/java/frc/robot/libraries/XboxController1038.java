@@ -87,7 +87,7 @@ public class XboxController1038 extends XboxController {
      * @return value of input axis, after deadband
      */
     public double deadband(double value) {
-        return MathUtil.applyDeadband(value, deadBandValue);
+        return MathUtil.applyDeadband(value, 0.1);
     }
 
     /**
