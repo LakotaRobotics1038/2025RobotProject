@@ -10,6 +10,10 @@ import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.net.WebServer;
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -25,6 +29,10 @@ public class Robot extends TimedRobot {
     // Singleton Instances
     private AutonSelector autonSelector = AutonSelector.getInstance();
     private SwagLights swagLights = SwagLights.getInstance();
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable table = inst.getTable("joysticktable");
+    final DoublePublisher unfilteredJoystickY = table.getDoubleTopic("UnfilteredJoysticYValue").publish();
+    final DoublePublisher filteredJoystickY = table.getDoubleTopic("FilteredJoystickYValue").publish();
 
     // Variables
     private Auton autonomousCommand;
@@ -33,6 +41,9 @@ public class Robot extends TimedRobot {
     // Subsystems
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Vision vision = Vision.getInstance();
+
+    // Driver Joystick Reference
+    private DriverJoystick joystick = DriverJoystick.getInstance();
 
     // Human Interface Devices
     private OperatorPanel operatorPanel = OperatorPanel.getInstance();
@@ -66,6 +77,7 @@ public class Robot extends TimedRobot {
                     estimatedPose.timestampSeconds,
                     vision.getEstimationStdDevs());
         });
+
     }
 
     @Override
@@ -125,12 +137,16 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        unfilteredJoystickY.set(joystick.getFilteredSidewaysValue());
+        filteredJoystickY.set(joystick.getFilteredForwardValue());
     }
 
     @Override
     public void teleopExit() {
         driveTrain.setX();
         // vision.stopRecording();
+        unfilteredJoystickY.close();
+        filteredJoystickY.close();
     }
 
     @Override

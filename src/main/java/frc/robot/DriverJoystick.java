@@ -63,6 +63,8 @@ public class DriverJoystick extends XboxController1038 {
     // Filtered & Unfiltered Variables
     private double filteredSideways;
     private double unfilteredSideways;
+    private double filteredForward;
+    private double unfilteredForward;
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -84,6 +86,7 @@ public class DriverJoystick extends XboxController1038 {
             double rotate = this.getRotateValue();
 
             this.filteredSideways = sideways;
+            this.filteredForward = forward;
 
             if (extension.getPosition() > 15) {
                 sideways = MathUtil.clamp(sideways, -0.25, 0.25);
@@ -193,6 +196,7 @@ public class DriverJoystick extends XboxController1038 {
      */
     private double getForwardValue() {
         double y = this.getLeftY() * maxPower;
+        this.unfilteredForward = y;
 
         // double highGainNearCenter = a * Math.pow(y, 3) + (1 - a) * y;
 
@@ -255,6 +259,13 @@ public class DriverJoystick extends XboxController1038 {
         return this.filteredSideways;
     }
 
+    public double getUnfilteredForwardValue() {
+        return this.unfilteredForward;
+    }
+
+    public double getFilteredForwardValue() {
+        return this.filteredForward;
+    }
     /*
      * public void adjustRateLimit(double newRate) {
      * sidewaysLimiter = new SlewRateLimiter(newRate);
