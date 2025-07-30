@@ -44,7 +44,7 @@ public class SwerveConstants {
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private static final Slot0Configs driveGains = new Slot0Configs()
             .withKP(0.1).withKI(0).withKD(0)
-            .withKS(0).withKV(0.124);
+            .withKS(0).withKV(0.124).withKA(0);
 
     public static final NeutralModeValue kAutonDrivingMotorNeutralMode = NeutralModeValue.Brake;
     public static final NeutralModeValue kTeleopDrivingMotorNeutralMode = NeutralModeValue.Coast;

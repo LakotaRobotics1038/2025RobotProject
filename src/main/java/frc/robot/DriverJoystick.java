@@ -65,6 +65,7 @@ public class DriverJoystick extends XboxController1038 {
     private double unfilteredSideways;
     private double filteredForward;
     private double unfilteredForward;
+    private double unfilteredRotation;
 
     // Singleton Setup
     private static DriverJoystick instance;
@@ -215,6 +216,7 @@ public class DriverJoystick extends XboxController1038 {
      */
     private double getRotateValue() {
         double z = this.getRightX() * 0.75;
+        this.unfilteredRotation = z;
 
         double highGainNearCenter = a * Math.pow(z, 3) + (1 - a) * z;
 
@@ -265,6 +267,10 @@ public class DriverJoystick extends XboxController1038 {
 
     public double getFilteredForwardValue() {
         return this.filteredForward;
+    }
+
+    public double getUnfilteredRotationValue() {
+        return this.unfilteredRotation;
     }
     /*
      * public void adjustRateLimit(double newRate) {

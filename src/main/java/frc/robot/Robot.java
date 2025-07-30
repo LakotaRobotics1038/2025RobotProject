@@ -29,10 +29,10 @@ public class Robot extends TimedRobot {
     // Singleton Instances
     private AutonSelector autonSelector = AutonSelector.getInstance();
     private SwagLights swagLights = SwagLights.getInstance();
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable("joysticktable");
-    final DoublePublisher unfilteredJoystickY = table.getDoubleTopic("UnfilteredJoysticYValue").publish();
-    final DoublePublisher filteredJoystickY = table.getDoubleTopic("FilteredJoystickYValue").publish();
+    private NetworkTableInstance inst;
+    private NetworkTable table;
+    private DoublePublisher unfilteredJoystickY;
+    private DoublePublisher unfilteredJoystickRotation;
 
     // Variables
     private Auton autonomousCommand;
@@ -54,6 +54,12 @@ public class Robot extends TimedRobot {
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
         Dashboard.getInstance();
+        inst = NetworkTableInstance.getDefault();
+        table = inst.getTable("joystickinputs");
+        unfilteredJoystickY = table.getDoubleTopic("UnfilteredJoystickYForwardValue").publish();
+        unfilteredJoystickRotation = table.getDoubleTopic("UnfilteredJoystickRotationValue").publish();
+        unfilteredJoystickY.setDefault(0);
+        unfilteredJoystickRotation.setDefault(0);
         // PathfindingCommand.warmupCommand().schedule();
         FollowPathCommand.warmupCommand().schedule();
 
@@ -77,6 +83,8 @@ public class Robot extends TimedRobot {
                     estimatedPose.timestampSeconds,
                     vision.getEstimationStdDevs());
         });
+        unfilteredJoystickY.set(joystick.getUnfilteredForwardValue());
+        unfilteredJoystickRotation.set(joystick.getUnfilteredRotationValue());
 
     }
 
@@ -133,20 +141,17 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
+
     }
 
     @Override
     public void teleopPeriodic() {
-        unfilteredJoystickY.set(joystick.getFilteredSidewaysValue());
-        filteredJoystickY.set(joystick.getFilteredForwardValue());
     }
 
     @Override
     public void teleopExit() {
         driveTrain.setX();
         // vision.stopRecording();
-        unfilteredJoystickY.close();
-        filteredJoystickY.close();
     }
 
     @Override
