@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.hal.ControlWord;
@@ -90,6 +91,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        SignalLogger.stop();
         System.out.println("Robot Disabled");
         DriverStationJNI.getControlWord(controlWordCache);
         if (controlWordCache.getEStop()) {
