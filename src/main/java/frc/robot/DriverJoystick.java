@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.AlignToAlgaeCommand;
 import frc.robot.commands.AlignWithBargeCommand;
 import frc.robot.commands.DetermineWaypointCommand;
@@ -123,7 +124,7 @@ public class DriverJoystick extends XboxController1038 {
                 .onTrue(new InstantCommand(() -> this.maxPower = DriveConstants.overdrivePower))
                 .onFalse(new InstantCommand(() -> this.maxPower = DriveConstants.defaultMaxPower));
 
-        this.yButton.whileTrue(new AlignWithBargeCommand(this::getSidewaysValue));
+        // this.yButton.whileTrue(new AlignWithBargeCommand(this::getSidewaysValue));
 
         this.leftBumper.onTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.LatchClimb, FinishActions.NoFinish));
@@ -131,35 +132,42 @@ public class DriverJoystick extends XboxController1038 {
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Climb, FinishActions.NoFinish));
 
         // Lock the wheels into an X formation
-        this.xButton.whileTrue(this.driveTrain.setX());
-
-        this.bButton
-                .and(operatorState::isGroundAlgae)
-                .whileTrue(new AlignToAlgaeCommand(this::getForwardValue, this::getSidewaysValue));
-
-        this.aButton.whileTrue(determineWaypointCommand.andThen(
-                new InstantCommand(() -> {
-                    Pose2d currentPose = this.driveTrain.getState().Pose;
-                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
-
-                    if (this.targetPose != null) {
-                        this.path = new PathPlannerPath(
-                                PathPlannerPath.waypointsFromPoses(currentPose,
-                                        targetPose),
-                                new PathConstraints(
-                                        AutoConstants.maxSpeed,
-                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                                new IdealStartingState(
-                                        driveTrain.getState().Speeds.vxMetersPerSecond,
-                                        driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, targetPose.getRotation()));
-                    }
-                })
-                        .andThen(
-                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+        /*
+         * this.xButton.whileTrue(this.driveTrain.setX());
+         * 
+         * this.bButton
+         * .and(operatorState::isGroundAlgae)
+         * .whileTrue(new AlignToAlgaeCommand(this::getForwardValue,
+         * this::getSidewaysValue));
+         * 
+         * this.aButton.whileTrue(determineWaypointCommand.andThen(
+         * new InstantCommand(() -> {
+         * Pose2d currentPose = this.driveTrain.getState().Pose;
+         * this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
+         * 
+         * if (this.targetPose != null) {
+         * this.path = new PathPlannerPath(
+         * PathPlannerPath.waypointsFromPoses(currentPose,
+         * targetPose),
+         * new PathConstraints(
+         * AutoConstants.maxSpeed,
+         * AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+         * AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+         * AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+         * new IdealStartingState(
+         * driveTrain.getState().Speeds.vxMetersPerSecond,
+         * driveTrain.getState().Pose.getRotation()),
+         * new GoalEndState(0, targetPose.getRotation()));
+         * }
+         * })
+         * .andThen(
+         * new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+         * Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+         */
+        this.yButton.whileTrue(driveTrain.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        this.aButton.whileTrue(driveTrain.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        this.bButton.whileTrue(driveTrain.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        this.xButton.whileTrue(driveTrain.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     }
 
     public double getAValue() {
