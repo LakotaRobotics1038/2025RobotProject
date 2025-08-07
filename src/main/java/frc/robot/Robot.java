@@ -143,6 +143,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Dashboard.getInstance().clearTrajectory();
         driveTrain.configNeutralMode(SwerveConstants.kTeleopDrivingMotorNeutralMode);
+        SignalLogger.start();
 
     }
 

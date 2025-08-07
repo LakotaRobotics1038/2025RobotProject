@@ -59,7 +59,7 @@ public class DriverJoystick extends XboxController1038 {
     LinearFilter forwardFilter = LinearFilter.movingAverage(5);
     LinearFilter sidewaysFilter = LinearFilter.movingAverage(5);
 
-    private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
+    // private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
     // Filtered & Unfiltered Variables
     private double filteredSideways;
@@ -99,7 +99,7 @@ public class DriverJoystick extends XboxController1038 {
             return driveTrain.drive(forward, -sideways, -rotate, true);
         }));
 
-        this.driveTrain.registerTelemetry(logger::telemeterize);
+        // this.driveTrain.registerTelemetry(logger::telemeterize);
 
         // Re-orient robot to the field
         this.startButton.whileTrue(new InstantCommand(driveTrain::seedFieldCentric, driveTrain));
@@ -134,17 +134,17 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         /*
          * this.xButton.whileTrue(this.driveTrain.setX());
-         * 
+         *
          * this.bButton
          * .and(operatorState::isGroundAlgae)
          * .whileTrue(new AlignToAlgaeCommand(this::getForwardValue,
          * this::getSidewaysValue));
-         * 
+         *
          * this.aButton.whileTrue(determineWaypointCommand.andThen(
          * new InstantCommand(() -> {
          * Pose2d currentPose = this.driveTrain.getState().Pose;
          * this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
-         * 
+         *
          * if (this.targetPose != null) {
          * this.path = new PathPlannerPath(
          * PathPlannerPath.waypointsFromPoses(currentPose,
