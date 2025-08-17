@@ -49,7 +49,7 @@ public class DriverJoystick extends XboxController1038 {
     private double prevRotate = 0;
 
     // High Gain Near Center
-    private double a = 0;
+    private double a = 1;
 
     // Limiters
     SlewRateLimiter forwardLimiter = new SlewRateLimiter(2.0);
@@ -188,10 +188,9 @@ public class DriverJoystick extends XboxController1038 {
         double x = this.getLeftX() * maxPower;
         this.unfilteredSideways = x;
 
-        // double highGainNearCenter = a * Math.pow(x, 3) + (1 - a) * x;
+         double highGainNearCenter = a * Math.pow(x, 3) + (1 - a) * x;
 
-        double sideways = sidewaysFilter.calculate(x);
-        sideways = limitRate(x, prevSideways, sidewaysLimiter);
+        double sideways = limitRate(highGainNearCenter, prevSideways, sidewaysLimiter);
         prevSideways = sideways;
 
         return sideways;
@@ -207,10 +206,9 @@ public class DriverJoystick extends XboxController1038 {
         double y = this.getLeftY() * maxPower;
         this.unfilteredForward = y;
 
-        // double highGainNearCenter = a * Math.pow(y, 3) + (1 - a) * y;
+        double highGainNearCenter = a * Math.pow(y, 3) + (1 - a) * y;
 
-        double forward = forwardFilter.calculate(y);
-        forward = limitRate(y, prevForward, forwardLimiter);
+        double forward = limitRate(highGainNearCenter, prevForward, forwardLimiter);
         prevForward = forward;
 
         return forward;
