@@ -57,6 +57,9 @@ public class DriverJoystick extends XboxController1038 {
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
+    // High Gain Near Center
+    private final double a = 1;
+
     // Singleton Setup
     private static DriverJoystick instance;
 
@@ -156,13 +159,10 @@ public class DriverJoystick extends XboxController1038 {
      * @return sideways value
      */
     private double getSidewaysValue() {
-        double x = this.getLeftX() * maxPower;
+        double unfilteredSideways = this.getLeftX() * maxPower;
+        prevSideways = limitRate(a * Math.pow(unfilteredSideways, 3) + (1 - a) * unfilteredSideways, prevSideways, sidewaysLimiter);
 
-        double sideways = sidewaysFilter.calculate(x);
-        sideways = limitRate(x, prevSideways, sidewaysLimiter);
-        prevSideways = sideways;
-
-        return sideways;
+        return prevSideways;
     }
 
     /**
@@ -172,13 +172,10 @@ public class DriverJoystick extends XboxController1038 {
      * @return forward value
      */
     private double getForwardValue() {
-        double y = this.getLeftY() * maxPower;
+        double unfilteredForward = this.getLeftY() * maxPower;
+        prevForward = limitRate(a * Math.pow(unfilteredForward, 3) + (1 - a) * unfilteredForward, prevForward, forwardLimiter);
 
-        double forward = forwardFilter.calculate(y);
-        forward = limitRate(y, prevForward, forwardLimiter);
-        prevForward = forward;
-
-        return forward;
+        return prevForward;
     }
 
     /**
@@ -188,12 +185,10 @@ public class DriverJoystick extends XboxController1038 {
      * @return rotate value
      */
     private double getRotateValue() {
-        double z = this.getRightX() * 0.75;
+        double unfilteredRotation = this.getRightX() * maxPower;
+        prevRotate = limitRate(a * Math.pow(unfilteredRotation, 3) + (1 - a) * unfilteredRotation, prevRotate, rotateLimiter);
 
-        double rotate = limitRate(z, prevRotate, rotateLimiter);
-        prevRotate = rotate;
-
-        return rotate;
+        return prevRotate;
     }
 
     /**
