@@ -85,11 +85,10 @@ public class SetAcquisitionPositionCommand extends Command {
         double extPos = extension.getPosition();
 
         if (!isGroundAngle) {
-            final double WRIST_LENGTH = 3; // TODO Random Value. Should be changed and placed in a constants file.
-            final double WRIST_WHEEL_OFFSET_ANGLE = 2; // TODO Random Value. Should be changed and placed in a constants
-                                                       // file.
-            final double MAX_VERT_EXTENSION = 18; // TODO Random Value. Should be changed and placed in a constants
-                                                  // file.
+            // Everything is in millimeters and degrees
+            final double WRIST_LENGTH = 787.4; // Length from axle to top wheel
+            final double WRIST_WHEEL_OFFSET_ANGLE = -25; // TODO what does the angle the wrist gives represent?
+            final double MAX_VERT_EXTENSION = 1682.75;
             final double SWERVE_MODULE_HEIGHT = 1;
             double extVertLength = extPos * AcquisitionConstants.cos(shoulderPos);
             double extHoriLength = extPos * AcquisitionConstants.sin(shoulderPos);
@@ -103,23 +102,27 @@ public class SetAcquisitionPositionCommand extends Command {
                     + WRIST_LENGTH * AcquisitionConstants.sin(shoulderPos + wristPos + WRIST_WHEEL_OFFSET_ANGLE);
 
             if (shoulderPos <= 0) {
+                // Vertical extension limit
                 shoulderPos = Math.min(shoulderPos,
                         90 - Math.toDegrees(AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
                                 - Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
                                         AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH))));
-                shoulderPos = Math.min(shoulderPos,
-                        90 - Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
-                                - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
+                // Horizontal extension limit
+//                shoulderPos = Math.min(shoulderPos,
+//                        90 - Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+//                                - Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+//                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
             } else {
+                // Vertical extension limit
                 shoulderPos = Math.max(shoulderPos,
                         -90 + Math.toDegrees(AcquisitionConstants.acos(MAX_VERT_EXTENSION / extPos)
                                 + Math.max(AcquisitionConstants.acos(wristTopWheelVertLength / WRIST_LENGTH),
                                         AcquisitionConstants.acos(wristBottomWheelVertLength / WRIST_LENGTH))));
-                shoulderPos = Math.max(shoulderPos,
-                        -90 + Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
-                                + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
-                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
+                // Horizontal extension limit
+//                shoulderPos = Math.max(shoulderPos,
+//                        -90 + Math.toDegrees(AcquisitionConstants.asin(SWERVE_MODULE_HEIGHT / extPos)
+//                                + Math.max(AcquisitionConstants.asin(wristTopWheelHoriLength / WRIST_LENGTH),
+//                                        AcquisitionConstants.asin(wristBottomWheelHoriLength / WRIST_LENGTH))));
             }
 
             // Will something bad happen if MAX_VERT_EXTENSION - extVertLength < 0? idk
