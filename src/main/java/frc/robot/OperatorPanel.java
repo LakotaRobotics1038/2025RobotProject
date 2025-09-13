@@ -13,7 +13,7 @@ import frc.robot.subsystems.Shoulder;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class OperatorPanel extends GenericHID {
-    private OperatorState operatorState = OperatorState.getInstance();
+    private final OperatorState operatorState = OperatorState.getInstance();
     private boolean isDefaultEnabled;
 
     private final Shoulder shoulder = Shoulder.getInstance();
@@ -53,7 +53,7 @@ public class OperatorPanel extends GenericHID {
                                         () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Storage))));
         this.storageButton
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
 
         this.bargeButton
                 .toggleOnTrue(
@@ -63,7 +63,7 @@ public class OperatorPanel extends GenericHID {
 
         this.bargeButton
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
 
         this.groundAlgaeButton
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.GroundAlgae,
@@ -72,7 +72,7 @@ public class OperatorPanel extends GenericHID {
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.GroundAlgae))));
         this.groundAlgaeButton
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
 
         this.algaeL23Button
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L23Algae,
@@ -81,7 +81,7 @@ public class OperatorPanel extends GenericHID {
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.L23Algae))));
         this.algaeL23Button
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
 
         this.algaeL34Button
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae,
@@ -90,7 +90,7 @@ public class OperatorPanel extends GenericHID {
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.L34Algae))));
         this.algaeL34Button
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
 
         this.processorButton
                 .onTrue(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Processor,
@@ -99,7 +99,7 @@ public class OperatorPanel extends GenericHID {
                                 () -> operatorState.setLastInput(AcquisitionPositionSetpoint.Processor))));
         this.processorButton
                 .and(this::getDefaultsDisabled)
-                .onTrue(new InstantCommand(() -> enableDefaults()));
+                .onTrue(new InstantCommand(this::enableDefaults));
         this.coralL4Button.onTrue(
                 new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.LatchClimb, FinishActions.NoFinish));
         this.coralL3Button

@@ -57,18 +57,13 @@ public class XboxController1038 extends XboxController {
 
     public PovPositions getPOVPosition() {
         int povVal = super.getPOV();
-        switch (povVal) {
-            case 0:
-                return PovPositions.Up;
-            case 90:
-                return PovPositions.Right;
-            case 180:
-                return PovPositions.Down;
-            case 270:
-                return PovPositions.Left;
-            default:
-                return PovPositions.None;
-        }
+        return switch (povVal) {
+            case 0 -> PovPositions.Up;
+            case 90 -> PovPositions.Right;
+            case 180 -> PovPositions.Down;
+            case 270 -> PovPositions.Left;
+            default -> PovPositions.None;
+        };
     }
 
     /**
@@ -140,7 +135,6 @@ public class XboxController1038 extends XboxController {
      * Sets the left rumble speed
      *
      * @param speed the rumble speed between 0.0 and 1.0
-     * @return the new speed
      */
     public void setLeftRumble(double speed) {
         setRumble(RumbleType.kLeftRumble, speed);
@@ -150,7 +144,6 @@ public class XboxController1038 extends XboxController {
      * Sets the right rumble speed
      *
      * @param speed the rumble speed between 0.0 and 1.0
-     * @return the new speed
      */
     public void setRightRumble(double speed) {
         setRumble(RumbleType.kRightRumble, speed);

@@ -20,12 +20,12 @@ import frc.robot.constants.ShoulderConstants;
 import frc.robot.constants.ShoulderConstants.ShoulderSetpoints;
 
 public class Shoulder extends SubsystemBase {
-    private SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
-    private SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
-    private AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
-    private PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
+    private final SparkMax leftShoulderMotor = new SparkMax(ShoulderConstants.kLeftMotorPort, MotorType.kBrushless);
+    private final SparkMax rightShoulderMotor = new SparkMax(ShoulderConstants.kRightMotorPort, MotorType.kBrushless);
+    private final AbsoluteEncoder shoulderEncoder = rightShoulderMotor.getAbsoluteEncoder();
+    private final PIDController shoulderController = new PIDController(ShoulderConstants.kP, ShoulderConstants.kI,
             ShoulderConstants.kD);
-    private SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
+    private final SparkLimitSwitch limitSwitch = rightShoulderMotor.getReverseLimitSwitch();
     private boolean enabled = false;
     private double shoulderOffset = 0.0;
     private ShoulderSetpoints shoulderSetpoints;
@@ -76,7 +76,7 @@ public class Shoulder extends SubsystemBase {
     }
 
     private void useOutput(double output) {
-        double power = output;
+        double power;
         if (this.getSetpoint().equals(ShoulderSetpoints.Climb) && this.getPosition() > 350) {
             power = MathUtil.clamp(output, -1, 1);
         } else {

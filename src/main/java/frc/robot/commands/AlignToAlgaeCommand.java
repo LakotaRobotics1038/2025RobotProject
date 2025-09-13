@@ -16,18 +16,18 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Vision;
 
 public class AlignToAlgaeCommand extends Command {
-    private Vision vision = Vision.getInstance();
-    private DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Vision vision = Vision.getInstance();
+    private final DriveTrain driveTrain = DriveTrain.getInstance();
 
     private Optional<PhotonTrackedTarget> bestAlgae = Optional.empty();
 
-    private Supplier<Double> xMove;
-    private Supplier<Double> yMove;
+    private final Supplier<Double> xMove;
+    private final Supplier<Double> yMove;
 
-    private static double kP = 0.015;
-    private static double kI = 0.0;
-    private static double kD = 0.0;
-    private PIDController turnController = new PIDController(kP, kI, kD);
+    private final static double kP = 0.015;
+    private final static double kI = 0.0;
+    private final static double kD = 0.0;
+    private final PIDController turnController = new PIDController(kP, kI, kD);
 
     public AlignToAlgaeCommand(Supplier<Double> xMove, Supplier<Double> yMove) {
         super.addRequirements(vision, driveTrain);

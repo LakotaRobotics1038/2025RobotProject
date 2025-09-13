@@ -17,17 +17,17 @@ public enum AcquisitionPositionSetpoint {
     PrepClimb(ShoulderSetpoints.Storage, WristSetpoints.PrepClimb, ExtensionSetpoints.LatchClimb, true),
     Climb(ShoulderSetpoints.Climb, WristSetpoints.Climb, ExtensionSetpoints.Climb, true);
 
-    private ShoulderSetpoints shoulderSetpoint;
-    private WristSetpoints wristSetPoint;
-    private ExtensionSetpoints extensionSetpoint;
-    private boolean isClimb;
+    private final ShoulderSetpoints shoulderSetpoint;
+    private final WristSetpoints wristSetPoint;
+    private final ExtensionSetpoints extensionSetpoint;
+    private final boolean isClimb;
 
-    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+    AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint) {
         this(shoulderSetpoint, wristSetPoint, extensionSetpoint, false);
     }
 
-    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+    AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint, boolean isClimb) {
         this.shoulderSetpoint = shoulderSetpoint;
         this.wristSetPoint = wristSetPoint;

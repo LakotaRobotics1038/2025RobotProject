@@ -132,7 +132,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                     this));
 
     /* The SysId routine to test */
-    private SysIdRoutine sysIdRoutineToApply = sysIdRoutineTranslation;
+    private final SysIdRoutine sysIdRoutineToApply = sysIdRoutineTranslation;
 
     private DriveTrain() {
         super(
@@ -144,30 +144,24 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                 SwerveConstants.FrontRight,
                 SwerveConstants.BackLeft,
                 SwerveConstants.BackRight);
-        if (AutoConstants.kRobotConfig.isPresent()) {
-            AutoBuilder.configure(
-                    () -> this.getState().Pose,
-                    this::resetPose,
-                    () -> this.getState().Speeds,
-                    (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> {
-                        this.setControl(
-                                new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
-                                        .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
-                                        .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons()));
-                    },
-                    new PPHolonomicDriveController(
-                            new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
-                                    AutoConstants.kDController),
-                            new PIDConstants(AutoConstants.kPThetaController,
-                                    AutoConstants.kIThetaController,
-                                    AutoConstants.kDThetaController)),
-                    AutoConstants.kRobotConfig.get(),
-                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                    this);
-        }
-        if (Utils.isSimulation())
-
-        {
+        AutoConstants.kRobotConfig.ifPresent(robotConfig -> AutoBuilder.configure(
+                () -> this.getState().Pose,
+                this::resetPose,
+                () -> this.getState().Speeds,
+                (ChassisSpeeds speeds, DriveFeedforwards feedForwards) -> this.setControl(
+                        new SwerveRequest.ApplyRobotSpeeds().withSpeeds(speeds)
+                                .withWheelForceFeedforwardsX(feedForwards.robotRelativeForcesXNewtons())
+                                .withWheelForceFeedforwardsY(feedForwards.robotRelativeForcesYNewtons())),
+                new PPHolonomicDriveController(
+                        new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController,
+                                AutoConstants.kDController),
+                        new PIDConstants(AutoConstants.kPThetaController,
+                                AutoConstants.kIThetaController,
+                                AutoConstants.kDThetaController)),
+                robotConfig,
+                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                this));
+        if (Utils.isSimulation()) {
             startSimThread();
         }
     }
@@ -208,7 +202,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * Returns a command that applies the specified control request to this swerve
      * drivetrain.
      *
-     * @param request Function returning the request to apply
+     * @param requestSupplier Function returning the request to apply
      * @return Command to run
      */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {

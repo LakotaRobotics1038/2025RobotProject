@@ -24,9 +24,9 @@ public final class AutoConstants {
         Storage(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0.0)));
 
         // BARGE X: 8.023
-        private Pose2d endpoint;
+        private final Pose2d endpoint;
 
-        private DriveWaypoints(Pose2d endpoint) {
+        DriveWaypoints(Pose2d endpoint) {
             this.endpoint = endpoint;
         }
 

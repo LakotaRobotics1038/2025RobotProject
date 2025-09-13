@@ -13,14 +13,14 @@ import frc.robot.constants.DashboardConstants;
 
 public class Dashboard extends SubsystemBase {
     // Inputs
-    private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Wrist wrist = Wrist.getInstance();
-    private Shoulder shoulder = Shoulder.getInstance();
-    private Extension extension = Extension.getInstance();
+    private final DriveTrain driveTrain = DriveTrain.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Extension extension = Extension.getInstance();
 
     // Choosers
-    private SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
-    private SendableChooser<Double> delayChooser = new SendableChooser<>();
+    private final SendableChooser<AutonChoices> autoChooser = new SendableChooser<>();
+    private final SendableChooser<Double> delayChooser = new SendableChooser<>();
 
     // Variables
     private final Field2d field = new Field2d();
@@ -48,13 +48,9 @@ public class Dashboard extends SubsystemBase {
 
         SmartDashboard.putData(field);
 
-        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-            field.getObject("target pose").setPose(pose);
-        });
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> field.getObject("target pose").setPose(pose));
 
-        PathPlannerLogging.setLogActivePathCallback((poses) -> {
-            field.getObject("poses").setPoses(poses);
-        });
+        PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("poses").setPoses(poses));
     }
 
     @Override
@@ -85,8 +81,6 @@ public class Dashboard extends SubsystemBase {
 
     /**
      * Gets the sendable chooser for Auton Modes
-     *
-     * @return
      */
     public SendableChooser<AutonChoices> getAutoChooser() {
         return autoChooser;

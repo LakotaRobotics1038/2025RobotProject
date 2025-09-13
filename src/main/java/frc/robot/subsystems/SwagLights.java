@@ -12,7 +12,7 @@ public class SwagLights implements Subsystem {
 
         public final String value;
 
-        private RobotStates(String value) {
+        RobotStates(String value) {
             this.value = value;
         }
     }
@@ -23,13 +23,13 @@ public class SwagLights implements Subsystem {
 
         public final String value;
 
-        private OperatorStates(String value) {
+        OperatorStates(String value) {
             this.value = value;
         }
     }
 
     // Inputs and Outputs
-    private SerialPort serialPort;
+    private final SerialPort serialPort;
 
     // States
     private RobotStates robotState = RobotStates.Disabled;

@@ -15,7 +15,7 @@ public class ShoulderConstants {
 
         public final double setpoint;
 
-        private ShoulderSetpoints(double setpoint) {
+        ShoulderSetpoints(double setpoint) {
             this.setpoint = setpoint;
         }
     }
