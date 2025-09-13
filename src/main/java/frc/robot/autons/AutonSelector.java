@@ -62,12 +62,16 @@ public class AutonSelector {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         System.out.println(this.autoChooser.getSelected());
         try {
-            return switch (this.autoChooser.getSelected()) {
-                case BargeAuto -> new BargeAuto(alliance);
-                case LeftTaxi -> new LeftTaxi(alliance);
-                case RightTaxi -> new RightTaxi(alliance);
-                default -> null;
-            };
+            switch (this.autoChooser.getSelected()) {
+                case BargeAuto:
+                    return new BargeAuto(alliance);
+                case LeftTaxi:
+                    return new LeftTaxi(alliance);
+                case RightTaxi:
+                    return new RightTaxi(alliance);
+                default:
+                    return null;
+            }
         } catch (Exception e) {
             System.out.println("Choose Auton Failed " + e);
             return null;

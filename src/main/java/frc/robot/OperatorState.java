@@ -25,10 +25,15 @@ public class OperatorState {
     }
 
     public boolean isAlgae() {
-        return switch (getLastInput()) {
-            case L23Algae, L34Algae, Processor, GroundAlgae -> true;
-            default -> false;
-        };
+        switch (getLastInput()) {
+            case L23Algae:
+            case L34Algae:
+            case Processor:
+            case GroundAlgae:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public boolean isGroundAlgae() {

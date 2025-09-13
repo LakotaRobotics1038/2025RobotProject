@@ -81,6 +81,8 @@ public class Dashboard extends SubsystemBase {
 
     /**
      * Gets the sendable chooser for Auton Modes
+     *
+     * @return The sendable chooser with the auton choices.
      */
     public SendableChooser<AutonChoices> getAutoChooser() {
         return autoChooser;
