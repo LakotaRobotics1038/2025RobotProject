@@ -159,7 +159,9 @@ public class DriverJoystick extends XboxController1038 {
      * @return sideways value
      */
     private double getSidewaysValue() {
-        prevSideways = limitRate(sidewaysFilter.calculate(this.getLeftX() * maxPower), prevSideways, sidewaysLimiter);
+        final double x = this.getLeftX() * maxPower;
+        final double sideways = sidewaysFilter.calculate(x);
+        prevSideways = limitRate(sideways, prevSideways, sidewaysLimiter);
 
         return prevSideways;
     }
@@ -171,7 +173,9 @@ public class DriverJoystick extends XboxController1038 {
      * @return forward value
      */
     private double getForwardValue() {
-        prevForward = limitRate(forwardFilter.calculate(this.getLeftY() * maxPower), prevForward, forwardLimiter);
+        final double y = this.getLeftY() * maxPower;
+        final double forward = forwardFilter.calculate(y);
+        prevForward = limitRate(forward, prevForward, forwardLimiter);
 
         return prevForward;
     }
@@ -183,7 +187,8 @@ public class DriverJoystick extends XboxController1038 {
      * @return rotate value
      */
     private double getRotateValue() {
-        prevRotate = limitRate(this.getRightX() * maxPower, prevRotate, rotateLimiter);
+        final double rotate = this.getRightX() * maxPower;
+        prevRotate = limitRate(rotate, prevRotate, rotateLimiter);
 
         return prevRotate;
     }
