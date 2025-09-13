@@ -159,7 +159,9 @@ public class Vision extends SubsystemBase {
     }
 
     /**
-     * Returns the latest standard deviations of the estimated pose from {@link #frontCamGetEstimatedGlobalPose} and {@link #backCamGetEstimatedGlobalPose}.
+     * Returns the latest standard deviations of the estimated pose from
+     * {@link #frontCamGetEstimatedGlobalPose} and
+     * {@link #backCamGetEstimatedGlobalPose}.
      * For use with {@link edu.wpi.first.math.estimator.SwerveDrivePoseEstimator}.
      * This should only be used when there are targets visible.
      */
