@@ -26,7 +26,7 @@ public final class AutoConstants {
         // BARGE X: 8.023
         private final Pose2d endpoint;
 
-        DriveWaypoints(Pose2d endpoint) {
+        private DriveWaypoints(Pose2d endpoint) {
             this.endpoint = endpoint;
         }
 

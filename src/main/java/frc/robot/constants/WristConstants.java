@@ -17,7 +17,7 @@ public class WristConstants {
         private double shoulderMin;
         private double shoulderMax;
 
-        WristSetpoints(double setpoint) {
+        private WristSetpoints(double setpoint) {
             this.setpoint = setpoint;
         }
 

@@ -22,12 +22,12 @@ public enum AcquisitionPositionSetpoint {
     private final ExtensionSetpoints extensionSetpoint;
     private final boolean isClimb;
 
-    AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint) {
         this(shoulderSetpoint, wristSetPoint, extensionSetpoint, false);
     }
 
-    AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
+    private AcquisitionPositionSetpoint(ShoulderSetpoints shoulderSetpoint, WristSetpoints wristSetPoint,
             ExtensionSetpoints extensionSetpoint, boolean isClimb) {
         this.shoulderSetpoint = shoulderSetpoint;
         this.wristSetPoint = wristSetPoint;

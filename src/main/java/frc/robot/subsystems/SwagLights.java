@@ -12,7 +12,7 @@ public class SwagLights implements Subsystem {
 
         public final String value;
 
-        RobotStates(String value) {
+        private RobotStates(String value) {
             this.value = value;
         }
     }
@@ -23,7 +23,7 @@ public class SwagLights implements Subsystem {
 
         public final String value;
 
-        OperatorStates(String value) {
+        private OperatorStates(String value) {
             this.value = value;
         }
     }

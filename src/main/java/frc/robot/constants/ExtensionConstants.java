@@ -34,7 +34,7 @@ public class ExtensionConstants {
 
         public final double position;
 
-        ExtensionSetpoints(double position) {
+        private ExtensionSetpoints(double position) {
             this.position = position;
         }
     }
