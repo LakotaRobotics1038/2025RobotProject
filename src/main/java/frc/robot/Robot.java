@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
         Dashboard.getInstance();
-        // PathfindingCommand.warmupCommand().schedule();
+
         FollowPathCommand.warmupCommand().schedule();
 
         WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
@@ -55,13 +55,13 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
 
-        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose ->
-                driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+        vision.frontCamGetEstimatedGlobalPose()
+                .ifPresent(estimatedPose -> driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
                         estimatedPose.timestampSeconds,
                         vision.getEstimationStdDevs()));
 
-        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose ->
-                driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+        vision.backCamGetEstimatedGlobalPose()
+                .ifPresent(estimatedPose -> driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
                         estimatedPose.timestampSeconds,
                         vision.getEstimationStdDevs()));
     }

@@ -1,8 +1,9 @@
 package frc.robot.constants;
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
-
+import java.io.IOException;
 import java.util.Optional;
+
+import org.json.simple.parser.ParseException;
 
 import com.pathplanner.lib.config.RobotConfig;
 
@@ -10,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 
 public final class AutoConstants {
     public enum DriveWaypoints {
@@ -62,7 +64,7 @@ public final class AutoConstants {
     private static Optional<RobotConfig> loadRobotConfig() {
         try {
             return Optional.of(RobotConfig.fromGUISettings());
-        } catch (Exception e) {
+        } catch (IOException | ParseException e) {
             // Handle exception as needed
             e.printStackTrace();
         }
