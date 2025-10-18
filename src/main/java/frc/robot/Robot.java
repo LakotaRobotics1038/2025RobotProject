@@ -23,22 +23,27 @@ import frc.robot.subsystems.Vision;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
-    private final AutonSelector autonSelector = AutonSelector.getInstance();
-    private final SwagLights swagLights = SwagLights.getInstance();
+    private AutonSelector autonSelector;
+    private SwagLights swagLights;
 
     // Variables
     private Auton autonomousCommand;
     private final ControlWord controlWordCache = new ControlWord();
 
     // Subsystems
-    private final DriveTrain driveTrain = DriveTrain.getInstance();
-    private final Vision vision = Vision.getInstance();
+    private DriveTrain driveTrain;
+    private Vision vision;
 
     // Human Interface Devices
-    private final OperatorPanel operatorPanel = OperatorPanel.getInstance();
+    private OperatorPanel operatorPanel;
 
     @Override
     public void robotInit() {
+        autonSelector = AutonSelector.getInstance();
+        swagLights = SwagLights.getInstance();
+        driveTrain = DriveTrain.getInstance();
+        vision = Vision.getInstance();
+        operatorPanel = OperatorPanel.getInstance();
         // Singleton instances that need to be created but not referenced
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
