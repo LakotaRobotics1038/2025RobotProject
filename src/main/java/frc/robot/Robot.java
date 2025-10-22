@@ -95,6 +95,7 @@ public class Robot extends TimedRobot {
         // if (DriverStation.isFMSAttached()) {
         // vision.startRecording();
         // }
+        vision.setAprilTagMode();
 
         if (autonomousCommand != null) {
             Pose2d initialPose = autonomousCommand.getInitialPose();
