@@ -27,9 +27,9 @@ public class BargeAuto extends Auton {
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
                                         FinishActions.NoDisable))))
-                        .withTimeout(2.5),
+                        .withTimeout(2.5).andThen(new WaitCommand(0.5)),
 
-                new ShootAlgaeCommand().withTimeout(0.5),
+                new ShootAlgaeCommand().withTimeout(0.3),
 
                 new AcquireAlgaeCommand().raceWith(
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
@@ -38,9 +38,9 @@ public class BargeAuto extends Auton {
                         .alongWith(new WaitCommand(0.5)
                                 .andThen(new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.Barge,
                                         FinishActions.NoDisable))))
-                        .withTimeout(3),
+                        .withTimeout(3).andThen(new WaitCommand(0.5)),
 
-                new ShootAlgaeCommand().withTimeout(0.5),
+                new ShootAlgaeCommand().withTimeout(0.3),
 
                 new AcquireAlgaeCommand().raceWith(
                         new SetAcquisitionPositionCommand(AcquisitionPositionSetpoint.L34Algae, FinishActions.NoDisable)
