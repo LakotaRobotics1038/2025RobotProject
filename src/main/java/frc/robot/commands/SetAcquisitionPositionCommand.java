@@ -63,9 +63,7 @@ public class SetAcquisitionPositionCommand extends Command {
             acquisitionPositionSetpoint = acquisitionPositionSetpointSupplier.get();
         }
 
-        if (acquisitionPositionSetpoint.getIsClimb()) {
-            isClimb = true;
-        }
+        isClimb = acquisitionPositionSetpoint.getIsClimb();
 
         if (this.acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
             vision.setAlgaeMode();
@@ -81,10 +79,8 @@ public class SetAcquisitionPositionCommand extends Command {
             waitUntilStorage = true;
         }
 
-        if (shoulder.getPosition() < 310 && extension.getPosition() > 20
-                && acquisitionPositionSetpoint.getExtensionSetpoint().position < 10) {
-            isFromBarge = true;
-        }
+        isFromBarge = shoulder.getPosition() < 310 && extension.getPosition() > 20
+                && acquisitionPositionSetpoint.getExtensionSetpoint().position < 10;
 
         wristSetpoint = acquisitionPositionSetpoint.getWristSetpoint();
         extensionSetpoint = acquisitionPositionSetpoint.getExtensionSetpoint();
