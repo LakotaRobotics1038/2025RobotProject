@@ -58,6 +58,7 @@ public class SetAcquisitionPositionCommand extends Command {
         this.finishAction = finishAction;
     }
 
+    @Override
     public void initialize() {
         if (acquisitionPositionSetpoint == null) {
             acquisitionPositionSetpoint = acquisitionPositionSetpointSupplier.get();
@@ -159,6 +160,7 @@ public class SetAcquisitionPositionCommand extends Command {
         wrist.setSetpoint(wristPos);
     }
 
+    @Override
     public boolean isFinished() {
         return finishAction != FinishActions.NoFinish &&
                 extension.onTarget() &&
@@ -166,6 +168,7 @@ public class SetAcquisitionPositionCommand extends Command {
                 wrist.onTarget();
     }
 
+    @Override
     public void end(boolean interrupted) {
         if (this.acquisitionPositionSetpoint == AcquisitionPositionSetpoint.GroundAlgae) {
             vision.setAprilTagMode();
