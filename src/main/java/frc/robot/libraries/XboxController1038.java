@@ -140,7 +140,6 @@ public class XboxController1038 extends XboxController {
      * Sets the left rumble speed
      *
      * @param speed the rumble speed between 0.0 and 1.0
-     * @return the new speed
      */
     public void setLeftRumble(double speed) {
         setRumble(RumbleType.kLeftRumble, speed);
@@ -150,7 +149,6 @@ public class XboxController1038 extends XboxController {
      * Sets the right rumble speed
      *
      * @param speed the rumble speed between 0.0 and 1.0
-     * @return the new speed
      */
     public void setRightRumble(double speed) {
         setRumble(RumbleType.kRightRumble, speed);

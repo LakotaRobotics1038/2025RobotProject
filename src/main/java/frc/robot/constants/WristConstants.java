@@ -12,7 +12,7 @@ public class WristConstants {
         PrepClimb(20),
         Climb(100);
 
-        private double setpoint;
+        private final double setpoint;
         private double extMax;
         private double shoulderMin;
         private double shoulderMax;

@@ -23,27 +23,32 @@ import frc.robot.subsystems.Vision;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
-    private AutonSelector autonSelector = AutonSelector.getInstance();
-    private SwagLights swagLights = SwagLights.getInstance();
+    private AutonSelector autonSelector;
+    private SwagLights swagLights;
 
     // Variables
     private Auton autonomousCommand;
-    private ControlWord controlWordCache = new ControlWord();
+    private final ControlWord controlWordCache = new ControlWord();
 
     // Subsystems
-    private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Vision vision = Vision.getInstance();
+    private DriveTrain driveTrain;
+    private Vision vision;
 
     // Human Interface Devices
-    private OperatorPanel operatorPanel = OperatorPanel.getInstance();
+    private OperatorPanel operatorPanel;
 
     @Override
     public void robotInit() {
+        autonSelector = AutonSelector.getInstance();
+        swagLights = SwagLights.getInstance();
+        driveTrain = DriveTrain.getInstance();
+        vision = Vision.getInstance();
+        operatorPanel = OperatorPanel.getInstance();
         // Singleton instances that need to be created but not referenced
         DriverJoystick.getInstance();
         OperatorPanel.getInstance();
         Dashboard.getInstance();
-        // PathfindingCommand.warmupCommand().schedule();
+
         FollowPathCommand.warmupCommand().schedule();
 
         WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
@@ -55,17 +60,15 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
 
-        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-                    estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
+        vision.frontCamGetEstimatedGlobalPose()
+                .ifPresent(estimatedPose -> driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+                        estimatedPose.timestampSeconds,
+                        vision.getEstimationStdDevs()));
 
-        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-                    estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
+        vision.backCamGetEstimatedGlobalPose()
+                .ifPresent(estimatedPose -> driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+                        estimatedPose.timestampSeconds,
+                        vision.getEstimationStdDevs()));
     }
 
     @Override

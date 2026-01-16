@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Acquisition;
 
 public class DisposeAlgaeCommand extends Command {
-    private Acquisition acquisition = Acquisition.getInstance();
-    private double secondsToDispose;
-    private Timer timer = new Timer();
+    private final Acquisition acquisition = Acquisition.getInstance();
+    private final double secondsToDispose;
+    private final Timer timer = new Timer();
 
     public DisposeAlgaeCommand() {
         this(0.0);

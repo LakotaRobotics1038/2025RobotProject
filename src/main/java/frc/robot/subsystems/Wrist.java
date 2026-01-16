@@ -19,9 +19,9 @@ import frc.robot.constants.WristConstants.WristSetpoints;
 
 public class Wrist extends SubsystemBase {
 
-    private SparkFlex wristMotor = new SparkFlex(WristConstants.kWristCanId, MotorType.kBrushless);
-    private AbsoluteEncoder wristEncoder = wristMotor.getAbsoluteEncoder();
-    private PIDController wristController = new PIDController(
+    private final SparkFlex wristMotor = new SparkFlex(WristConstants.kWristCanId, MotorType.kBrushless);
+    private final AbsoluteEncoder wristEncoder = wristMotor.getAbsoluteEncoder();
+    private final PIDController wristController = new PIDController(
             WristConstants.kWristControllerP,
             WristConstants.kWristControllerI,
             WristConstants.kWristControllerD);

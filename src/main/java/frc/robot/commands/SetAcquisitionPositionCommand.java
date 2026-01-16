@@ -14,14 +14,14 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class SetAcquisitionPositionCommand extends Command {
-    private Shoulder shoulder = Shoulder.getInstance();
-    private Wrist wrist = Wrist.getInstance();
-    private Extension extension = Extension.getInstance();
-    private Vision vision = Vision.getInstance();
+    private final Shoulder shoulder = Shoulder.getInstance();
+    private final Wrist wrist = Wrist.getInstance();
+    private final Extension extension = Extension.getInstance();
+    private final Vision vision = Vision.getInstance();
 
     private AcquisitionPositionSetpoint acquisitionPositionSetpoint;
     private Supplier<AcquisitionPositionSetpoint> acquisitionPositionSetpointSupplier;
-    private FinishActions finishAction;
+    private final FinishActions finishAction;
     private WristSetpoints wristSetpoint;
     private ExtensionSetpoints extensionSetpoint;
     private ShoulderSetpoints shoulderSetpoint;

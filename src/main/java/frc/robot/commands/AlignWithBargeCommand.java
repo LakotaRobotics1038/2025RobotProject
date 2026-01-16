@@ -14,17 +14,17 @@ public class AlignWithBargeCommand extends Command {
     public DriveTrain driveTrain = DriveTrain.getInstance();
     public SwagLights swagLights = SwagLights.getInstance();
 
-    private Supplier<Double> yMove;
+    private final Supplier<Double> yMove;
 
-    private static double kZP = 0.015;
-    private static double kZI = 0.0;
-    private static double kZD = 0.0;
-    private PIDController zController = new PIDController(kZP, kZI, kZD);
+    private final static double kZP = 0.015;
+    private final static double kZI = 0.0;
+    private final static double kZD = 0.0;
+    private final PIDController zController = new PIDController(kZP, kZI, kZD);
 
-    private static double kXP = 0.25;
-    private static double kXI = 0.0;
-    private static double kXD = 0.0;
-    private PIDController xController = new PIDController(kXP, kXI, kXD);
+    private final static double kXP = 0.25;
+    private final static double kXI = 0.0;
+    private final static double kXD = 0.0;
+    private final PIDController xController = new PIDController(kXP, kXI, kXD);
 
     public AlignWithBargeCommand(Supplier<Double> yMove) {
         super.addRequirements(driveTrain);

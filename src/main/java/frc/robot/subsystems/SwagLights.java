@@ -29,7 +29,7 @@ public class SwagLights implements Subsystem {
     }
 
     // Inputs and Outputs
-    private SerialPort serialPort;
+    private final SerialPort serialPort;
 
     // States
     private RobotStates robotState = RobotStates.Disabled;

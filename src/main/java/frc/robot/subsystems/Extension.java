@@ -19,11 +19,11 @@ import frc.robot.constants.ExtensionConstants.ExtensionSetpoints;
 import frc.robot.constants.NeoMotorConstants;
 
 public class Extension extends SubsystemBase {
-    private SparkFlex extensionMotor = new SparkFlex(ExtensionConstants.kExtensionMotorPort, MotorType.kBrushless);
-    private PIDController extensionController = new PIDController(ExtensionConstants.kP, ExtensionConstants.kI,
+    private final SparkFlex extensionMotor = new SparkFlex(ExtensionConstants.kExtensionMotorPort, MotorType.kBrushless);
+    private final PIDController extensionController = new PIDController(ExtensionConstants.kP, ExtensionConstants.kI,
             ExtensionConstants.kD);
-    private SparkLimitSwitch limitSwitch = extensionMotor.getReverseLimitSwitch();
-    private RelativeEncoder extensionEncoder = extensionMotor.getEncoder();
+    private final SparkLimitSwitch limitSwitch = extensionMotor.getReverseLimitSwitch();
+    private final RelativeEncoder extensionEncoder = extensionMotor.getEncoder();
     private static Extension instance;
     private boolean enabled;
     private double extensionOffset = 0.0;

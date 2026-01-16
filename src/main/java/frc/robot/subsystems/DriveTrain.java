@@ -132,7 +132,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                     this));
 
     /* The SysId routine to test */
-    private SysIdRoutine sysIdRoutineToApply = sysIdRoutineTranslation;
+    private final SysIdRoutine sysIdRoutineToApply = sysIdRoutineTranslation;
 
     private DriveTrain() {
         super(
@@ -165,9 +165,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
                     () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
                     this);
         }
-        if (Utils.isSimulation())
-
-        {
+        if (Utils.isSimulation()) {
             startSimThread();
         }
     }
@@ -208,7 +206,7 @@ public class DriveTrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
      * Returns a command that applies the specified control request to this swerve
      * drivetrain.
      *
-     * @param request Function returning the request to apply
+     * @param requestSupplier Function returning the request to apply
      * @return Command to run
      */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {

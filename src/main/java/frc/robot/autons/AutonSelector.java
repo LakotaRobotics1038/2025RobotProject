@@ -5,7 +5,6 @@ import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 import frc.robot.subsystems.Dashboard;
 
 public class AutonSelector {
@@ -13,7 +12,7 @@ public class AutonSelector {
         NoAuto,
         BargeAuto,
         LeftTaxi,
-        RightTaxi;
+        RightTaxi
     }
 
     // Choosers

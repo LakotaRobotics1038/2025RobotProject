@@ -13,7 +13,7 @@ import frc.robot.commands.AcquireAlgaeCommand;
 import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
-import frc.robot.utils.AcquisitionPositionSetpoint;;
+import frc.robot.utils.AcquisitionPositionSetpoint;
 
 public class BargeAuto extends Auton {
     BargeAuto(Optional<Alliance> alliance) throws FileVersionException, IOException, ParseException {

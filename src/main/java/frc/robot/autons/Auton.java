@@ -63,7 +63,7 @@ public abstract class Auton extends SequentialCommandGroup {
 
     public Command followPathCommand(PathPlannerPath path) {
         try {
-            if (!AutoConstants.kRobotConfig.isPresent()) {
+            if (AutoConstants.kRobotConfig.isEmpty()) {
                 throw new Error("PP Robot Config is Missing");
             }
             return new FollowPathCommand(
