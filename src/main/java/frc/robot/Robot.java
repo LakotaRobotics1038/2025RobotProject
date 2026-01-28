@@ -19,7 +19,6 @@ import frc.robot.constants.SwerveConstants;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SwagLights;
-import frc.robot.subsystems.Vision;
 
 public class Robot extends TimedRobot {
     // Singleton Instances
@@ -32,7 +31,6 @@ public class Robot extends TimedRobot {
 
     // Subsystems
     private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Vision vision = Vision.getInstance();
 
     // Human Interface Devices
     private OperatorPanel operatorPanel = OperatorPanel.getInstance();
@@ -55,17 +53,17 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
 
-        vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-                    estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
+        // vision.frontCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+        // driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+        // estimatedPose.timestampSeconds,
+        // vision.getEstimationStdDevs());
+        // });
 
-        vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
-            driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
-                    estimatedPose.timestampSeconds,
-                    vision.getEstimationStdDevs());
-        });
+        // vision.backCamGetEstimatedGlobalPose().ifPresent(estimatedPose -> {
+        // driveTrain.addVisionMeasurement(estimatedPose.estimatedPose.toPose2d(),
+        // estimatedPose.timestampSeconds,
+        // vision.getEstimationStdDevs());
+        // });
     }
 
     @Override

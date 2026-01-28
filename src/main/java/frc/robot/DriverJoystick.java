@@ -1,26 +1,13 @@
 package frc.robot;
 
-import java.util.Set;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.IdealStartingState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AlignToAlgaeCommand;
 import frc.robot.commands.AlignWithBargeCommand;
-import frc.robot.commands.DetermineWaypointCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand;
 import frc.robot.commands.SetAcquisitionPositionCommand.FinishActions;
-import frc.robot.constants.AutoConstants;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.IOConstants;
 import frc.robot.libraries.XboxController1038;
@@ -31,15 +18,9 @@ import frc.robot.utils.AcquisitionPositionSetpoint;
 public class DriverJoystick extends XboxController1038 {
     // Subsystem Dependencies
     private final DriveTrain driveTrain = DriveTrain.getInstance();
-    private final OperatorState operatorState = OperatorState.getInstance();
     private final Extension extension = Extension.getInstance();
 
-    // Commands
-    private final DetermineWaypointCommand determineWaypointCommand = new DetermineWaypointCommand();
-
     // Instance Variables
-    private PathPlannerPath path;
-    private Pose2d targetPose;
     private double maxPower = DriveConstants.defaultMaxPower;
 
     // Previous Status
@@ -120,33 +101,34 @@ public class DriverJoystick extends XboxController1038 {
         // Lock the wheels into an X formation
         this.xButton.whileTrue(this.driveTrain.setX());
 
-        this.bButton
-                .and(operatorState::isGroundAlgae)
-                .whileTrue(new AlignToAlgaeCommand(this::getForwardValue, this::getSidewaysValue));
+        // this.bButton
+        // .and(operatorState::isGroundAlgae)
+        // .whileTrue(new AlignToAlgaeCommand(this::getForwardValue,
+        // this::getSidewaysValue));
 
-        this.aButton.whileTrue(determineWaypointCommand.andThen(
-                new InstantCommand(() -> {
-                    Pose2d currentPose = this.driveTrain.getState().Pose;
-                    this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
+        // this.aButton.whileTrue(determineWaypointCommand.andThen(
+        // new InstantCommand(() -> {
+        // Pose2d currentPose = this.driveTrain.getState().Pose;
+        // this.targetPose = determineWaypointCommand.getPose2d().orElse(null);
 
-                    if (this.targetPose != null) {
-                        this.path = new PathPlannerPath(
-                                PathPlannerPath.waypointsFromPoses(currentPose,
-                                        targetPose),
-                                new PathConstraints(
-                                        AutoConstants.maxSpeed,
-                                        AutoConstants.kMaxAccelerationMetersPerSecondSquared,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecond,
-                                        AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
-                                new IdealStartingState(
-                                        driveTrain.getState().Speeds.vxMetersPerSecond,
-                                        driveTrain.getState().Pose.getRotation()),
-                                new GoalEndState(0, targetPose.getRotation()));
-                    }
-                })
-                        .andThen(
-                                new DeferredCommand(() -> AutoBuilder.followPath(this.path),
-                                        Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
+        // if (this.targetPose != null) {
+        // this.path = new PathPlannerPath(
+        // PathPlannerPath.waypointsFromPoses(currentPose,
+        // targetPose),
+        // new PathConstraints(
+        // AutoConstants.maxSpeed,
+        // AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecond,
+        // AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared),
+        // new IdealStartingState(
+        // driveTrain.getState().Speeds.vxMetersPerSecond,
+        // driveTrain.getState().Pose.getRotation()),
+        // new GoalEndState(0, targetPose.getRotation()));
+        // }
+        // })
+        // .andThen(
+        // new DeferredCommand(() -> AutoBuilder.followPath(this.path),
+        // Set.of(this.driveTrain)).onlyIf(() -> this.targetPose != null))));
     }
 
     /**
