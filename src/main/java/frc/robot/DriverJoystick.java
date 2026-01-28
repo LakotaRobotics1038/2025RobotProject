@@ -38,6 +38,9 @@ public class DriverJoystick extends XboxController1038 {
 
     private final Telemetry logger = new Telemetry(DriveConstants.MaxSpeed);
 
+    // High Gain Near Center
+    private final double a = 1;
+
     // Singleton Setup
     private static DriverJoystick instance;
 
@@ -138,13 +141,11 @@ public class DriverJoystick extends XboxController1038 {
      * @return sideways value
      */
     private double getSidewaysValue() {
-        double x = this.getLeftX() * maxPower;
+        final double x = this.getLeftX() * maxPower;
+        final double sideways = sidewaysFilter.calculate(x);
+        prevSideways = limitRate(sideways, prevSideways, sidewaysLimiter);
 
-        double sideways = sidewaysFilter.calculate(x);
-        sideways = limitRate(x, prevSideways, sidewaysLimiter);
-        prevSideways = sideways;
-
-        return sideways;
+        return prevSideways;
     }
 
     /**
@@ -154,13 +155,11 @@ public class DriverJoystick extends XboxController1038 {
      * @return forward value
      */
     private double getForwardValue() {
-        double y = this.getLeftY() * maxPower;
+        final double y = this.getLeftY() * maxPower;
+        final double forward = forwardFilter.calculate(y);
+        prevForward = limitRate(forward, prevForward, forwardLimiter);
 
-        double forward = forwardFilter.calculate(y);
-        forward = limitRate(y, prevForward, forwardLimiter);
-        prevForward = forward;
-
-        return forward;
+        return prevForward;
     }
 
     /**
@@ -170,12 +169,10 @@ public class DriverJoystick extends XboxController1038 {
      * @return rotate value
      */
     private double getRotateValue() {
-        double z = this.getRightX() * 0.75;
+        final double rotate = this.getRightX() * maxPower;
+        prevRotate = limitRate(rotate, prevRotate, rotateLimiter);
 
-        double rotate = limitRate(z, prevRotate, rotateLimiter);
-        prevRotate = rotate;
-
-        return rotate;
+        return prevRotate;
     }
 
     /**
